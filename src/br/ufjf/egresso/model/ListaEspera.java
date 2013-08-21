@@ -1,14 +1,18 @@
 package br.ufjf.egresso.model;
 
-	import javax.persistence.Column;
-	import javax.persistence.Entity;
-	import javax.persistence.FetchType;
-	import javax.persistence.GeneratedValue;
-	import javax.persistence.Id;
-	import javax.persistence.JoinColumn;
-	import javax.persistence.ManyToOne;
-	import javax.persistence.Table;
-	import org.hibernate.annotations.GenericGenerator;
+	import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
 
 	@Entity
 	@Table(name = "listaespera")
@@ -23,18 +27,21 @@ package br.ufjf.egresso.model;
 		@Column(name = "matricula", nullable = false, unique = true, length = 15)
 		String matricula;
 
-		@Column(name = "nome", length = 65, nullable = false)
+		@Column(name = "nome", length = 65, unique = false, nullable = true)
 		String nome;
 
-		@Column(name = "tokenfacebook", nullable = false, unique = true, length = 255)
+		@Column(name = "tokenfacebook", nullable = true, unique = true, length = 255)
 		String tokenfacebook;
 		
 		@Column(name = "idfacebook", nullable = false, unique = true, length = 20)
 		String idfacebook;
 		
 		@ManyToOne(fetch = FetchType.LAZY)
-		@JoinColumn(name = "turma", nullable = false)
+		@JoinColumn(name = "idturma", nullable = false)
 		private Turma turma;
+		
+		@OneToMany(fetch = FetchType.LAZY, mappedBy = "listaespera")
+		private List<ListaEsperaAluno> ListaEsperaAluno = new ArrayList<ListaEsperaAluno>();
 
 		public int getIdlistaEspera() {
 			return idlistaEspera;
@@ -86,6 +93,14 @@ package br.ufjf.egresso.model;
 
 		public void setIdlistaEspera(int idlistaEspera) {
 			this.idlistaEspera = idlistaEspera;
+		}
+
+		public List<ListaEsperaAluno> getListaEsperaAluno() {
+			return ListaEsperaAluno;
+		}
+
+		public void setListaEsperaAluno(List<ListaEsperaAluno> listaEsperaAluno) {
+			ListaEsperaAluno = listaEsperaAluno;
 		}
 		
 	}

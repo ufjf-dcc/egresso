@@ -15,6 +15,7 @@
 		<mapping class="br.ufjf.egresso.model.ListaEspera" />
 		<mapping class="br.ufjf.egresso.model.TipoAtuacao" />
 		<mapping class="br.ufjf.egresso.model.Turma" />
+		<mapping class="br.ufjf.egresso.model.ListaEsperaAluno" />
 
 	</session-factory>
 </hibernate-configuration>

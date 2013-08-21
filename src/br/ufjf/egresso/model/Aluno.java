@@ -8,7 +8,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -24,30 +23,30 @@ public class Aluno {
 	@GenericGenerator(name = "increment", strategy = "increment")
 	int idaluno;
 
-	@Column(name = "matricula", unique = true, length = 15)
+	@Column(name = "matricula", unique = true, length = 15, nullable = true)
 	String matricula;
 
 	@Column(name = "nome", length = 65, nullable = false)
 	String nome;
-	
-	@Column(name = "tokenfacebook", unique = true, length = 255)
+
+	@Column(name = "tokenfacebook", unique = true, nullable = true, length = 255)
 	String tokenfacebook;
-	
-	@Column(name = "idfacebook", nullable = false, unique = true, length = 20)
+
+	@Column(name = "idfacebook", unique = true, nullable = true, length = 20)
 	String idfacebook;
-	
+
 	@Column(name = "coordenador", nullable = false)
 	Boolean coordenador;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "turma")
+	@JoinColumn(name = "idturma")
 	private Turma turma;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "aluno")
 	private List<Atuacao> atuacao = new ArrayList<Atuacao>();
 
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "aluno")
-	private List<ListaEspera> listaEspera = new ArrayList<ListaEspera>();
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "aluno")
+	private List<ListaEsperaAluno> ListaEsperaAluno = new ArrayList<ListaEsperaAluno>();
 
 	public int getIdaluno() {
 		return idaluno;
@@ -97,14 +96,6 @@ public class Aluno {
 		this.atuacao = atuacao;
 	}
 
-	public List<ListaEspera> getLista_de_espera() {
-		return listaEspera;
-	}
-
-	public void setListaEspera(List<ListaEspera> listaEspera) {
-		this.listaEspera = listaEspera;
-	}
-	
 	public String getIdfacebook() {
 		return idfacebook;
 	}
@@ -121,8 +112,12 @@ public class Aluno {
 		this.coordenador = coordenador;
 	}
 
-	public List<ListaEspera> getListaEspera() {
-		return listaEspera;
+	public List<ListaEsperaAluno> getListaEsperaAluno() {
+		return ListaEsperaAluno;
+	}
+
+	public void setListaEsperaAluno(List<ListaEsperaAluno> listaEsperaAluno) {
+		ListaEsperaAluno = listaEsperaAluno;
 	}
 
 }

@@ -21,22 +21,22 @@ public class Atuacao {
 	@GenericGenerator(name = "increment", strategy = "increment")
 	int idatuacao;
 
-	@Column(name = "dataInicio")
+	@Column(name = "dataInicio", nullable = true)
 	Date dataInicio;
 
-	@Column(name = "dataTermino")
+	@Column(name = "dataTermino", nullable = true)
 	Date dataTermino;
 
-	@Column(name = "local", length = 45)
+	@Column(name = "local", length = 45, nullable = true)
 	String local;
 
-	@Column(name = "especificacao", length = 45)
+	@Column(name = "especificacao", length = 45, nullable = true)
 	String especificacao;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "idaluno", nullable = false)
 	private Aluno aluno;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "idtipoAtucao", nullable = false)
 	private TipoAtuacao tipoAtuacao;
@@ -96,5 +96,5 @@ public class Atuacao {
 	public void setTipo_atuacao(TipoAtuacao tipo_atuacao) {
 		this.tipoAtuacao = tipo_atuacao;
 	}
-	
+
 }

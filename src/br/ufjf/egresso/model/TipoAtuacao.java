@@ -49,5 +49,5 @@ public class TipoAtuacao {
 	public void setAtuacao(List<Atuacao> atuacao) {
 		this.atuacao = atuacao;
 	}
-	
+
 }
