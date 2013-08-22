@@ -1,0 +1,11 @@
+<?page title="Home" contentType="text/html;charset=UTF-8"?>
+
+<zk>
+	<div align="center" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('hf') @init('br.ufjf.egresso.controller.HomeController')"
+		form="@id('fx') @load(hf.aluno)">
+
+		Seja bem vindo(a) :
+		<label value="@load(fx.nome)" />
+	</div>
+</zk>
