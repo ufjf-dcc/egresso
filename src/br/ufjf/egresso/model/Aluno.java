@@ -29,14 +29,14 @@ public class Aluno {
 	@Column(name = "nome", length = 65, nullable = false)
 	String nome;
 
-	@Column(name = "tokenfacebook", unique = true, nullable = true, length = 255)
-	String tokenfacebook;
+	@Column(name = "tokenFacebook", nullable = true, length = 255)
+	String tokenFacebook;
 
 	@Column(name = "idfacebook", unique = true, nullable = true, length = 20)
 	String idfacebook;
 
-	@Column(name = "coordenador", nullable = false)
-	Boolean coordenador;
+	@Column(name = "tipoPermissao", nullable = false)
+	int tipoPermissao;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "idturma")
@@ -72,12 +72,12 @@ public class Aluno {
 		this.nome = nome;
 	}
 
-	public String getTokenfacebook() {
-		return tokenfacebook;
+	public String getTokenFacebook() {
+		return tokenFacebook;
 	}
 
-	public void setTokenfacebook(String tokenfacebook) {
-		this.tokenfacebook = tokenfacebook;
+	public void setTokenFacebook(String tokenFacebook) {
+		this.tokenFacebook = tokenFacebook;
 	}
 
 	public Turma getTurma() {
@@ -104,12 +104,12 @@ public class Aluno {
 		this.idfacebook = idfacebook;
 	}
 
-	public Boolean getCoordenador() {
-		return coordenador;
+	public int getTipoPermissao() {
+		return tipoPermissao;
 	}
 
-	public void setCoordenador(Boolean coordenador) {
-		this.coordenador = coordenador;
+	public void setTipoPermissao(int tipoPermissao) {
+		this.tipoPermissao = tipoPermissao;
 	}
 
 	public List<ListaEsperaAluno> getListaEsperaAluno() {

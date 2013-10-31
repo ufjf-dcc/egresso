@@ -1,0 +1,10 @@
+<?page title="Menu Aluno" contentType="text/html;charset=UTF-8"?>
+<zk>
+<div style="position:left; width:200">
+		<menubar orient="horizontal" style="width:200; position:left" >
+ 				<menuitem label="Turmas" style="padding:10%" href="/home.zul"/>
+ 				<menuitem label="Meu Perfil" style="padding:10%" href="/perfil.zul"/>
+ 				<menuitem label="Sair" onClick="@command('exit')" style="padding:10%"/>
+		</menubar>
+</div>
+</zk>
