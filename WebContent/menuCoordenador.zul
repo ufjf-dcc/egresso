@@ -1,0 +1,28 @@
+<?page title="Menu Coordenador" contentType="text/html;charset=UTF-8"?>
+<zk>
+<div style="position:left; width:200">
+		
+		<menubar scrollable="true" orient="horizontal" autodrop="true" style="width:200; position:left" >
+ 				<menuitem label="Turmas" style="padding:10%" href="/home.zul"/>
+ 				<menuitem label="Meu Perfil" style="padding:10%" href="/perfil.zul"/>
+ 				
+ 				<menu label="Opções Turmas" style="padding:10%">
+ 					<menupopup>
+ 						<menuitem label="Cadastrar" href="/cadastrarTurma.zul" />
+ 						<menuitem label="Alterar" href="/alterarTurma.zul" />
+ 						<menuitem label="Excluir" href="/excluirTurma.zul" />
+ 					</menupopup>
+ 				</menu>	
+ 				
+ 				<menu label="Opções Alunos" style="padding:10%">
+ 					<menupopup>
+ 						<menuitem label="Cadastrar" href="/cadastrarAluno.zul" />
+ 						<menuitem label="Alterar" href="/alterarAluno.zul" />
+ 						<menuitem label="Excluir" href="/excluirAluno.zul" />
+ 					</menupopup>
+ 				</menu>	
+ 				
+ 				<menuitem label="Sair" onClick="@command('exit')" style="padding:10%"/>
+		</menubar>
+</div>
+</zk>

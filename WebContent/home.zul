@@ -1,11 +1,11 @@
-<?page title="Home" contentType="text/html;charset=UTF-8"?>
-
-<zk>
-	<div align="center" apply="org.zkoss.bind.BindComposer"
-		viewModel="@id('hf') @init('br.ufjf.egresso.controller.HomeController')"
-		form="@id('fx') @load(hf.aluno)">
-
-		Seja bem vindo(a) :
-		<label value="@load(fx.nome)" />
+<?page title="Controle de Egresso UFJF - Home" contentType="text/html;charset=UTF-8"?>
+<?init class="br.ufjf.egresso.controller.AuthController"?>
+<div style="margin-top:5px;"  apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('br.ufjf.egresso.controller.HomeController')">
+	
+	<include src="@load(vm.menu)" />
+	
+	<div align="center">
+		<label value="@bind(vm.usuario.nome)"/>, seja bem vindo(a) ao Controle de Egressos da UFJF!
 	</div>
-</zk>
+	
+</div>

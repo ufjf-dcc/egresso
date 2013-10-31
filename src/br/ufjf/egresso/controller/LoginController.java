@@ -1,42 +1,43 @@
 package br.ufjf.egresso.controller;
 
-import javax.servlet.http.HttpSession;
 import org.hibernate.HibernateException;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
+import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.Session;
+import org.zkoss.zk.ui.Sessions;
 
-import br.ufjf.egresso.business.LoginBusiness;
+import br.ufjf.egresso.business.AlunoBusiness;
 import br.ufjf.egresso.model.Aluno;
 
 public class LoginController {
 
 	private Aluno aluno = new Aluno();
-	private LoginBusiness loginBusiness;
-	private HttpSession session = (HttpSession) (Executions.getCurrent())
-			.getDesktop().getSession().getNativeSession();
-
+	private AlunoBusiness alunoBusiness = new AlunoBusiness();
+	private Session session = Sessions.getCurrent();
+	
 	@Init
-	public void verificaLogado() throws HibernateException, Exception {
+	public void Logado() throws HibernateException, Exception {
+		alunoBusiness = new AlunoBusiness();
 		aluno = (Aluno) session.getAttribute("aluno");
-		if (aluno != null) {
-			loginBusiness = new LoginBusiness();
-			aluno = loginBusiness.login(aluno.getTokenfacebook());
-			if (aluno != null) {
+		if (alunoBusiness.checaLogin(aluno)) {
 				Executions.sendRedirect("/home.zul");
-				return;
-			}
 		}
-		aluno = new Aluno();
+		else {
+			aluno = new Aluno();
+		}
 	}
 
 	@Command
 	public void submit() throws HibernateException, Exception {
-		if (aluno != null && aluno.getTokenfacebook() != null) {
-			loginBusiness = new LoginBusiness();
-			aluno = loginBusiness.login(aluno.getTokenfacebook());
-			if (aluno != null) {
+		if (aluno != null && aluno.getTokenFacebook() != null) {
+			if (alunoBusiness.login(aluno.getTokenFacebook())) {
+				aluno = (Aluno) session.getAttribute("aluno");
 				Executions.sendRedirect("/home.zul");
+			}	
+			else {
+				Messagebox.show("Token Facebook inválido!", "Erro!", Messagebox.OK, Messagebox.ERROR);
 			}
 		}
 	}
