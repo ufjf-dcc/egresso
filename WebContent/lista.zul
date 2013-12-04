@@ -1,0 +1,15 @@
+<?page title="Controle de Egresso UFJF - Lista de Espera" contentType="text/html;charset=UTF-8"?>
+<?init class="br.ufjf.egresso.controller.ListaController"?>
+<zk>
+	<div align="center" apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('br.ufjf.egresso.controller.GenericController')">
+	<div>
+		<menubar orient="horizontal">
+			<menuitem label="Sair" onClick="@command('exit')"/>
+		</menubar>
+	</div>
+
+	<label
+		value="Você está na lista de espera. Aguarde a aprovação de um administrador." />
+	</div>	
+</zk>

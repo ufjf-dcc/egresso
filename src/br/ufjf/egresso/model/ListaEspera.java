@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.hibernate.annotations.GenericGenerator;
 
 	@Entity
@@ -42,7 +44,10 @@ import org.hibernate.annotations.GenericGenerator;
 		
 		@OneToMany(fetch = FetchType.LAZY, mappedBy = "listaespera")
 		private List<ListaEsperaAluno> ListaEsperaAluno = new ArrayList<ListaEsperaAluno>();
-
+		
+		@Transient
+		private String linkFacebook;
+		
 		public int getIdlistaEspera() {
 			return idlistaEspera;
 		}
@@ -101,6 +106,14 @@ import org.hibernate.annotations.GenericGenerator;
 
 		public void setListaEsperaAluno(List<ListaEsperaAluno> listaEsperaAluno) {
 			ListaEsperaAluno = listaEsperaAluno;
+		}
+
+		public String getLinkFacebook() {
+			return ("http://facebook.com/"+idfacebook);
+		}
+
+		public void setLinkFacebook(String linkFacebook) {
+			this.linkFacebook = linkFacebook;
 		}
 		
 	}

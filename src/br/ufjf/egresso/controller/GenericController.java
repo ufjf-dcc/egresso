@@ -15,7 +15,7 @@ public class GenericController {
 	protected Aluno aluno = (Aluno) session.getAttribute("aluno");
 	protected AlunoBusiness alunoBusiness;
 
-	public boolean Logado() throws HibernateException, Exception {
+	public boolean logado() throws HibernateException, Exception {
 		aluno = (Aluno) session.getAttribute("aluno");
 		alunoBusiness = new AlunoBusiness();
 		if (!alunoBusiness.checaLogin(aluno)) {
@@ -26,7 +26,7 @@ public class GenericController {
 		return true;
 	}
 
-	public void Permissao(int tipo) throws HibernateException, Exception {
+	public void permissao(int tipo) throws HibernateException, Exception {
 		aluno = (Aluno) session.getAttribute("aluno");
 		alunoBusiness = new AlunoBusiness();
 		if (alunoBusiness.checaLogin(aluno)) {
@@ -40,18 +40,18 @@ public class GenericController {
 	}
 
 	public String getMenu() {
-		aluno = (Aluno) session.getAttribute("aluno");
 		if (aluno != null) {
 			int tipoUsuario = aluno.getTipoPermissao();
-			System.out.println(tipoUsuario);
 			if (tipoUsuario == 0)
 				return "/menuAluno.zul";
 			if (tipoUsuario == 1)
 				return "/menuCoordenador.zul";
-			if (tipoUsuario == 2)
+			if (tipoUsuario == 2){
 				return "/menuAdministrador.zul";
+			}
+			else return "/menuAluno.zul";
 		}
-		return null;
+		return null;	
 	}
 
 	@Command

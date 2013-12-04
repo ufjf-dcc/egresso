@@ -18,10 +18,10 @@ public class LoginController {
 	private Session session = Sessions.getCurrent();
 	
 	@Init
-	public void Logado() throws HibernateException, Exception {
+	public void logado() throws HibernateException, Exception {
 		alunoBusiness = new AlunoBusiness();
 		aluno = (Aluno) session.getAttribute("aluno");
-		if (alunoBusiness.checaLogin(aluno)) {
+		if (alunoBusiness.checaLogin(aluno) || alunoBusiness.checaLoginAdmin(aluno)) {
 				Executions.sendRedirect("/home.zul");
 		}
 		else {
@@ -30,18 +30,22 @@ public class LoginController {
 	}
 
 	@Command
-	public void submit() throws HibernateException, Exception {
-		if (aluno != null && aluno.getTokenFacebook() != null) {
-			if (alunoBusiness.login(aluno.getTokenFacebook())) {
-				aluno = (Aluno) session.getAttribute("aluno");
-				Executions.sendRedirect("/home.zul");
-			}	
-			else {
-				Messagebox.show("Token Facebook inválido!", "Erro!", Messagebox.OK, Messagebox.ERROR);
-			}
-		}
+	public void facebookLogin(){
+		Executions.sendRedirect("/signin");
 	}
-
+	
+	@Command
+	public void adminLogin() throws HibernateException, Exception{
+		if (aluno != null && alunoBusiness.stringPreenchida(aluno.getNome()) && alunoBusiness.stringPreenchida(aluno.getTokenFacebook())){
+			if (alunoBusiness.login(aluno.getNome(), aluno.getTokenFacebook()))
+				Executions.sendRedirect("home.zul");
+			else 
+				Messagebox.show("Login ou senha inválidos!", "Erro!", Messagebox.OK, Messagebox.ERROR);
+		}
+		else
+				Messagebox.show("Preencha os campos!", "Erro!", Messagebox.OK, Messagebox.ERROR);
+	}
+	
 	public Aluno getAluno() {
 		return aluno;
 	}

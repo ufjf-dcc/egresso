@@ -11,7 +11,7 @@ public class AlunoController extends GenericController{
 	
 	@Init
 	public void init() throws HibernateException, Exception{
-		Logado();
+		//Logado();
 	}
 
 	public Aluno getAluno() {

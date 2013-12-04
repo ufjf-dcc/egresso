@@ -34,19 +34,18 @@ public class TurmaDAO extends GenericoDAO implements ITurmaDAO {
 	@SuppressWarnings("unchecked")
 	public List<Turma> getTurmas() {
 		try {
-			Query query = getSession()
-					.createQuery(
-							"SELECT turma FROM turma AS t LEFT JOIN FETCH t.aluno JOIN FETCH t.listaespera");
-			List<Turma> turma = query.list();
+			Query query = getSession().createQuery("SELECT t FROM Turma AS t ORDER BY t.turma");
+			List<Turma> turmas = query.list();
 
 			getSession().close();
 
-			if (turma != null)
-				return turma;
+			if (turmas != null)
+				return turmas;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
+	
 
 }

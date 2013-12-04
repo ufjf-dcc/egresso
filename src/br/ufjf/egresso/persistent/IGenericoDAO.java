@@ -1,6 +1,7 @@
 package br.ufjf.egresso.persistent;
 
 import java.util.List;
+
 import org.hibernate.HibernateException;
 
 public interface IGenericoDAO {
@@ -11,8 +12,10 @@ public interface IGenericoDAO {
 
 	boolean salvaOuEdita(Object objeto) throws HibernateException;
 
+	@SuppressWarnings("rawtypes")
 	Object procuraId(int id, Class classe) throws HibernateException;
 
+	@SuppressWarnings("rawtypes")
 	List<?> procuraTodos(Class classe, int inicio, int fim) throws HibernateException;
 
 	boolean exclui(Object objeto) throws HibernateException;

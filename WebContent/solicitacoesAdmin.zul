@@ -1,0 +1,32 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<div apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm')@init('br.ufjf.egresso.controller.HomeController')">
+
+		<groupbox>
+			<caption label="Solicitações:" />
+			<grid model="@load(vm.solicitacoes)">
+				<columns>
+					<column />
+					<column />
+					<column />
+					<column />
+					<column />
+				</columns>
+				<template name="model">
+					<row>
+						<label value="@load(each.nome)" />
+						<label value="@load(each.turma.turma)" />
+						<label value="@load(each.matricula)" />
+						<label value="@load(each.linkFacebook)" />
+						<div>
+							<button label="Aceitar" onClick="@command('aceita', solicitacao=each)" />
+							<button label="Recusar" />
+						</div>
+					</row>
+				</template>
+			</grid>
+		</groupbox>
+
+	</div>
+</zk>
