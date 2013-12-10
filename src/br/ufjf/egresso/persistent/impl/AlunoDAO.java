@@ -11,14 +11,33 @@ import br.ufjf.egresso.persistent.IAlunoDAO;
 public class AlunoDAO extends GenericoDAO implements IAlunoDAO {
 	
 	@Override
-	public Aluno retornaAluno(String tokenFacebook) {
+	public Aluno retornaAluno(String idFacebook) {
 		try {
-			Query query = getSession().createQuery("select a from Aluno as a where a.tokenFacebook = :tokenFacebook");
-			query.setParameter("tokenFacebook", tokenFacebook);
+			Query query = getSession().createQuery("SELECT a FROM Aluno AS a WHERE a.idfacebook = :idFacebook");
+			query.setParameter("idFacebook", idFacebook);
 			
 			Aluno aluno = (Aluno) query.uniqueResult();
 	
 			System.out.println(aluno.getNome());
+			getSession().close();
+			
+			if(aluno!=null)
+				return aluno;
+		} catch (Exception e) {
+			System.out.println(e);
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public Aluno retornaAluno(String nome, String tokenFacebook) {
+		try {
+			Query query = getSession().createQuery("SELECT a FROM Aluno AS a WHERE a.nome =:nome AND a.tokenFacebook = :tokenFacebook");
+			query.setParameter("tokenFacebook", tokenFacebook);
+			query.setParameter("nome", nome);
+			
+			Aluno aluno = (Aluno) query.uniqueResult();
+	
 			getSession().close();
 			
 			if(aluno!=null)
@@ -153,5 +172,7 @@ public class AlunoDAO extends GenericoDAO implements IAlunoDAO {
 		}
 		return null;
 	}
+	
+	
 	
 }

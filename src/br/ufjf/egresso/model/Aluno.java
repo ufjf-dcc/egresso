@@ -2,6 +2,7 @@ package br.ufjf.egresso.model;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -37,6 +40,9 @@ public class Aluno {
 
 	@Column(name = "tipoPermissao", nullable = false)
 	int tipoPermissao;
+	
+	@Column(name = "urlFoto", nullable = true, length = 255)
+	String urlFoto;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "idturma")
@@ -48,6 +54,9 @@ public class Aluno {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "aluno")
 	private List<ListaEsperaAluno> ListaEsperaAluno = new ArrayList<ListaEsperaAluno>();
 
+	@Transient
+	private String linkFacebook;
+	
 	public int getIdaluno() {
 		return idaluno;
 	}
@@ -119,5 +128,24 @@ public class Aluno {
 	public void setListaEsperaAluno(List<ListaEsperaAluno> listaEsperaAluno) {
 		ListaEsperaAluno = listaEsperaAluno;
 	}
+
+	public String getLinkFacebook() {
+		
+		return ("http://facebook.com/"+idfacebook);
+	}
+
+	public void setLinkFacebook(String linkFacebook) {
+		this.linkFacebook = linkFacebook;
+	}
+
+	public String getUrlFoto() {
+		return urlFoto;
+	}
+
+	public void setUrlFoto(String urlFoto) {
+		this.urlFoto = urlFoto;
+	}
+	
+	
 
 }

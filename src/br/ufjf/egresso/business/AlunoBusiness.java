@@ -10,10 +10,21 @@ import br.ufjf.egresso.persistent.impl.AlunoDAO;
 
 public class AlunoBusiness extends GenericBusiness {
 
-	
 	public boolean login(String codigoFB) throws HibernateException, Exception {
 		AlunoDAO alunoDAO = new AlunoDAO();
 		Aluno aluno = alunoDAO.retornaAluno(codigoFB);
+
+		if (aluno != null) {
+			Session session = Sessions.getCurrent();
+			session.setAttribute("aluno", aluno);
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean login(String nome, String codigoFB) throws HibernateException, Exception {
+		AlunoDAO alunoDAO = new AlunoDAO();
+		Aluno aluno = alunoDAO.retornaAluno(nome,codigoFB);
 
 		if (aluno != null) {
 			Session session = Sessions.getCurrent();
@@ -26,7 +37,18 @@ public class AlunoBusiness extends GenericBusiness {
 	public boolean checaLogin(Aluno aluno) throws HibernateException, Exception {
 		if (aluno != null) {
 			AlunoDAO alunoDAO = new AlunoDAO();
-			aluno = alunoDAO.retornaAluno(aluno.getTokenFacebook());
+			aluno = alunoDAO.retornaAluno(aluno.getIdfacebook());
+			if (aluno != null) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean checaLoginAdmin(Aluno aluno) throws HibernateException, Exception {
+		if (aluno != null) {
+			AlunoDAO alunoDAO = new AlunoDAO();
+			aluno = alunoDAO.retornaAluno(aluno.getNome(), aluno.getTokenFacebook());
 			if (aluno != null) {
 				return true;
 			}
@@ -46,5 +68,6 @@ public class AlunoBusiness extends GenericBusiness {
 	public boolean cadastroAluno(){
 		return true;
 	}
+
 	
 }

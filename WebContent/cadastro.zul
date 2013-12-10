@@ -1,0 +1,43 @@
+<?page title="Controle de Egresso UFJF - Cadastro" contentType="text/html;charset=UTF-8"?>
+<zk>
+<div align="center" apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('br.ufjf.egresso.controller.CadastroController')" form="@id('fx') @load(vm.listaEspera) @save(vm.listaEspera, before='cadastra')">
+	
+	<div>
+		<menubar orient="horizontal">
+			<menuitem label="Sair" onClick="@command('exit')"/>
+		</menubar>
+	</div>
+	
+	<vbox>
+		<groupbox contentStyle="width:80%;margin:auto">
+			<image src="@bind(vm.urlpic)" />
+		</groupbox>
+		<groupbox>
+			<vbox>
+				<hbox>
+					<vbox>
+						<label value="Nome: " />
+						<label value="Matrícula: " />
+						<label value="Turma: " />
+					</vbox>
+					<vbox>
+						<label value="@load(vm.listaEspera.nome)" />
+						<textbox value="@bind(fx.matricula)" />
+						<combobox model="@load(vm.turmas)" readonly="true"
+							selectedItem="@bind(fx.turma)" autodrop="true">
+							<template name="model">
+								<comboitem label="@load(each.turma)" />
+							</template>
+						</combobox>
+					</vbox>
+				</hbox>
+				<div align="center">
+					<button label="Cadstrar"
+						onClick="@command('cadastra')" mold="trendy" />
+				</div>
+			</vbox>
+		</groupbox>
+	</vbox>
+</div>
+</zk>

@@ -1,27 +1,30 @@
 <?page title="Controle de Egresso UFJF - Login" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<div style="position:absolute; top:50%; margin-top:-100px; left:50%; margin-left:-150px;">
-		<div apply="org.zkoss.bind.BindComposer" viewModel="@id('lf')@init('br.ufjf.egresso.controller.LoginController')"
-			form="@id('fx') @load(lf.aluno) @save(lf.aluno, before='submit')" id="loginForm">
-			<panel style="text-align:center;" title="Login (temporário)" border="normal" width="300px">
-			<panelchildren>
-				<grid style="margin:auto;" width="300px">
-					<columns>
-						<column width="120px" />
-					</columns>
-					<rows>
-						<row>
-							<label value="Token Facebook: " /><textbox width="160px" value="@bind(fx.tokenFacebook)" />
-						</row>
-						<row>
-							<cell colspan="2">
-								<button width="70px" height="35px" label="Entrar" onClick="@command('submit')" />			
-							</cell>
-						</row>
-					</rows>
-				</grid>
-			</panelchildren>
-		</panel>
+	<div
+		style="position:absolute; top:50%; margin-top:-100px; left:50%; margin-left:-150px;">
+		<div apply="org.zkoss.bind.BindComposer" viewModel="@id('vm')@init('br.ufjf.egresso.controller.LoginController')" 
+			form="@id('fx') @load(vm.aluno) @save(vm.aluno, before='adminLogin')">
+			<vbox>
+				<image src="/img/facebookbutton.png"
+					onClick="@command('facebookLogin')" />
+				<groupbox mold="default" closable="false">
+					<caption label="Administradores" />
+					<hbox>
+						<vbox>
+							<label value="Login: " />
+							<label value="Senha: " />
+							
+						</vbox>
+						<vbox>
+							<textbox value="@bind(fx.nome)"/>
+							<textbox type="password" value="@bind(fx.tokenFacebook)"/>
+						</vbox>
+							
+					</hbox>
+					<separator/>									
+					<div align="center"><button label="Entrar" onClick="@command('adminLogin')"/></div>
+				</groupbox>
+			</vbox>
 		</div>
 	</div>
 </zk>

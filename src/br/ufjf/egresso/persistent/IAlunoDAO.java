@@ -3,6 +3,7 @@ package br.ufjf.egresso.persistent;
 import java.util.List;
 
 import org.hibernate.HibernateException;
+
 import br.ufjf.egresso.model.Aluno;
 
 public interface IAlunoDAO {
@@ -22,4 +23,6 @@ public interface IAlunoDAO {
 	public List<Aluno> getAdministradores();
 	
 	public List<Aluno> getAlunoTurma(String turma);
+	
+	public Aluno retornaAluno(String nome, String tokenFacebook);
 }

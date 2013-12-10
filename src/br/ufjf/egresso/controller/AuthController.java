@@ -19,7 +19,7 @@ public class AuthController implements Initiator {
 		Session session = Sessions.getCurrent();
 		Aluno aluno = (Aluno) session.getAttribute("aluno");
 		AlunoBusiness alunoBusiness = new AlunoBusiness();
-		if (!alunoBusiness.checaLogin(aluno)) {
+		if (!(alunoBusiness.checaLogin(aluno) || alunoBusiness.checaLoginAdmin(aluno))) {
 			Executions.sendRedirect("/index.zul");
 			return;
 		}

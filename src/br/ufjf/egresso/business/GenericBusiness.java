@@ -1,6 +1,7 @@
 package br.ufjf.egresso.business;
 
 public class GenericBusiness {
+	
 		public boolean stringPreenchida(String conteudo) {
 			if(conteudo==null)
 				return false;
