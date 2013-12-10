@@ -38,6 +38,9 @@ import org.hibernate.annotations.GenericGenerator;
 		@Column(name = "idfacebook", nullable = false, unique = true, length = 20)
 		String idfacebook;
 		
+		@Column(name = "urlFoto", nullable = true, length = 255)
+		String urlFoto;
+		
 		@ManyToOne(fetch = FetchType.LAZY)
 		@JoinColumn(name = "idturma", nullable = false)
 		private Turma turma;
@@ -115,5 +118,15 @@ import org.hibernate.annotations.GenericGenerator;
 		public void setLinkFacebook(String linkFacebook) {
 			this.linkFacebook = linkFacebook;
 		}
+
+		public String getUrlFoto() {
+			return urlFoto;
+		}
+
+		public void setUrlFoto(String urlFoto) {
+			this.urlFoto = urlFoto;
+		}
+		
+		
 		
 	}

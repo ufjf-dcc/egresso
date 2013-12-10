@@ -5,6 +5,7 @@ import java.util.List;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
 
 import br.ufjf.egresso.model.ListaEspera;
@@ -32,8 +33,11 @@ public class CadastroController {
 
 	@Command
 	public void cadastra() {
+		listaEspera.setUrlFoto(urlpic);
 		ListaEsperaDAO listaEsperaDAO = new ListaEsperaDAO();
 		listaEsperaDAO.salvar(listaEspera);
+		Session session = Sessions.getCurrent();
+		session.setAttribute("listaEspera", listaEspera);
 		Executions.sendRedirect("/lista.zul");
 	}
 

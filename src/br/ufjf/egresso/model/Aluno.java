@@ -40,6 +40,9 @@ public class Aluno {
 
 	@Column(name = "tipoPermissao", nullable = false)
 	int tipoPermissao;
+	
+	@Column(name = "urlFoto", nullable = true, length = 255)
+	String urlFoto;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "idturma")
@@ -134,6 +137,15 @@ public class Aluno {
 	public void setLinkFacebook(String linkFacebook) {
 		this.linkFacebook = linkFacebook;
 	}
+
+	public String getUrlFoto() {
+		return urlFoto;
+	}
+
+	public void setUrlFoto(String urlFoto) {
+		this.urlFoto = urlFoto;
+	}
+	
 	
 
 }

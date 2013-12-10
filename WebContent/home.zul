@@ -23,7 +23,11 @@
     	</listbox>
     	</groupbox>
     	
+    	<include src="/amigos.zul"/>
 		<include src="@load(vm.menuSolicitacoes)"/>
+		
+		
+		
 		
 	</div>
 	

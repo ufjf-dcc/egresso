@@ -1,0 +1,23 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<div apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm')@init('br.ufjf.egresso.controller.HomeController')">
+
+		<groupbox>
+			<caption label="Amigos:" />
+			<grid model="@load(vm.amigos)">
+				<template name="model">
+					<row >
+						<vbox>
+							<image src="@load(each.picture.uRL.ref)" width="50px" height="50px"/>
+							<textbox value="@load(each.picture.uRL)"/>
+							<label value="@load(each.name)" />
+							<button label="Convidar" onClick="@command('convida', id=each.id)" />
+						</vbox>
+					</row>
+				</template>
+			</grid>
+		</groupbox>
+
+	</div>
+</zk>
