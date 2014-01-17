@@ -1,30 +1,31 @@
 package br.ufjf.egresso.model;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name = "tipo_atuacao")
-public class TipoAtuacao {
+@Table(name = "administrador")
+public class Administrador {
+
 	@Id
 	@Column(name = "id", unique = true, nullable = false)
 	@GeneratedValue(generator = "increment")
 	@GenericGenerator(name = "increment", strategy = "increment")
 	int id;
 
-	@Column(name = "nome", length = 45, nullable = false)
+	@Column(name = "identificador", unique = true, length = 15, nullable = true)
+	String identificador;
+
+	@Column(name = "nome", unique = true, length = 15, nullable = true)
 	String nome;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tipoAtuacao")
-	private List<Atuacao> tipo = new ArrayList<Atuacao>();
+	@Column(name = "senha", length = 65, nullable = false)
+	String senha;
 
 	public int getId() {
 		return id;
@@ -32,6 +33,14 @@ public class TipoAtuacao {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getIdentificador() {
+		return identificador;
+	}
+
+	public void setIdentificador(String identificador) {
+		this.identificador = identificador;
 	}
 
 	public String getNome() {
@@ -42,12 +51,12 @@ public class TipoAtuacao {
 		this.nome = nome;
 	}
 
-	public List<Atuacao> getTipo() {
-		return tipo;
+	public String getSenha() {
+		return senha;
 	}
 
-	public void setTipo(List<Atuacao> tipo) {
-		this.tipo = tipo;
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 }

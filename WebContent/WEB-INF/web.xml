@@ -47,37 +47,4 @@
 		<welcome-file>default.jsp</welcome-file>
 		<welcome-file>index.zul</welcome-file>
 	</welcome-file-list>
-	<!-- Mapeamento das servlets do Facebook4j -->
-	<servlet>
-		<servlet-name>signin</servlet-name>
-		<servlet-class>br.ufjf.egresso.facebook4j.SignInServlet</servlet-class>
-	</servlet>
-	<servlet>
-		<servlet-name>callback</servlet-name>
-		<servlet-class>br.ufjf.egresso.facebook4j.CallbackServlet</servlet-class>
-	</servlet>
-	<servlet>
-		<servlet-name>logout</servlet-name>
-		<servlet-class>br.ufjf.egresso.facebook4j.LogoutServlet</servlet-class>
-	</servlet>
-	<servlet>
-		<servlet-name>post</servlet-name>
-		<servlet-class>br.ufjf.egresso.facebook4j.PostServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>signin</servlet-name>
-		<url-pattern>/signin</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>callback</servlet-name>
-		<url-pattern>/callback</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>logout</servlet-name>
-		<url-pattern>/logout</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>post</servlet-name>
-		<url-pattern>/post</url-pattern>
-	</servlet-mapping>
 </web-app>

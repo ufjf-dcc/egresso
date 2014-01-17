@@ -1,43 +1,44 @@
 <?page title="Controle de Egresso UFJF - Cadastro" contentType="text/html;charset=UTF-8"?>
 <zk>
-<div align="center" apply="org.zkoss.bind.BindComposer"
-	viewModel="@id('vm') @init('br.ufjf.egresso.controller.CadastroController')" form="@id('fx') @load(vm.listaEspera) @save(vm.listaEspera, before='cadastra')">
-	
-	<div>
-		<menubar orient="horizontal">
-			<menuitem label="Sair" onClick="@command('exit')"/>
-		</menubar>
-	</div>
-	
-	<vbox>
-		<groupbox contentStyle="width:80%;margin:auto">
-			<image src="@bind(vm.urlpic)" />
-		</groupbox>
-		<groupbox>
-			<vbox>
-				<hbox>
-					<vbox>
+	<div apply="org.zkoss.bind.BindComposer" width="100%"
+		viewModel="@id('vm') @init('br.ufjf.egresso.controller.CadastroController')"
+		form="@id('fx') @load(vm.pedido) @save(vm.pedido, before='solicitaCadastro')">
+
+		<div align="center" width="250px">
+			<image src="@bind(vm.urlpic)" width="150px"
+				style="margin:20px" />
+			<grid>
+				<columns>
+					<column width="100px" />
+					<column />
+				</columns>
+				<rows>
+					<row>
 						<label value="Nome: " />
+						<textbox readonly="true"
+							value="@load(vm.pedido.nome)" width="98%" />
+					</row>
+					<row>
 						<label value="Matrícula: " />
+						<textbox value="@bind(fx.matricula)"
+							width="98%" />
+					</row>
+					<row>
 						<label value="Turma: " />
-					</vbox>
-					<vbox>
-						<label value="@load(vm.listaEspera.nome)" />
-						<textbox value="@bind(fx.matricula)" />
-						<combobox model="@load(vm.turmas)" readonly="true"
-							selectedItem="@bind(fx.turma)" autodrop="true">
+						<combobox model="@load(vm.turmas)" width="98%"
+							readonly="true" selectedItem="@bind(fx.turma)" autodrop="true">
 							<template name="model">
-								<comboitem label="@load(each.turma)" />
+								<comboitem label="@load(each.semestre)" />
 							</template>
 						</combobox>
-					</vbox>
-				</hbox>
-				<div align="center">
-					<button label="Cadstrar"
-						onClick="@command('cadastra')" mold="trendy" />
-				</div>
-			</vbox>
-		</groupbox>
-	</vbox>
-</div>
+					</row>
+				</rows>
+
+			</grid>
+			<div align="center">
+				<button label="Solicitar Cadastro" style="margin:20px"
+					onClick="@command('solicitaCadastro')" />
+			</div>
+		</div>
+	</div>
 </zk>

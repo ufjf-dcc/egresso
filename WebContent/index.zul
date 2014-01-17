@@ -2,29 +2,9 @@
 <zk>
 	<div
 		style="position:absolute; top:50%; margin-top:-100px; left:50%; margin-left:-150px;">
-		<div apply="org.zkoss.bind.BindComposer" viewModel="@id('vm')@init('br.ufjf.egresso.controller.LoginController')" 
-			form="@id('fx') @load(vm.aluno) @save(vm.aluno, before='adminLogin')">
-			<vbox>
-				<image src="/img/facebookbutton.png"
-					onClick="@command('facebookLogin')" />
-				<groupbox mold="default" closable="false">
-					<caption label="Administradores" />
-					<hbox>
-						<vbox>
-							<label value="Login: " />
-							<label value="Senha: " />
-							
-						</vbox>
-						<vbox>
-							<textbox value="@bind(fx.nome)"/>
-							<textbox type="password" value="@bind(fx.tokenFacebook)"/>
-						</vbox>
-							
-					</hbox>
-					<separator/>									
-					<div align="center"><button label="Entrar" onClick="@command('adminLogin')"/></div>
-				</groupbox>
-			</vbox>
+		<div apply="org.zkoss.bind.BindComposer" align="center"
+			viewModel="@id('vm')@init('br.ufjf.egresso.controller.LoginController')">
+			<label value="Redirecionando..." />
 		</div>
 	</div>
 </zk>

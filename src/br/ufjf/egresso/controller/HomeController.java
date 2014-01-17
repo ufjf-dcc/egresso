@@ -9,10 +9,10 @@ import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 
 import br.ufjf.egresso.model.Aluno;
-import br.ufjf.egresso.model.ListaEspera;
+import br.ufjf.egresso.model.Pedido;
 import br.ufjf.egresso.model.Turma;
 import br.ufjf.egresso.persistent.impl.AlunoDAO;
-import br.ufjf.egresso.persistent.impl.ListaEsperaDAO;
+import br.ufjf.egresso.persistent.impl.PedidoDAO;
 import br.ufjf.egresso.persistent.impl.TurmaDAO;
 import facebook4j.Facebook;
 import facebook4j.FacebookException;
@@ -22,30 +22,28 @@ import facebook4j.PostUpdate;
 public class HomeController extends GenericController{
 
 	private TurmaDAO turmaDAO = new TurmaDAO();
-	private ListaEsperaDAO listaEsperaDAO = new ListaEsperaDAO();
 	private List<Turma> turmas = turmaDAO.getTurmas();
-	private List<ListaEspera> solicitacoes =  listaEsperaDAO.getListasEspera();
 	int[] linhas = new int[] {0,1,2,3,4,5,6};
 	Facebook facebook = (Facebook) Sessions.getCurrent().getAttribute("facebook");
 	List<Friend> amigos = new ArrayList<Friend>();
 	
 	public String getMenuSolicitacoes(){
-		if (aluno != null) {
+		/*if (aluno != null) {
 			int tipoUsuario = aluno.getTipoPermissao();
 			if (tipoUsuario == 2){
 				return "/solicitacoesAdmin.zul";
 			}
 			else return "";
-		}
-		return null;	
+		}*/
+		return null;
 	}
 
 	@Command
-	public void aceita(@BindingParam("solicitacao")ListaEspera listaEspera ){
-		ListaEsperaDAO listaEsperaDAO = new ListaEsperaDAO();
+	public void aceita(@BindingParam("solicitacao")Pedido listaEspera ){
+		PedidoDAO listaEsperaDAO = new PedidoDAO();
 		AlunoDAO alunoDAO = new AlunoDAO();
 		Aluno aluno = alunoDAO.retornaAlunoM(listaEspera.getMatricula());
-		aluno.setIdfacebook(listaEspera.getIdfacebook());
+		aluno.setLinkFacebook(listaEspera.getIdFacebook());
 		aluno.setUrlFoto(listaEspera.getUrlFoto());
 		alunoDAO.editar(aluno);
 		listaEsperaDAO.exclui(listaEspera);
@@ -53,8 +51,8 @@ public class HomeController extends GenericController{
 	}
 	
 	@Command
-	public void recusa(@BindingParam("solicitacao")ListaEspera listaEspera ){
-		ListaEsperaDAO listaEsperaDAO = new ListaEsperaDAO();
+	public void recusa(@BindingParam("solicitacao")Pedido listaEspera ){
+		PedidoDAO listaEsperaDAO = new PedidoDAO();
 		listaEsperaDAO.exclui(listaEspera);
 		Executions.sendRedirect("/home.zul");
 	}
@@ -67,24 +65,20 @@ public class HomeController extends GenericController{
 	
 	
 	public String getMenuAmigos(){
-		if (aluno != null) {
+		/*if (aluno != null) {
 			int tipoUsuario = aluno.getTipoPermissao();
 			if (tipoUsuario == 0){
 				return "/amigos.zul";
 			}
 			else return "";
-		}
-		return null;	
+		}*/
+		return "/amigos.zul";	
 	}
 	
 	
 	
 	public List<Turma> getTurmas() {
 		return turmas;
-	}
-
-	public List<ListaEspera> getSolicitacoes() {
-		return solicitacoes;
 	}
 
 	public int[] getLinhas() {

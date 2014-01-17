@@ -34,7 +34,8 @@ public class TurmaDAO extends GenericoDAO implements ITurmaDAO {
 	@SuppressWarnings("unchecked")
 	public List<Turma> getTurmas() {
 		try {
-			Query query = getSession().createQuery("SELECT t FROM Turma AS t ORDER BY t.turma");
+			Query query = getSession().createQuery(
+					"SELECT t FROM Turma AS t ORDER BY t.semestre");
 			List<Turma> turmas = query.list();
 
 			getSession().close();
@@ -46,6 +47,5 @@ public class TurmaDAO extends GenericoDAO implements ITurmaDAO {
 		}
 		return null;
 	}
-	
 
 }

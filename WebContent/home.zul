@@ -1,35 +1,40 @@
 <?page title="Controle de Egresso UFJF - Home" contentType="text/html;charset=UTF-8"?> 
 <?init class="br.ufjf.egresso.controller.AuthController"?>
 <zk xmlns:n="native">
-<div  apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('br.ufjf.egresso.controller.HomeController')">
-	
-	<include src="@load(vm.menu)"/>
-	
-	<div align="center">
-	
-		<label value="@bind(vm.usuario.nome)" style="font-weight:bold"/>, seja bem vindo(a) ao Controle de Egressos da UFJF!
-		
-		<groupbox>
-		<caption label="Turmas:"/>
-		<listbox >
-        	<listitem forEach="${vm.linhas}" >
-        		<listcell forEach="${vm.turmas}" forEachBegin="${forEachStatus.previous.index*4}" forEachEnd="${forEachStatus.previous.index*4 + 3}">
-        			<groupbox mold="3d" open="false">
-        				<caption label="${each.turma}"/>
-        				<label value="Ver Turma"/>
-        			</groupbox>
-        		</listcell>
-        	</listitem>
-    	</listbox>
-    	</groupbox>
-    	
-    	<include src="/amigos.zul"/>
-		<include src="@load(vm.menuSolicitacoes)"/>
-		
-		
-		
-		
+	<div apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('br.ufjf.egresso.controller.HomeController')">
+
+		<include src="@load(vm.menu)" />
+
+		<div align="center">
+
+			<label value="@bind(vm.usuario.nome)"
+				style="font-weight:bold" />
+			, seja bem vindo(a) ao Controle de Egressos da UFJF!
+
+			<groupbox>
+				<caption label="Turmas:" />
+				<listbox>
+					<listitem forEach="${vm.linhas}">
+						<listcell forEach="${vm.turmas}"
+							forEachBegin="${forEachStatus.previous.index*4}"
+							forEachEnd="${forEachStatus.previous.index*4 + 3}">
+							<groupbox mold="3d" open="false">
+								<caption label="${each.semestre}" />
+								<label value="Ver Turma" />
+							</groupbox>
+						</listcell>
+					</listitem>
+				</listbox>
+			</groupbox>
+
+
+			<include src="@load(vm.menuSolicitacoes)" />
+
+
+
+
+		</div>
+
 	</div>
-	
-</div>
 </zk>

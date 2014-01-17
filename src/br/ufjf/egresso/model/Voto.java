@@ -12,25 +12,25 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name = "listaesperaaluno")
-public class ListaEsperaAluno {
+@Table(name = "voto")
+public class Voto {
 
 	@Id
-	@Column(name = "idlistaEsperaAluno", unique = true, nullable = false)
+	@Column(name = "id", unique = true, nullable = false)
 	@GeneratedValue(generator = "increment")
 	@GenericGenerator(name = "increment", strategy = "increment")
-	int idlistaEsperaAluno;
-	
+	int id;
+
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "idaluno", nullable = false)
+	@JoinColumn(name = "id_aluno", nullable = false)
 	private Aluno aluno;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "idlistaEspera", nullable = false)
-	private ListaEspera listaespera;
+	@JoinColumn(name = "id_pedido", nullable = false)
+	private Pedido pedido;
 
-	@Column(name = "aprovado", nullable = true)
-	private Boolean aprovado;
+	@Column(name = "resultado", nullable = true)
+	private Boolean resultado;
 
 	public Aluno getAluno() {
 		return aluno;
@@ -40,20 +40,28 @@ public class ListaEsperaAluno {
 		this.aluno = aluno;
 	}
 
-	public ListaEspera getListaespera() {
-		return listaespera;
+	public int getId() {
+		return id;
 	}
 
-	public void setListaespera(ListaEspera listaespera) {
-		this.listaespera = listaespera;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public Boolean getAprovado() {
-		return aprovado;
+	public Pedido getPedido() {
+		return pedido;
 	}
 
-	public void setAprovado(Boolean aprovado) {
-		this.aprovado = aprovado;
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
+	}
+
+	public Boolean getResultado() {
+		return resultado;
+	}
+
+	public void setResultado(Boolean resultado) {
+		this.resultado = resultado;
 	}
 
 }

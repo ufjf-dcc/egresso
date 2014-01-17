@@ -15,50 +15,50 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "turma")
 public class Turma {
 	@Id
-	@Column(name = "idturma", unique = true, nullable = false)
+	@Column(name = "id", unique = true, nullable = false)
 	@GeneratedValue(generator = "increment")
 	@GenericGenerator(name = "increment", strategy = "increment")
-	int idturma;
+	int id;
 
-	@Column(name = "turma", unique = true, length = 6, nullable = false)
-	String turma;
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "turma")
-	private List<Aluno> aluno = new ArrayList<Aluno>();
+	@Column(name = "semestre", unique = true, length = 6, nullable = false)
+	String semestre;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "turma")
-	private List<ListaEspera> listaEspera = new ArrayList<ListaEspera>();
+	private List<Aluno> alunos = new ArrayList<Aluno>();
 
-	public int getIdTurma() {
-		return idturma;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "turma")
+	private List<Pedido> pedidos = new ArrayList<Pedido>();
+
+	public String getSemestre() {
+		return semestre;
 	}
 
-	public void setIdTurma(int idTurma) {
-		this.idturma = idTurma;
+	public void setSemestre(String semestre) {
+		this.semestre = semestre;
 	}
 
-	public String getTurma() {
-		return turma;
+	public int getId() {
+		return id;
 	}
 
-	public void setTurma(String turma) {
-		this.turma = turma;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public List<Aluno> getaluno() {
-		return aluno;
+	public List<Aluno> getAlunos() {
+		return alunos;
 	}
 
-	public void setaluno(List<Aluno> aluno) {
-		this.aluno = aluno;
+	public void setAlunos(List<Aluno> alunos) {
+		this.alunos = alunos;
 	}
 
-	public List<ListaEspera> getlista_de_espera() {
-		return listaEspera;
+	public List<Pedido> getPedidos() {
+		return pedidos;
 	}
 
-	public void setlista_de_espera(List<ListaEspera> listaEspera) {
-		this.listaEspera = listaEspera;
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
 	}
 
 }

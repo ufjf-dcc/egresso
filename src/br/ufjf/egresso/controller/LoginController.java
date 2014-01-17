@@ -1,57 +1,98 @@
 package br.ufjf.egresso.controller;
 
+import java.net.URLEncoder;
+
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+
+import org.apache.commons.codec.binary.Base64;
 import org.hibernate.HibernateException;
-import org.zkoss.bind.annotation.Command;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.zkoss.bind.annotation.Init;
-import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Executions;
-import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
 
 import br.ufjf.egresso.business.AlunoBusiness;
+import br.ufjf.egresso.business.PedidoBusiness;
 import br.ufjf.egresso.model.Aluno;
+import facebook4j.Facebook;
+import facebook4j.FacebookFactory;
+import facebook4j.auth.AccessToken;
 
-public class LoginController {
+public class LoginController extends GenericController {
 
-	private Aluno aluno = new Aluno();
-	private AlunoBusiness alunoBusiness = new AlunoBusiness();
-	private Session session = Sessions.getCurrent();
-	
 	@Init
-	public void logado() throws HibernateException, Exception {
-		alunoBusiness = new AlunoBusiness();
-		aluno = (Aluno) session.getAttribute("aluno");
-		if (alunoBusiness.checaLogin(aluno) || alunoBusiness.checaLoginAdmin(aluno)) {
-				Executions.sendRedirect("/home.zul");
-		}
-		else {
-			aluno = new Aluno();
+	public void autentica() throws HibernateException, Exception {
+		String fbSecretKey = "39fa8aca462711f08f9eeaf084413a64";
+		String fbAppId = "679414068740684";
+		String fbCanvasPage = "https://apps.facebook.com/ufjf-dcc-egresso";
+		String fbCanvasUrl = "http://localhost:8080/egresso/";
+
+		if (Executions.getCurrent().getParameter("signed_request") != null) {
+
+			Base64 base64 = new Base64(true);
+
+			String[] signedRequest = Executions.getCurrent()
+					.getParameter("signed_request").split("\\.", 2);
+
+			String sig = new String(base64.decode(signedRequest[0]
+					.getBytes("UTF-8")));
+
+			JSONObject data = (JSONObject) new JSONParser().parse(new String(
+					base64.decode(signedRequest[1].getBytes("UTF-8"))));
+
+			if (!data.get("algorithm").equals("HMAC-SHA256")) {
+				return;
+			}
+
+			try {
+				if (!hmacSHA256(signedRequest[1], fbSecretKey).equals(sig)) {
+					return;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			if (!data.containsKey("user_id")
+					|| !data.containsKey("oauth_token")) {
+				Executions.getCurrent().sendRedirect(
+						"https://www.facebook.com/dialog/oauth?client_id="
+								+ fbAppId + "&redirect_uri="
+								+ URLEncoder.encode(fbCanvasUrl, "UTF-8")
+								+ "&scope=publish_stream,offline_access,email",
+						"_top");
+			} else {
+				AccessToken accessToken = new AccessToken(
+						(String) data.get("oauth_token"));
+				Facebook facebook = new FacebookFactory()
+						.getInstance(accessToken);
+				Sessions.getCurrent().setAttribute("facebook", facebook);
+				System.out.println(facebook.getId());
+				
+				//Verifica se o aluno já foi autorizado ou se já solicitou cadastro.
+				Aluno aluno = new AlunoBusiness().getAluno(facebook.getId());
+				if (aluno != null) {
+					Sessions.getCurrent().setAttribute("aluno", aluno);
+					Executions.sendRedirect("/home.zul");
+				} else if (new PedidoBusiness().getPedido(facebook.getId()) == null)
+					Executions.sendRedirect("/cadastro.zul");
+				else
+					Executions.sendRedirect("/pedido-em-espera.zul");
+			}
+
+		} else {
+			Executions.sendRedirect(fbCanvasPage);
 		}
 	}
 
-	@Command
-	public void facebookLogin(){
-		Executions.sendRedirect("/signin");
-	}
-	
-	@Command
-	public void adminLogin() throws HibernateException, Exception{
-		if (aluno != null && alunoBusiness.stringPreenchida(aluno.getNome()) && alunoBusiness.stringPreenchida(aluno.getTokenFacebook())){
-			if (alunoBusiness.login(aluno.getNome(), aluno.getTokenFacebook()))
-				Executions.sendRedirect("home.zul");
-			else 
-				Messagebox.show("Login ou senha inválidos!", "Erro!", Messagebox.OK, Messagebox.ERROR);
-		}
-		else
-				Messagebox.show("Preencha os campos!", "Erro!", Messagebox.OK, Messagebox.ERROR);
-	}
-	
-	public Aluno getAluno() {
-		return aluno;
-	}
-
-	public void setAluno(Aluno aluno) {
-		this.aluno = aluno;
+	private String hmacSHA256(String data, String key) throws Exception {
+		SecretKeySpec secretKey = new SecretKeySpec(key.getBytes("UTF-8"),
+				"HmacSHA256");
+		Mac mac = Mac.getInstance("HmacSHA256");
+		mac.init(secretKey);
+		byte[] hmacData = mac.doFinal(data.getBytes("UTF-8"));
+		return new String(hmacData);
 	}
 
 }

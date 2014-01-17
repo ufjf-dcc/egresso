@@ -16,37 +16,53 @@ import org.hibernate.annotations.GenericGenerator;
 public class Atuacao {
 
 	@Id
-	@Column(name = "idatuacao", unique = true, nullable = false)
+	@Column(name = "id", unique = true, nullable = false)
 	@GeneratedValue(generator = "increment")
 	@GenericGenerator(name = "increment", strategy = "increment")
-	int idatuacao;
+	int id;
 
-	@Column(name = "dataInicio", nullable = true)
+	@Column(name = "data_inicio", nullable = true)
 	Date dataInicio;
 
-	@Column(name = "dataTermino", nullable = true)
+	@Column(name = "data_termino", nullable = true)
 	Date dataTermino;
 
 	@Column(name = "local", length = 45, nullable = true)
 	String local;
 
-	@Column(name = "especificacao", length = 45, nullable = true)
-	String especificacao;
+	@Column(name = "cargo", length = 45, nullable = true)
+	String cargo;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "idaluno", nullable = false)
+	@JoinColumn(name = "id_aluno", nullable = false)
 	private Aluno aluno;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "idtipoAtucao", nullable = false)
+	@JoinColumn(name = "id_tipo_atuacao", nullable = false)
 	private TipoAtuacao tipoAtuacao;
 
-	public int getIdatuacao() {
-		return idatuacao;
+	public int getId() {
+		return id;
 	}
 
-	public void setIdatuacao(int idatuacao) {
-		this.idatuacao = idatuacao;
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getCargo() {
+		return cargo;
+	}
+
+	public void setCargo(String cargo) {
+		this.cargo = cargo;
+	}
+
+	public TipoAtuacao getTipoAtuacao() {
+		return tipoAtuacao;
+	}
+
+	public void setTipoAtuacao(TipoAtuacao tipoAtuacao) {
+		this.tipoAtuacao = tipoAtuacao;
 	}
 
 	public Date getDataInicio() {
@@ -71,14 +87,6 @@ public class Atuacao {
 
 	public void setLocal(String local) {
 		this.local = local;
-	}
-
-	public String getEspecificacao() {
-		return especificacao;
-	}
-
-	public void setEspecificacao(String especificacao) {
-		this.especificacao = especificacao;
 	}
 
 	public Aluno getAluno() {
