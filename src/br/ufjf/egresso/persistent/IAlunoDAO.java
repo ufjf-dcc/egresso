@@ -15,7 +15,7 @@ public interface IAlunoDAO {
 	
 	public List<Aluno> getAlunosTurma(Turma turma);
 
-	Aluno retornaAlunoM(String matricula);
+	Aluno buscaPorMatricula(String matricula);
 
 	Aluno retornaAlunoN(String nome);
 }

@@ -13,7 +13,7 @@
 		<mapping class="br.ufjf.egresso.model.Administrador" />
 		<mapping class="br.ufjf.egresso.model.Aluno" />
 		<mapping class="br.ufjf.egresso.model.Atuacao" />
-		<mapping class="br.ufjf.egresso.model.Pedido" />
+		<mapping class="br.ufjf.egresso.model.Solicitacao" />
 		<mapping class="br.ufjf.egresso.model.TipoAtuacao" />
 		<mapping class="br.ufjf.egresso.model.Turma" />
 		<mapping class="br.ufjf.egresso.model.Voto" />

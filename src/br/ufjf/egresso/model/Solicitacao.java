@@ -13,8 +13,8 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name = "pedido")
-public class Pedido {
+@Table(name = "solicitacao")
+public class Solicitacao {
 
 	@Id
 	@Column(name = "id", unique = true, nullable = false)
@@ -28,14 +28,14 @@ public class Pedido {
 	@Column(name = "nome", length = 65, unique = false, nullable = true)
 	String nome;
 
-	@Column(name = "id_facebook", nullable = false, unique = true, length = 20)
+	@Column(name = "facebook_id", nullable = false, unique = true, length = 20)
 	String idFacebook;
 
 	@Column(name = "url_foto", nullable = true, length = 255)
 	String urlFoto;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_turma", nullable = false)
+	@JoinColumn(name = "turma_id", nullable = false)
 	private Turma turma;
 
 	@Transient

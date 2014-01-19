@@ -1,0 +1,50 @@
+<?page title="Solicitações em Aberto" contentType="text/html;charset=UTF-8"?>
+<?init class="br.ufjf.egresso.controller.AuthAdminController"?>
+<zk>
+	<include src="/templates/menu-admin.zul" />
+	<div apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm')@init('br.ufjf.egresso.controller.AdminHomeController')">
+
+		<grid model="@load(vm.solicitacoes)">
+			<auxhead>
+				<auxheader colspan="4"><div>
+					<label value="Solicitações de cadastro em aberto" />
+					<button label="Analisar todas" onClick="@command('analisar')" style="float:right"/>
+					</div>
+				</auxheader>
+			</auxhead>
+			<columns>
+				<column label="Nome" />
+				<column label="Turma" />
+				<column label="Matrícula" />
+				<column label="Opções" />
+			</columns>
+			<template name="model">
+				<row>
+					<div>
+						<image src="@load(each.urlFoto)" width="50px"
+							height="50px" />
+						<label value="@load(each.nome)" />
+					</div>
+					<div>
+						<label value="@load(each.turma.semestre)" />
+					</div>
+					<div>
+						<label value="@load(each.matricula)" />
+					</div>
+					<div>
+						<button label="Ver perfil do Facebook"
+							href="@load(each.linkFacebook)" />
+						<button label="Aceitar"
+							onClick="@command('aceita', solicitacao=each)" />
+						<button label="Recusar"
+							onClick="@command('recusa', solicitacao=each)" />
+						<button label="Comparar"
+							onClick="@command('comparar', solicitacao=each)" />
+					</div>
+				</row>
+			</template>
+		</grid>
+
+	</div>
+</zk>

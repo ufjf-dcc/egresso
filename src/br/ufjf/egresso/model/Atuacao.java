@@ -34,11 +34,11 @@ public class Atuacao {
 	String cargo;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_aluno", nullable = false)
+	@JoinColumn(name = "aluno_id", nullable = false)
 	private Aluno aluno;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_tipo_atuacao", nullable = false)
+	@JoinColumn(name = "tipo_atuacao_id", nullable = false)
 	private TipoAtuacao tipoAtuacao;
 
 	public int getId() {

@@ -9,18 +9,19 @@ import org.zkoss.zul.Messagebox;
 import br.ufjf.egresso.business.AdministradorBusiness;
 import br.ufjf.egresso.model.Administrador;
 
-public class LoginAdminController extends GenericController {
-	
+public class LoginAdminController {
+
 	@Command
-	public void entrar(@BindingParam("id") String id, @BindingParam("senha") String senha){
-		Administrador admin = new AdministradorBusiness().entrar(id, senha);
-		if (admin != null){
+	public void entrar(@BindingParam("identificador") String identificador,
+			@BindingParam("senha") String senha) {
+		Administrador admin = new AdministradorBusiness().entrar(identificador,
+				senha);
+		if (admin != null) {
 			Sessions.getCurrent().setAttribute("admin", admin);
-			Executions.sendRedirect("home.zul");
+			Executions.sendRedirect("solicitacoes.zul");
 		} else {
-			Messagebox
-			.show("Identificador ou senha incorretos.",
-					"Erro", Messagebox.OK, Messagebox.ERROR);
+			Messagebox.show("Identificador ou senha incorretos.", "Erro",
+					Messagebox.OK, Messagebox.ERROR);
 		}
 	}
 

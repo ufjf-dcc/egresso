@@ -20,16 +20,23 @@ public class AlunoBusiness extends GenericBusiness {
 	public Aluno getAluno(String facebookId) {
 		return alunoDao.getAluno(facebookId);
 	}
-	
+
 	public boolean checaLogin(Aluno aluno) throws HibernateException, Exception {
-        if (aluno != null) {
-                AlunoDAO alunoDAO = new AlunoDAO();
-                aluno = alunoDAO.getAluno(aluno.getFacebookId());
-                if (aluno != null) {
-                        return true;
-                }
-        }
-        return false;
-}
+		if (aluno != null) {
+			aluno = alunoDao.getAluno(aluno.getFacebookId());
+			if (aluno != null) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public Aluno buscaPorMatricula(String matricula){
+		return alunoDao.buscaPorMatricula(matricula);
+	}
+
+	public boolean editar(Aluno aluno) {
+		return alunoDao.editar(aluno);		
+	}
 
 }

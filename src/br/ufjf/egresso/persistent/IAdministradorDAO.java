@@ -4,6 +4,6 @@ import br.ufjf.egresso.model.Administrador;
 
 public interface IAdministradorDAO {
 	
-	public Administrador entrar(String id, String senhaEncriptada);
+	public Administrador entrar(String identificador, String senhaEncriptada);
 
 }

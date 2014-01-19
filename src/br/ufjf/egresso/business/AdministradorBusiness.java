@@ -10,8 +10,8 @@ public class AdministradorBusiness extends GenericBusiness {
 		adminisytradorDao = new AdministradorDAO();
 	}
 	
-	public Administrador entrar(String id, String senha){
-		return adminisytradorDao.entrar(id, encripta(senha));
+	public Administrador entrar(String identificador, String senha){
+		return adminisytradorDao.entrar(identificador, encripta(senha));
 	}
 
 }

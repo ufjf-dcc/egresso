@@ -2,7 +2,7 @@
 <zk>
 	<div apply="org.zkoss.bind.BindComposer" width="100%"
 		viewModel="@id('vm') @init('br.ufjf.egresso.controller.CadastroController')"
-		form="@id('fx') @load(vm.pedido) @save(vm.pedido, before='solicitaCadastro')">
+		form="@id('fx') @load(vm.solicitacao) @save(vm.solicitacao, before='solicitaCadastro')">
 
 		<div align="center" width="250px">
 			<image src="@bind(vm.urlpic)" width="150px"
@@ -16,7 +16,7 @@
 					<row>
 						<label value="Nome: " />
 						<textbox readonly="true"
-							value="@load(vm.pedido.nome)" width="98%" />
+							value="@load(vm.solicitacao.nome)" width="98%" />
 					</row>
 					<row>
 						<label value="Matrícula: " />

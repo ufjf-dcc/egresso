@@ -28,14 +28,14 @@ public class Aluno {
 	@Column(name = "nome", length = 65, nullable = false)
 	String nome;
 
-	@Column(name = "id_facebook", unique = true, nullable = true, length = 20)
+	@Column(name = "facebook_id", unique = true, nullable = true, length = 20)
 	String facebookId;
 
 	@Column(name = "url_foto", nullable = true, length = 255)
 	String urlFoto;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_turma")
+	@JoinColumn(name = "turma_id")
 	private Turma turma;
 
 	@Transient

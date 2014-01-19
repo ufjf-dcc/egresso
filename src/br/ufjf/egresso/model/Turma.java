@@ -27,7 +27,7 @@ public class Turma {
 	private List<Aluno> alunos = new ArrayList<Aluno>();
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "turma")
-	private List<Pedido> pedidos = new ArrayList<Pedido>();
+	private List<Solicitacao> solicitacoes = new ArrayList<Solicitacao>();
 
 	public String getSemestre() {
 		return semestre;
@@ -53,12 +53,12 @@ public class Turma {
 		this.alunos = alunos;
 	}
 
-	public List<Pedido> getPedidos() {
-		return pedidos;
+	public List<Solicitacao> getSolicitacoes() {
+		return solicitacoes;
 	}
 
-	public void setPedidos(List<Pedido> pedidos) {
-		this.pedidos = pedidos;
+	public void setSolicitacoes(List<Solicitacao> solicitacoes) {
+		this.solicitacoes = solicitacoes;
 	}
 
 }

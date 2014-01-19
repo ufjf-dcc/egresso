@@ -8,12 +8,12 @@ import br.ufjf.egresso.persistent.IAdministradorDAO;
 
 public class AdministradorDAO extends GenericoDAO implements IAdministradorDAO {
 
-	public Administrador entrar(String id, String senhaEncriptada) {
+	public Administrador entrar(String identificador, String senhaEncriptada) {
 		try {
 			Query query = getSession()
 					.createQuery(
-							"SELECT a FROM Administrador AS a WHERE a.id = :id AND a.senha = :senha");
-			query.setParameter("id", id);
+							"SELECT a FROM Administrador AS a WHERE a.identificador = :identificador AND a.senha = :senha");
+			query.setParameter("identificador", identificador);
 			query.setParameter("senha", senhaEncriptada);
 
 			Administrador admin = (Administrador) query.uniqueResult();

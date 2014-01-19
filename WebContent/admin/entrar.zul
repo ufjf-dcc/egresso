@@ -11,15 +11,15 @@
 			<rows>
 				<row>
 					<label value="Identificador: " />
-					<textbox id="txbId" width="98%" />
+					<textbox id="txbId" width="98%" onOK="@command('entrar', identificador=txbId.value, senha=self.value)" />
 				</row>
 				<row>
 					<label value="Senha: " />
-					<textbox id="txbSenha" width="98%" />
+					<textbox id="txbSenha" width="98%" type="password" onOK="@command('entrar', identificador=txbId.value, senha=self.value)"/>
 				</row>
 			</rows>
 		</grid>
 		<button label="Entrar no sistema" style="margin:10px"
-			onClick="@command('entrar', id=txbId.value, senha=txbSenha.value)" />
+			onClick="@command('entrar', identificador=txbId.value, senha=txbSenha.value)" />
 	</div>
 </zk>

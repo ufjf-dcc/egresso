@@ -14,20 +14,19 @@ import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 
 import br.ufjf.egresso.business.AlunoBusiness;
-import br.ufjf.egresso.business.PedidoBusiness;
+import br.ufjf.egresso.business.SolicitacaoBusiness;
 import br.ufjf.egresso.model.Aluno;
 import facebook4j.Facebook;
 import facebook4j.FacebookFactory;
 import facebook4j.auth.AccessToken;
 
-public class LoginController extends GenericController {
+public class IndexController {
 
 	@Init
 	public void autentica() throws HibernateException, Exception {
 		String fbSecretKey = "39fa8aca462711f08f9eeaf084413a64";
 		String fbAppId = "679414068740684";
-		String fbCanvasPage = "https://apps.facebook.com/ufjf-dcc-egresso";
-		String fbCanvasUrl = "http://localhost:8080/egresso/";
+		String redirectUrl = "http://localhost:8080/egresso/fb/redirect.zul";
 
 		if (Executions.getCurrent().getParameter("signed_request") != null) {
 
@@ -59,7 +58,7 @@ public class LoginController extends GenericController {
 				Executions.getCurrent().sendRedirect(
 						"https://www.facebook.com/dialog/oauth?client_id="
 								+ fbAppId + "&redirect_uri="
-								+ URLEncoder.encode(fbCanvasUrl, "UTF-8")
+								+ URLEncoder.encode(redirectUrl, "UTF-8")
 								+ "&scope=publish_stream,offline_access,email",
 						"_top");
 			} else {
@@ -68,21 +67,22 @@ public class LoginController extends GenericController {
 				Facebook facebook = new FacebookFactory()
 						.getInstance(accessToken);
 				Sessions.getCurrent().setAttribute("facebook", facebook);
-				System.out.println(facebook.getId());
-				
-				//Verifica se o aluno já foi autorizado ou se já solicitou cadastro.
+
+				// Verifica se o aluno já foi autorizado ou se já solicitou
+				// cadastro.
 				Aluno aluno = new AlunoBusiness().getAluno(facebook.getId());
 				if (aluno != null) {
 					Sessions.getCurrent().setAttribute("aluno", aluno);
 					Executions.sendRedirect("/home.zul");
-				} else if (new PedidoBusiness().getPedido(facebook.getId()) == null)
+				} else if (new SolicitacaoBusiness()
+						.getPedido(facebook.getId()) == null)
 					Executions.sendRedirect("/cadastro.zul");
 				else
-					Executions.sendRedirect("/pedido-em-espera.zul");
+					Executions.sendRedirect("/solicitacao-em-espera.zul");
 			}
 
 		} else {
-			Executions.sendRedirect(fbCanvasPage);
+			Executions.sendRedirect("admin/entrar.zul");
 		}
 	}
 

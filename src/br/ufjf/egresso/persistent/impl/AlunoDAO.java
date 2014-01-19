@@ -70,7 +70,7 @@ public class AlunoDAO extends GenericoDAO implements IAlunoDAO {
 	}
 
 	@Override
-	public Aluno retornaAlunoM(String matricula) {
+	public Aluno buscaPorMatricula(String matricula) {
 		try {
 			Query query = getSession().createQuery(
 					"SELECT a FROM Aluno as a WHERE a.matricula = :matricula");
