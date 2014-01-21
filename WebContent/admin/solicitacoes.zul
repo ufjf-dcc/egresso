@@ -3,13 +3,16 @@
 <zk>
 	<include src="/templates/menu-admin.zul" />
 	<div apply="org.zkoss.bind.BindComposer"
-		viewModel="@id('vm')@init('br.ufjf.egresso.controller.AdminHomeController')">
+		viewModel="@id('vm')@init('br.ufjf.egresso.controller.AdminSolicitacoesController')">
 
 		<grid model="@load(vm.solicitacoes)">
 			<auxhead>
-				<auxheader colspan="4"><div>
-					<label value="Solicitações de cadastro em aberto" />
-					<button label="Analisar todas" onClick="@command('analisar')" style="float:right"/>
+				<auxheader colspan="4">
+					<div>
+						<label
+							value="Solicitações de cadastro em aberto" />
+						<button label="Analisar todas"
+							onClick="@command('analisar')" style="float:right" />
 					</div>
 				</auxheader>
 			</auxhead>
@@ -17,7 +20,7 @@
 				<column label="Nome" />
 				<column label="Turma" />
 				<column label="Matrícula" />
-				<column label="Opções" />
+				<column label="Opções" width="265px" />
 			</columns>
 			<template name="model">
 				<row>
@@ -32,16 +35,20 @@
 					<div>
 						<label value="@load(each.matricula)" />
 					</div>
-					<div>
-						<button label="Ver perfil do Facebook"
-							href="@load(each.linkFacebook)" />
-						<button label="Aceitar"
-							onClick="@command('aceita', solicitacao=each)" />
-						<button label="Recusar"
-							onClick="@command('recusa', solicitacao=each)" />
-						<button label="Comparar"
-							onClick="@command('comparar', solicitacao=each)" />
-					</div>
+					<hlayout width="100%" hflex="true">
+						<vlayout>
+							<button label="Ver Perfil no Facebook"
+								href="@load(each.linkFacebook)" />
+							<button label="Comparar" width="100%"
+								onClick="@command('comparar', solicitacao=each)" />
+						</vlayout>
+						<vlayout  hflex="1">
+							<button label="Aceitar" width="100%"
+								onClick="@command('aceita', solicitacao=each)" />
+							<button label="Recusar" width="100%"
+								onClick="@command('recusa', solicitacao=each)" />
+						</vlayout>
+					</hlayout>
 				</row>
 			</template>
 		</grid>

@@ -6,9 +6,10 @@ import java.util.List;
 import org.hibernate.HibernateException;
 
 import br.ufjf.egresso.model.Aluno;
+import br.ufjf.egresso.model.Turma;
 import br.ufjf.egresso.persistent.impl.AlunoDAO;
 
-public class AlunoBusiness extends GenericBusiness {
+public class AlunoBusiness {
 	private AlunoDAO alunoDao;
 	private List<String> errors;
 
@@ -26,8 +27,14 @@ public class AlunoBusiness extends GenericBusiness {
 
 		validaMatricula(aluno.getMatricula(), matriculaAntiga);
 		validaNome(aluno.getNome());
+		validaTurma(aluno.getTurma());
 
 		return errors.size() == 0;
+	}
+
+	private void validaTurma(Turma turma) {
+		if (turma == null)
+			errors.add("É necessário informar a turma do aluno;\n");
 	}
 
 	private void validaNome(String nome) {
@@ -37,7 +44,7 @@ public class AlunoBusiness extends GenericBusiness {
 
 	private void validaMatricula(String matricula, String matriculaAntiga) {
 		if (matricula == null || matricula.trim().length() == 0)
-			errors.add("É necessário informar o código do curso;\n");
+			errors.add("É necessário informar o código do aluno;\n");
 		else
 			jaExiste(matricula, matriculaAntiga);
 	}
@@ -45,7 +52,7 @@ public class AlunoBusiness extends GenericBusiness {
 	private boolean jaExiste(String matricula, String matriculaAntiga) {
 		errors.clear();
         if (alunoDao.jaExiste(matricula, matriculaAntiga)){
-                errors.add("Já existe um departamento com este código.\n");
+                errors.add("Já existe um aluno com esta matrícula.\n");
                 return true;
         }
         return false;

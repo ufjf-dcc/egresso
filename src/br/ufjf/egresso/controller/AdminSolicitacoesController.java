@@ -7,6 +7,7 @@ import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Sessions;
+import org.zkoss.zul.Messagebox;
 
 import br.ufjf.egresso.business.AlunoBusiness;
 import br.ufjf.egresso.business.SolicitacaoBusiness;
@@ -17,7 +18,7 @@ import facebook4j.FacebookException;
 import facebook4j.Friend;
 import facebook4j.PostUpdate;
 
-public class AdminHomeController {
+public class AdminSolicitacoesController {
 
 	private List<Solicitacao> solicitacoes;
 	private Facebook facebook;
@@ -34,11 +35,18 @@ public class AdminHomeController {
 	@Command
 	public void aceita(@BindingParam("solicitacao") Solicitacao solicitacao) {
 		AlunoBusiness alunoBusiness = new AlunoBusiness();
-		Aluno aluno = alunoBusiness.buscaPorMatricula(solicitacao.getMatricula());
+		Aluno aluno = alunoBusiness.buscaPorMatricula(solicitacao
+				.getMatricula());
+		if (aluno == null) {
+			Messagebox.show("Nenhum aluno foi encontrado com esta matrícula ("
+					+ solicitacao.getMatricula() + ").", "Erro", Messagebox.OK,
+					Messagebox.ERROR);
+			return;
+		}
 		aluno.setFacebookId(solicitacao.getIdFacebook());
 		aluno.setUrlFoto(solicitacao.getUrlFoto());
 		alunoBusiness.editar(aluno);
-		solicitacoes.remove(solicitacao);		
+		solicitacoes.remove(solicitacao);
 		solicitacaoBusiness.exclui(solicitacao);
 	}
 

@@ -108,7 +108,7 @@ public class Aluno {
 		this.editingStatus = editingStatus;
 	}
 
-	public void copy(Aluno outro) {
+	public void copiar(Aluno outro) {
 		this.id = outro.id;
 		this.matricula = outro.matricula;
 		this.nome = outro.nome;

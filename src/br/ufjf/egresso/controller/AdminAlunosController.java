@@ -14,7 +14,9 @@ import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
 import br.ufjf.egresso.business.AlunoBusiness;
+import br.ufjf.egresso.business.TurmaBusiness;
 import br.ufjf.egresso.model.Aluno;
+import br.ufjf.egresso.model.Turma;
 
 public class AdminAlunosController {
 	private AlunoBusiness alunoBusiness = new AlunoBusiness();
@@ -22,6 +24,7 @@ public class AdminAlunosController {
 	private Map<Integer, Aluno> editTemp = new HashMap<Integer, Aluno>();
 	private List<Aluno> todosAlunos = alunoBusiness.getTodos();
 	private List<Aluno> filterAlunos = todosAlunos;
+	private List<Turma> turmas = new TurmaBusiness().getTodas();
 	private String filterString = "";
 
 	public List<Aluno> getFilterAlunos() {
@@ -44,15 +47,19 @@ public class AdminAlunosController {
 		this.filterString = filterString;
 	}
 
+	public List<Turma> getTurmas() {
+		return turmas;
+	}
+
 	@Command
 	public void changeEditableStatus(@BindingParam("aluno") Aluno departamento) {
 		if (!departamento.getEditingStatus()) {
 			Aluno temp = new Aluno();
-			temp.copy(departamento);
+			temp.copiar(departamento);
 			editTemp.put(departamento.getId(), temp);
 			departamento.setEditingStatus(true);
 		} else {
-			departamento.copy(editTemp.get(departamento.getId()));
+			departamento.copiar(editTemp.get(departamento.getId()));
 			editTemp.remove(departamento.getId());
 			departamento.setEditingStatus(false);
 		}
@@ -123,7 +130,7 @@ public class AdminAlunosController {
 		filterAlunos = new ArrayList<Aluno>();
 		String filter = filterString.toLowerCase().trim();
 		for (Aluno c : todosAlunos) {
-			if (c.getNome().toLowerCase().contains(filter)) {
+			if (c.getNome().toLowerCase().contains(filter) || c.getMatricula().toLowerCase().contains(filter)) {
 				filterAlunos.add(c);
 			}
 		}

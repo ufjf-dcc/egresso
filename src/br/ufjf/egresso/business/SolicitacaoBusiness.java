@@ -9,7 +9,7 @@ import org.zkoss.zk.ui.Sessions;
 import br.ufjf.egresso.model.Solicitacao;
 import br.ufjf.egresso.persistent.impl.SolicitacaoDAO;
 
-public class SolicitacaoBusiness extends GenericBusiness {
+public class SolicitacaoBusiness {
 	private SolicitacaoDAO solicitacaoDAO;
 
 	public SolicitacaoBusiness() {

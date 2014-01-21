@@ -36,7 +36,7 @@ public class AlunoDAO extends GenericoDAO implements IAlunoDAO {
 	public List<Aluno> getTodos() {
 		try {
 			Query query = getSession().createQuery(
-					"SELECT a FROM Aluno as a ORDER BY a.nome");
+					"SELECT a FROM Aluno AS a LEFT JOIN FETCH a.turma ORDER BY a.nome");
 
 			List<Aluno> aluno = query.list();
 			getSession().close();
