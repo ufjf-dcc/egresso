@@ -11,11 +11,10 @@ public interface IAlunoDAO {
 
 	public Aluno getAluno(String facebookId) throws HibernateException,Exception;
 
-	public List<Aluno> getAlunos();
+	public List<Aluno> getTodos();
 	
 	public List<Aluno> getAlunosTurma(Turma turma);
 
 	Aluno buscaPorMatricula(String matricula);
 
-	Aluno retornaAlunoN(String nome);
 }

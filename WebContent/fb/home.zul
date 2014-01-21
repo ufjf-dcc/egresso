@@ -1,4 +1,4 @@
-<?page title="Controle de Egresso UFJF - Home" contentType="text/html;charset=UTF-8"?> 
+<?page title="Controle de Egresso UFJF - Home" contentType="text/html;charset=UTF-8"?>
 <zk xmlns:n="native">
 	<div apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbHomeController')">
@@ -26,13 +26,6 @@
 					</listitem>
 				</listbox>
 			</groupbox>
-
-
-			<include src="@load(vm.menuSolicitacoes)" />
-
-
-
-
 		</div>
 
 	</div>

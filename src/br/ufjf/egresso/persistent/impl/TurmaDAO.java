@@ -11,7 +11,7 @@ import br.ufjf.egresso.persistent.ITurmaDAO;
 public class TurmaDAO extends GenericoDAO implements ITurmaDAO {
 
 	@Override
-	public Turma retornaTurma(String stringTurma) {
+	public Turma getTurma(String stringTurma) {
 		try {
 			Query query = getSession()
 					.createQuery(
@@ -32,7 +32,7 @@ public class TurmaDAO extends GenericoDAO implements ITurmaDAO {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Turma> getTurmas() {
+	public List<Turma> getTodas() {
 		try {
 			Query query = getSession().createQuery(
 					"SELECT t FROM Turma AS t ORDER BY t.semestre");

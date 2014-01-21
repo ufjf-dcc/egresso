@@ -4,7 +4,7 @@ import org.zkoss.bind.annotation.Command;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 
-public class AdminMenuController {
+public class MenuController {
 	
 	@Command
 	public void sair(){

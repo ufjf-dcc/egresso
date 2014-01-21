@@ -30,7 +30,7 @@ public class FbHomeController {
 		facebook = (Facebook) Sessions.getCurrent().getAttribute(
 				"facebook");
 		try {
-			Aluno aluno = new AlunoBusiness().getAluno(facebook.getId());
+			aluno = new AlunoBusiness().getAluno(facebook.getId());
 		} catch (IllegalStateException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -45,20 +45,20 @@ public class FbHomeController {
 		facebook.postFeed(id, new PostUpdate("teste"));
 	}
 
-	public String getMenuAmigos() {
-		return "/amigos.zul";
-	}
-
 	public List<Turma> getTurmas() {
 		return turmas;
+	}
+
+	public void setTurmas(List<Turma> turmas) {
+		this.turmas = turmas;
 	}
 
 	public int[] getLinhas() {
 		return linhas;
 	}
 
-	public List<Friend> getAmigos() throws FacebookException {
-		return (List<Friend>) facebook.getFriends();
+	public void setLinhas(int[] linhas) {
+		this.linhas = linhas;
 	}
 
 	public Facebook getFacebook() {
@@ -67,6 +67,22 @@ public class FbHomeController {
 
 	public void setFacebook(Facebook facebook) {
 		this.facebook = facebook;
+	}
+
+	public Aluno getAluno() {
+		return aluno;
+	}
+
+	public void setAluno(Aluno aluno) {
+		this.aluno = aluno;
+	}
+
+	public List<Friend> getAmigos() {
+		return amigos;
+	}
+
+	public void setAmigos(List<Friend> amigos) {
+		this.amigos = amigos;
 	}
 
 }

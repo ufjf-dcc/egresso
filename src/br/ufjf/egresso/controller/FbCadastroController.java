@@ -22,7 +22,7 @@ public class FbCadastroController {
 			"facebook");
 	private String urlpic;
 	private Solicitacao solicitacao = new Solicitacao();
-	private List<Turma> turmas = new TurmaDAO().getTurmas();
+	private List<Turma> turmas = new TurmaDAO().getTodas();
 
 	@Init
 	public void init() throws FacebookException {

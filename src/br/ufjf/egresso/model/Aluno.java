@@ -41,6 +41,9 @@ public class Aluno {
 	@Transient
 	private String linkFacebook;
 
+	@Transient
+	private boolean editingStatus;
+
 	public int getId() {
 		return id;
 	}
@@ -95,6 +98,24 @@ public class Aluno {
 
 	public String getLinkFacebook() {
 		return ("http://facebook.com/" + facebookId);
+	}
+
+	public boolean getEditingStatus() {
+		return editingStatus;
+	}
+
+	public void setEditingStatus(boolean editingStatus) {
+		this.editingStatus = editingStatus;
+	}
+
+	public void copy(Aluno outro) {
+		this.id = outro.id;
+		this.matricula = outro.matricula;
+		this.nome = outro.nome;
+		this.facebookId = outro.facebookId;
+		this.turma = outro.turma;
+		this.urlFoto = outro.urlFoto;
+		this.linkFacebook = outro.linkFacebook;
 	}
 
 }

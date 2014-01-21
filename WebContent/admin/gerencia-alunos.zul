@@ -1,0 +1,96 @@
+<?page title="Gerenciamento de Alunos" contentType="text/html;charset=UTF-8"?>
+<?init class="br.ufjf.egresso.controller.AuthAdminController"?>
+<zk>
+	<include src="/templates/menu-admin.zul" />
+	<div apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('br.ufjf.egresso.controller.AdminAlunosController')"
+		height="100%">
+		<grid
+			model="@load(vm.filterAlunos) @template(each.editingStatus ? 'editable' : 'noneditable')"
+			mold="paging" autopaging="true" vflex="true">
+			<auxhead sclass="text-center">
+				<auxheader label="Alunos cadastrados no sistema"
+					colspan="8" />
+			</auxhead>
+			<auxhead>
+				<auxheader colspan="3">
+					<div>
+						<div style="float:left">
+							<textbox id="filtro"
+								value="@bind(vm.filterString)" />
+							<button label="Pesquisar"
+								onClick="@command('filtra')" />
+						</div>
+						<div style="float:right">
+							<button label="Cadastrar Aluno"
+								onClick="@command('addAluno', window=addAluno)" />
+						</div>
+					</div>
+				</auxheader>
+			</auxhead>
+			<columns>
+				<column width="70px" label="Matrícula"
+					sort="auto(aluno.matricula)" />
+				<column hflex="5" label="Nome"
+					sort="auto(aluno.nome)" />
+				<column width="120px" label="Editar" sort="" />
+			</columns>
+			<template name="editable">
+				<row>
+					<textbox
+						value="@load(each.matricula) @save(each.matricula, before='confirm')" />
+					<textbox
+						value="@load(each.nome) @save(each.nome, before='confirm')" />
+					<div align="center">
+						<button image="/img/confirm.gif"
+							onClick="@command('confirm', aluno=each)" />
+						<button image="/img/cancel.png"
+							onClick="@command('changeEditableStatus', aluno=each)" />
+					</div>
+				</row>
+			</template>
+			<template name="noneditable">
+				<row>
+					<label value="@load(each.matricula)" />
+					<label value="@load(each.nome)" />
+					<div align="center">
+						<button image="/img/edit.gif"
+							onClick="@command('changeEditableStatus', aluno=each)" />
+						<button image="/img/delete.png"
+							onClick="@command('delete', aluno=each)" />
+					</div>
+				</row>
+			</template>
+		</grid>
+		<window id="addAluno" title="Cadastrar Aluno" visible="false"
+                        width="350px" border="normal" position="center,center"
+                        closable="true"
+                        onClose="self.setVisible(false); event.stopPropagation();">
+                        <grid>
+                                <columns>
+                                        <column hflex="1" />
+                                        <column hflex="2" />
+                                </columns>
+                                <rows>
+                                        <row>
+                                                <label value="Código do Aluno:" />
+                                                <textbox
+                                                        value="@load(vm.novoAluno.matricula) @save(vm.novoAluno.matricula, before='submitAluno')"
+                                                        tabindex="1" id="matricula" width="100%" />
+                                        </row>
+                                        <row>
+                                                <label value="Nome do Aluno:" />
+                                                <textbox
+                                                        value="@load(vm.novoAluno.nome) @save(vm.novoAluno.nome, before='submitAluno')"
+                                                        tabindex="2" id="nome" width="100%" />
+                                        </row>
+
+                                </rows>
+                        </grid>
+                        <div align="center">
+                                <button label="Cadastrar" onClick="@command('submitAluno', window=addAluno)"
+                                        width="75px" style="margin-top:5px" />
+                        </div>
+                </window>
+	</div>
+</zk>

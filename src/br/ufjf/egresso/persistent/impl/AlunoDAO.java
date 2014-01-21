@@ -33,7 +33,7 @@ public class AlunoDAO extends GenericoDAO implements IAlunoDAO {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Aluno> getAlunos() {
+	public List<Aluno> getTodos() {
 		try {
 			Query query = getSession().createQuery(
 					"SELECT a FROM Aluno as a ORDER BY a.nome");
@@ -87,22 +87,32 @@ public class AlunoDAO extends GenericoDAO implements IAlunoDAO {
 		return null;
 	}
 
-	@Override
-	public Aluno retornaAlunoN(String nome) {
+	public boolean jaExiste(String matricula, String matriculaAntiga) {
 		try {
-			Query query = getSession().createQuery(
-					"SELECT a FROM Aluno as a WHERE a.nome = :nome");
-			query.setParameter("nome", nome);
+			Query query;
+			if (matriculaAntiga != null) {
+				query = getSession()
+						.createQuery(
+								"SELECT c FROM Departamento c WHERE c.codigoDepartamento = :codigoDepartamento AND c.codigoDepartamento != :oldDepartamento");
+				query.setParameter("oldCodigo", matriculaAntiga);
+			} else
+				query = getSession()
+						.createQuery(
+								"SELECT c FROM Departamento c WHERE c.codigoDepartamento = :codigoDepartamento");
 
-			Aluno aluno = (Aluno) query.uniqueResult();
+			query.setParameter("codigoDepartamento", matricula);
+
+			boolean resultado = query.list().size() > 0 ? true : false;
+
 			getSession().close();
 
-			if (aluno != null)
-				return aluno;
+			return resultado;
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+
+		return false;
 	}
 
 }

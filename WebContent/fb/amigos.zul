@@ -2,6 +2,8 @@
 <zk>
 	<div apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm')@init('br.ufjf.egresso.controller.HomeController')">
+		
+		<include src="/templates/menu-aluno.zul" />
 
 		<groupbox>
 			<caption label="Amigos:" />
