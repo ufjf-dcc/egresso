@@ -5,6 +5,7 @@ import java.util.List;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
+import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Sessions;
 
 import br.ufjf.egresso.business.AlunoBusiness;
@@ -29,6 +30,7 @@ public class AdminHomeController {
 		facebook = (Facebook) Sessions.getCurrent().getAttribute("facebook");
 	}
 
+	@NotifyChange
 	@Command
 	public void aceita(@BindingParam("solicitacao") Solicitacao solicitacao) {
 		AlunoBusiness alunoBusiness = new AlunoBusiness();
@@ -40,7 +42,7 @@ public class AdminHomeController {
 		solicitacaoBusiness.exclui(solicitacao);
 	}
 
-	
+	@NotifyChange
 	@Command
 	public void recusa(@BindingParam("solicitacao") Solicitacao solicitacao) {
 		solicitacoes.remove(solicitacao);

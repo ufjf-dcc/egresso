@@ -36,7 +36,7 @@ public class FbCadastroController {
 	public void solicitaCadastro() {
 		solicitacao.setUrlFoto(urlpic);
 		if (new SolicitacaoBusiness().salvar(solicitacao))
-			Executions.sendRedirect("/solicitacao-em-espera.zul");
+			Executions.sendRedirect("/fb/solicitacao-em-espera.zul");
 		else
 			Messagebox
 					.show("Não foi possível solicitar po cadastro. Por favor, tente novamente mais tarde.",
@@ -51,7 +51,7 @@ public class FbCadastroController {
 		return urlpic;
 	}
 
-	public Solicitacao getPedido() {
+	public Solicitacao getSolicitacao() {
 		return solicitacao;
 	}
 

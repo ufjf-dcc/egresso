@@ -27,6 +27,7 @@ public class IndexController {
 		String fbSecretKey = "39fa8aca462711f08f9eeaf084413a64";
 		String fbAppId = "679414068740684";
 		String redirectUrl = "http://localhost:8080/egresso/fb/redirect.zul";
+		String fbCanvasPage = "https://apps.facebook.com/ufjf-dcc-egresso/";
 
 		if (Executions.getCurrent().getParameter("signed_request") != null) {
 
@@ -73,16 +74,16 @@ public class IndexController {
 				Aluno aluno = new AlunoBusiness().getAluno(facebook.getId());
 				if (aluno != null) {
 					Sessions.getCurrent().setAttribute("aluno", aluno);
-					Executions.sendRedirect("/home.zul");
+					Executions.sendRedirect("/fb/home.zul");
 				} else if (new SolicitacaoBusiness()
 						.getPedido(facebook.getId()) == null)
-					Executions.sendRedirect("/cadastro.zul");
+					Executions.sendRedirect("/fb/cadastro.zul");
 				else
-					Executions.sendRedirect("/solicitacao-em-espera.zul");
+					Executions.sendRedirect("/fb/solicitacao-em-espera.zul");
 			}
 
 		} else {
-			Executions.sendRedirect("admin/entrar.zul");
+			Executions.sendRedirect(fbCanvasPage);
 		}
 	}
 
