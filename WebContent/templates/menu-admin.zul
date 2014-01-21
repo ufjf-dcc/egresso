@@ -5,7 +5,7 @@
 
 		<menubar orient="horizontal">
 			<menuitem label="Solicitações pendentes" href="solicitacoes.zul"/>
-			<menuitem label="Gerenciar Turmas" />
+			<menuitem label="Gerenciar Turmas" href ="gerencia-turmas.zul"/>
 			<menuitem label="Gerenciar Alunos" href="gerencia-alunos.zul"/>
 			<menuitem label="Sair" onClick="@command('sair')" style="float:right" />
 		</menubar>

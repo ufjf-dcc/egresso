@@ -2,6 +2,7 @@ package br.ufjf.egresso.model;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -28,11 +31,19 @@ public class Turma {
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "turma")
 	private List<Solicitacao> solicitacoes = new ArrayList<Solicitacao>();
+	@Transient
+	private boolean editingStatus;
 
 	public String getSemestre() {
 		return semestre;
 	}
 
+	public boolean getEditingStatus() {
+		return editingStatus;
+	}
+	public void setEditingStatus(boolean editingStatus) {
+		this.editingStatus = editingStatus;
+	}
 	public void setSemestre(String semestre) {
 		this.semestre = semestre;
 	}
@@ -60,5 +71,12 @@ public class Turma {
 	public void setSolicitacoes(List<Solicitacao> solicitacoes) {
 		this.solicitacoes = solicitacoes;
 	}
-
+	
+	public void copy(Turma outra) {
+		this.id = outra.id;
+		this.semestre = outra.semestre;
+		this.alunos = outra.alunos;
+		this.solicitacoes = outra.solicitacoes;
+		
+	}
 }
