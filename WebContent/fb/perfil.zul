@@ -14,13 +14,13 @@
 					<row>
 						<div>
 							<label value="Nome: " />
-							<textbox value="@load(vm.aluno.nome)" />
+							<label value="@load(vm.aluno.nome)" />
 						</div>
 					</row>
 					<row>
 						<div>
 							<label value="Matrícula: " />
-							<textbox value="@load(vm.aluno.nome)" />
+							<label value="@load(vm.aluno.matricula)" />
 						</div>
 					</row>
 				</rows>

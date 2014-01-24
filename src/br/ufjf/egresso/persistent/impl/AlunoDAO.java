@@ -16,7 +16,7 @@ public class AlunoDAO extends GenericoDAO implements IAlunoDAO {
 		try {
 			Query query = getSession()
 					.createQuery(
-							"SELECT a FROM Aluno AS a LEFT JOIN FECTH a.turma WHERE a.facebookId = :idFacebook");
+							"SELECT a FROM Aluno AS a LEFT JOIN FETCH a.turma WHERE a.facebookId = :idFacebook");
 			query.setParameter("idFacebook", facebookId);
 
 			Aluno aluno = (Aluno) query.uniqueResult();

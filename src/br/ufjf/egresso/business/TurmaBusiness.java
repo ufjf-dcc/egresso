@@ -21,13 +21,6 @@ public class TurmaBusiness {
 	public List<String> getErrors() {
 		return errors;
 	}
-
-	public boolean turmaCadastrada(String turma) throws HibernateException, Exception{
-		TurmaDAO turmaDAO = new TurmaDAO();
-		if ((turmaDAO.getTurma(turma) != null))
-			return true;
-		else return false;
-	}
 	
 	public List<Turma> getTodas(){
 		return new TurmaDAO().getTodas();
