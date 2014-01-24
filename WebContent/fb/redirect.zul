@@ -1,5 +1,0 @@
-<?page title="Redirecionando..." contentType="text/html;charset=UTF-8"?>
-<?init class="br.ufjf.egresso.controller.FbRedirectController"?>
-<zk>
-
-</zk>

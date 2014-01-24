@@ -6,6 +6,7 @@ import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zul.Messagebox;
 
@@ -31,7 +32,7 @@ public class AdminSolicitacoesController {
 		facebook = (Facebook) Sessions.getCurrent().getAttribute("facebook");
 	}
 
-	@NotifyChange
+	@NotifyChange("solicitacoes")
 	@Command
 	public void aceita(@BindingParam("solicitacao") Solicitacao solicitacao) {
 		AlunoBusiness alunoBusiness = new AlunoBusiness();
@@ -50,7 +51,7 @@ public class AdminSolicitacoesController {
 		solicitacaoBusiness.exclui(solicitacao);
 	}
 
-	@NotifyChange
+	@NotifyChange("solicitacoes")
 	@Command
 	public void recusa(@BindingParam("solicitacao") Solicitacao solicitacao) {
 		solicitacoes.remove(solicitacao);
@@ -76,6 +77,11 @@ public class AdminSolicitacoesController {
 
 	public void setFacebook(Facebook facebook) {
 		this.facebook = facebook;
+	}
+	
+	@Command
+	public void comparar(@BindingParam("solicitacao") Solicitacao solicitacao){
+		Executions.sendRedirect("compara-alunos.zul?id=" + solicitacao.getIdFacebook());
 	}
 
 }

@@ -26,7 +26,8 @@ public class IndexController {
 	public void autentica() throws HibernateException, Exception {
 		String fbSecretKey = "39fa8aca462711f08f9eeaf084413a64";
 		String fbAppId = "679414068740684";
-		String redirectUrl = "http://localhost:8080/egresso/fb/redirect.zul";
+		//String redirectUrl = "http://localhost:8080/egresso/fb/";
+		String redirectUrl = "http://200.131.219.47/egresso/fb/";
 		String fbCanvasPage = "https://apps.facebook.com/ufjf-dcc-egresso/";
 
 		if (Executions.getCurrent().getParameter("signed_request") != null) {
@@ -76,10 +77,10 @@ public class IndexController {
 					Sessions.getCurrent().setAttribute("aluno", aluno);
 					Executions.sendRedirect("/fb/home.zul");
 				} else if (new SolicitacaoBusiness()
-						.getPedido(facebook.getId()) == null)
-					Executions.sendRedirect("/fb/cadastro.zul");
-				else
+						.getSolicitacao(facebook.getId()) != null)
 					Executions.sendRedirect("/fb/solicitacao-em-espera.zul");
+				else
+					Executions.sendRedirect("/fb/cadastro.zul");
 			}
 
 		} else {

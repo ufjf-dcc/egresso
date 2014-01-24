@@ -14,7 +14,6 @@ import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
 import br.ufjf.egresso.business.TurmaBusiness;
-import br.ufjf.egresso.model.Aluno;
 import br.ufjf.egresso.model.Turma;
 
 public class AdminTurmasController {
@@ -25,7 +24,7 @@ public class AdminTurmasController {
 	private List<Turma> filterTurmas = todasTurmas;
 	private String filterString = "";
 
-	public List<Turma> getFilterAlunos() {
+	public List<Turma> getFilterTurmas() {
 		return filterTurmas;
 	}
 
@@ -84,7 +83,7 @@ public class AdminTurmasController {
 	@Command
 	public void delete(@BindingParam("turma") final Turma turma) {
 		Messagebox.show(
-				"Você tem certeza que deseja deletar a turma: "
+				"Você tem certeza que deseja excluir a turma do semestre "
 						+ turma.getSemestre() + "?", "Confirmação", Messagebox.OK
 						| Messagebox.CANCEL, Messagebox.QUESTION,
 				new org.zkoss.zk.ui.event.EventListener() {
@@ -113,7 +112,7 @@ public class AdminTurmasController {
 	public void removeFromList(Turma turma) {
 		filterTurmas.remove(turma);
 		todasTurmas.remove(turma);
-		BindUtils.postNotifyChange(null, null, this, "filterAlunos");
+		BindUtils.postNotifyChange(null, null, this, "filterTurmas");
 	}
 
 	public void refreshRowTemplate(Turma turma) {
@@ -129,7 +128,7 @@ public class AdminTurmasController {
 				filterTurmas.add(c);
 			}
 		}
-		BindUtils.postNotifyChange(null, null, this, "filterAlunos");
+		BindUtils.postNotifyChange(null, null, this, "filterTurmas");
 	}
 
 	@Command

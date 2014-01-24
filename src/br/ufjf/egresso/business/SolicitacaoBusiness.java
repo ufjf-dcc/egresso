@@ -18,7 +18,7 @@ public class SolicitacaoBusiness {
 
 	public boolean naLista(String idFacebook) throws HibernateException,
 			Exception {
-		Solicitacao listaEspera = solicitacaoDAO.getPedido(idFacebook);
+		Solicitacao listaEspera = solicitacaoDAO.getSolicitacao(idFacebook);
 
 		if (listaEspera != null) {
 			Session session = Sessions.getCurrent();
@@ -31,7 +31,7 @@ public class SolicitacaoBusiness {
 	public boolean checaLista(Solicitacao solicitacao)
 			throws HibernateException, Exception {
 		if (solicitacao != null) {
-			solicitacao = solicitacaoDAO.getPedido(solicitacao
+			solicitacao = solicitacaoDAO.getSolicitacao(solicitacao
 					.getIdFacebook());
 			if (solicitacao != null) {
 				return true;
@@ -44,8 +44,8 @@ public class SolicitacaoBusiness {
 		return solicitacaoDAO.salvar(solicitacao);
 	}
 
-	public Object getPedido(String facebookId) {
-		return solicitacaoDAO.getPedido(facebookId);
+	public Solicitacao getSolicitacao(String facebookId) {
+		return solicitacaoDAO.getSolicitacao(facebookId);
 	}
 	
 	public List<Solicitacao> getTodos(){

@@ -6,7 +6,6 @@
 		<menubar orient="horizontal">
  				<menuitem label="Turmas" href="/fb/home.zul"/>
  				<menuitem label="Meu Perfil" href="/fb/perfil.zul"/>
- 				<menuitem label="Sair" onClick="@command('exit')"/>
 		</menubar>
 </div>
 </zk>

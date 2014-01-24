@@ -9,6 +9,6 @@ public class MenuController {
 	@Command
 	public void sair(){
 		Sessions.getCurrent().invalidate();
-		Executions.sendRedirect("/admin/entrar.zul");
+		Executions.sendRedirect("/index.zul");
 	}
 }

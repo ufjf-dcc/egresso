@@ -1,19 +1,19 @@
 <?page title="Gerenciamento de Turmas" contentType="text/html;charset=UTF-8"?>
-<?init class="br.ufjf.egresso.controller.AuthAdminController"?>
+<?init class="br.ufjf.egresso.controller.AdminAuthController"?>
 <zk>
 	<include src="/templates/menu-admin.zul" />
 	<div apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('br.ufjf.egresso.controller.AdminTurmasController')"
 		height="100%">
 		<grid
-			model="@load(vm.filterAlunos) @template(each.editingStatus ? 'editable' : 'noneditable')"
+			model="@load(vm.filterTurmas) @template(each.editingStatus ? 'editable' : 'noneditable')"
 			mold="paging" autopaging="true" vflex="true">
 			<auxhead sclass="text-center">
 				<auxheader label="Turmas cadastradas no sistema"
-					colspan="1" />
+					colspan="2" />
 			</auxhead>
 			<auxhead>
-				<auxheader colspan="1">
+				<auxheader colspan="2">
 					<div>
 						<div style="float:left">
 							<textbox id="filtro"
@@ -30,16 +30,16 @@
 			</auxhead>
 			<columns>
 				<column label="Semestre" sort="auto(turma.semestre)" />
-
+				<column label="Opções" width="180px"/>
 			</columns>
 			<template name="editable">
 				<row>
 					<textbox
 						value="@load(each.semestre) @save(each.semestre, before='confirm')" />
 					<div>
-						<button image="/img/confirm.gif"
+						<button label="Confirmar"
 							onClick="@command('confirm', turma=each)" />
-						<button image="/img/cancel.png"
+						<button label="Cancelar"
 							onClick="@command('changeEditableStatus',turma=each)" />
 					</div>
 				</row>
@@ -49,9 +49,9 @@
 					<label value="@load(each.semestre)" />
 
 					<div align="center">
-						<button image="/img/edit.gif"
+						<button label="Editar"
 							onClick="@command('changeEditableStatus', turma=each)" />
-						<button image="/img/delete.png"
+						<button label="Excluir"
 							onClick="@command('delete', turma=each)" />
 					</div>
 				</row>

@@ -9,7 +9,7 @@ import org.zkoss.zul.Messagebox;
 import br.ufjf.egresso.business.AdministradorBusiness;
 import br.ufjf.egresso.model.Administrador;
 
-public class LoginAdminController {
+public class AdminLoginController {
 
 	@Command
 	public void entrar(@BindingParam("identificador") String identificador,
@@ -18,7 +18,7 @@ public class LoginAdminController {
 				senha);
 		if (admin != null) {
 			Sessions.getCurrent().setAttribute("admin", admin);
-			Executions.sendRedirect("solicitacoes.zul");
+			Executions.sendRedirect("/admin/solicitacoes.zul");
 		} else {
 			Messagebox.show("Identificador ou senha incorretos.", "Erro",
 					Messagebox.OK, Messagebox.ERROR);

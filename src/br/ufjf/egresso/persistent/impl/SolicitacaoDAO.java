@@ -10,11 +10,11 @@ import br.ufjf.egresso.persistent.ISolicitacaoDAO;
 
 public class SolicitacaoDAO extends GenericoDAO implements ISolicitacaoDAO {
 
-	public Solicitacao getPedido(String facebookId) {
+	public Solicitacao getSolicitacao(String facebookId) {
 		try {
 			Query query = getSession()
 					.createQuery(
-							"SELECT s FROM Solicitacao AS s WHERE s.idFacebook = :idFacebook");
+							"SELECT s FROM Solicitacao AS s LEFT JOIN FETCH s.turma WHERE s.idFacebook = :idFacebook");
 			query.setParameter("idFacebook", facebookId);
 
 			Solicitacao solicitacao = (Solicitacao) query.uniqueResult();
