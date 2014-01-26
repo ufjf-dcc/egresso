@@ -1,0 +1,44 @@
+<?page title="Controle de Egresso UFJF - Cadastro" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<div apply="org.zkoss.bind.BindComposer" width="100%"
+		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbCadastroController')"
+		form="@id('fx') @load(vm.solicitacao) @save(vm.solicitacao, before='solicitaCadastro')">
+
+		<div align="center" width="250px">
+			<image src="@bind(vm.urlpic)" width="150px"
+				style="margin:20px" />
+			<grid>
+				<columns>
+					<column width="100px" />
+					<column />
+				</columns>
+				<rows>
+					<row>
+						<label value="Nome: " />
+						<textbox readonly="true"
+							value="@load(vm.solicitacao.nome)" width="98%" />
+					</row>
+					<row>
+						<label value="Matrícula: " />
+						<textbox value="@bind(fx.matricula)"
+							width="98%" />
+					</row>
+					<row>
+						<label value="Turma: " />
+						<combobox model="@load(vm.turmas)" width="98%"
+							readonly="true" selectedItem="@bind(fx.turma)" autodrop="true">
+							<template name="model">
+								<comboitem label="@load(each.semestre)" />
+							</template>
+						</combobox>
+					</row>
+				</rows>
+
+			</grid>
+			<div align="center">
+				<button label="Solicitar Cadastro" style="margin:20px"
+					onClick="@command('solicitaCadastro')" />
+			</div>
+		</div>
+	</div>
+</zk>

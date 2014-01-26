@@ -1,0 +1,10 @@
+<?page title="Controle de Egresso UFJF - Login" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<div
+		style="position:absolute; top:50%; margin-top:-100px; left:50%; margin-left:-150px;">
+		<div apply="org.zkoss.bind.BindComposer" align="center"
+			viewModel="@id('vm')@init('br.ufjf.egresso.controller.IndexController')">
+			<label value="Redirecionando..." />
+		</div>
+	</div>
+</zk>

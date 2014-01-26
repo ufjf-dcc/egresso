@@ -6,8 +6,6 @@ import br.ufjf.egresso.model.Turma;
 
 public interface ITurmaDAO {
 
-	public Turma retornaTurma(String turma);
-
-	public List<Turma> getTurmas();
+	public List<Turma> getTodas();
 	
 }

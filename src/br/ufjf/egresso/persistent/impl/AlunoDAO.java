@@ -5,174 +5,114 @@ import java.util.List;
 import org.hibernate.Query;
 
 import br.ufjf.egresso.model.Aluno;
+import br.ufjf.egresso.model.Turma;
 import br.ufjf.egresso.persistent.GenericoDAO;
 import br.ufjf.egresso.persistent.IAlunoDAO;
 
 public class AlunoDAO extends GenericoDAO implements IAlunoDAO {
-	
+
 	@Override
-	public Aluno retornaAluno(String idFacebook) {
+	public Aluno getAluno(String facebookId) {
 		try {
-			Query query = getSession().createQuery("SELECT a FROM Aluno AS a WHERE a.idfacebook = :idFacebook");
-			query.setParameter("idFacebook", idFacebook);
-			
+			Query query = getSession()
+					.createQuery(
+							"SELECT a FROM Aluno AS a LEFT JOIN FETCH a.turma WHERE a.facebookId = :idFacebook");
+			query.setParameter("idFacebook", facebookId);
+
 			Aluno aluno = (Aluno) query.uniqueResult();
-	
-			System.out.println(aluno.getNome());
+
 			getSession().close();
-			
-			if(aluno!=null)
-				return aluno;
+
+			return aluno;
 		} catch (Exception e) {
 			System.out.println(e);
 			e.printStackTrace();
 		}
 		return null;
 	}
-	
-	public Aluno retornaAluno(String nome, String tokenFacebook) {
-		try {
-			Query query = getSession().createQuery("SELECT a FROM Aluno AS a WHERE a.nome =:nome AND a.tokenFacebook = :tokenFacebook");
-			query.setParameter("tokenFacebook", tokenFacebook);
-			query.setParameter("nome", nome);
-			
-			Aluno aluno = (Aluno) query.uniqueResult();
-	
-			getSession().close();
-			
-			if(aluno!=null)
-				return aluno;
-		} catch (Exception e) {
-			System.out.println(e);
-			e.printStackTrace();
-		}
-		return null;
-	}
-	
+
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Aluno> getAlunos() {
+	public List<Aluno> getTodos() {
 		try {
-			Query query = getSession().createQuery("SELECT a FROM Aluno as a ORDER BY a.nome");
-			
+			Query query = getSession().createQuery(
+					"SELECT a FROM Aluno AS a LEFT JOIN FETCH a.turma ORDER BY a.nome");
+
 			List<Aluno> aluno = query.list();
 			getSession().close();
-			
-			if(aluno!=null)
+
+			if (aluno != null)
 				return aluno;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
-	
+
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Aluno> getSomenteAlunos() {
+	public List<Aluno> getAlunosTurma(Turma turma) {
 		try {
-			Query query = getSession().createQuery("SELECT a FROM Aluno as aWHERE a.tipoPermissao = :tipoPermissao ORDER BY a.nome");
-			query.setParameter("tipoPermissao", 0);
-			
-			List<Aluno> aluno = query.list();
-			getSession().close();
-			
-			if(aluno!=null)
-				return aluno;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-	
-	@Override
-	public Aluno retornaAlunoM(String matricula) {
-		try {
-			Query query = getSession().createQuery("SELECT a FROM Aluno as a WHERE a.matricula = :matricula");
-			query.setParameter("matricula", matricula);
-			
-			Aluno aluno = (Aluno) query.uniqueResult();
-			getSession().close();
-			
-			if (aluno!=null)
-				return aluno;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-	
-	@Override
-	public Aluno retornaAlunoN(String nome) {
-		try {
-			Query query = getSession().createQuery("SELECT a FROM Aluno as a WHERE a.nome = :nome");
-			query.setParameter("nome", nome);
-			
-			Aluno aluno = (Aluno) query.uniqueResult();
-			getSession().close();
-			
-			if (aluno!=null)
-				return aluno;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-	
-	
-	@Override
-	@SuppressWarnings("unchecked")
-	public List<Aluno> getCoordenadores() {
-		try {
-			Query query = getSession().createQuery("SELECT a FROM Aluno as a WHERE a.tipoPermissao = :tipoPermissao ORDER BY a.nome");
-			query.setParameter("tipoPermissao", 1);
-			
-			List<Aluno> coordenadores = query.list();
-			getSession().close();
-			
-			if (coordenadores!=null)
-				return coordenadores;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-	
-	@Override
-	@SuppressWarnings("unchecked")
-	public List<Aluno> getAdministradores() {
-		try {
-			Query query = getSession().createQuery("SELECT a FROM Aluno as a WHERE a.tipoPermissao = :tipoPermissao ORDER BY a.nome");
-			query.setParameter("tipoPermissao", 2);
-			
-			List<Aluno> administradores = query.list();
-			getSession().close();
-			
-			if (administradores!=null)
-				return administradores;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-	
-	@Override
-	@SuppressWarnings("unchecked")
-	public List<Aluno> getAlunoTurma(String turma) {
-		try {
-			Query query = getSession().createQuery("SELECT a FROM Aluno as a WHERE a.turma = :turma ORDER BY a.nome");
+			Query query = getSession()
+					.createQuery(
+							"SELECT a FROM Aluno as a WHERE a.turma = :turma ORDER BY a.nome");
 			query.setParameter("turma", turma);
-			
+
 			List<Aluno> administradores = query.list();
 			getSession().close();
-			
-			if (administradores!=null)
+
+			if (administradores != null)
 				return administradores;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
-	
-	
-	
+
+	@Override
+	public Aluno buscaPorMatricula(String matricula) {
+		try {
+			Query query = getSession().createQuery(
+					"SELECT a FROM Aluno as a LEFT JOIN FETCH a.turma WHERE a.matricula = :matricula");
+			query.setParameter("matricula", matricula);
+
+			Aluno aluno = (Aluno) query.uniqueResult();
+			getSession().close();
+
+			if (aluno != null)
+				return aluno;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public boolean jaExiste(String matricula, String matriculaAntiga) {
+		try {
+			Query query;
+			if (matriculaAntiga != null) {
+				query = getSession()
+						.createQuery(
+								"SELECT c FROM Departamento c WHERE c.codigoDepartamento = :codigoDepartamento AND c.codigoDepartamento != :oldDepartamento");
+				query.setParameter("oldCodigo", matriculaAntiga);
+			} else
+				query = getSession()
+						.createQuery(
+								"SELECT c FROM Departamento c WHERE c.codigoDepartamento = :codigoDepartamento");
+
+			query.setParameter("codigoDepartamento", matricula);
+
+			boolean resultado = query.list().size() > 0 ? true : false;
+
+			getSession().close();
+
+			return resultado;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return false;
+	}
+
 }

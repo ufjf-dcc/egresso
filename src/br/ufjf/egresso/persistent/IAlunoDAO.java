@@ -5,24 +5,16 @@ import java.util.List;
 import org.hibernate.HibernateException;
 
 import br.ufjf.egresso.model.Aluno;
+import br.ufjf.egresso.model.Turma;
 
 public interface IAlunoDAO {
 
-	public Aluno retornaAluno(String tokenFacebook) throws HibernateException,Exception;
+	public Aluno getAluno(String facebookId) throws HibernateException,Exception;
 
-	public List<Aluno> getAlunos();
+	public List<Aluno> getTodos();
 	
-	public List<Aluno> getSomenteAlunos();
-	
-	public Aluno retornaAlunoM(String matricula) throws HibernateException,Exception;
-	
-	public Aluno retornaAlunoN(String nome) throws HibernateException,Exception;
-	
-	public List<Aluno> getCoordenadores();
-	
-	public List<Aluno> getAdministradores();
-	
-	public List<Aluno> getAlunoTurma(String turma);
-	
-	public Aluno retornaAluno(String nome, String tokenFacebook);
+	public List<Aluno> getAlunosTurma(Turma turma);
+
+	Aluno buscaPorMatricula(String matricula);
+
 }

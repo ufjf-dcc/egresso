@@ -1,73 +1,100 @@
 package br.ufjf.egresso.business;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.HibernateException;
-import org.zkoss.zk.ui.Session;
-import org.zkoss.zk.ui.Sessions;
 
 import br.ufjf.egresso.model.Aluno;
+import br.ufjf.egresso.model.Turma;
 import br.ufjf.egresso.persistent.impl.AlunoDAO;
 
+public class AlunoBusiness {
+	private AlunoDAO alunoDao;
+	private List<String> errors;
 
-public class AlunoBusiness extends GenericBusiness {
-
-	public boolean login(String codigoFB) throws HibernateException, Exception {
-		AlunoDAO alunoDAO = new AlunoDAO();
-		Aluno aluno = alunoDAO.retornaAluno(codigoFB);
-
-		if (aluno != null) {
-			Session session = Sessions.getCurrent();
-			session.setAttribute("aluno", aluno);
-			return true;
-		}
-		return false;
+	public AlunoBusiness() {
+		this.errors = new ArrayList<String>();
+		alunoDao = new AlunoDAO();
 	}
-	
-	public boolean login(String nome, String codigoFB) throws HibernateException, Exception {
-		AlunoDAO alunoDAO = new AlunoDAO();
-		Aluno aluno = alunoDAO.retornaAluno(nome,codigoFB);
 
-		if (aluno != null) {
-			Session session = Sessions.getCurrent();
-			session.setAttribute("aluno", aluno);
-			return true;
-		}
-		return false;
+	public List<String> getErrors() {
+		return errors;
+	}
+
+	public boolean validar(Aluno aluno, String matriculaAntiga) {
+		errors.clear();
+
+		validaMatricula(aluno.getMatricula(), matriculaAntiga);
+		validaNome(aluno.getNome());
+		validaTurma(aluno.getTurma());
+
+		return errors.size() == 0;
+	}
+
+	private void validaTurma(Turma turma) {
+		if (turma == null)
+			errors.add("É necessário informar a turma do aluno;\n");
+	}
+
+	private void validaNome(String nome) {
+		if (nome == null || nome.trim().length() == 0)
+			errors.add("É necessário informar o nome do aluno;\n");
+	}
+
+	private void validaMatricula(String matricula, String matriculaAntiga) {
+		if (matricula == null || matricula.trim().length() == 0)
+			errors.add("É necessário informar o código do aluno;\n");
+		else
+			jaExiste(matricula, matriculaAntiga);
+	}
+
+	private boolean jaExiste(String matricula, String matriculaAntiga) {
+		errors.clear();
+        if (alunoDao.jaExiste(matricula, matriculaAntiga)){
+                errors.add("Já existe um aluno com esta matrícula.\n");
+                return true;
+        }
+        return false;
+	}
+
+	public boolean alunoCadastrado(String facebookId)
+			throws HibernateException, Exception {
+		return alunoDao.getAluno(facebookId) != null;
+	}
+
+	public Aluno getAluno(String facebookId) {
+		return alunoDao.getAluno(facebookId);
 	}
 
 	public boolean checaLogin(Aluno aluno) throws HibernateException, Exception {
 		if (aluno != null) {
-			AlunoDAO alunoDAO = new AlunoDAO();
-			aluno = alunoDAO.retornaAluno(aluno.getIdfacebook());
+			aluno = alunoDao.getAluno(aluno.getFacebookId());
 			if (aluno != null) {
 				return true;
 			}
 		}
 		return false;
-	}
-	
-	public boolean checaLoginAdmin(Aluno aluno) throws HibernateException, Exception {
-		if (aluno != null) {
-			AlunoDAO alunoDAO = new AlunoDAO();
-			aluno = alunoDAO.retornaAluno(aluno.getNome(), aluno.getTokenFacebook());
-			if (aluno != null) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	public boolean alunoCadastrado(String codigoFB) throws HibernateException, Exception {
-		AlunoDAO alunoDAO = new AlunoDAO();
-		if (alunoDAO.retornaAluno(codigoFB)!=null){
-			return true;
-		}
-		else return false;
-	}
-		
-	
-	public boolean cadastroAluno(){
-		return true;
 	}
 
-	
+	public Aluno buscaPorMatricula(String matricula) {
+		return alunoDao.buscaPorMatricula(matricula);
+	}
+
+	public boolean editar(Aluno aluno) {
+		return alunoDao.editar(aluno);
+	}
+
+	public List<Aluno> getTodos() {
+		return alunoDao.getTodos();
+	}
+
+	public boolean exclui(Aluno aluno) {
+		return alunoDao.exclui(aluno);
+	}
+
+	public boolean salvar(Aluno novoAluno) {
+		return alunoDao.salvar(novoAluno);
+	}
+
 }

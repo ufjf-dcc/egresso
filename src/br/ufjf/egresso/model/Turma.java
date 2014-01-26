@@ -2,6 +2,7 @@ package br.ufjf.egresso.model;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,56 +10,73 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "turma")
 public class Turma {
 	@Id
-	@Column(name = "idturma", unique = true, nullable = false)
+	@Column(name = "id", unique = true, nullable = false)
 	@GeneratedValue(generator = "increment")
 	@GenericGenerator(name = "increment", strategy = "increment")
-	int idturma;
+	int id;
 
-	@Column(name = "turma", unique = true, length = 6, nullable = false)
-	String turma;
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "turma")
-	private List<Aluno> aluno = new ArrayList<Aluno>();
+	@Column(name = "semestre", unique = true, length = 6, nullable = false)
+	String semestre;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "turma")
-	private List<ListaEspera> listaEspera = new ArrayList<ListaEspera>();
+	private List<Aluno> alunos = new ArrayList<Aluno>();
 
-	public int getIdTurma() {
-		return idturma;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "turma")
+	private List<Solicitacao> solicitacoes = new ArrayList<Solicitacao>();
+	@Transient
+	private boolean editingStatus;
+
+	public String getSemestre() {
+		return semestre;
 	}
 
-	public void setIdTurma(int idTurma) {
-		this.idturma = idTurma;
+	public boolean getEditingStatus() {
+		return editingStatus;
+	}
+	public void setEditingStatus(boolean editingStatus) {
+		this.editingStatus = editingStatus;
+	}
+	public void setSemestre(String semestre) {
+		this.semestre = semestre;
 	}
 
-	public String getTurma() {
-		return turma;
+	public int getId() {
+		return id;
 	}
 
-	public void setTurma(String turma) {
-		this.turma = turma;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public List<Aluno> getaluno() {
-		return aluno;
+	public List<Aluno> getAlunos() {
+		return alunos;
 	}
 
-	public void setaluno(List<Aluno> aluno) {
-		this.aluno = aluno;
+	public void setAlunos(List<Aluno> alunos) {
+		this.alunos = alunos;
 	}
 
-	public List<ListaEspera> getlista_de_espera() {
-		return listaEspera;
+	public List<Solicitacao> getSolicitacoes() {
+		return solicitacoes;
 	}
 
-	public void setlista_de_espera(List<ListaEspera> listaEspera) {
-		this.listaEspera = listaEspera;
+	public void setSolicitacoes(List<Solicitacao> solicitacoes) {
+		this.solicitacoes = solicitacoes;
 	}
-
+	
+	public void copy(Turma outra) {
+		this.id = outra.id;
+		this.semestre = outra.semestre;
+		this.alunos = outra.alunos;
+		this.solicitacoes = outra.solicitacoes;
+		
+	}
 }
