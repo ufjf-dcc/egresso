@@ -1,6 +1,7 @@
 package br.ufjf.egresso.model;
 
 import java.sql.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -24,7 +27,7 @@ public class Atuacao {
 	@Column(name = "data_inicio", nullable = true)
 	Date dataInicio;
 
-	@Column(name = "data_termino", nullable = true)
+	@Column(name = "data_final", nullable = true)
 	Date dataTermino;
 
 	@Column(name = "local", length = 45, nullable = true)
@@ -40,6 +43,10 @@ public class Atuacao {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "tipo_atuacao_id", nullable = false)
 	private TipoAtuacao tipoAtuacao;
+	@Transient
+	private boolean editingStatus;
+
+	
 
 	public int getId() {
 		return id;
@@ -104,5 +111,24 @@ public class Atuacao {
 	public void setTipo_atuacao(TipoAtuacao tipo_atuacao) {
 		this.tipoAtuacao = tipo_atuacao;
 	}
+	
 
+	public boolean getEditingStatus() {
+		return editingStatus;
+	}
+	public void setEditingStatus(boolean editingStatus) {
+		this.editingStatus = editingStatus;
+	}
+	public void copy(Atuacao outra) {
+		this.id = outra.id;
+		this.cargo = outra.cargo;
+		this.tipoAtuacao = outra.tipoAtuacao;
+		this.dataInicio = outra.dataInicio;
+		this.dataTermino = outra.dataTermino;
+		this.local = outra.local;
+		this.aluno = outra.aluno;
+
+		
+	}
 }
+

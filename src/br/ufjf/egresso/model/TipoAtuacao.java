@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name = "tipo_atuacao")
+@Table(name = "tipoAtuacao")
 public class TipoAtuacao {
 	@Id
 	@Column(name = "id", unique = true, nullable = false)
@@ -24,7 +24,7 @@ public class TipoAtuacao {
 	String nome;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tipoAtuacao")
-	private List<Atuacao> tipo = new ArrayList<Atuacao>();
+	private List<Atuacao> atuacoes = new ArrayList<Atuacao>();
 
 	public int getId() {
 		return id;
@@ -42,12 +42,14 @@ public class TipoAtuacao {
 		this.nome = nome;
 	}
 
-	public List<Atuacao> getTipo() {
-		return tipo;
+	public List<Atuacao> getAtuacoes() {
+		return atuacoes;
 	}
 
-	public void setTipo(List<Atuacao> tipo) {
-		this.tipo = tipo;
+	public void setAtuacoes(List<Atuacao> atuacoes) {
+		this.atuacoes = atuacoes;
 	}
+
+	
 
 }

@@ -1,30 +1,131 @@
-<?page title="Controle de Egresso UFJF - Meu Perfil" contentType="text/html;charset=UTF-8"?>
+<?page title="Perfil do Aluno" contentType="text/html;charset=UTF-8"?>
+
 <zk>
-	<div apply="org.zkoss.bind.BindComposer" align="center"
+	
+	<div apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbPerfilController')"
 		height="100%">
-
-		<hlayout width="400px">
-			<image height="150px" src="@load(vm.aluno.urlFoto)" />
+		<grid
+			model="@load(vm.filterAtuacoes) @template(each.editingStatus ? 'editable' : 'noneditable')"
+			mold="paging" autopaging="true" vflex="true">
+			<auxhead sclass="text-center">
+				<auxheader label="Atuacoes Cadastradas no sistema"
+					colspan="2" />
+			</auxhead>
+			<auxhead>
+				<auxheader colspan="5">
+					<div>
+						<div style="float:left">
+							<textbox id="filtro"
+								value="@bind(vm.filterString)" />
+							<button label="Pesquisar"
+								onClick="@command('filtra')" />
+						</div>
+						<div style="float:right">
+							<button label="Cadastrar Atuação"
+								onClick="@command('addAtuacao', window=addAtuacao)" />
+						</div>
+					</div>
+				</auxheader>
+			</auxhead>
+			<columns>
+				<column label="Cargo" sort="auto(atuacao.cargo)" />
+				<column label="Local" sort="auto(atuacao.local)" />
+				<column label="Data Início" sort="auto(atuacao.dataInicio)" />
+				<column label="Data Término" sort="auto(atuacao.dataTermino)" />
+				
+								
+				<column label="Opções" width="180px"/>
+			</columns>
+			<template name="editable">
+				<row>
+					<textbox
+						value="@load(each.cargo) @save(each.cargo, before='confirm')" />
+						<textbox
+						value="@load(each.local) @save(each.local, before='confirm')" />
+						<datebox format="medium" onCreate="self.value = new Date()"
+						value="@load(each.dataInicio) @save(each.dataInicio, before='confirm')" />
+						<datebox format="medium" onCreate="self.value = new Date()"
+						value="@load(each.dataTermino) @save(each.dataTermino, before='confirm')" />
+					<div>
+						<button label="Confirmar"
+							onClick="@command('confirm', atuacao=each)" />
+						<button label="Cancelar"
+							onClick="@command('changeEditableStatus',atuacao=each)" />
+					</div>
+				</row>
+			</template>
+			<template name="noneditable">
+				<row>
+					<label value="@load(each.cargo)" />
+					<label value="@load(each.local)" />
+					<label value="@load(each.dataInicio)" />
+					<label value="@load(each.dataTermino)" />
+					
+				
+					<div align="center">
+						<button label="Editar"
+							onClick="@command('changeEditableStatus',atuacao=each)" />
+						<button label="Excluir"
+							onClick="@command('delete', atuacao=each)" />
+					</div>
+				</row>
+			</template>
+		</grid>
+		<window id="addAtuacao" title="Cadastrar Atuação" visible="false"
+			width="350px" border="normal" position="center,center"
+			closable="true"
+			onClose="self.setVisible(false); event.stopPropagation();">
 			<grid>
 				<columns>
-					<column />
+					<column hflex="1" />
+					<column hflex="2" />
+					
 				</columns>
 				<rows>
 					<row>
-						<div>
-							<label value="Nome: " />
-							<label value="@load(vm.aluno.nome)" />
-						</div>
+						<label value="Cargo:" />
+						<textbox
+							value="@load(vm.novaAtuacao.cargo)@save(vm.novaAtuacao.cargo, before='submitAtuacao')"
+							tabindex="1" id="cargo" width="100%" />
+							
+					</row>
+
+					<row>
+						<label value="Local:" />
+						<textbox
+							value="@load(vm.novaAtuacao.local)@save(vm.novaAtuacao.local, before='submitAtuacao')"
+							tabindex="1" id="local" width="100%" />
 					</row>
 					<row>
-						<div>
-							<label value="Matrícula: " />
-							<label value="@load(vm.aluno.matricula)" />
-						</div>
+						<label value="Data Início:" />
+						<datebox format="medium" onCreate="self.value = new Date()"
+							value="@load(vm.novaAtuacao.dataInicio)@save(vm.novaAtuacao.dataInicio, before='submitAtuacao')"
+							tabindex="1" id="dataInicio" width="100%" />
 					</row>
+					<row>
+						<label value="Data Término:" />
+						<datebox format="medium" onCreate="self.value = new Date()"
+							value="@load(vm.novaAtuacao.dataTermino)@save(vm.novaAtuacao.dataTermino, before='submitAtuacao')"
+							tabindex="1" id="dataTermino" width="100%" />
+					</row>
+					<row>
+					<combobox id="cmbTipoAtuacao" width="100%"
+							readonly="true" model="@load(vm.tipoAtuacao)"
+							value="@load(vm.novaAtuacao.tipoAtuacao.nome ne null ? vm.novaAtuacao.tipoAtuacao.nome : 'Nenhum')"
+							selectedItem="@bind(vm.novaAtuacao.tipoAtuacao)">
+							<template name="model">
+								<comboitem label="@load(each.nome)" />
+							</template>
+						</combobox>
+				</row>
 				</rows>
 			</grid>
-		</hlayout>
+			<div align="center">
+				<button label="Cadastrar"
+					onClick="@command('submitAtuacao', window=addAtuacao)" width="75px"
+					style="margin-top:5px" />
+			</div>
+		</window>
 	</div>
 </zk>
