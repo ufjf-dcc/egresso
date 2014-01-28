@@ -75,7 +75,7 @@ public class IndexController {
 				Aluno aluno = new AlunoBusiness().getAluno(facebook.getId());
 				if (aluno != null) {
 					Sessions.getCurrent().setAttribute("aluno", aluno);
-					Executions.sendRedirect("/fb/home.zul");
+					Executions.sendRedirect("/fb/perfil.zul");
 				} else if (new SolicitacaoBusiness()
 						.getSolicitacao(facebook.getId()) != null)
 					Executions.sendRedirect("/fb/solicitacao-em-espera.zul");

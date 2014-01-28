@@ -2,11 +2,11 @@
 <zk xmlns:n="native">
 	<div apply="org.zkoss.bind.BindComposer" align="center" width="100%"
 		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbHomeController')">
+		<include src="/templates/menu-aluno.zul"/>
 		<grid model="@load(vm.turmas) @template('turmas')" mold="paging"
 			autopaging="true" vflex="true">
 			<auxhead>
 				<auxheader colspan="2">
-					<button label="Ver meu perfil" href="perfil.zul" style="float:right" />
 					<label value="@bind(vm.aluno.nome)"
 						style="font-weight:bold" />
 					, seja bem vindo(a) ao Controle de Egressos da UFJF!

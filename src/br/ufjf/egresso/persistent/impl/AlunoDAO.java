@@ -93,14 +93,14 @@ public class AlunoDAO extends GenericoDAO implements IAlunoDAO {
 			if (matriculaAntiga != null) {
 				query = getSession()
 						.createQuery(
-								"SELECT c FROM Departamento c WHERE c.codigoDepartamento = :codigoDepartamento AND c.codigoDepartamento != :oldDepartamento");
-				query.setParameter("oldCodigo", matriculaAntiga);
+								"SELECT a FROM Aluno a WHERE a.matricula = :matricula AND a.matricula != :matriculaAntiga");
+				query.setParameter("matriculaAntiga", matriculaAntiga);
 			} else
 				query = getSession()
 						.createQuery(
-								"SELECT c FROM Departamento c WHERE c.codigoDepartamento = :codigoDepartamento");
+								"SELECT a FROM Aluno a WHERE a.matricula = :matricula");
 
-			query.setParameter("codigoDepartamento", matricula);
+			query.setParameter("matricula", matricula);
 
 			boolean resultado = query.list().size() > 0 ? true : false;
 
