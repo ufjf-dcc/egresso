@@ -20,7 +20,7 @@
 				<column label="Nome" />
 				<column label="Turma" />
 				<column label="Matrícula" />
-				<column label="Opções" width="265px" />
+				<column label="Opções" width="200px" />
 			</columns>
 			<template name="model">
 				<row>
@@ -35,23 +35,48 @@
 					<div>
 						<label value="@load(each.matricula)" />
 					</div>
-					<hlayout width="100%" hflex="true">
-						<vlayout>
-							<button label="Ver Perfil no Facebook"
-								href="@load(each.linkFacebook)" />
-							<button label="Comparar" width="100%"
-								onClick="@command('comparar', solicitacao=each)" />
-						</vlayout>
-						<vlayout  hflex="1">
-							<button label="Aceitar" width="100%"
-								onClick="@command('aceita', solicitacao=each)" />
-							<button label="Recusar" width="100%"
-								onClick="@command('recusa', solicitacao=each)" />
-						</vlayout>
-					</hlayout>
+					<vlayout width="100%">
+						<button label="Ver Perfil no Facebook" width="100%"
+							href="@load(each.linkFacebook)" />
+						<button label="Comparar" width="100%"
+							onClick="@command('comparar', solicitacao=each, window=compara)" />
+					</vlayout>
 				</row>
 			</template>
 		</grid>
+		<window id="compara" width="400px" title="Comparação de dados"
+			visible="false" border="normal" position="center,center"
+			closable="true"
+			onClose="self.setVisible(false); event.stopPropagation(); ">
+			<grid>
+				<columns>
+					<column label="Aluno cadastrado" />
+					<column label="Solicitante" />
+				</columns>
+				<rows>
+					<row>
+						<label value="@load(vm.aluno.nome)" />
+						<label value="@load(vm.solicitacao.nome)" />
+					</row>
+					<row>
+						<label value="@load(vm.aluno.matricula)" />
+						<label value="@load(vm.solicitacao.matricula)" />
+					</row>
+					<row>
+						<label value="@load(vm.aluno.turma.semestre)" />
+						<label
+							value="@load(vm.solicitacao.turma.semestre)" />
+					</row>
+				</rows>
+			</grid>
+			<div width="100%" align="center">
+				<button label="Aceitar"
+					onClick="@command('aceita', window=compara)" />
+				<button label="Recusar"
+					onClick="@command('recusa', window=compara)" />
+			</div>
+
+		</window>
 
 	</div>
 </zk>

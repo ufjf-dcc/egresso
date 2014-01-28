@@ -2,7 +2,7 @@
 <?init class="br.ufjf.egresso.controller.AdminAuthController"?>
 <zk>
 	<include src="/templates/menu-admin.zul" />
-	<div apply="org.zkoss.bind.BindComposer"
+	<window apply="org.zkoss.bind.BindComposer" width="400px" align="center"
 		viewModel="@id('vm')@init('br.ufjf.egresso.controller.AdminComparaAlunosController')">
 		<grid>
 			<auxhead>
@@ -20,7 +20,6 @@
 				<row>
 					<label value="@load(vm.aluno.nome)" />
 					<label value="@load(vm.solicitacao.nome)" />
-
 				</row>
 				<row>
 					<label value="@load(vm.aluno.matricula)" />
@@ -37,5 +36,5 @@
 		<button label="Recusar"
 			onClick="@command('recusa')" />
 
-	</div>
+	</window>
 </zk>

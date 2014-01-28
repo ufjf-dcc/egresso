@@ -22,7 +22,7 @@ public class Aluno {
 	@GenericGenerator(name = "increment", strategy = "increment")
 	int id;
 
-	@Column(name = "matricula", unique = true, length = 15, nullable = true)
+	@Column(name = "matricula", unique = true, length = 15, nullable = false)
 	String matricula;
 
 	@Column(name = "nome", length = 65, nullable = false)

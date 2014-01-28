@@ -9,7 +9,6 @@ import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.zk.ui.event.Event;
-import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
@@ -52,18 +51,18 @@ public class AdminAlunosController {
 	}
 
 	@Command
-	public void changeEditableStatus(@BindingParam("aluno") Aluno departamento) {
-		if (!departamento.getEditingStatus()) {
+	public void changeEditableStatus(@BindingParam("aluno") Aluno aluno) {
+		if (!aluno.getEditingStatus()) {
 			Aluno temp = new Aluno();
-			temp.copiar(departamento);
-			editTemp.put(departamento.getId(), temp);
-			departamento.setEditingStatus(true);
+			temp.copiar(aluno);
+			editTemp.put(aluno.getId(), temp);
+			aluno.setEditingStatus(true);
 		} else {
-			departamento.copiar(editTemp.get(departamento.getId()));
-			editTemp.remove(departamento.getId());
-			departamento.setEditingStatus(false);
+			aluno.copiar(editTemp.get(aluno.getId()));
+			editTemp.remove(aluno.getId());
+			aluno.setEditingStatus(false);
 		}
-		refreshRowTemplate(departamento);
+		refreshRowTemplate(aluno);
 	}
 
 	@Command
@@ -71,8 +70,8 @@ public class AdminAlunosController {
 		if (alunoBusiness.validar(aluno, editTemp.get(aluno.getId())
 				.getMatricula())) {
 			if (!alunoBusiness.editar(aluno))
-				Messagebox.show("Não foi possível editar o departamento.",
-						"Erro", Messagebox.OK, Messagebox.ERROR);
+				Messagebox.show("Não foi possível editar o aluno.", "Erro",
+						Messagebox.OK, Messagebox.ERROR);
 			editTemp.remove(aluno.getId());
 			aluno.setEditingStatus(false);
 			refreshRowTemplate(aluno);
@@ -88,37 +87,74 @@ public class AdminAlunosController {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Command
 	public void delete(@BindingParam("aluno") final Aluno aluno) {
-		Messagebox.show(
-				"Você tem certeza que deseja deletar o aluno: "
-						+ aluno.getNome() + "?", "Confirmação", Messagebox.OK
-						| Messagebox.CANCEL, Messagebox.QUESTION,
-				new org.zkoss.zk.ui.event.EventListener() {
-					public void onEvent(Event e) {
-						if (Messagebox.ON_OK.equals(e.getName())) {
+		if (aluno.getFacebookId() != null)
+			Messagebox
+					.show("Você tem certeza que deseja deletar o(a) aluno(a): "
+							+ aluno.getNome()
+							+ ", já cadastrado(a) no sistema? (Note que isso acarretará na exclusão de todas as atividades dele(a) no sistema permanentemente.)",
+							"Confirmação", Messagebox.OK | Messagebox.CANCEL,
+							Messagebox.QUESTION,
+							new org.zkoss.zk.ui.event.EventListener() {
+								public void onEvent(Event e) {
+									if (Messagebox.ON_OK.equals(e.getName())) {
+										int index = filterAlunos.indexOf(aluno);
+										aluno.setFacebookId(null);
+										aluno.setUrlFoto(null);
+										if (alunoBusiness.editar(aluno)) {
+											filterAlunos.set(index, aluno);
+											notifyAlunos();
+											Messagebox
+													.show("O aluno foi excluído com sucesso.",
+															"Sucesso",
+															Messagebox.OK,
+															Messagebox.INFORMATION);
+										} else {
+											String errorMessage = "O aluno não pôde ser excluído.\n";
+											for (String error : alunoBusiness
+													.getErrors())
+												errorMessage += error;
+											Messagebox.show(errorMessage,
+													"Erro", Messagebox.OK,
+													Messagebox.ERROR);
+										}
 
-							if (alunoBusiness.exclui(aluno)) {
-								removeFromList(aluno);
-								Messagebox
-										.show("O departamento foi excluído com sucesso.",
-												"Sucesso", Messagebox.OK,
-												Messagebox.INFORMATION);
-							} else {
-								String errorMessage = "O departamento não pôde ser excluído.\n";
-								for (String error : alunoBusiness.getErrors())
-									errorMessage += error;
-								Messagebox.show(errorMessage, "Erro",
-										Messagebox.OK, Messagebox.ERROR);
+									}
+								}
+							});
+		else
+			Messagebox.show(
+					"Você tem certeza que deseja deletar o registro do aluno: "
+							+ aluno.getNome() + "?", "Confirmação",
+					Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION,
+					new org.zkoss.zk.ui.event.EventListener() {
+						public void onEvent(Event e) {
+							if (Messagebox.ON_OK.equals(e.getName())) {
+
+								if (alunoBusiness.exclui(aluno)) {
+									removeFromList(aluno);
+									notifyAlunos();
+									Messagebox
+											.show("O aluno foi excluído com sucesso.",
+													"Sucesso", Messagebox.OK,
+													Messagebox.INFORMATION);
+								} else {
+									String errorMessage = "O aluno não pôde ser excluído.\n";
+									for (String error : alunoBusiness
+											.getErrors())
+										errorMessage += error;
+									Messagebox.show(errorMessage, "Erro",
+											Messagebox.OK, Messagebox.ERROR);
+								}
+
 							}
-
 						}
-					}
-				});
+					});
 	}
 
 	public void removeFromList(Aluno aluno) {
 		filterAlunos.remove(aluno);
 		todosAlunos.remove(aluno);
-		BindUtils.postNotifyChange(null, null, this, "filterAlunos");
+		notifyAlunos();
 	}
 
 	public void refreshRowTemplate(Aluno aluno) {
@@ -130,11 +166,12 @@ public class AdminAlunosController {
 		filterAlunos = new ArrayList<Aluno>();
 		String filter = filterString.toLowerCase().trim();
 		for (Aluno c : todosAlunos) {
-			if (c.getNome().toLowerCase().contains(filter) || c.getMatricula().toLowerCase().contains(filter)) {
+			if (c.getNome().toLowerCase().contains(filter)
+					|| c.getMatricula().toLowerCase().contains(filter)) {
 				filterAlunos.add(c);
 			}
 		}
-		BindUtils.postNotifyChange(null, null, this, "filterAlunos");
+		notifyAlunos();
 	}
 
 	@Command
@@ -150,12 +187,10 @@ public class AdminAlunosController {
 				todosAlunos.add(novoAluno);
 				filterAlunos = todosAlunos;
 				notifyAlunos();
-				Clients.clearBusy(window);
 				Messagebox.show("Aluno adicionado com sucesso!", "Sucesso",
 						Messagebox.OK, Messagebox.INFORMATION);
 				limpa();
 			} else {
-				Clients.clearBusy(window);
 				Messagebox.show("Aluno não foi adicionado!", "Erro",
 						Messagebox.OK, Messagebox.ERROR);
 			}

@@ -10,10 +10,10 @@
 			mold="paging" autopaging="true" vflex="true">
 			<auxhead sclass="text-center">
 				<auxheader label="Alunos cadastrados no sistema"
-					colspan="4" />
+					colspan="5" />
 			</auxhead>
 			<auxhead>
-				<auxheader colspan="4">
+				<auxheader colspan="5">
 					<div>
 						<div style="float:left">
 							<textbox id="filtro"
@@ -29,23 +29,20 @@
 				</auxheader>
 			</auxhead>
 			<columns>
-				<column hflex="5" label="Nome" sort="auto(aluno.nome)" />
-				<column hflex="2" label="Matrícula"
+				<column width="50px" label="Foto" />
+				<column label="Nome" sort="auto(aluno.nome)" />
+				<column width="165px" label="Matrícula"
 					sort="auto(aluno.matricula)" />
-				<column hflex="1" label="Turma" />
-				<column width="165px" label="Ações" sort="" />
+				<column width="165px" label="Turma" />
+				<column width="165px" label="Ações" />
 			</columns>
 			<template name="editable">
 				<row>
-					<div>
-						<image src="@load(each.urlFoto)" height="50px" />
-						<textbox
-							value="@load(each.nome) @save(each.nome, before='confirm')" />
-					</div>
+					<image src="@load(each.urlFoto)" width="100%"/>
+					<textbox
+						value="@load(each.nome) @save(each.nome, before='confirm')" />
 					<textbox
 						value="@load(each.matricula) @save(each.matricula, before='confirm')" />
-
-
 					<combobox id="cmbTurma" width="100%" readonly="true"
 						model="@load(vm.turmas)" value="@load(each.turma.semestre)"
 						selectedItem="@bind(each.turma)">
@@ -53,24 +50,22 @@
 							<comboitem label="@load(each.semestre)" />
 						</template>
 					</combobox>
-					<div align="center">
-						<button label="OK"
+					<hlayout width="100%" hflex="true">
+						<button label="OK" hflex="1"
 							onClick="@command('confirm', aluno=each)" />
-						<button label="Cancelar"
+						<button label="Cancelar" hflex="1"
 							onClick="@command('changeEditableStatus', aluno=each)" />
-					</div>
+					</hlayout>
 				</row>
 			</template>
 			<template name="noneditable">
 				<row>
-					<div>
-						<image src="@load(each.urlFoto)" height="50px" />
-						<label value="@load(each.nome)" />
-					</div>
+					<image src="@load(each.urlFoto)" width="100%"/>
+					<label value="@load(each.nome)" />
 					<label value="@load(each.matricula)" />
 					<label value="@load(each.turma.semestre)" />
 					<vlayout width="100%">
-						<button label="Ver Perfil no Facebook"
+						<button label="Ver Perfil no Facebook" width="100%"
 							href="@load(each.linkFacebook)" />
 						<hlayout width="100%" hflex="true">
 							<button hflex="1" label="Editar"
@@ -89,7 +84,7 @@
 			<grid>
 				<columns>
 					<column hflex="1" />
-					<column hflex="2" />
+					<column hflex="1" />
 				</columns>
 				<rows>
 					<row>
