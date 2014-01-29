@@ -161,6 +161,7 @@ public class FbPerfilController {
 					Messagebox.OK, Messagebox.ERROR);
 			}
 		}
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Command
 	public void delete(@BindingParam("atuacao") final Atuacao atuacao) {
 		Messagebox.show(

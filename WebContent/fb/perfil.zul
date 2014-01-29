@@ -33,7 +33,8 @@
 				<column label="Local" sort="auto(atuacao.local)" />
 				<column label="Data Início" sort="auto(atuacao.dataInicio)" />
 				<column label="Data Término" sort="auto(atuacao.dataTermino)" />
-				
+				<column label="Tipo de Atuação" sort="auto(atuacao.dataTermino)" />
+			
 								
 				<column label="Opções" width="180px"/>
 			</columns>
@@ -47,6 +48,14 @@
 						value="@load(each.dataInicio) @save(each.dataInicio, before='confirm')" />
 						<datebox format="medium" onCreate="self.value = new Date()"
 						value="@load(each.dataTermino) @save(each.dataTermino, before='confirm')" />
+							<combobox id="cmbTipoAtuacao" width="100%"
+							readonly="true" model="@load(vm.tipoAtuacao)"
+							value="@load(vm.novaAtuacao.tipoAtuacao.nome ne null ? vm.novaAtuacao.tipoAtuacao.nome : 'Nenhum')"
+							selectedItem="@bind(vm.novaAtuacao.tipoAtuacao)">
+							<template name="model">
+								<comboitem label="@load(each.nome)" />
+							</template>
+						</combobox>
 					<div>
 						<button label="Confirmar"
 							onClick="@command('confirm', atuacao=each)" />
@@ -61,6 +70,10 @@
 					<label value="@load(each.local)" />
 					<label value="@load(each.dataInicio)" />
 					<label value="@load(each.dataTermino)" />
+					<label value="@load(each.tipoAtuacao.nome)" />
+					
+				
+					
 					
 				
 					<div align="center">
@@ -109,6 +122,7 @@
 							value="@load(vm.novaAtuacao.dataTermino)@save(vm.novaAtuacao.dataTermino, before='submitAtuacao')"
 							tabindex="1" id="dataTermino" width="100%" />
 					</row>
+					
 					<row>
 					<combobox id="cmbTipoAtuacao" width="100%"
 							readonly="true" model="@load(vm.tipoAtuacao)"

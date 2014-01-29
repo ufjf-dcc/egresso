@@ -15,7 +15,7 @@ public class AtuacaoDAO extends GenericoDAO implements IAtuacaoDAO {
 	public List<Atuacao> getTodas() {
 		try {
 			Query query = getSession().createQuery(
-					"SELECT a FROM Atuacao AS a ORDER BY a.id");
+					"SELECT a FROM Atuacao AS a LEFT JOIN fetch a.tipoAtuacao ORDER BY a.id");
 			List<Atuacao> atuacao = query.list();
 
 			getSession().close();

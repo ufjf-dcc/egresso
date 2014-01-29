@@ -127,8 +127,6 @@ public class Atuacao {
 		this.dataTermino = outra.dataTermino;
 		this.local = outra.local;
 		this.aluno = outra.aluno;
-
-		
 	}
 }
 
