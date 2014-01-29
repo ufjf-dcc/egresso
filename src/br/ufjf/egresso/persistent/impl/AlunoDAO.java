@@ -16,8 +16,8 @@ public class AlunoDAO extends GenericoDAO implements IAlunoDAO {
 		try {
 			Query query = getSession()
 					.createQuery(
-							"SELECT a FROM Aluno AS a LEFT JOIN FETCH a.turma WHERE a.facebookId = :idFacebook");
-			query.setParameter("idFacebook", facebookId);
+							"SELECT a FROM Aluno AS a LEFT JOIN FETCH a.turma WHERE a.facebookId = :facebookId");
+			query.setParameter("facebookId", facebookId);
 
 			Aluno aluno = (Aluno) query.uniqueResult();
 
@@ -113,6 +113,26 @@ public class AlunoDAO extends GenericoDAO implements IAlunoDAO {
 		}
 
 		return false;
+	}
+
+	public List<Aluno> buscaPorTurma(Turma turma) {
+		try {
+			Query query = getSession()
+					.createQuery(
+							"SELECT a FROM Aluno AS a LEFT JOIN FETCH a.turma WHERE a.turma = :turma AND a.facebookId IS NOT NULL");
+			query.setParameter("turma", turma);
+
+			@SuppressWarnings("unchecked")
+			List<Aluno> aluno = query.list();
+
+			getSession().close();
+
+			return aluno;
+		} catch (Exception e) {
+			System.out.println(e);
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

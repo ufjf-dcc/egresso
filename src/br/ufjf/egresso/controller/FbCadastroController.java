@@ -8,7 +8,9 @@ import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zul.Messagebox;
 
+import br.ufjf.egresso.business.AlunoBusiness;
 import br.ufjf.egresso.business.SolicitacaoBusiness;
+import br.ufjf.egresso.model.Aluno;
 import br.ufjf.egresso.model.Solicitacao;
 import br.ufjf.egresso.model.Turma;
 import br.ufjf.egresso.persistent.impl.TurmaDAO;
@@ -34,13 +36,33 @@ public class FbCadastroController {
 
 	@Command
 	public void solicitaCadastro() {
-		solicitacao.setUrlFoto(urlpic);
-		if (new SolicitacaoBusiness().salvar(solicitacao))
-			Executions.sendRedirect("/fb/solicitacao-em-espera.zul");
-		else
-			Messagebox
-					.show("Não foi possível solicitar po cadastro. Por favor, tente novamente mais tarde.",
-							"Erro", Messagebox.OK, Messagebox.ERROR);
+		SolicitacaoBusiness solicitacaoBusiness = new SolicitacaoBusiness();
+		if (solicitacaoBusiness.validar(solicitacao)) {
+			AlunoBusiness alunoBusiness = new AlunoBusiness();
+			Aluno aluno = alunoBusiness.buscaPorMatricula(solicitacao
+					.getMatricula());
+			if (aluno == null)
+				Messagebox
+						.show("Não temos registro de um aluno com matrícula "
+								+ solicitacao.getMatricula()
+								+ ". Certifique-se que digitou a matrícula corretamente.",
+								"Erro", Messagebox.OK, Messagebox.ERROR);
+			else if (aluno.getFacebookId() != null)
+				Messagebox.show("O aluno de matrícula " + aluno.getMatricula()
+						+ " já está cadastrado no aplicativo.", "Erro", Messagebox.OK,
+						Messagebox.ERROR);
+			else {
+				solicitacao.setUrlFoto(urlpic);
+				if (new SolicitacaoBusiness().salvar(solicitacao))
+					Executions.sendRedirect("/fb/solicitacao-em-espera.zul");
+				else
+					Messagebox
+							.show("Não foi possível solicitar po cadastro. Por favor, tente novamente mais tarde.",
+									"Erro", Messagebox.OK, Messagebox.ERROR);
+			}
+		} else
+			Messagebox.show("É necessário informar a matrícula e a turma.", "Erro", Messagebox.OK,
+					Messagebox.ERROR);
 	}
 
 	public Facebook getFacebook() {

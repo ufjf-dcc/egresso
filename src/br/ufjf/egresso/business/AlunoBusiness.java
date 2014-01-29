@@ -80,6 +80,10 @@ public class AlunoBusiness {
 	public Aluno buscaPorMatricula(String matricula) {
 		return alunoDao.buscaPorMatricula(matricula);
 	}
+	
+	public List<Aluno> buscaPorTurma(Turma turma) {
+		return alunoDao.buscaPorTurma(turma);
+	}
 
 	public boolean editar(Aluno aluno) {
 		return alunoDao.editar(aluno);

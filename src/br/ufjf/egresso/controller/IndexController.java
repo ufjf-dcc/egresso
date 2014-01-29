@@ -26,8 +26,8 @@ public class IndexController {
 	public void autentica() throws HibernateException, Exception {
 		String fbSecretKey = "39fa8aca462711f08f9eeaf084413a64";
 		String fbAppId = "679414068740684";
-		//String redirectUrl = "http://localhost:8080/egresso/fb/";
-		String redirectUrl = "http://200.131.219.47/egresso/fb/";
+		String redirectUrl = "http://localhost:8080/egresso/fb/";
+		//String redirectUrl = "http://monografias.nrc.ice.ufjf.br/egresso/fb/";
 		String fbCanvasPage = "https://apps.facebook.com/ufjf-dcc-egresso/";
 
 		if (Executions.getCurrent().getParameter("signed_request") != null) {
