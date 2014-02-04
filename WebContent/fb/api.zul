@@ -1,0 +1,33 @@
+<?page title="API" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="api" title="API" visible="false" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('br.ufjf.egresso.controller.ApiController')"
+		width="250px" border="normal" position="center,center" closable="true"
+		onClose="self.setVisible(false); event.stopPropagation();">
+		<grid>
+			<columns>
+				<column />
+			</columns>
+			<rows>
+				<row>
+					<button label="Atualizar status" onClick="@command('atualizarStatus')" width="100%" />
+				</row>
+				<row>
+					<button label="Postar link" onClick="@command('postLink')" width="100%" />
+				</row>
+				<row>
+					<button label="Postar link com título" disabled="true" onClick="@command('postLinkT')" width="100%" />
+				</row>
+				<row>
+					<button label="Postar link com título2" onClick="@command('postLinkT2')" width="100%" />
+				</row>
+				<row>
+					<button label="Postar link com título e descrição" disabled="true" onClick="@command('postLinkTD')" width="100%" />
+				</row>
+				<row>
+					<button label="Convidar amigos para o aplicativo" disabled="true" onClick="@command('convidar')" width="100%" />
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

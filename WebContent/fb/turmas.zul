@@ -1,14 +1,16 @@
 <?page title="Controle de Egresso UFJF - Home" contentType="text/html;charset=UTF-8"?>
 <?init class="br.ufjf.egresso.controller.FbAuthController"?>
 <zk xmlns:n="native">
+	<style src="/styles.css" />
 	<div apply="org.zkoss.bind.BindComposer" align="center" width="100%"
 		height="100%"
 		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbTurmaController')">
 		<include src="/templates/menu-aluno.zul" />
-		<grid model="@load(vm.alunosTurma) @template('alunosTurma')"
+		<grid model="@load(vm.alunos) @template('alunos')"
+			emptyMessage="@load(vm.emptyMessage)"
 			mold="paging" autopaging="true" vflex="true">
 			<auxhead>
-				<auxheader colspan="5">
+				<auxheader colspan="3">
 					<combobox id="cmbTurma" readonly="true"
 						style="float:right" model="@load(vm.turmas)"
 						value="@load(vm.turma.semestre)" selectedItem="@bind(vm.turma)">
@@ -16,9 +18,17 @@
 							<comboitem label="@load(each.semestre)" />
 						</template>
 					</combobox>
-					<label value="@bind(vm.aluno.nome)"
-						style="font-weight:bold" />
-					, seja bem vindo(a) ao Controle de Egressos da UFJF!
+					<div>
+						<label value="Listagem de alunos por semestre"
+							style="font-weight:bold" />
+						<space orient="vertical" width="10px" />
+						<textbox id="filtro"
+							value="@load(vm.pesquisa) @save(vm.pesquisa, before='pesquisar')" />
+						<button label="Pesquisar"
+							onClick="@command('pesquisar')" />
+						<button label="Limpar pesquisa" onClick="@command('limparPesquisa')" />
+						<button label="convidar" onClick="@command('convidar')" />
+					</div>
 				</auxheader>
 			</auxhead>
 			<columns>
@@ -26,7 +36,7 @@
 				<column hflex="1" label="Nome" sort="auto(aluno.nome)" />
 				<column width="100px" />
 			</columns>
-			<template name="alunosTurma">
+			<template name="alunos">
 				<row>
 					<image src="@load(each.urlFoto)" width="100%" />
 					<label value="@load(each.nome)" />

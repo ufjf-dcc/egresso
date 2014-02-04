@@ -9,13 +9,14 @@ import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
-import org.zkoss.zk.ui.Session;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
+import br.ufjf.egresso.business.AlunoBusiness;
 import br.ufjf.egresso.business.AtuacaoBusiness;
 import br.ufjf.egresso.model.Aluno;
 import br.ufjf.egresso.model.Atuacao;
@@ -29,18 +30,20 @@ public class FbPerfilController {
 
 	private Aluno aluno;
 	private AtuacaoBusiness atuacaoBusiness = new AtuacaoBusiness();
-	private List<Atuacao> todasAtuacoes =  atuacaoBusiness.getTodas();
+	private List<Atuacao> todasAtuacoes, filterAtuacoes;
 	private Atuacao novaAtuacao = new Atuacao();
 	private Map<Integer, Atuacao> editTemp = new HashMap<Integer, Atuacao>();
-	private List<Atuacao> filterAtuacoes = todasAtuacoes;
 	private String filterString = "";
 	private List<TipoAtuacao> tipoAtuacao = new TipoAtuacaoDAO().getTodas();
 	@Init
 	public void init() {
-		Session session = Sessions.getCurrent();
-		aluno = (Aluno) session.getAttribute("aluno");
-		if(todasAtuacoes == null)
-			todasAtuacoes = new ArrayList<Atuacao>();
+		String facebookId = (String) Executions.getCurrent().getParameter("id");
+		if(facebookId != null)
+			aluno = new AlunoBusiness().getAluno(facebookId);
+		else
+			aluno = (Aluno) Sessions.getCurrent().getAttribute("aluno");
+		todasAtuacoes = new AtuacaoBusiness().getPorAluno(aluno);
+		filterAtuacoes = todasAtuacoes;
 	}
 	public List<Atuacao> getFilterAtuacoes() {
 		return filterAtuacoes;

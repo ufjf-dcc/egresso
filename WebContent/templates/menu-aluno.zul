@@ -4,8 +4,13 @@
 		viewModel="@id('vm')@init('br.ufjf.egresso.controller.MenuController')">
 
 		<menubar orient="horizontal">
-			<menuitem label="Meu Perfil" href="/fb/perfil.zul" />
-			<menuitem label="Ver Turmas" href="/fb/turmas.zul" />
+			<menuitem label="@load(vm.saudacao)" />
+			<menuitem label="Meu perfil" href="/fb/perfil.zul" />
+			<menuitem label="Ver alunos por semestre"
+				href="/fb/turmas.zul" />
+			<menuitem label="Universidade Federal de Juiz de Fora"
+				href="http://www.ufjf.br" target="_blank" style="float:right" />
+			<menuitem label="API" onClick="@command('api')" />
 		</menubar>
 	</div>
 </zk>

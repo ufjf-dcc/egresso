@@ -1,21 +1,20 @@
 <?page title="Perfil do Aluno" contentType="text/html;charset=UTF-8"?>
 
 <zk>
+	<style src="/styles.css" />
 	<include src="/templates/menu-aluno.zul"/>
 	<div apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbPerfilController')"
 		height="100%">
 		<grid
 			model="@load(vm.filterAtuacoes) @template(each.editingStatus ? 'editable' : 'noneditable')"
-			mold="paging" autopaging="true" vflex="true">
-			<auxhead sclass="text-center">
-				<auxheader label="Atuacoes Cadastradas no sistema"
-					colspan="5" />
-			</auxhead>
+			mold="paging" autopaging="true" vflex="true" emptyMessage="Seus empregos, atividades e projetos serão listados aqui">
 			<auxhead>
-				<auxheader colspan="5">
+				<auxheader colspan="6">
 					<div>
 						<div style="float:left">
+							<label value="Atuacoes Cadastradas no sistema " style="font-weight:bold" />
+							<space orient="vertical" width="10px" />
 							<textbox id="filtro"
 								value="@bind(vm.filterString)" />
 							<button label="Pesquisar"
