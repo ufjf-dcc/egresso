@@ -6,14 +6,48 @@
 	<div apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbPerfilController')"
 		height="100%">
+		
+		<grid>
+
+		
+			<auxhead sclass="text-center">
+				<auxheader label="Perfil do Aluno " colspan="6" />
+			</auxhead>
+			<columns>
+				<column label="Nome" sort="auto(atuacao.aluno.nome)" />
+				<column label="Matricula" sort="auto(atuacao.aluno.matricula)" />
+				<column label="Turma" sort="auto(atuacao.aluno.turma.semestre)" />
+				<column label="Foto" sort="auto(atuacao.aluno.urlFoto)" />
+			
+				</columns>
+				<template name="teste">
+				<row>
+					<label value="@load(each.aluno.nome)" />
+					<label value="@load(each.aluno.matricula)" />
+					<label value="@load(each.aluno.turma.semestre)" />
+					<image src="@load(each.aluno.urlFoto)" width="100%"/>
+				</row>
+				</template>	
+			</grid>
 		<grid
 			model="@load(vm.filterAtuacoes) @template(each.editingStatus ? 'editable' : 'noneditable')"
-			mold="paging" autopaging="true" vflex="true" emptyMessage="Seus empregos, atividades e projetos serão listados aqui">
+
+			mold="paging" autopaging="true" vflex="true">
+			
+				
+					
+					
+			
+			<auxhead sclass="text-center">
+				<auxheader label="Atuacoes Cadastradas no sistema"
+					colspan="6" />
+			</auxhead>
+
 			<auxhead>
 				<auxheader colspan="6">
 					<div>
 						<div style="float:left">
-							<label value="Atuacoes Cadastradas no sistema " style="font-weight:bold" />
+							<label value="Pesquisar Atuações " style="font-weight:bold" />
 							<space orient="vertical" width="10px" />
 							<textbox id="filtro"
 								value="@bind(vm.filterString)" />
@@ -107,19 +141,19 @@
 						<label value="Local:" />
 						<textbox
 							value="@load(vm.novaAtuacao.local)@save(vm.novaAtuacao.local, before='submitAtuacao')"
-							tabindex="1" id="local" width="100%" />
+							tabindex="2" id="local" width="100%" />
 					</row>
 					<row>
 						<label value="Data Início:" />
 						<datebox format="medium" onCreate="self.value = new Date()"
 							value="@load(vm.novaAtuacao.dataInicio)@save(vm.novaAtuacao.dataInicio, before='submitAtuacao')"
-							tabindex="1" id="dataInicio" width="100%" />
+							tabindex="3" id="dataInicio" width="100%" />
 					</row>
 					<row>
 						<label value="Data Término:" />
 						<datebox format="medium" onCreate="self.value = new Date()"
 							value="@load(vm.novaAtuacao.dataTermino)@save(vm.novaAtuacao.dataTermino, before='submitAtuacao')"
-							tabindex="1" id="dataTermino" width="100%" />
+							tabindex="4" id="dataTermino" width="100%" />
 					</row>
 					
 					<row>
