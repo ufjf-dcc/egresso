@@ -25,6 +25,7 @@ public class AtuacaoBusiness {
 		errors.clear();
 
 		validaCargo(atuacao.getCargo());
+		validaLocal(atuacao.getLocal());
 		return errors.size() == 0;
 	}
 
@@ -32,6 +33,11 @@ public class AtuacaoBusiness {
 		if (cargo == null || cargo.trim().length() == 0)
 			errors.add("É necessário informar o cargo;\n");
 	}
+	private void validaLocal(String local) {
+		if (local == null || local.trim().length() == 0)
+			errors.add("É necessário informar o local;\n");
+	}
+	
 
 	public List<Atuacao> getPorAluno(Aluno aluno) {
 		return atuacaoDao.getPorAluno(aluno);
