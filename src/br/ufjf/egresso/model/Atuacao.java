@@ -29,6 +29,10 @@ public class Atuacao {
 
 	@Column(name = "data_final", nullable = true)
 	Date dataTermino;
+	
+	@Column(name = "atual", nullable = true)
+	int atual;
+	
 
 	@Column(name = "local", length = 45, nullable = true)
 	String local;
@@ -45,8 +49,25 @@ public class Atuacao {
 	private TipoAtuacao tipoAtuacao;
 	@Transient
 	private boolean editingStatus;
-
+	@Transient
+	private	boolean boolAtual;
 	
+	
+	public boolean getBoolAtual() {
+		return boolAtual;
+	}
+
+	public void setBoolAtual(boolean boolAtual) {
+		this.boolAtual = boolAtual;
+	}
+
+	public int getAtual() {
+		return atual;
+	}
+
+	public void setAtual(int i) {
+		this.atual = i;
+	}
 
 	public int getId() {
 		return id;

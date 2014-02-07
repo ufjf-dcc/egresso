@@ -35,6 +35,12 @@ public class FbPerfilController {
 	private Map<Integer, Atuacao> editTemp = new HashMap<Integer, Atuacao>();
 	private String filterString = "";
 	private List<TipoAtuacao> tipoAtuacao = new TipoAtuacaoDAO().getTodas();
+
+	
+	
+
+
+
 	@Init
 	public void init() {
 		String facebookId = (String) Executions.getCurrent().getParameter("id");
@@ -84,8 +90,9 @@ public class FbPerfilController {
 			if (c.getCargo().toLowerCase().contains(filter)) {
 				filterAtuacoes.add(c);
 			}
+			
 		}
-		BindUtils.postNotifyChange(null, null, this, "filterTurmas");
+		BindUtils.postNotifyChange(null, null, this, "filterAtuacoes");
 	}
 	@Command
 	public void changeEditableStatus(@BindingParam("atuacao") Atuacao atuacao) {
@@ -111,7 +118,11 @@ public class FbPerfilController {
 	@Command
 	public void submitAtuacao(@BindingParam("window") final Window window) {
 		novaAtuacao.setAluno(aluno);
-	
+		if(novaAtuacao.getBoolAtual()==true)
+			novaAtuacao.setAtual(1);
+		else
+			novaAtuacao.setAtual(0);
+		
 		if (atuacaoBusiness.validar(novaAtuacao)) {
 			if (atuacaoBusiness.salvar(novaAtuacao)) {
 				todasAtuacoes.add(novaAtuacao);
@@ -145,7 +156,7 @@ public class FbPerfilController {
 	public void removeFromList(Atuacao atuacao) {
 		filterAtuacoes.remove(atuacao);
 		todasAtuacoes.remove(atuacao);
-		BindUtils.postNotifyChange(null, null, this, "filterTurmas");
+		BindUtils.postNotifyChange(null, null, this, "filterAtuacoes");
 	}
 	@Command
 	public void confirm(@BindingParam("atuacao") Atuacao atuacao) {
@@ -194,6 +205,21 @@ public class FbPerfilController {
 					}
 				});
 	}
+	
+
+	@Command("limparPesquisaAtuacao")
+	public void limparPesquisaAtuacao() {
+		filterString = "";
+		filterAtuacoes = todasAtuacoes;
+		BindUtils.postNotifyChange(null, null, this, "filterAtuacoes");
+		BindUtils.postNotifyChange(null, null, this, "filterString");
+		
+		
+	}
+	
+
+
+
 
 
 }

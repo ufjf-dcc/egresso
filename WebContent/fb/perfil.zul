@@ -3,6 +3,11 @@
 <zk>
 	<style src="/styles.css" />
 	<include src="/templates/menu-aluno.zul" />
+	<zscript>
+	void hideDataTermino()
+	{
+	}
+	</zscript>
 	<div apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbPerfilController')"
 		height="100%">
@@ -44,11 +49,11 @@
 
 			<auxhead sclass="text-center">
 				<auxheader label="Atuacoes Cadastradas no sistema"
-					colspan="6" />
+					colspan="7" />
 			</auxhead>
 
 			<auxhead>
-				<auxheader colspan="6">
+				<auxheader colspan="7">
 					<div>
 						<div style="float:left">
 							<label value="Pesquisar Atuações "
@@ -58,6 +63,14 @@
 								value="@bind(vm.filterString)" />
 							<button label="Pesquisar"
 								onClick="@command('filtra')" />
+						</div>
+						<div style ="float :left">
+						
+							<space orient="vertical" width="10px" />
+							
+							<button label="Limpar Pesquisa"
+								onClick="@command('limparPesquisaAtuacao')" />
+						
 						</div>
 						<div style="float:right">
 							<button label="Cadastrar Atuação"
@@ -73,6 +86,9 @@
 					sort="auto(atuacao.dataInicio)" />
 				<column label="Data Término"
 					sort="auto(atuacao.dataTermino)" />
+					
+					<column label="Ocupação atual?"
+					sort="auto(atuacao.atual)" />	
 				<column label="Tipo de Atuação"
 					sort="auto(atuacao.dataTermino)" />
 
@@ -91,6 +107,8 @@
 					<datebox format="medium"
 						onCreate="self.value = new Date()"
 						value="@load(each.dataTermino) @save(each.dataTermino, before='confirm')" />
+						<textbox
+						value="@load( each.atual ne 0 ? 'Sim' : 'Não') @save(each.atual, before='confirm')" />
 					<combobox id="cmbTipoAtuacao" width="100%"
 						readonly="true" model="@load(vm.tipoAtuacao)"
 						value="@load(vm.novaAtuacao.tipoAtuacao.nome ne null ? vm.novaAtuacao.tipoAtuacao.nome : 'Nenhum')"
@@ -112,7 +130,8 @@
 					<label value="@load(each.cargo)" />
 					<label value="@load(each.local)" />
 					<label value="@load(each.dataInicio)" />
-					<label value="@load(each.dataTermino)" />
+					<label value="@load(each.dataTermino )" />
+					<label value="@load(each.atual ne 0? 'Sim' : 'Não' )" />
 					<label value="@load(each.tipoAtuacao.nome)" />
 
 
@@ -162,12 +181,18 @@
 					</row>
 					<row>
 						<label value="Data Término:" />
-						<datebox format="medium"
+						<datebox name="dt" format="medium"
 							onCreate="self.value = new Date()"
 							value="@load(vm.novaAtuacao.dataTermino)@save(vm.novaAtuacao.dataTermino, before='submitAtuacao')"
 							tabindex="4" id="dataTermino" width="100%" />
 					</row>
-
+					<row>
+					<hlayout>
+					<checkbox label="Ocupação Atual?"
+					value="@load(vm.novaAtuacao.tipoAtuacao.boolAtual" onCheck="hideDataTermino()"
+					checked="@bind(vm.novaAtuacao.boolAtual)"/>
+					</hlayout>
+					</row>
 					<row>
 					<label value="Tipo da Atuação:" />
 						<combobox id="cmbTipoAtuacao" width="100%"
