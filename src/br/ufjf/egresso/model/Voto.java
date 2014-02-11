@@ -30,7 +30,7 @@ public class Voto {
 	private Solicitacao solicitacao;
 
 	@Column(name = "resultado", nullable = true)
-	private Boolean resultado;
+	private boolean resultado;
 
 	public Aluno getAluno() {
 		return aluno;
@@ -56,11 +56,11 @@ public class Voto {
 		this.solicitacao = solicitacao;
 	}
 
-	public Boolean getResultado() {
+	public boolean getResultado() {
 		return resultado;
 	}
 
-	public void setResultado(Boolean resultado) {
+	public void setResultado(boolean resultado) {
 		this.resultado = resultado;
 	}
 

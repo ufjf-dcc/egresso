@@ -14,6 +14,8 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name = "tipoAtuacao")
 public class TipoAtuacao {
+	public static final int EMPREGO = 0, PROJETO = 1, FORMACAO = 2;
+	
 	@Id
 	@Column(name = "id", unique = true, nullable = false)
 	@GeneratedValue(generator = "increment")

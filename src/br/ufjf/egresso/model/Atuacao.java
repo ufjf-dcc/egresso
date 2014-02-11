@@ -24,20 +24,19 @@ public class Atuacao {
 	@GenericGenerator(name = "increment", strategy = "increment")
 	int id;
 
-	@Column(name = "data_inicio", nullable = true)
+	@Column(name = "data_inicio", nullable = false)
 	Date dataInicio;
 
 	@Column(name = "data_final", nullable = true)
 	Date dataTermino;
-	
-	@Column(name = "atual", nullable = true)
-	int atual;
-	
 
-	@Column(name = "local", length = 45, nullable = true)
+	@Column(name = "atual", nullable = true)
+	boolean atual;
+
+	@Column(name = "local", length = 45, nullable = false)
 	String local;
 
-	@Column(name = "cargo", length = 45, nullable = true)
+	@Column(name = "cargo", length = 45, nullable = false)
 	String cargo;
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -47,25 +46,15 @@ public class Atuacao {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "tipo_atuacao_id", nullable = false)
 	private TipoAtuacao tipoAtuacao;
+	
 	@Transient
 	private boolean editingStatus;
-	@Transient
-	private	boolean boolAtual;
-	
-	
-	public boolean getBoolAtual() {
-		return boolAtual;
-	}
 
-	public void setBoolAtual(boolean boolAtual) {
-		this.boolAtual = boolAtual;
-	}
-
-	public int getAtual() {
+	public boolean getAtual() {
 		return atual;
 	}
 
-	public void setAtual(int i) {
+	public void setAtual(boolean i) {
 		this.atual = i;
 	}
 
@@ -125,21 +114,14 @@ public class Atuacao {
 		this.aluno = aluno;
 	}
 
-	public TipoAtuacao getTipo_atuacao() {
-		return tipoAtuacao;
-	}
-
-	public void setTipo_atuacao(TipoAtuacao tipo_atuacao) {
-		this.tipoAtuacao = tipo_atuacao;
-	}
-	
-
 	public boolean getEditingStatus() {
 		return editingStatus;
 	}
+
 	public void setEditingStatus(boolean editingStatus) {
 		this.editingStatus = editingStatus;
 	}
+
 	public void copy(Atuacao outra) {
 		this.id = outra.id;
 		this.cargo = outra.cargo;
@@ -150,4 +132,3 @@ public class Atuacao {
 		this.aluno = outra.aluno;
 	}
 }
-

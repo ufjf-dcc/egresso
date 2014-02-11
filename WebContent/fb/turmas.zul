@@ -27,7 +27,6 @@
 						<button label="Pesquisar"
 							onClick="@command('pesquisar')" />
 						<button label="Limpar pesquisa" onClick="@command('limparPesquisa')" />
-						<button label="convidar" onClick="@command('convidar')" />
 					</div>
 				</auxheader>
 			</auxhead>
