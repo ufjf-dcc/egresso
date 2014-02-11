@@ -11,16 +11,20 @@
 		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbPerfilController')"
 		height="100%">
 		<div width="800px">
-			<groupbox mold="3d">
+			<groupbox mold="3d" closable="false"
+				style="margin-top:20px">
 				<caption label="Informações básicas" />
 				<hlayout>
-					<image src="@load(vm.aluno.urlFoto)" height="100px" />
-					<grid>
+					<image src="@load(vm.aluno.urlFoto)" height="150px" />
+					<grid hflex="1">
 						<rows>
 							<row>
 								<div>
 									<label value="Nome : " />
 									<label value="@load(vm.aluno.nome)" />
+									<button label="Perfil no Facebook"
+										href="@load(vm.aluno.linkFacebook)" target="_blank"
+										style="float:right" />
 								</div>
 							</row>
 							<row>
@@ -48,7 +52,7 @@
 					mold="paging" vflex="true">
 
 					<auxhead>
-						<auxheader colspan="6">
+						<auxheader colspan="5">
 							<div>
 								<div style="float:left">
 									<label value="Pesquisar empregos "
@@ -58,15 +62,16 @@
 									<textbox id="filtro"
 										value="@bind(vm.filterString)" />
 									<button label="Pesquisar"
-										onClick="@command('filtra')" />
+										onClick="@command('filtraEmpregos')" />
 								</div>
 								<div style="float :left">
 									<space orient="vertical"
 										width="10px" />
 									<button label="Limpar Pesquisa"
-										onClick="@command('limparPesquisaAtuacao')" />
+										onClick="@command('limparPesquisaEmprego')" />
 								</div>
-								<div style="float:right">
+								<div visible="@load(vm.podeEditar)"
+									style="float:right">
 									<button label="Cadastrar Emprego"
 										onClick="@command('addEmprego', window=addAtuacao)" />
 								</div>
@@ -74,15 +79,14 @@
 						</auxheader>
 					</auxhead>
 					<columns>
-						<column label="Cargo"
-							sort="auto(atuacao.cargo)" />
-						<column label="Local"
-							sort="auto(atuacao.local)" />
-						<column label="Data Início"
-							sort="auto(atuacao.dataInicio)" />
-						<column label="Data Término"
-							sort="auto(atuacao.dataTermino)" />
-						<column label="Opções" width="180px" />
+						<column label="Cargo" sort="auto(cargo)" />
+						<column label="Local" sort="auto(local)" />
+						<column label="Data Início" width="150px"
+							sort="auto(dataInicio)" />
+						<column label="Data Término" width="150px"
+							sort="auto(dataTermino)" />
+						<column label="Opções" width="180px"
+							visible="@load(vm.podeEditar)" />
 					</columns>
 					<template name="editable">
 						<row>
@@ -97,7 +101,7 @@
 								<datebox format="medium"
 									onCreate="self.value = new Date()"
 									value="@load(each.dataTermino) @save(each.dataTermino, before='confirm')" />
-								<checkbox label="Até a data presente"
+								<checkbox label="Atual"
 									checked="@load(each.atual) @save(each.atual,before='confirm' )"
 									onCheck="@command('dataTermino', atuacao=each, checkbox=self, datebox=self.previousSibling)" />
 							</div>
@@ -126,7 +130,7 @@
 					</template>
 				</grid>
 			</groupbox>
-			
+
 			<groupbox mold="3d" style="margin-top:20px">
 				<caption label="Formação" />
 				<grid
@@ -134,7 +138,7 @@
 					mold="paging" vflex="true">
 
 					<auxhead>
-						<auxheader colspan="6">
+						<auxheader colspan="5">
 							<div>
 								<div style="float:left">
 									<label value="Pesquisar "
@@ -144,15 +148,16 @@
 									<textbox
 										value="@bind(vm.filterString)" />
 									<button label="Pesquisar"
-										onClick="@command('filtra')" />
+										onClick="@command('filtraFormacoes')" />
 								</div>
 								<div style="float :left">
 									<space orient="vertical"
 										width="10px" />
 									<button label="Limpar Pesquisa"
-										onClick="@command('limparPesquisaAtuacao')" />
+										onClick="@command('limparPesquisaFormacao')" />
 								</div>
-								<div style="float:right">
+								<div visible="@load(vm.podeEditar)"
+									style="float:right">
 									<button label="Cadastrar Formação"
 										onClick="@command('addFormacao', window=addAtuacao, tipo=2)" />
 								</div>
@@ -160,15 +165,14 @@
 						</auxheader>
 					</auxhead>
 					<columns>
-						<column label="Cargo"
-							sort="auto(atuacao.cargo)" />
-						<column label="Local"
-							sort="auto(atuacao.local)" />
-						<column label="Data Início"
-							sort="auto(atuacao.dataInicio)" />
-						<column label="Data Término"
-							sort="auto(atuacao.dataTermino)" />
-						<column label="Opções" width="180px" />
+						<column label="Cargo" sort="auto(cargo)" />
+						<column label="Local" sort="auto(local)" />
+						<column label="Data Início" width="150px"
+							sort="auto(dataInicio)" />
+						<column label="Data Término" width="150px"
+							sort="auto(dataTermino)" />
+						<column label="Opções" width="180px"
+							visible="@load(vm.podeEditar)" />
 					</columns>
 					<template name="editable">
 						<row>
@@ -183,7 +187,7 @@
 								<datebox format="medium"
 									onCreate="self.value = new Date()"
 									value="@load(each.dataTermino) @save(each.dataTermino, before='confirm')" />
-								<checkbox label="Até a data presente"
+								<checkbox label="Atual"
 									checked="@load(each.atual) @save(each.atual,before='confirm' )"
 									onCheck="@command('dataTermino', atuacao=each, checkbox=self, datebox=self.previousSibling)" />
 							</div>
@@ -212,7 +216,7 @@
 					</template>
 				</grid>
 			</groupbox>
-			
+
 			<groupbox mold="3d" style="margin-top:20px">
 				<caption label="Projetos" />
 				<grid
@@ -220,7 +224,7 @@
 					mold="paging" vflex="true">
 
 					<auxhead>
-						<auxheader colspan="6">
+						<auxheader colspan="5">
 							<div>
 								<div style="float:left">
 									<label value="Pesquisar"
@@ -230,15 +234,16 @@
 									<textbox
 										value="@bind(vm.filterString)" />
 									<button label="Pesquisar"
-										onClick="@command('filtra')" />
+										onClick="@command('filtraProjetos')" />
 								</div>
 								<div style="float :left">
 									<space orient="vertical"
 										width="10px" />
 									<button label="Limpar Pesquisa"
-										onClick="@command('limparPesquisaAtuacao')" />
+										onClick="@command('limparPesquisaProjeto')" />
 								</div>
-								<div style="float:right">
+								<div style="float:right"
+									visible="@load(vm.podeEditar)">
 									<button label="Cadastrar Projeto"
 										onClick="@command('addProjeto', window=addAtuacao, tipo=2)" />
 								</div>
@@ -246,15 +251,14 @@
 						</auxheader>
 					</auxhead>
 					<columns>
-						<column label="Cargo"
-							sort="auto(atuacao.cargo)" />
-						<column label="Local"
-							sort="auto(atuacao.local)" />
-						<column label="Data Início"
-							sort="auto(atuacao.dataInicio)" />
-						<column label="Data Término"
-							sort="auto(atuacao.dataTermino)" />
-						<column label="Opções" width="180px" />
+						<column label="Cargo" sort="auto(cargo)" />
+						<column label="Local" sort="auto(local)" />
+						<column label="Data Início" width="150px"
+							sort="auto(dataInicio)" />
+						<column label="Data Término" width="150px"
+							sort="auto(dataTermino)" />
+						<column label="Opções" width="180px"
+							visible="@load(vm.podeEditar)" />
 					</columns>
 					<template name="editable">
 						<row>
@@ -268,10 +272,11 @@
 							<div>
 								<datebox format="medium"
 									onCreate="self.value = new Date()"
+									disabled="@load(self.nextSibling.checked)"
 									value="@load(each.dataTermino) @save(each.dataTermino, before='confirm')" />
-								<checkbox label="Até a data presente"
+								<checkbox label="Atual"
 									checked="@load(each.atual) @save(each.atual,before='confirm' )"
-									onCheck="@command('dataTermino', atuacao=each, checkbox=self, datebox=self.previousSibling)" />
+									onCheck="@command('dataTermino', checkbox=self, datebox=self.previousSibling)" />
 							</div>
 							<div>
 								<button label="Confirmar"
@@ -301,9 +306,9 @@
 		</div>
 
 
-		<window id="addAtuacao" title="Cadastrar"
-			visible="false" width="350px" border="normal"
-			position="center,center" closable="true"
+		<window id="addAtuacao" title="Cadastrar" visible="false"
+			width="350px" border="normal" position="center,center"
+			closable="true"
 			onClose="self.setVisible(false); event.stopPropagation();">
 			<grid>
 				<columns>
@@ -320,14 +325,14 @@
 					<row>
 						<label value="Local:" />
 						<textbox
-							value="@load(vm.novaAtuacao.local)@save(vm.novaAtuacao.local, before='submitAtuacao')"
+							value="@load(vm.novaAtuacao.local) @save(vm.novaAtuacao.local, before='submitAtuacao')"
 							tabindex="2" id="local" width="100%" />
 					</row>
 					<row>
 						<label value="Data Início:" />
 						<datebox format="medium"
 							onCreate="self.value = new Date()"
-							value="@load(vm.novaAtuacao.dataInicio)@save(vm.novaAtuacao.dataInicio, before='submitAtuacao')"
+							value="@load(vm.novaAtuacao.dataInicio) @save(vm.novaAtuacao.dataInicio, before='submitAtuacao')"
 							tabindex="3" id="dataInicio" width="100%" />
 					</row>
 					<row>
@@ -338,8 +343,8 @@
 								value="@load(vm.novaAtuacao.dataTermino)@save(vm.novaAtuacao.dataTermino, before='submitAtuacao')"
 								tabindex="4" id="dataTermino" />
 							<checkbox label="Atual"
-								checked="@load(each.atual) @save(each.atual,before='confirm' )"
-								onCheck="@command('dataTermino', atuacao=each, checkbox=self, datebox=self.previousSibling)" />
+								checked="@load(vm.novaAtuacao.atual) @save(vm.novaAtuacao.atual,before='confirm' )"
+								onCheck="@command('dataTermino', checkbox=self, datebox=self.previousSibling)" />
 						</div>
 					</row>
 				</rows>

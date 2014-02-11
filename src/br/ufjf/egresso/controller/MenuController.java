@@ -9,22 +9,19 @@ import org.zkoss.zul.Window;
 import br.ufjf.egresso.model.Aluno;
 
 public class MenuController {
-	private String saudacao;
+	private Aluno aluno;
 
 	@Init
 	public void init() {
-		Aluno aluno = (Aluno) Sessions.getCurrent().getAttribute("aluno");
-		if (aluno != null)
-			saudacao = aluno.getNome()
-					+ ", seja bem vindo(a) ao Controle de Egressos da UFJF!";
+		aluno = (Aluno) Sessions.getCurrent().getAttribute("aluno");
 	}
 
-	public String getSaudacao() {
-		return saudacao;
+	public Aluno getAluno() {
+		return aluno;
 	}
 
-	public void setSaudacao(String saudacao) {
-		this.saudacao = saudacao;
+	public void setAluno(Aluno aluno) {
+		this.aluno = aluno;
 	}
 
 	@Command
@@ -32,12 +29,12 @@ public class MenuController {
 		Sessions.getCurrent().invalidate();
 		Executions.sendRedirect("/index.zul");
 	}
-	
+
 	@Command
-	public void api(){
-		Window window = (Window)Executions.createComponents(
-                "/fb/api.zul", null, null);
-        window.doModal();
+	public void api() {
+		Window window = (Window) Executions.createComponents("/fb/api.zul",
+				null, null);
+		window.doModal();
 	}
 
 }

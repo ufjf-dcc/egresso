@@ -36,37 +36,43 @@ public class FbPerfilController {
 	private String filterString = "";
 	private Atuacao atuacaoAtual;
 	private List<TipoAtuacao> tipoAtuacao = new TipoAtuacaoDAO().getTodas();
+	private boolean podeEditar = false;
 
 	@Init
 	public void init() {
 		String facebookId = (String) Executions.getCurrent().getParameter("id");
 		if (facebookId != null)
 			aluno = new AlunoBusiness().getAluno(facebookId);
-		else
+		else {
 			aluno = (Aluno) Sessions.getCurrent().getAttribute("aluno");
-		List<Atuacao> todasAtuacoes = new AtuacaoBusiness().getPorAluno(aluno);
-		for (Atuacao a : todasAtuacoes){
-			if (a.getAtual()) {
-				atuacaoAtual = a;
-				break;
-			}
-			
-			switch(a.getTipoAtuacao().getId()){
-			case TipoAtuacao.EMPREGO:
-				empregos.add(a);
-				break;
-			case TipoAtuacao.PROJETO:
-				projetos.add(a);
-				break;
-			case TipoAtuacao.FORMACAO:
-				formacoes.add(a);
-				break;
-			}
+			podeEditar = true;
 		}
+		List<Atuacao> todasAtuacoes = new AtuacaoBusiness().getPorAluno(aluno);
+		if(todasAtuacoes != null)
+			for (Atuacao a : todasAtuacoes){
+				if (a.getAtual())
+					atuacaoAtual = a;
+				
+				switch(a.getTipoAtuacao().getId()){
+				case TipoAtuacao.EMPREGO:
+					empregos.add(a);
+					break;
+				case TipoAtuacao.PROJETO:
+					projetos.add(a);
+					break;
+				case TipoAtuacao.FORMACAO:
+					formacoes.add(a);
+					break;
+				}
+			}
 		
 		filtraEmpregos = empregos;
 		filtraProjetos = projetos;
 		filtraFormacoes = formacoes;
+	}
+
+	public boolean isPodeEditar() {
+		return podeEditar;
 	}
 
 	public String getFilterString() {
@@ -122,7 +128,7 @@ public class FbPerfilController {
 		filtraEmpregos = new ArrayList<Atuacao>();
 		String filter = filterString.toLowerCase().trim();
 		for (Atuacao c : empregos) {
-			if (c.getCargo().toLowerCase().contains(filter)) {
+			if (c.getCargo().toLowerCase().contains(filter) || c.getLocal().toLowerCase().contains(filter)) {
 				filtraEmpregos.add(c);
 			}
 
@@ -135,7 +141,7 @@ public class FbPerfilController {
 		filtraProjetos = new ArrayList<Atuacao>();
 		String filter = filterString.toLowerCase().trim();
 		for (Atuacao c : projetos) {
-			if (c.getCargo().toLowerCase().contains(filter)) {
+			if (c.getCargo().toLowerCase().contains(filter) || c.getLocal().toLowerCase().contains(filter)) {
 				filtraProjetos.add(c);
 			}
 
@@ -148,7 +154,7 @@ public class FbPerfilController {
 		filtraFormacoes = new ArrayList<Atuacao>();
 		String filter = filterString.toLowerCase().trim();
 		for (Atuacao c : formacoes) {
-			if (c.getCargo().toLowerCase().contains(filter)) {
+			if (c.getCargo().toLowerCase().contains(filter) || c.getLocal().toLowerCase().contains(filter)) {
 				filtraFormacoes.add(c);
 			}
 
@@ -247,6 +253,7 @@ public class FbPerfilController {
 
 	public void limpa() {
 		novaAtuacao = new Atuacao();
+		novaAtuacao.setAtual(false);
 		BindUtils.postNotifyChange(null, null, this, "novaAtuacao");
 	}
 
@@ -355,8 +362,7 @@ public class FbPerfilController {
 	}
 
 	@Command
-	public void dataTermino(@BindingParam("atuacao") Atuacao atuacao,
-			@BindingParam("checkbox") Checkbox checkbox,
+	public void dataTermino(@BindingParam("checkbox") Checkbox checkbox,
 			@BindingParam("datebox") Datebox datebox) {
 		datebox.setDisabled(checkbox.isChecked());
 		if (checkbox.isChecked())

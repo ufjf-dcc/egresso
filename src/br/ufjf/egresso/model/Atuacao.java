@@ -54,8 +54,8 @@ public class Atuacao {
 		return atual;
 	}
 
-	public void setAtual(boolean i) {
-		this.atual = i;
+	public void setAtual(boolean atual) {
+		this.atual = atual;
 	}
 
 	public int getId() {
