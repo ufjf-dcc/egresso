@@ -107,12 +107,13 @@
 					<datebox format="medium"
 						onCreate="self.value = new Date()"
 						value="@load(each.dataTermino) @save(each.dataTermino, before='confirm')" />
-						<textbox
-						value="@load( each.atual ne 0 ? 'Sim' : 'Não') @save(each.atual, before='confirm')" />
+							<checkbox label="Ocupação Atual?"
+					value="@load(each.boolAtual)" checked ="@save(each.boolAtual,before='confirm' )"
+					/>
 					<combobox id="cmbTipoAtuacao" width="100%"
 						readonly="true" model="@load(vm.tipoAtuacao)"
-						value="@load(vm.novaAtuacao.tipoAtuacao.nome ne null ? vm.novaAtuacao.tipoAtuacao.nome : 'Nenhum')"
-						selectedItem="@bind(vm.novaAtuacao.tipoAtuacao)">
+						value="@load(each.tipoAtuacao.nome ne null ? each.tipoAtuacao.nome : 'Nenhum') @save(each.tipoAtuacao.nome, before='confirm')"
+						>
 						<template name="model">
 							<comboitem label="@load(each.nome)" />
 						</template>
