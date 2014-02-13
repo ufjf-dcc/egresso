@@ -11,8 +11,8 @@
 					<div>
 						<label
 							value="Solicitações de cadastro em aberto" />
-						<button label="Analisar todas"
-							onClick="@command('analisar')" style="float:right" />
+						<!-- <button label="Analisar todas"
+							onClick="@command('analisar')" style="float:right" /> -->
 					</div>
 				</auxheader>
 			</auxhead>

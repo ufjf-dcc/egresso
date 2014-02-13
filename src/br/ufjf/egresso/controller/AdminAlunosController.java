@@ -14,6 +14,7 @@ import org.zkoss.zul.Window;
 
 import br.ufjf.egresso.business.AlunoBusiness;
 import br.ufjf.egresso.business.TurmaBusiness;
+import br.ufjf.egresso.business.AtuacaoBusiness;
 import br.ufjf.egresso.model.Aluno;
 import br.ufjf.egresso.model.Turma;
 
@@ -101,13 +102,16 @@ public class AdminAlunosController {
 										aluno.setFacebookId(null);
 										aluno.setUrlFoto(null);
 										if (alunoBusiness.editar(aluno)) {
-											filterAlunos.set(index, aluno);
-											notifyAlunos();
-											Messagebox
-													.show("O aluno foi excluído com sucesso.",
-															"Sucesso",
-															Messagebox.OK,
-															Messagebox.INFORMATION);
+											if (new AtuacaoBusiness()
+													.excluiPorAluno(aluno)) {
+												filterAlunos.set(index, aluno);
+												notifyAlunos();
+												Messagebox
+														.show("O aluno foi excluído com sucesso.",
+																"Sucesso",
+																Messagebox.OK,
+																Messagebox.INFORMATION);
+											}
 										} else {
 											String errorMessage = "O aluno não pôde ser excluído.\n";
 											for (String error : alunoBusiness

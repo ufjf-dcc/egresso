@@ -42,6 +42,10 @@ public class AtuacaoBusiness {
 	public List<Atuacao> getPorAluno(Aluno aluno) {
 		return atuacaoDao.getPorAluno(aluno);
 	}
+	
+	public boolean excluiPorAluno(Aluno aluno){
+		return atuacaoDao.excluiPorAluno(aluno);
+	}
 
 	public boolean editar(Atuacao atuacao) {
 		return atuacaoDao.editar(atuacao);

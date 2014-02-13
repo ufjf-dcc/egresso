@@ -46,5 +46,20 @@ public class AtuacaoDAO extends GenericoDAO implements IAtuacaoDAO {
 		return null;
 	}
 
+	public boolean excluiPorAluno(Aluno aluno) {
+		try {
+		Query query = getSession().createQuery("DELETE Atuacao WHERE aluno = :aluno");
+		query.setParameter("aluno", aluno);
+		query.executeUpdate();
+
+		getSession().close();
+		return true;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}		
+	}
+
 	
 }
