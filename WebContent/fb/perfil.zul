@@ -3,10 +3,6 @@
 <zk>
 	<style src="/styles.css" />
 	<include src="/templates/menu-aluno.zul" />
-	<zscript>
-	void hideDataTermino() {
-	}
-</zscript>
 	<div apply="org.zkoss.bind.BindComposer" width="100%" align="center"
 		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbPerfilController')"
 		height="100%">
