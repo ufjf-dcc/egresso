@@ -9,6 +9,7 @@ import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zul.Button;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
@@ -87,10 +88,10 @@ public class AdminAlunosController {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Command
-	public void delete(@BindingParam("aluno") final Aluno aluno) {
+	public void delete(@BindingParam("aluno") final Aluno aluno,@BindingParam("button") final  Button button) {
 		if (aluno.getFacebookId() != null)
 			Messagebox
-					.show("Você tem certeza que deseja deletar o(a) aluno(a): "
+					.show("Você tem certeza que deseja desvincular o(a) perfil do aluno(a): "
 							+ aluno.getNome()
 							+ ", já cadastrado(a) no sistema? (Note que isso acarretará na exclusão de todas as atividades dele(a) no sistema permanentemente.)",
 							"Confirmação", Messagebox.OK | Messagebox.CANCEL,
@@ -105,12 +106,14 @@ public class AdminAlunosController {
 											if (new AtuacaoBusiness()
 													.excluiPorAluno(aluno)) {
 												filterAlunos.set(index, aluno);
+												
 												notifyAlunos();
 												Messagebox
 														.show("O aluno foi excluído com sucesso.",
 																"Sucesso",
 																Messagebox.OK,
 																Messagebox.INFORMATION);
+																
 											}
 										} else {
 											String errorMessage = "O aluno não pôde ser excluído.\n";
@@ -210,7 +213,8 @@ public class AdminAlunosController {
 	public void notifyAlunos() {
 		BindUtils.postNotifyChange(null, null, this, "filterAlunos");
 	}
-
+	
+	
 	public void limpa() {
 		novoAluno = new Aluno();
 		BindUtils.postNotifyChange(null, null, this, "novoAluno");

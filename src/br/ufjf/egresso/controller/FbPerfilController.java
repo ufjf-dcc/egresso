@@ -337,29 +337,7 @@ public class FbPerfilController {
 				});
 	}
 
-	@Command("limparPesquisaEmprego")
-	public void limparPesquisaEmprego() {
-		filterString = "";
-		filtraEmpregos = empregos;
-		BindUtils.postNotifyChange(null, null, this, "filtraEmpregos");
-		BindUtils.postNotifyChange(null, null, this, "filterString");
-	}
-	
-	@Command("limparPesquisaProjeto")
-	public void limparPesquisaProjeto() {
-		filterString = "";
-		filtraProjetos = projetos;
-		BindUtils.postNotifyChange(null, null, this, "filtraProjetos");
-		BindUtils.postNotifyChange(null, null, this, "filterString");
-	}
-	
-	@Command("limparPesquisaFormacao")
-	public void limparPesquisaFormacao() {
-		filterString = "";
-		filtraFormacoes = formacoes;
-		BindUtils.postNotifyChange(null, null, this, "filtraFormacoes");
-		BindUtils.postNotifyChange(null, null, this, "filterString");
-	}
+
 
 	@Command
 	public void dataTermino(@BindingParam("checkbox") Checkbox checkbox,

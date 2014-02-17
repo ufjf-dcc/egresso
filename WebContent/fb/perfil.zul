@@ -51,22 +51,7 @@
 					<auxhead>
 						<auxheader colspan="5">
 							<div>
-								<div style="float:left">
-									<label value="Pesquisar empregos "
-										style="font-weight:bold" />
-									<space orient="vertical"
-										width="10px" />
-									<textbox id="filtro"
-										value="@bind(vm.filterString)" />
-									<button label="Pesquisar"
-										onClick="@command('filtraEmpregos')" />
-								</div>
-								<div style="float :left">
-									<space orient="vertical"
-										width="10px" />
-									<button label="Limpar Pesquisa"
-										onClick="@command('limparPesquisaEmprego')" />
-								</div>
+								
 								<div visible="@load(vm.podeEditar)"
 									style="float:right">
 									<button label="Cadastrar Emprego"
@@ -137,22 +122,7 @@
 					<auxhead>
 						<auxheader colspan="5">
 							<div>
-								<div style="float:left">
-									<label value="Pesquisar "
-										style="font-weight:bold" />
-									<space orient="vertical"
-										width="10px" />
-									<textbox
-										value="@bind(vm.filterString)" />
-									<button label="Pesquisar"
-										onClick="@command('filtraFormacoes')" />
-								</div>
-								<div style="float :left">
-									<space orient="vertical"
-										width="10px" />
-									<button label="Limpar Pesquisa"
-										onClick="@command('limparPesquisaFormacao')" />
-								</div>
+								
 								<div visible="@load(vm.podeEditar)"
 									style="float:right">
 									<button label="Cadastrar Formação"
@@ -223,22 +193,7 @@
 					<auxhead>
 						<auxheader colspan="5">
 							<div>
-								<div style="float:left">
-									<label value="Pesquisar"
-										style="font-weight:bold" />
-									<space orient="vertical"
-										width="10px" />
-									<textbox
-										value="@bind(vm.filterString)" />
-									<button label="Pesquisar"
-										onClick="@command('filtraProjetos')" />
-								</div>
-								<div style="float :left">
-									<space orient="vertical"
-										width="10px" />
-									<button label="Limpar Pesquisa"
-										onClick="@command('limparPesquisaProjeto')" />
-								</div>
+								
 								<div style="float:right"
 									visible="@load(vm.podeEditar)">
 									<button label="Cadastrar Projeto"
@@ -301,6 +256,7 @@
 				</grid>
 			</groupbox>
 		</div>
+	
 
 
 		<window id="addAtuacao" title="Cadastrar" visible="false"

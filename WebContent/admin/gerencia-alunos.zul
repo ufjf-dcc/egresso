@@ -70,8 +70,8 @@
 						<hlayout width="100%" hflex="true">
 							<button hflex="1" label="Editar"
 								onClick="@command('changeEditableStatus', aluno=each)" />
-							<button hflex="1" label="Excluir"
-								onClick="@command('delete', aluno=each)" />
+							<button hflex="1" label="Desvincular"
+								onClick="@command('delete', aluno=each, button=self)" />
 						</hlayout>
 					</vlayout>
 				</row>
