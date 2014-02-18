@@ -88,8 +88,9 @@ public class AdminAlunosController {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Command
-	public void delete(@BindingParam("aluno") final Aluno aluno,@BindingParam("button") final  Button button) {
-		if (aluno.getFacebookId() != null)
+	public void delete (@BindingParam("button") final  Button button,
+	@BindingParam("aluno") final Aluno aluno) {
+		if (aluno.getFacebookId() != null){
 			Messagebox
 					.show("Você tem certeza que deseja desvincular o(a) perfil do aluno(a): "
 							+ aluno.getNome()
@@ -99,6 +100,7 @@ public class AdminAlunosController {
 							new org.zkoss.zk.ui.event.EventListener() {
 								public void onEvent(Event e) {
 									if (Messagebox.ON_OK.equals(e.getName())) {
+										
 										int index = filterAlunos.indexOf(aluno);
 										aluno.setFacebookId(null);
 										aluno.setUrlFoto(null);
@@ -113,7 +115,7 @@ public class AdminAlunosController {
 																"Sucesso",
 																Messagebox.OK,
 																Messagebox.INFORMATION);
-																
+												
 											}
 										} else {
 											String errorMessage = "O aluno não pôde ser excluído.\n";
@@ -128,7 +130,7 @@ public class AdminAlunosController {
 									}
 								}
 							});
-		else
+		}else{
 			Messagebox.show(
 					"Você tem certeza que deseja deletar o registro do aluno: "
 							+ aluno.getNome() + "?", "Confirmação",
@@ -144,6 +146,8 @@ public class AdminAlunosController {
 											.show("O aluno foi excluído com sucesso.",
 													"Sucesso", Messagebox.OK,
 													Messagebox.INFORMATION);
+												
+													
 								} else {
 									String errorMessage = "O aluno não pôde ser excluído.\n";
 									for (String error : alunoBusiness
@@ -156,6 +160,7 @@ public class AdminAlunosController {
 							}
 						}
 					});
+		}
 	}
 
 	public void removeFromList(Aluno aluno) {
@@ -213,6 +218,7 @@ public class AdminAlunosController {
 	public void notifyAlunos() {
 		BindUtils.postNotifyChange(null, null, this, "filterAlunos");
 	}
+	
 	
 	
 	public void limpa() {

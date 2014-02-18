@@ -3,7 +3,7 @@ package br.ufjf.egresso.business;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.HibernateException;
+
 
 import br.ufjf.egresso.model.Turma;
 import br.ufjf.egresso.persistent.impl.TurmaDAO;
