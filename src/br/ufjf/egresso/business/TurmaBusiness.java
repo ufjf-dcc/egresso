@@ -5,6 +5,7 @@ import java.util.List;
 
 
 
+
 import br.ufjf.egresso.model.Turma;
 import br.ufjf.egresso.persistent.impl.TurmaDAO;
 
@@ -45,6 +46,10 @@ public class TurmaBusiness {
 	private void validaSemestre(String semestre) {
 		if (semestre == null || semestre.trim().length() == 0)
 			errors.add("É necessário informar o semestre da turma;\n");
+	}
+
+	public Turma getTurma(int ano, int semestre) {
+		return turmaDao.getTurma(ano, semestre);
 	}
 
 }

@@ -17,7 +17,7 @@
 					<div>
 						<div style="float:left">
 							<textbox id="filtro"
-								value="@bind(vm.filterString)" />
+								value="@bind(vm.filterInt)" />
 							<button label="Pesquisar"
 								onClick="@command('filtra')" />
 						</div>
@@ -30,7 +30,7 @@
 			</auxhead>
 			<columns>
 				<column label="Semestre" sort="auto(turma.semestre)" />
-				<column label="Opções" width="180px"/>
+				<column label="Opções" width="180px" />
 			</columns>
 			<template name="editable">
 				<row>
@@ -70,11 +70,15 @@
 					<row>
 						<label value="Semestre:" />
 						<textbox
-							value="@load(vm.novaTurma.semestre)@save(vm.novaTurma.semestre, before='submitTurma')"
-							tabindex="1" id="semestre" width="100%" />
+							value="@load(vm.novaTurma.ano)@save(vm.novaTurma.ano, before='submitTurma')"
+							tabindex="1" id="ano" width="100%" />
 					</row>
-
-
+					<row>
+						<label value="Semestre:" />
+						<textbox
+							value="@load(vm.novaTurma.semestre)@save(vm.novaTurma.ano, before='submitTurma')"
+							tabindex="1" id="semestre" width="100%"/>
+					</row>
 				</rows>
 			</grid>
 			<div align="center">
@@ -84,4 +88,12 @@
 			</div>
 		</window>
 	</div>
+	<script type="text/javascript" src="/jquery.maskedinput.js" />
+	<script type="text/javascript">
+        zk.afterMount(function() {
+            $.mask.definitions['s']='[12]';
+            jq("$ano").mask("9999");
+            jq("$semestre").mask("s");
+        });
+    </script>
 </zk>

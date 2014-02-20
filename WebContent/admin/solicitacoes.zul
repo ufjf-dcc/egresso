@@ -36,8 +36,8 @@
 						<label value="@load(each.matricula)" />
 					</div>
 					<vlayout width="100%">
-						<button label="Ver Perfil no Facebook" width="100%"
-							href="@load(each.linkFacebook)" />
+						<button label="Ver Perfil no Facebook"
+							width="100%" href="@load(each.linkFacebook)" />
 						<button label="Comparar" width="100%"
 							onClick="@command('comparar', solicitacao=each, window=compara)" />
 					</vlayout>
@@ -63,9 +63,22 @@
 						<label value="@load(vm.solicitacao.matricula)" />
 					</row>
 					<row>
-						<label value="@load(vm.aluno.turma.semestre)" />
-						<label
-							value="@load(vm.solicitacao.turma.semestre)" />
+						<div>
+							<label
+								value="@load(vm.aluno.turma.semestre)" />
+							<label
+								value="º semestre de " />
+							<label
+								value="@load(vm.aluno.turma.ano)" />
+						</div>
+						<div>
+							<label
+								value="@load(vm.solicitacao.turma.semestre)" />
+							<label
+								value="º semestre de " />
+							<label
+								value="@load(vm.aluno.turma.ano)" />
+						</div>
 					</row>
 				</rows>
 			</grid>

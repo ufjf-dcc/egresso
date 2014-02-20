@@ -1,44 +1,59 @@
 <?page title="Controle de Egresso UFJF - Cadastro" contentType="text/html;charset=UTF-8"?>
-<zk>
+<zk xmlns:c='client'>
+	<script type="text/javascript" src="jquery-1.7.1.min.js" />
+	<script type="text/javascript">
+
+
+		
+		<![CDATA[ function prosseguir(hide, show){
+		jq("$"+hide).fadeOut('fast', function(){
+		jq("$"+show).fadeIn('fast'); }); } ]]>
+		
+		
+		
+	</script>
 	<div apply="org.zkoss.bind.BindComposer" width="100%"
-		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbCadastroController')"
-		form="@id('fx') @load(vm.solicitacao) @save(vm.solicitacao, before='solicitaCadastro')">
+		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbCadastroController')">
 
-		<div align="center" width="250px">
-			<image src="@bind(vm.urlpic)" width="150px"
-				style="margin:20px" />
-			<grid>
-				<columns>
-					<column width="100px" />
-					<column />
-				</columns>
-				<rows>
-					<row>
-						<label value="Nome: " />
-						<textbox readonly="true"
-							value="@load(vm.solicitacao.nome)" width="98%" />
-					</row>
-					<row>
-						<label value="Matrícula: " />
-						<textbox value="@bind(fx.matricula)"
-							width="98%" />
-					</row>
-					<row>
-						<label value="Turma: " />
-						<combobox model="@load(vm.turmas)" width="98%"
-							readonly="true" selectedItem="@bind(fx.turma)" autodrop="true">
-							<template name="model">
-								<comboitem label="@load(each.semestre)" />
-							</template>
-						</combobox>
-					</row>
-				</rows>
+		<div align="center">
+			<label value="Álbum de Fotos" />
+			<label value="Curso de Ciência da proximoutação" />
+			<label value="UFJF" />
+		</div>
 
-			</grid>
-			<div align="center">
-				<button label="Solicitar Cadastro" style="margin:20px"
-					onClick="@command('solicitaCadastro')" />
-			</div>
+		<div align="center" id="intro">
+			<label
+				value="Cadastre-se para manter-se em contato com seus ex-colegas de classe!" />
+			<button label="Prosseguir"
+				c:onClick="prosseguir(this.parent.id, this.parent.nextSibling.id)" />
+		</div>
+
+		<div visible="false" align="center" id="matricula">
+			<label value="Por favor, informe seu número de matrícula:" />
+			<textbox
+				c:onOK="prosseguir(this.parent.id, this.parent.nextSibling.id)"
+				onOK="@command('checaMatricula', txt=self)" />
+		</div>
+
+		<div visible="false" align="center" id="turma">
+			<label value="Em que semestre você entrou no curso?" />
+			<combobox id="combo" autodrop="true"
+				model="@load(vm.turmas)">
+				<template name="model">
+					<comboitem label="@load(each.ano)" />
+				</template>
+			</combobox>
+			<radiogroup id="semestres">
+				<radio label="1º" radiogroup="semestres" />
+				<radio label="2º" radiogroup="semestres" />
+			</radiogroup>
+			<button label="Solicitar cadastro"
+				c:onClick="prosseguir(this.parent.id, this.parent.nextSibling.id)"
+				onClick="@command('checaTurma', ano=self.previousSibling.previousSibling.value, semestres=semestres)" />
+		</div>
+
+		<div visible="false" align="center" id="mensagem">
+			<label />
 		</div>
 	</div>
 </zk>

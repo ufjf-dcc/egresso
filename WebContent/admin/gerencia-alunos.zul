@@ -34,7 +34,7 @@
 				<column width="165px" label="Matrícula"
 					sort="auto(aluno.matricula)" />
 				<column width="165px" label="Turma" />
-				<column width="165px" label="Ações" />
+				<column width="190px" label="Ações" />
 			</columns>
 			<template name="editable">
 				<row>
@@ -70,7 +70,7 @@
 						<hlayout width="100%" hflex="true">
 							<button hflex="1" label="Editar"
 								onClick="@command('changeEditableStatus', aluno=each)" />
-							<button hflex="1" label="Desvincular"
+							<button hflex="1" label="@load(each.urlFoto eq null ? 'Excluir' : 'Desvincular')"
 								onClick="@command('delete', aluno=each, button=self)" />
 						</hlayout>
 					</vlayout>

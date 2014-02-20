@@ -14,8 +14,8 @@ import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
 import br.ufjf.egresso.business.AlunoBusiness;
-import br.ufjf.egresso.business.TurmaBusiness;
 import br.ufjf.egresso.business.AtuacaoBusiness;
+import br.ufjf.egresso.business.TurmaBusiness;
 import br.ufjf.egresso.model.Aluno;
 import br.ufjf.egresso.model.Turma;
 
@@ -110,6 +110,7 @@ public class AdminAlunosController {
 												filterAlunos.set(index, aluno);
 												
 												notifyAlunos();
+												button.setLabel("Excluir");
 												Messagebox
 														.show("O aluno foi excluído com sucesso.",
 																"Sucesso",
