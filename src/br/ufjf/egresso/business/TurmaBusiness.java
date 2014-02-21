@@ -43,9 +43,9 @@ public class TurmaBusiness {
 	}
 
 
-	private void validaSemestre(String semestre) {
-		if (semestre == null || semestre.trim().length() == 0)
-			errors.add("É necessário informar o semestre da turma;\n");
+	private void validaSemestre(int semestre) {
+		if(!(semestre==1 || semestre == 2))
+			errors.add("Semestre incorreto;\n");
 	}
 
 	public Turma getTurma(int ano, int semestre) {

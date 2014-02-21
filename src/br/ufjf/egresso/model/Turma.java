@@ -90,6 +90,7 @@ public class Turma {
 		this.semestre = outra.semestre;
 		this.alunos = outra.alunos;
 		this.solicitacoes = outra.solicitacoes;
+		this.ano = outra.ano;
 
 	}
 }
