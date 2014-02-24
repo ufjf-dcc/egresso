@@ -1,7 +1,7 @@
 <?page title="Perfil do Aluno" contentType="text/html;charset=UTF-8"?>
 
 <zk>
-	<style src="/styles.css" />
+	
 <?link rel="stylesheet" type="text/css"
     href="../bootstrap/css/bootstrap.css" ?>
 	<include src="/templates/menu-aluno.zul" />
