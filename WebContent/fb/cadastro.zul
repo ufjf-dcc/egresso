@@ -1,59 +1,85 @@
 <?page title="Controle de Egresso UFJF - Cadastro" contentType="text/html;charset=UTF-8"?>
 <zk xmlns:c='client'>
-	<script type="text/javascript" src="jquery-1.7.1.min.js" />
+	<script type="text/javascript" src="/watermarkinput.js" />
 	<script type="text/javascript">
-
-
+		zk.afterMount(function() {
+		jq("$matriculatxt").Watermark("ex:200035001","gray"); });
+	</script>
+	<script type="text/javascript">
 		
 		<![CDATA[ function prosseguir(hide, show){
 		jq("$"+hide).fadeOut('fast', function(){
-		jq("$"+show).fadeIn('fast'); }); } ]]>
-		
-		
+		jq("$"+show).fadeIn('fast'); }); }
+
+		function watermark(txt){
+		jq("$matriculatxt").Watermark("ex:20003501","grZay"); }]]>
 		
 	</script>
-	<div apply="org.zkoss.bind.BindComposer" width="100%"
+	<style src="/bootstrap/css/bootstrap.css" />
+	<style src="/styles.css" />
+	<div apply="org.zkoss.bind.BindComposer" width="100%" align="center"
 		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbCadastroController')">
+		<div id="principal" class="intro">
+			<vlayout class="intro-cabecalho">
+				<label value="Álbum de Fotos" class="intro-titulo" />
+				<label value="Curso de Ciência da Computação - UFJF"
+					class="intro-subtitulo" />
+			</vlayout>
 
-		<div align="center">
-			<label value="Álbum de Fotos" />
-			<label value="Curso de Ciência da proximoutação" />
-			<label value="UFJF" />
+			<vlayout id="intro" class="intro-cabecalho">
+				<label
+					value="Cadastre-se para manter-se em contato com seus ex-colegas de classe!" />
+				<button label="Prosseguir" class="btn" id="introbtn"
+					c:onClick="prosseguir(this.parent.id, this.parent.nextSibling.id)" />
+			</vlayout>
+
+			<vlayout visible="false" id="matricula"
+				class="intro-form">
+				<label
+					value="Por favor, informe seu número de matrícula:"
+					class="intro-form" />
+				<hlayout width="100%">
+					<textbox class="intro-form" id="matriculatxt"
+						c:onOK="prosseguir(this.parent.parent.id, this.parent.parent.nextSibling.id)"
+						onOK="@command('checaMatricula', txt=self)" />
+					<button
+						c:onClick="prosseguir(this.parent.parent.id, this.parent.parent.nextSibling.id)"
+						onClick="@command('checaMatricula', txt=self.previousSibling)" label=">>" />
+				</hlayout>
+
+			</vlayout>
+
+			<vlayout visible="false" id="turma" class="intro-form">
+				<label value="Em que semestre você entrou no curso?"
+					class="intro-form" />
+				<combobox id="combo" autodrop="true"
+					model="@load(vm.turmas)">
+					<template name="model">
+						<comboitem label="@load(each.ano)" />
+					</template>
+				</combobox>
+				<radiogroup id="semestres">
+					<radio label="1º semestre" radiogroup="semestres"
+						class="intro-semestre" />
+					<radio label="2º semestre" radiogroup="semestres"
+						class="intro-semestre" />
+				</radiogroup>
+				<button label="Solicitar cadastro"
+					c:onClick="prosseguir(this.parent.id, this.parent.parent.nextSibling.id)"
+					onClick="@command('checaTurma', ano=self.previousSibling.previousSibling.value, semestres=semestres)" />
+			</vlayout>
 		</div>
 
-		<div align="center" id="intro">
-			<label
-				value="Cadastre-se para manter-se em contato com seus ex-colegas de classe!" />
-			<button label="Prosseguir"
-				c:onClick="prosseguir(this.parent.id, this.parent.nextSibling.id)" />
+		<div id="mensagem" visible="false">
+			<div class="intro-mensagem">
+				<label
+					value="Obrigado! Analisaremos seu pedido em breve." />
+			</div>
+			<div class="intro-coord">
+				<label
+					value="Coordenação do Curso de Ciência da Computação" />
+			</div>
 		</div>
 
-		<div visible="false" align="center" id="matricula">
-			<label value="Por favor, informe seu número de matrícula:" />
-			<textbox
-				c:onOK="prosseguir(this.parent.id, this.parent.nextSibling.id)"
-				onOK="@command('checaMatricula', txt=self)" />
-		</div>
-
-		<div visible="false" align="center" id="turma">
-			<label value="Em que semestre você entrou no curso?" />
-			<combobox id="combo" autodrop="true"
-				model="@load(vm.turmas)">
-				<template name="model">
-					<comboitem label="@load(each.ano)" />
-				</template>
-			</combobox>
-			<radiogroup id="semestres">
-				<radio label="1º" radiogroup="semestres" />
-				<radio label="2º" radiogroup="semestres" />
-			</radiogroup>
-			<button label="Solicitar cadastro"
-				c:onClick="prosseguir(this.parent.id, this.parent.nextSibling.id)"
-				onClick="@command('checaTurma', ano=self.previousSibling.previousSibling.value, semestres=semestres)" />
-		</div>
-
-		<div visible="false" align="center" id="mensagem">
-			<label />
-		</div>
 	</div>
 </zk>
