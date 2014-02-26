@@ -1,27 +1,66 @@
 <?page title="Perfil do Aluno" contentType="text/html;charset=UTF-8"?>
 
 <zk>
+
+	<?link rel="stylesheet" type="text/css"
+    href="/bootstrap/css/bootstrap.css" ?>
 	
-<?link rel="stylesheet" type="text/css"
-    href="../bootstrap/css/bootstrap.css" ?>
-	<include src="/templates/menu-aluno.zul" />
-	<div apply="org.zkoss.bind.BindComposer" width="100%" 
+	<div apply="org.zkoss.bind.BindComposer" width="100%"
 		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbPerfilController')"
 		height="100%">
-		
-		<div class = "info-aluno">
-			<div class ="foto">
-			<image src="@load(vm.aluno.urlFoto)" height="250px" width="250px"/>
+<div class="top">
+
+</div>
+		<hlayout>
+		<div class="info-aluno">
+			<div class="foto">
+				<image src="@load(vm.aluno.urlFoto)" height="250px"
+					width="250px" />
 			</div>
-			<div class= "infos">
-				<label sclass= "nome_perfil" value ="@load(vm.aluno.nome)"/>
-				<label sclass="turma_perfil" value ="@load('Turma do '.concat(vm.aluno.turma.semestre).concat('° ').concat('semestre do ano de ').concat(vm.aluno.turma.ano).concat('.'))"/>
-				</div>
+			<div class="infos">
+				<label sclass="nome_perfil"
+					value="@load(vm.aluno.nome)" />
+				<label sclass="turma_perfil"
+					value="@load('Turma do '.concat(vm.aluno.turma.semestre).concat('° ').concat('semestre do ano de ').concat(vm.aluno.turma.ano).concat('.'))" />
+			</div>
 		</div>
-		<div class="ver_perfil_fb">
-			<button class="btn"  id="btn_visitar_perfil" label="Ver Perfil no Facebook" href ="@load(vm.aluno.linkFacebook)"/>
+		<vlayout>
+		<div class ="btnAdd">
+		<button class="btn" label ="Adicionar experiência, formação ou projeto..." />
+		</div>
+		<vlayout>
+		<div class="ocupacaoAtual" >
+			<div>
+				<label value="Ocupação Atual:"/>
+			</div>
+			<div class="ocupacao_atual" >
+				<label sclass="cargo" value  = "@load(vm.atuacaoAtual.cargo)"/>
+			</div>
+			<div class="ocupacao_atual">
+				<label sclass="local" value  = "@load(vm.atuacaoAtual.local)"/>
+			</div>
+			<div class="ocupacao_atual">
+				<label  sclass = "dt_inicio " value  = "@load('Desde:'.concat(' ').concat(vm.atuacaoAtual.dataInicio))"/>
+			</div>
+		</div>
+		</vlayout>
+		</vlayout>
+		</hlayout>
+	
+		<div class="rede_sociais">
+		
+		<a  href="@load(vm.aluno.linkFacebook)" target="_blank" image= "/img/02_facebook.png" />
+		
+			<image src="/img/07_linkedin.png" />
+			<image src="/img/01_twitter.png" />
+			<image src="/img/03_youtube.png" />
+			<image src="/img/14_google+.png" />
+
+		</div>
+		<div class="bottom">
+		
 		</div>
 	</div>
-	
-	
+
+
 </zk>
