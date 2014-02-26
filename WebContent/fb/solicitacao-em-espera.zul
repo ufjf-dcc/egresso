@@ -1,8 +1,20 @@
 <?page title="Controle de Egresso UFJF - Lista de Espera" contentType="text/html;charset=UTF-8"?>
 <zk>
+	<style src="/styles.css" />
 	<div align="center" apply="org.zkoss.bind.BindComposer">
+		<vlayout class="intro-cabecalho">
+			<label value="Álbum de Fotos" class="intro-titulo" />
+			<label value="Curso de Ciência da Computação - UFJF"
+				class="intro-subtitulo" />
+		</vlayout>
 
-		<label
-			value="Você está na lista de espera. Por favor, aguarde a aprovação de um administrador." />
+		<div class="intro-mensagem">
+			<label
+				value="Seu cadastro ainda não foi aprovado. Tente mais tarde." />
+		</div>
+		<div class="intro-coord">
+			<label
+				value="Coordenação do Curso de Ciência da Computação - UFJF" />
+		</div>
 	</div>
 </zk>

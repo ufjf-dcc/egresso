@@ -5,7 +5,6 @@ import java.util.List;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
-import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Radiogroup;
@@ -104,9 +103,7 @@ public class FbCadastroController {
 		if (solicitacaoBusiness.validar(solicitacao)) {
 
 			solicitacao.setUrlFoto(urlpic);
-			if (new SolicitacaoBusiness().salvar(solicitacao))
-				Executions.sendRedirect("/fb/solicitacao-em-espera.zul");
-			else
+			if (!new SolicitacaoBusiness().salvar(solicitacao))
 				Messagebox
 						.show("Não foi possível solicitar po cadastro. Por favor, tente novamente mais tarde.",
 								"Erro", Messagebox.OK, Messagebox.ERROR);
