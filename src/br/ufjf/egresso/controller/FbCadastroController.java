@@ -6,6 +6,7 @@ import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.zk.ui.Sessions;
+import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Radiogroup;
 import org.zkoss.zul.Textbox;
@@ -28,6 +29,7 @@ public class FbCadastroController {
 	private Solicitacao solicitacao = new Solicitacao();
 	private TurmaBusiness turmaBusiness = new TurmaBusiness();
 	private List<Turma> turmas = turmaBusiness.getTodas();
+	private boolean matriculaExiste = false;
 
 	@Init
 	public void init() throws FacebookException {
@@ -52,7 +54,15 @@ public class FbCadastroController {
 	public List<Turma> getTurmas() {
 		return turmas;
 	}
-	
+
+	public boolean isMatriculaExiste() {
+		return matriculaExiste;
+	}
+
+	public void setMatriculaExiste(boolean matriculaExiste) {
+		this.matriculaExiste = matriculaExiste;
+	}
+
 	@Command
 	public void checaMatricula(@BindingParam("txt") Textbox txt) {
 		String matricula = txt.getValue();
@@ -68,8 +78,10 @@ public class FbCadastroController {
 				Messagebox.show("O aluno de matrícula " + aluno.getMatricula()
 						+ " já está cadastrado no aplicativo.", "Erro",
 						Messagebox.OK, Messagebox.ERROR);
-			else
+			else {
 				solicitacao.setMatricula(txt.getValue());
+				Clients.evalJavaScript("formTurma()");
+			}
 		} else
 			Messagebox.show("É necessário informar a matrícula e a turma.",
 					"Erro", Messagebox.OK, Messagebox.ERROR);

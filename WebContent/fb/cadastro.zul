@@ -7,12 +7,19 @@
 	</script>
 	<script type="text/javascript">
 		
-		<![CDATA[ function prosseguir(hide, show){
-		jq("$"+hide).fadeOut('fast', function(){
-		jq("$"+show).fadeIn('fast'); }); }
-
-		function watermark(txt){
-		jq("$matriculatxt").Watermark("ex:20003501","grZay"); }]]>
+		<![CDATA[
+		
+		function formMatricula(){
+		jq("$intro").fadeOut('fast', function(){
+		jq("$matricula").fadeIn('fast'); }); }
+		
+		function formTurma(){
+		jq("$matricula").fadeOut('fast', function(){
+		jq("$turma").fadeIn('fast'); }); }
+		
+		function concluido(){
+		jq("$turma").fadeOut('fast', function(){
+		jq("$mensagem").fadeIn('fast'); }); }]]>
 		
 	</script>
 	<style src="/bootstrap/css/bootstrap.css" />
@@ -30,7 +37,7 @@
 				<label
 					value="Cadastre-se para manter-se em contato com seus ex-colegas de classe!" />
 				<button label="Prosseguir" class="btn" id="introbtn"
-					c:onClick="prosseguir(this.parent.id, this.parent.nextSibling.id)" />
+					c:onClick="formMatricula()" />
 			</vlayout>
 
 			<vlayout visible="false" id="matricula"
@@ -40,10 +47,8 @@
 					class="intro-form" />
 				<hlayout width="100%">
 					<textbox class="intro-form" id="matriculatxt"
-						c:onOK="prosseguir(this.parent.parent.id, this.parent.parent.nextSibling.id)"
 						onOK="@command('checaMatricula', txt=self)" />
 					<button
-						c:onClick="prosseguir(this.parent.parent.id, this.parent.parent.nextSibling.id)"
 						onClick="@command('checaMatricula', txt=self.previousSibling)" label=">>" />
 				</hlayout>
 
@@ -65,7 +70,7 @@
 						class="intro-semestre" />
 				</radiogroup>
 				<button label="Solicitar cadastro"
-					c:onClick="prosseguir(this.parent.id, this.parent.parent.nextSibling.id)"
+					c:onClick="concluido()"
 					onClick="@command('checaTurma', ano=self.previousSibling.previousSibling.value, semestres=semestres)" />
 			</vlayout>
 		</div>

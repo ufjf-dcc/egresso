@@ -1,0 +1,66 @@
+@CHARSET "UTF-8";
+
+tbody.z-grid-emptybody td {
+font-size: 15px;
+padding: 10px;
+}
+
+/**Estilos da página de cadastro **/
+.intro.z-div {
+width: 350px;
+margin-top: 20px;
+text-align: center;
+}
+
+.intro-form.z-vlayout {
+background: #c0504d;
+margin-top: 20px;
+padding: 15px;
+}
+
+.intro-mensagem.z-div {
+background: #c0504d;
+margin-top: 20px;
+padding: 10px;
+width: 350px;
+font-size: 15px;
+color: white;
+}
+
+.intro-coord.z-div {
+background: #f0f0f0;
+padding: 10px;
+width: 350px;
+font-size: 15px;
+color: grey;
+}
+
+.intro-form.z-label {
+color: white;
+margin-bottom: 10px;
+}
+
+.intro-form.z-textbox {
+width: 100%;
+}
+
+.intro-titulo.z-label {
+font-size: 30px;
+}
+
+.intro-subtitulo.z-label {
+font-size: 16px;
+}
+
+.intro-cabecalho.z-vlayout {
+margin-top: 20px;
+}
+
+.intro-semestre.z-radio {
+color: white;
+margin: 5px;
+}
+
+.water-mark {
+color: gray;
+}
