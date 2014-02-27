@@ -47,6 +47,10 @@ public class TurmaBusiness {
 		if(!(semestre==1 || semestre == 2))
 			errors.add("Semestre incorreto;\n");
 	}
+	
+	public Turma getTurma(int id) {
+		return turmaDao.getTurma(id);
+	}
 
 	public Turma getTurma(int ano, int semestre) {
 		return turmaDao.getTurma(ano, semestre);

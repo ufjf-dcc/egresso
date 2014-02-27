@@ -13,7 +13,7 @@ public interface IAlunoDAO {
 
 	public List<Aluno> getTodos();
 	
-	public List<Aluno> getAlunosTurma(Turma turma);
+	public List<Aluno> getAlunos(Turma turma);
 
 	Aluno buscaPorMatricula(String matricula);
 

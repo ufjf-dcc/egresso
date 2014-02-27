@@ -9,68 +9,37 @@ import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Executions;
-import org.zkoss.zk.ui.Session;
-import org.zkoss.zk.ui.Sessions;
 
 import br.ufjf.egresso.business.AlunoBusiness;
 import br.ufjf.egresso.business.TurmaBusiness;
 import br.ufjf.egresso.model.Aluno;
 import br.ufjf.egresso.model.Turma;
-import facebook4j.Friend;
 
 public class FbTurmaController {
 
-	private List<Turma> turmas = new TurmaBusiness().getTodas();
-	private List<Aluno> alunos;
-	private Aluno aluno;
+	private List<Aluno> alunos, filtraAlunos;
 	private Turma turma;
-	private List<Friend> amigos = new ArrayList<Friend>();
 	private String pesquisa,
-			emptyMessage = "Nenhum aluno deste semestre se cadastrou no aplicativo";
+			emptyMessage = "Nenhum aluno desta turma se cadastrou no aplicativo ainda", descricao;
 
 	@Init
 	public void init() {
-		Session session = Sessions.getCurrent();
-		aluno = (Aluno) session.getAttribute("aluno");
-		turma = aluno.getTurma();
-		selecionaTurma();
+		turma = new TurmaBusiness().getTurma(Integer.parseInt(Executions.getCurrent().getParameter("id")));
+		descricao = "Turma do "+turma.getSemestre()+"º semestre de "+turma.getAno();
+		alunos = new AlunoBusiness().getAlunos(turma);
+		filtraAlunos = alunos;
 	}
 
-	public List<Turma> getTurmas() {
-		return turmas;
+	public String getDescricao() {
+		return descricao;
 	}
 
-	public void setTurmas(List<Turma> turmas) {
-		this.turmas = turmas;
-	}
-
-	public Aluno getAluno() {
-		return aluno;
-	}
-
-	public void setAluno(Aluno aluno) {
-		this.aluno = aluno;
-	}
-
-	public List<Friend> getAmigos() {
-		return amigos;
-	}
-
-	public void setAmigos(List<Friend> amigos) {
-		this.amigos = amigos;
-	}
-
-	public List<Aluno> getAlunos() {
-		return alunos;
+	public List<Aluno> getFiltraAlunos() {
+		return filtraAlunos;
 	}
 
 	public Turma getTurma() {
 		return turma;
-	}
-
-	public void setTurma(Turma turma) {
-		this.turma = turma;
-		selecionaTurma();
 	}
 
 	public String getPesquisa() {
@@ -86,32 +55,22 @@ public class FbTurmaController {
 	}
 
 	@Command
-	@NotifyChange({ "alunos", "emptyMessage", "turma" })
+	@NotifyChange({ "filtraAlunos", "emptyMessage" })
 	public void pesquisar() {
 		List<Aluno> resultados = new ArrayList<Aluno>();
-		for (Aluno aluno : new AlunoBusiness().getTodos())
+		for (Aluno aluno : alunos)
 			if (aluno.getNome().trim().toLowerCase()
 					.contains(pesquisa.trim().toLowerCase()))
 				resultados.add(aluno);
-		alunos = resultados;
+		filtraAlunos = resultados;
 		emptyMessage = "Nenhum resultado encontrado para \"" + pesquisa + "\"";
-		turma = null;
+		BindUtils.postNotifyChange(null, null, this, "filtraAlunos");
 	}
 
 	@Command("limparPesquisa")
 	public void limparPesquisa() {
-		turma = aluno.getTurma();
-		BindUtils.postNotifyChange(null, null, this, "turma");
-		selecionaTurma();
-	}
-
-	public void selecionaTurma() {
-		alunos = new AlunoBusiness().buscaPorTurma(turma);
-		emptyMessage = "Nenhum aluno deste semestre se cadastrou no aplicativo";
-		pesquisa = null;
-		BindUtils.postNotifyChange(null, null, this, "emptyMessage");
-		BindUtils.postNotifyChange(null, null, this, "alunos");
-		BindUtils.postNotifyChange(null, null, this, "pesquisa");
+		filtraAlunos = alunos;
+		BindUtils.postNotifyChange(null, null, this, "filtraAlunos");
 	}
 
 	@Command

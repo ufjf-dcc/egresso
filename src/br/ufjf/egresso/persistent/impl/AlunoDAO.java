@@ -51,7 +51,7 @@ public class AlunoDAO extends GenericoDAO implements IAlunoDAO {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Aluno> getAlunosTurma(Turma turma) {
+	public List<Aluno> getAlunos(Turma turma) {
 		try {
 			Query query = getSession()
 					.createQuery(
@@ -115,7 +115,7 @@ public class AlunoDAO extends GenericoDAO implements IAlunoDAO {
 		return false;
 	}
 
-	public List<Aluno> buscaPorTurma(Turma turma) {
+	public List<Aluno> getAlunosCadastrados(Turma turma) {
 		try {
 			Query query = getSession()
 					.createQuery(

@@ -26,6 +26,23 @@ public class TurmaDAO extends GenericoDAO implements ITurmaDAO {
 		}
 		return null;
 	}
+	
+	public Turma getTurma(int id) {
+		try {
+			Query query = getSession()
+					.createQuery(
+							"SELECT t FROM Turma AS t WHERE t.id = :id");
+			query.setParameter("id", id);
+			Turma turma = (Turma) query.uniqueResult();
+
+			getSession().close();
+
+			return turma;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	public Turma getTurma(int ano, int semestre) {
 		try {

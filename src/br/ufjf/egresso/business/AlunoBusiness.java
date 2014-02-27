@@ -81,8 +81,8 @@ public class AlunoBusiness {
 		return alunoDao.buscaPorMatricula(matricula);
 	}
 	
-	public List<Aluno> buscaPorTurma(Turma turma) {
-		return alunoDao.buscaPorTurma(turma);
+	public List<Aluno> getAlunosCadastrados(Turma turma) {
+		return alunoDao.getAlunosCadastrados(turma);
 	}
 
 	public boolean editar(Aluno aluno) {
@@ -99,6 +99,10 @@ public class AlunoBusiness {
 
 	public boolean salvar(Aluno novoAluno) {
 		return alunoDao.salvar(novoAluno);
+	}
+
+	public List<Aluno> getAlunos(Turma turma) {
+		return alunoDao.getAlunos(turma);
 	}
 
 }

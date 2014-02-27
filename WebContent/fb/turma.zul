@@ -1,0 +1,46 @@
+<?page title="Turma" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<style src="/styles.css" />
+	<script type="text/javascript" src="/watermarkinput.js" />
+	<script type="text/javascript">
+		zk.afterMount(function() {
+		jq("$txtpesquisa").Watermark("Pesquisar alunos","gray"); });
+	</script>
+	<div apply="org.zkoss.bind.BindComposer" width="100%"
+		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbTurmaController')"
+		height="100%">
+		<div class="cabecalho">
+			<textbox id="txtpesquisa" class="pesquisa"
+				onOK="@command('pesquisar')" value="@bind(vm.pesquisa)" />
+			<label class="cabecalho" value="@load(vm.descricao)" />
+		</div>
+		<html>
+
+
+			
+			<![CDATA[ <hr style="border-top: dashed 1px; border-color:
+			#c0504d; margin-bottom:20px; margin-left: 50px;
+			margin-right:50px; border-bottom: none" />]]>
+			
+			
+						
+		</html>
+		<hlayout class="conteudo">
+			<div class="mural">
+				<div class="caixa-mural">
+					<label value="Mural" />
+				</div>
+			</div>
+			<hlayout children="@load(vm.filtraAlunos)">
+				<template name="children" var="aluno">
+					<vlayout class="aluno">
+						<image class="aluno" src="@load(aluno.urlFoto)"
+							onClick='@command("verPerfil", aluno=aluno)' />
+						<label class="aluno" value="@load(aluno.nome)"
+							onClick='@command("verPerfil", aluno=aluno)' />
+					</vlayout>
+				</template>
+			</hlayout>
+		</hlayout>
+	</div>
+</zk>

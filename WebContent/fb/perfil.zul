@@ -76,7 +76,7 @@
 
 		</div>
 		<div class="bottom">
-		
+			<!-- coloquei aqui só pra testar a pag. de turma --><button href="turma.zul?id=1" />
 		</div>
 	</div>
 
