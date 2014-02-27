@@ -9,7 +9,8 @@
 		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbPerfilController')"
 		height="100%">
 <div class="top">
-
+	<label sclass="title" 
+		value="Álbum de Fotos - Ciência da Computação - UFJF"/> 
 </div>
 		<hlayout>
 		<div class="info-aluno">
@@ -28,6 +29,7 @@
 		<div class ="btnAdd">
 		<button class="btn" label ="Adicionar experiência, formação ou projeto..." />
 		</div>
+		<hlayout>
 		<vlayout>
 		<div class="ocupacaoAtual" >
 			<div>
@@ -44,6 +46,22 @@
 			</div>
 		</div>
 		</vlayout>
+				<div class="editar_atual ">
+					<button class="btn" label ="Editar" />
+				</div>
+		</hlayout>
+			<label value = "Experiências"/>
+		<div  class="experiencias" forEach="${vm.filtraEmpregos}">
+		<hlayout>
+			<vlayout>
+				<label value = "${each.cargo}" />
+				<label value = "${each.local}" />
+			</vlayout>
+				<div class="editar_atual ">
+					<button class="btn" label ="Editar" />
+				</div>
+		</hlayout>
+		</div>
 		</vlayout>
 		</hlayout>
 	

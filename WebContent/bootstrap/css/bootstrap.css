@@ -5785,7 +5785,7 @@ button.close {
   }
 }
 .info-aluno{
-	background-color:black;
+	background-color:#B22222;
 	margin: 20px;
 	width :300px;
 	padding:2px;
@@ -5816,8 +5816,53 @@ button.close {
 
 
 
-.ver_perfil_fb{
-	margin: 20px;
+.btnAdd{
+	margin: 25px;
+	margin-left:200px;
 	
+}
+.ocupacaoAtual{
+	margin:25px;
+	margin-left:200px;
+}
+.ocupacao_atual{
+	margin-bottom:5px;
+}
+.cargo.z-label{
+	font-size:20px;
+}
+.local.z-label{
+	font-size:15px;
+}
+.dt_inicio.z-label{
+	font-size:15px;
+}
+.top{
+	
+	background-color:gray;
+	width:1600px;
+	height:35px;
+	margin-left:20px;
+
+}
+.bottom{
+	background-color:#B22222;
+	width:1600px;
+	margin-left:20px;
+	height:5px;
+}
+.title.z-label{
+	margin-left:1300px;
+	margin-top:5px;
+
+	color:white;
+}
+.editar_atual{
+	margin-left:500px;
+	margin-top:50px;
+}
+.experiencias{
+	margin:25px;
+	margin-left:200px;
 }
 /*# sourceMappingURL=bootstrap.css.map */
