@@ -14,16 +14,10 @@
 				onOK="@command('pesquisar')" value="@bind(vm.pesquisa)" />
 			<label class="cabecalho" value="@load(vm.descricao)" />
 		</div>
-		<html>
-
-
-			
+		<html>			
 			<![CDATA[ <hr style="border-top: dashed 1px; border-color:
 			#c0504d; margin-bottom:20px; margin-left: 50px;
 			margin-right:50px; border-bottom: none" />]]>
-			
-			
-						
 		</html>
 		<hlayout class="conteudo">
 			<div class="mural">
@@ -34,8 +28,11 @@
 			<hlayout children="@load(vm.filtraAlunos)">
 				<template name="children" var="aluno">
 					<vlayout class="aluno">
-						<image class="aluno" src="@load(aluno.urlFoto)"
-							onClick='@command("verPerfil", aluno=aluno)' />
+						<div class="aluno">
+							<image class="aluno"
+								src="@load(aluno.urlFoto)"
+								onClick='@command("verPerfil", aluno=aluno)' />
+						</div>
 						<label class="aluno" value="@load(aluno.nome)"
 							onClick='@command("verPerfil", aluno=aluno)' />
 					</vlayout>

@@ -1,48 +1,57 @@
 <?page title="Controle de Egresso UFJF - Home" contentType="text/html;charset=UTF-8"?>
 <?init class="br.ufjf.egresso.controller.FbAuthController"?>
 <zk xmlns:n="native">
-	<style src="/styles.css" />
-	<div apply="org.zkoss.bind.BindComposer" align="center" width="100%"
-		height="100%"
-		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbTurmaController')">
-		<include src="/templates/menu-aluno.zul" />
-		<grid model="@load(vm.alunos) @template('alunos')"
-			emptyMessage="@load(vm.emptyMessage)"
-			mold="paging" autopaging="true" vflex="true">
-			<auxhead>
-				<auxheader colspan="3">
-					<combobox id="cmbTurma" readonly="true"
-						style="float:right" model="@load(vm.turmas)"
-						value="@load(vm.turma.semestre)" selectedItem="@bind(vm.turma)">
-						<template name="model">
-							<comboitem label="@load(each.semestre)" />
-						</template>
-					</combobox>
-					<div>
-						<label value="Listagem de alunos por semestre"
-							style="font-weight:bold" />
-						<space orient="vertical" width="10px" />
-						<textbox id="filtro"
-							value="@load(vm.pesquisa) @save(vm.pesquisa, before='pesquisar')" />
-						<button label="Pesquisar"
-							onClick="@command('pesquisar')" />
-						<button label="Limpar pesquisa" onClick="@command('limparPesquisa')" />
-					</div>
-				</auxheader>
-			</auxhead>
-			<columns>
-				<column width="50px" label="Foto" />
-				<column hflex="1" label="Nome" sort="auto(aluno.nome)" />
-				<column width="100px" />
-			</columns>
-			<template name="alunos">
-				<row>
-					<image src="@load(each.urlFoto)" width="100%" />
-					<label value="@load(each.nome)" />
-					<button label="Ver perfil"
-						onClick="@command('verPerfil', aluno=each)" />
-				</row>
+	<html>
+
+
+
+		
+		<![CDATA[ <link rel="stylesheet" type="text/css"
+		href="../styles.css"> <link rel="stylesheet" type="text/css"
+		href="../coverflow/css/style.css"> <script
+		type="text/javascript"
+		src="../coverflow/js/jquery-1.7.1.js"></script> <script
+		type="text/javascript"
+		src="../coverflow/js/jquery-ui-1.7.2.custom.js"></script>
+		<script type="text/javascript"
+		src="../coverflow/js/jquery.class.js"></script> <script
+		type="text/javascript"
+		src="../coverflow/js/coverflow.class.js"></script> <script
+		type="text/javascript"
+		src="../coverflow/js/snapshot.class.js"></script> <script
+		type="text/javascript" src="../coverflow/js/script.js"></script>
+		]]>
+		
+		
+		
+		
+	</html>
+
+	<div apply="org.zkoss.bind.BindComposer" width="100%"
+		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbTurmasController')"
+		height="100%">
+		<n:div id="coverFlow1" class="coverFlow"
+			children="@load(vm.filtraTurmas)">
+			<template name="children" var="turma">
+				<n:div class="snapshot" align="center">
+					<n:table>
+						<n:tr>
+							<n:td>
+								<label class="turma-semestre"
+									value="@load(turma.semestre)" />
+								<label class="turma-semestre"
+									value="º semestre de" />
+							</n:td>
+						</n:tr>
+						<n:tr>
+							<n:td>
+								<label class="turma-ano"
+									value="@load(turma.ano)" />
+							</n:td>
+						</n:tr>
+					</n:table>
+				</n:div>
 			</template>
-		</grid>
+		</n:div>
 	</div>
 </zk>

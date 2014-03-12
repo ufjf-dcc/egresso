@@ -1,0 +1,28 @@
+<zk xmlns:n="native">
+	<html>
+		<![CDATA[ <link rel="stylesheet" type="text/css"
+		href="css/style.css"> <script type="text/javascript"
+		src="js/jquery-1.7.1.js"></script> <script
+		type="text/javascript"
+		src="js/jquery-ui-1.7.2.custom.js"></script> <script
+		type="text/javascript" src="js/jquery.class.js"></script>
+		<script type="text/javascript"
+		src="js/coverflow.class.js"></script> <script
+		type="text/javascript" src="js/snapshot.class.js"></script>
+		<script type="text/javascript" src="js/script.js"></script>
+		 ]]>
+		
+</html>
+		<n:div id="coverFlow1" class="coverFlow">
+			<n:div class="snapshot">1</n:div>
+			<n:div class="snapshot">2</n:div>
+			<n:div class="snapshot">3</n:div>
+			<n:div class="snapshot">4</n:div>
+			<n:div class="snapshot">5</n:div>
+			<n:div class="snapshot">6</n:div>
+			<n:div class="snapshot">7</n:div>
+			<n:div class="snapshot">8</n:div>
+			<n:div class="snapshot">9</n:div>
+			<n:div class="snapshot">10</n:div>
+		</n:div>
+</zk>

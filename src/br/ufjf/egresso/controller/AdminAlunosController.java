@@ -92,9 +92,9 @@ public class AdminAlunosController {
 	@BindingParam("aluno") final Aluno aluno) {
 		if (aluno.getFacebookId() != null){
 			Messagebox
-					.show("Você tem certeza que deseja desvincular o(a) perfil do aluno(a): "
+					.show("Você tem certeza que deseja desvincular o(a) perfil do aluno(a) "
 							+ aluno.getNome()
-							+ ", já cadastrado(a) no sistema? (Note que isso acarretará na exclusão de todas as atividades dele(a) no sistema permanentemente.)",
+							+ ", já cadastrado(a) no sistema? (Note que isso acarretará na exclusão de todas as atividades dele(a) permanentemente.)",
 							"Confirmação", Messagebox.OK | Messagebox.CANCEL,
 							Messagebox.QUESTION,
 							new org.zkoss.zk.ui.event.EventListener() {

@@ -100,6 +100,12 @@ z-vlayout {
 	height: 200px;
 }
 
+.aluno.z-div{
+	width: 100%;
+    height: 125px;
+    overflow: hidden;
+}
+
 .aluno.z-image {
 	width: 100%;
 }
@@ -123,4 +129,15 @@ z-vlayout {
 .pesquisa.z-textbox {
 	float: right;
 	background: none
+}
+
+/** Relação de turmas **/
+.turma-ano{
+	color: white;
+	size: 36px;
+}
+
+.turma-semestre{
+	color:white;
+	size:18px;
 }
