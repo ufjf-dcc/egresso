@@ -50,18 +50,47 @@
 					<button class="btn" label ="Editar" />
 				</div>
 		</hlayout>
+
 			<label value = "Experiências"/>
-		<div  class="experiencias" forEach="${vm.filtraEmpregos}">
+		<div  class="experiencias" >
+			<hlayout>
+			<vlayout children="@load(vm.filtraEmpregos)">
+			
+		<template name="children" var="atuacao">
 		<hlayout>
 			<vlayout>
-				<label value = "${each.cargo}" />
-				<label value = "${each.local}" />
+				<label value = "@load(atuacao.cargo)" />
+				<label value = "@load(atuacao.local)" />
 			</vlayout>
-				<div class="editar_atual ">
-					<button class="btn" label ="Editar" />
-				</div>
+			<div class="btn_edt">
+				<button class="btn" label ="Editar" />
+			</div>
+		</hlayout>
+		</template>
+			</vlayout>
+	
+			<label value = "Formação"/>
+		<div  class="experiencias" >
+			<hlayout>
+			<vlayout children="@load(vm.filtraFormacoes)">
+			
+		<template name="children" var="atuacao">
+		<hlayout>
+			<vlayout>
+				<label value = "@load(atuacao.cargo)" />
+				<label value = "@load(atuacao.local)" />
+			</vlayout>
+			<div class="btn_edt">
+				<button class="btn" label ="Editar" />
+			</div>
+		</hlayout>
+		</template>
+			</vlayout>		
+					
+				
 		</hlayout>
 		</div>
+	
 		</vlayout>
 		</hlayout>
 	
