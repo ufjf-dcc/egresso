@@ -29,8 +29,11 @@
 		<div class ="btnAdd">
 		<button class="btn" label ="Adicionar experiência, formação ou projeto..." />
 		</div>
+		<template name ="noneditable">
 		<hlayout>
 		<vlayout>
+		
+		
 		<div class="ocupacaoAtual" >
 			<div>
 				<label value="Ocupação Atual:"/>
@@ -46,28 +49,29 @@
 			</div>
 		</div>
 		</vlayout>
-		
+
 				<div class="editar_atual ">
-					<button class="btn" label ="Editar" onClick="@command('changeEditableStatus', atuacao=each)" />
+					<button class="btn" label ="Editar" onClick="@command('changeEditableStatus', atuacaoAtual=each)" />
 				</div>
 		</hlayout>
+		</template>
 		<template name="editable">
-                <row>
+               
                     <textbox
-                        value="@load(each.atuacaoAtual.cargo) @save(each.atuacao.cargo, before='confirm')" />
+                        value="@load(each.atuacaoAtual.cargo) @save(each.atuacaoAtual.cargo, before='confirm')" />
                     <textbox
-                        value="@load(each.atuacaoAtual.local) @save(each.atuacao.local, before='confirm')" />
+                        value="@load(each.atuacaoAtual.local) @save(each.atuacaoAtuallocal, before='confirm')" />
                     <textbox
-                        value="@load(each.atuacaoAtual.dataInicio) @save(each.atuacao.dataInicio, before='confirm')" />
+                        value="@load(each.atuacaoAtual.dataInicio) @save(each.atuacaoAtual.dataInicio, before='confirm')" />
                     <div>
                         <button
                           	label= "OK"
-                            onClick="@command('confirm', atuacao=each)" />
+                            onClick="@command('confirm', atuacaoAtual=each)" />
                         <button
                            	label="cancel"
-                            onClick="@command('changeEditableStatus',atuacao=each)" />
+                            onClick="@command('changeEditableStatusAtual',atuacaoAtual=each)" />
                     </div>
-                </row>
+              
             </template>
 
 		<div  class="exp" >

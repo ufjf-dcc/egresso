@@ -163,18 +163,18 @@ public class FbPerfilController {
 	}
 
 	@Command
-	public void changeEditableStatus(@BindingParam("atuacao") Atuacao atuacao) {
-		if (!atuacao.getEditingStatus()) {
+	public void changeEditableStatusAtual(@BindingParam("atuacaoAtual") Atuacao atuacaoAtual) {
+		if (!atuacaoAtual.getEditingStatus()) {
 			Atuacao temp = new Atuacao();
-			temp.copy(atuacao);
-			editTemp.put(atuacao.getId(), temp);
-			atuacao.setEditingStatus(true);
+			temp.copy(atuacaoAtual);
+			editTemp.put(atuacaoAtual.getId(), temp);
+			atuacaoAtual.setEditingStatus(true);
 		} else {
-			atuacao.copy(editTemp.get(atuacao.getId()));
-			editTemp.remove(atuacao.getId());
-			atuacao.setEditingStatus(false);
+			atuacaoAtual.copy(editTemp.get(atuacaoAtual.getId()));
+			editTemp.remove(atuacaoAtual.getId());
+			atuacaoAtual.setEditingStatus(false);
 		}
-		refreshRowTemplate(atuacao);
+		refreshRowTemplate(atuacaoAtual);
 	}
 
 	@Command
