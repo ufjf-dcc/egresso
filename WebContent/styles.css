@@ -3,6 +3,8 @@
 body {
 	background: url('img/bg.png') repeat repeat;
 	font-family: times;
+	margin-left:50px;
+	margin-right:50px
 }
 
 tbody.z-grid-emptybody td {
@@ -116,19 +118,27 @@ z-vlayout {
 
 .cabecalho.z-div {
 	font-size: 30px;
-	margin: 30px 50px;
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+
+.pesquisa-turma.z-div{
+	background: #c0504d;
+	padding: 20px;
+}
+
+.pesquisa-turma.z-label{
+	font-size: 14px;
+	color: white;
 }
 
 .conteudo.z-hlayout {
 	font-size: 30px;
-	margin-right: 50px;
-	margin-left: 50px;
 	margin-bottom: 50px;
 }
 
 .pesquisa.z-textbox {
 	float: right;
-	background: none
 }
 
 /** Relação de turmas **/

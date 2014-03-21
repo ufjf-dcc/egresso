@@ -4,20 +4,52 @@
 	<script type="text/javascript" src="/watermarkinput.js" />
 	<script type="text/javascript">
 		zk.afterMount(function() {
-		jq("$txtpesquisa").Watermark("Pesquisar alunos","gray"); });
+		jq("$txtpesquisa").Watermark("Nome","gray"); });
 	</script>
 	<div apply="org.zkoss.bind.BindComposer" width="100%"
 		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbTurmaController')"
 		height="100%">
-		<div class="cabecalho">
-			<textbox id="txtpesquisa" class="pesquisa"
-				onOK="@command('pesquisar')" value="@bind(vm.pesquisa)" />
-			<label class="cabecalho" value="@load(vm.descricao)" />
-		</div>
-		<html>			
+		<hlayout>
+			<div class="cabecalho" hflex="1">
+
+				<label class="cabecalho" value="@load(vm.descricao)" />
+			</div>
+			<div class="pesquisa-turma" width="440px">
+				<hlayout>
+					<vlayout>
+						<label class="pesquisa-turma"
+							value="Pesquisar aluno:" />
+						<textbox id="txtpesquisa" class="pesquisa"
+							onOK="@command('pesquisar')" value="@bind(vm.pesquisa)" />
+					</vlayout>
+					<vlayout>
+						<label class="pesquisa-turma"
+							value="Ver outra turma:" />
+						<div>
+							<combobox readonly="true"
+								model="@load(vm.semestres)" width="45px"
+								value="@load(vm.turma.semestre)"
+								onSelect="@command('trocaTurma', semestre=self.value, ano=self.nextSibling.value)">
+								<template name="model">
+									<comboitem label="@load(each)" />
+								</template>
+							</combobox>
+							<combobox readonly="true"
+								model="@load(vm.anos)" width="70px">
+								<template name="model">
+									<comboitem label="@load(each)" />
+								</template>
+							</combobox>
+						</div>
+					</vlayout>
+				</hlayout>
+			</div>
+		</hlayout>
+		<html>
+			
 			<![CDATA[ <hr style="border-top: dashed 1px; border-color:
-			#c0504d; margin-bottom:20px; margin-left: 50px;
-			margin-right:50px; border-bottom: none" />]]>
+			#c0504d; margin-bottom:20px; border-bottom: none" />]]>
+			
 		</html>
 		<hlayout class="conteudo">
 			<div class="mural">

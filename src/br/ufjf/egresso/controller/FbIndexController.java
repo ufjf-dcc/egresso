@@ -20,7 +20,7 @@ import facebook4j.Facebook;
 import facebook4j.FacebookFactory;
 import facebook4j.auth.AccessToken;
 
-public class IndexController {
+public class FbIndexController {
 
 	@Init
 	public void autentica() throws HibernateException, Exception {
@@ -75,7 +75,7 @@ public class IndexController {
 				Aluno aluno = new AlunoBusiness().getAluno(facebook.getId());
 				if (aluno != null) {
 					Sessions.getCurrent().setAttribute("aluno", aluno);
-					Executions.sendRedirect("/fb/perfil.zul");
+					Executions.sendRedirect("/fb/menu.zul");
 				} else if (new SolicitacaoBusiness()
 						.getSolicitacao(facebook.getId()) != null)
 					Executions.sendRedirect("/fb/solicitacao-em-espera.zul");

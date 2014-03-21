@@ -1,6 +1,7 @@
 package br.ufjf.egresso.controller;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import org.zkoss.bind.BindUtils;
@@ -18,13 +19,26 @@ import br.ufjf.egresso.model.Turma;
 public class FbTurmaController {
 
 	private List<Aluno> alunos, filtraAlunos;
+	private HashSet<Integer> anos, semestres;
+	private List<Turma> turmas;
 	private Turma turma;
 	private String pesquisa,
 			emptyMessage = "Nenhum aluno desta turma se cadastrou no aplicativo ainda", descricao;
 
 	@Init
 	public void init() {
-		turma = new TurmaBusiness().getTurma(Integer.parseInt(Executions.getCurrent().getParameter("id")));
+		TurmaBusiness turmaBusiness = new TurmaBusiness();
+		turma = turmaBusiness.getTurma(Integer.parseInt(Executions.getCurrent().getParameter("id")));
+		turmas = turmaBusiness.getTodas();
+		
+		anos = new HashSet<Integer>();
+		semestres = new HashSet<Integer>();
+		for (Turma t : turmas){
+			anos.add(t.getAno());
+		}
+		semestres.add(1);
+		semestres.add(2);
+		
 		descricao = "Turma do "+turma.getSemestre()+"º semestre de "+turma.getAno();
 		alunos = new AlunoBusiness().getAlunos(turma);
 		filtraAlunos = alunos;
@@ -52,6 +66,14 @@ public class FbTurmaController {
 
 	public String getEmptyMessage() {
 		return emptyMessage;
+	}
+
+	public HashSet<Integer> getAnos() {
+		return anos;
+	}
+
+	public HashSet<Integer> getSemestres() {
+		return semestres;
 	}
 
 	@Command

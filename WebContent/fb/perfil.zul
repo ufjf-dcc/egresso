@@ -2,149 +2,158 @@
 
 <zk>
 
-	<?link rel="stylesheet" type="text/css"
-    href="/bootstrap/css/bootstrap.css" ?>
-	
+	<style src="/bootstrap/css/bootstrap.css"/>
+	<style src="/styles.css"/>
+
 	<div apply="org.zkoss.bind.BindComposer" width="100%"
 		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbPerfilController')"
 		height="100%">
-<div class="top">
-	<label sclass="title" 
-		value="Álbum de Fotos - Ciência da Computação - UFJF"/> 
-</div>
 		<hlayout>
-		<div class="info-aluno">
-			<div class="foto">
-				<image src="@load(vm.aluno.urlFoto)" height="250px"
-					width="250px" />
-			</div>
-			<div class="infos">
-				<label sclass="nome_perfil"
-					value="@load(vm.aluno.nome)" />
-				<label sclass="turma_perfil"
-					value="@load('Turma do '.concat(vm.aluno.turma.semestre).concat('° ').concat('semestre do ano de ').concat(vm.aluno.turma.ano).concat('.'))" />
-			</div>
-		</div>
-	<vlayout>
-		<div class ="btnAdd">
-		<button class="btn" label ="Adicionar experiência, formação ou projeto..." />
-		</div>
-		<template name ="noneditable">
-		<hlayout>
-		<vlayout>
-		
-		
-		<div class="ocupacaoAtual" >
-			<div>
-				<label value="Ocupação Atual:"/>
-			</div>
-			<div class="ocupacao_atual" >
-				<label sclass="cargo" value  = "@load(vm.atuacaoAtual.cargo)"/>
-			</div>
-			<div class="ocupacao_atual">
-				<label sclass="local" value  = "@load(vm.atuacaoAtual.local)"/>
-			</div>
-			<div class="ocupacao_atual">
-				<label  sclass = "dt_inicio " value  = "@load('Desde:'.concat(' ').concat(vm.atuacaoAtual.dataInicio))"/>
-			</div>
-		</div>
-		</vlayout>
-
-				<div class="editar_atual ">
-					<button class="btn" label ="Editar" onClick="@command('changeEditableStatus', atuacaoAtual=each)" />
+			<div class="info-aluno">
+				<div class="foto">
+					<image src="@load(vm.aluno.urlFoto)" height="250px"
+						width="250px" />
 				</div>
-		</hlayout>
-		</template>
-		<template name="editable">
-               
-                    <textbox
-                        value="@load(each.atuacaoAtual.cargo) @save(each.atuacaoAtual.cargo, before='confirm')" />
-                    <textbox
-                        value="@load(each.atuacaoAtual.local) @save(each.atuacaoAtuallocal, before='confirm')" />
-                    <textbox
-                        value="@load(each.atuacaoAtual.dataInicio) @save(each.atuacaoAtual.dataInicio, before='confirm')" />
-                    <div>
-                        <button
-                          	label= "OK"
-                            onClick="@command('confirm', atuacaoAtual=each)" />
-                        <button
-                           	label="cancel"
-                            onClick="@command('changeEditableStatusAtual',atuacaoAtual=each)" />
-                    </div>
-              
-            </template>
+				<div class="infos">
+					<label sclass="nome_perfil"
+						value="@load(vm.aluno.nome)" />
+					<label sclass="turma_perfil"
+						value="@load('Turma do '.concat(vm.aluno.turma.semestre).concat('° ').concat('semestre do ano de ').concat(vm.aluno.turma.ano).concat('.'))" />
+				</div>
+			</div>
+			<vlayout>
+				<div class="btnAdd">
+					<button class="btn"
+						label="Adicionar experiência, formação ou projeto..." />
+				</div>
+				<template name="noneditable">
+					<hlayout>
+						<vlayout>
 
-		<div  class="exp" >
-			<label value = "Experiências :"/>
-			<vlayout children="@load(vm.filtraEmpregos)">
-			
-		<template name="children" var="atuacao">
-		<hlayout>
-			<vlayout>
-				<label sclass= "cargo" value = "@load(atuacao.cargo)" />
-				<label sclass = "local" value = "@load(atuacao.local)" />
-				<label sclass="dt_inicio" value = "@load('De:'.concat(' ').concat(atuacao.dataInicio))" />
-					<label sclass = "dt_inicio" value = "@load('Até :'.concat(' ').concat(atuacao.dataTermino))" />
-			</vlayout>
-			<div class="editar_exp">
-				<button class="btn" label ="Editar" />
-			</div>
-		</hlayout>
-		</template>
-			</vlayout>
+
+							<div class="ocupacaoAtual">
+								<div>
+									<label value="Ocupação Atual:" />
+								</div>
+								<div class="ocupacao_atual">
+									<label sclass="cargo"
+										value="@load(vm.atuacaoAtual.cargo)" />
+								</div>
+								<div class="ocupacao_atual">
+									<label sclass="local"
+										value="@load(vm.atuacaoAtual.local)" />
+								</div>
+								<div class="ocupacao_atual">
+									<label sclass="dt_inicio "
+										value="@load('Desde:'.concat(' ').concat(vm.atuacaoAtual.dataInicio))" />
+								</div>
+							</div>
+						</vlayout>
+
+						<div class="editar_atual ">
+							<button class="btn" label="Editar"
+								onClick="@command('changeEditableStatus', atuacaoAtual=each)" />
+						</div>
+					</hlayout>
+				</template>
+				<template name="editable">
+
+					<textbox
+						value="@load(each.atuacaoAtual.cargo) @save(each.atuacaoAtual.cargo, before='confirm')" />
+					<textbox
+						value="@load(each.atuacaoAtual.local) @save(each.atuacaoAtuallocal, before='confirm')" />
+					<textbox
+						value="@load(each.atuacaoAtual.dataInicio) @save(each.atuacaoAtual.dataInicio, before='confirm')" />
+					<div>
+						<button label="OK"
+							onClick="@command('confirm', atuacaoAtual=each)" />
+						<button label="cancel"
+							onClick="@command('changeEditableStatusAtual',atuacaoAtual=each)" />
+					</div>
+
+				</template>
+
+				<div class="exp">
+					<label value="Experiências :" />
+					<vlayout children="@load(vm.filtraEmpregos)">
+
+						<template name="children" var="atuacao">
+							<hlayout>
+								<vlayout>
+									<label sclass="cargo"
+										value="@load(atuacao.cargo)" />
+									<label sclass="local"
+										value="@load(atuacao.local)" />
+									<label sclass="dt_inicio"
+										value="@load('De:'.concat(' ').concat(atuacao.dataInicio))" />
+									<label sclass="dt_inicio"
+										value="@load('Até :'.concat(' ').concat(atuacao.dataTermino))" />
+								</vlayout>
+								<div class="editar_exp">
+									<button class="btn" label="Editar" />
+								</div>
+							</hlayout>
+						</template>
+					</vlayout>
 					<vlayout children="@load(vm.filtraProjetos)">
-			
-		<template name="children" var="atuacao">
-		<hlayout>
-			<vlayout>
-				<label sclass= "cargo" value = "@load(atuacao.cargo)" />
-				<label sclass = "local" value = "@load(atuacao.local)" />
-				<label sclass="dt_inicio" value = "@load('De:'.concat(' ').concat(atuacao.dataInicio))" />
-					<label sclass = "dt_inicio" value = "@load('Até :'.concat(' ').concat(atuacao.dataTermino))" />
+
+						<template name="children" var="atuacao">
+							<hlayout>
+								<vlayout>
+									<label sclass="cargo"
+										value="@load(atuacao.cargo)" />
+									<label sclass="local"
+										value="@load(atuacao.local)" />
+									<label sclass="dt_inicio"
+										value="@load('De:'.concat(' ').concat(atuacao.dataInicio))" />
+									<label sclass="dt_inicio"
+										value="@load('Até :'.concat(' ').concat(atuacao.dataTermino))" />
+								</vlayout>
+								<div class="editar_exp">
+									<button class="btn" label="Editar" />
+								</div>
+							</hlayout>
+						</template>
+					</vlayout>
+				</div>
+
+				<div class="exp">
+					<label value="Formações :" />
+					<vlayout children="@load(vm.filtraFormacoes)">
+
+						<template name="children" var="atuacao">
+							<hlayout>
+								<vlayout>
+									<label sclass="cargo"
+										value="@load(atuacao.cargo)" />
+									<label sclass="local"
+										value="@load(atuacao.local)" />
+									<label sclass="dt_inicio"
+										value="@load('De:'.concat(' ').concat(atuacao.dataInicio))" />
+									<label sclass="dt_inicio"
+										value="@load('Até :'.concat(' ').concat(atuacao.dataTermino))" />
+								</vlayout>
+								<div class="editar_exp">
+									<button class="btn" label="Editar" />
+								</div>
+							</hlayout>
+						</template>
+					</vlayout>
+				</div>
+
 			</vlayout>
-			<div class="editar_exp">
-				<button class="btn" label ="Editar" />
-			</div>
 		</hlayout>
-		</template>
-			</vlayout>
-	</div>
-	
-		<div  class="exp" >
-			<label value = "Formações :"/>
-			<vlayout children="@load(vm.filtraFormacoes)">
-			
-		<template name="children" var="atuacao">
-		<hlayout>
-			<vlayout>
-				<label sclass= "cargo" value = "@load(atuacao.cargo)" />
-				<label sclass = "local" value = "@load(atuacao.local)" />
-				<label sclass="dt_inicio" value = "@load('De:'.concat(' ').concat(atuacao.dataInicio))" />
-					<label sclass = "dt_inicio" value = "@load('Até :'.concat(' ').concat(atuacao.dataTermino))" />
-			</vlayout>
-			<div class="editar_exp">
-				<button class="btn" label ="Editar" />
-			</div>
-		</hlayout>
-		</template>
-			</vlayout>
-	</div>
-	
-	</vlayout>
-	</hlayout>
-	
+
 		<div class="rede_sociais">
-		
-		<a  href="@load(vm.aluno.linkFacebook)" target="_blank" image= "/img/02_facebook.png" />
-		
+
+			<a href="@load(vm.aluno.linkFacebook)" target="_blank"
+				image="/img/02_facebook.png" />
+
 			<image src="/img/07_linkedin.png" />
 			<image src="/img/01_twitter.png" />
 			<image src="/img/03_youtube.png" />
-			<image src="/img/14_google+.png" />
+			<image src="/img/14_google_plus.png" />
 
-		</div>
-		<div class="bottom">
-			<!-- coloquei aqui só pra testar a pag. de turma --><button href="turma.zul?id=1" /><button href="turmas.zul" />
 		</div>
 	</div>
 

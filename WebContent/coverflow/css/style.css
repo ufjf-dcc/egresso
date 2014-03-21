@@ -1,21 +1,17 @@
-body{
-	background:white;
-	margin:0;
-	padding:0;
-	-moz-user-select: none;
-	-webkit-user-select:none;
-	user-select :none;
-}
-
 div.coverFlow{
 	position:absolute;
 	overflow:hidden;
 	padding:10px;
+	-moz-user-select: none; 
+	-webkit-user-select: none; 
+	-ms-user-select:none; 
+	user-select:none;
 }
 
 div#coverFlow1{
+    position:absolute;
     width: 50%;
-    height: 20%;
+    height: 200px;
     left: 25%;
     top: 20%;
 	font-size:100%;
@@ -23,9 +19,10 @@ div#coverFlow1{
 
 div.snapshot{
 	position: absolute;
+	margin-top:10px;
 	border: 1px solid #333;
 	text-align: center;
-	background: #ddd;
-	box-shadow:0px 0px 10px black;
-	border-radius:10px;
+	background: #c0504d;
+	box-shadow:0px 0px 5px black;
+	border-radius:4px;
 }
