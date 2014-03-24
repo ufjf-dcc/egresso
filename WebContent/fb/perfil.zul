@@ -48,9 +48,30 @@
 							</div>
 						</div>
 					</vlayout>
+					<vlayout visible="false">
+									<hlayout>
+										<label sclass="cargo"
+											value="Cargo: " />
+										<textbox
+											value="@bind(vm.atuacaoEmEdicao.cargo)" />
+									</hlayout>
+									<hlayout>
+										<label sclass="local"
+											value="Local: " />
+										<textbox
+											value="@bind(vm.atuacaoEmEdicao.local)" />
+									</hlayout>
+									<hlayout>
+										<label sclass="dt_inicio"
+											value="De:" />
+										<textbox
+											value="@bind(vm.atuacaoEmEdicao.dataInicio)" />
+									</hlayout>
+								</vlayout>
 
 					<div class="editar_atual ">
-						<button class="btn" label="Editar" />
+						<button class="btn" label="Editar" onClick="@command('editarAtuacao', botao=self,sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling, cancelar=self.nextSibling, atuacao=vm.atuacaoAtual)" />
+									<button class="btn" label="Cancelar" visible="false" onClick="@command('cancelarEdicao', editar=self.previousSibling, cancelar=self, sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling)"/>
 					</div>
 				</hlayout>
 
@@ -68,7 +89,7 @@
 									<label sclass="dt_inicio"
 										value="@load('De:'.concat(' ').concat(atuacao.dataInicio))" />
 									<label sclass="dt_inicio"
-										value="@load('Até :'.concat(' ').concat(atuacao.dataTermino))" />
+										value="@load(atuacao.dataTermino ne null ? 'Até :'.concat(' ').concat(atuacao.dataTermino): 'Até Agora')"  />
 								</vlayout>
 								<vlayout visible="false">
 									<hlayout>
@@ -91,7 +112,7 @@
 									</hlayout>
 									<hlayout>
 										<label sclass="dt_inicio"
-											value="Até :" />
+											value="Até : "  />
 										<textbox
 											value="@bind(vm.atuacaoEmEdicao.dataTermino)" />
 									</hlayout>
