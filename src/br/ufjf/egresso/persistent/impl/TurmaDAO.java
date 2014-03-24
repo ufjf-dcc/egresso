@@ -15,7 +15,7 @@ public class TurmaDAO extends GenericoDAO implements ITurmaDAO {
 	public List<Turma> getTodas() {
 		try {
 			Query query = getSession().createQuery(
-					"SELECT t FROM Turma AS t ORDER BY t.semestre");
+					"SELECT t FROM Turma AS t ORDER BY t.ano DESC");
 			List<Turma> turmas = query.list();
 
 			getSession().close();

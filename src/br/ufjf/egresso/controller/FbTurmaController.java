@@ -1,7 +1,6 @@
 package br.ufjf.egresso.controller;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import org.zkoss.bind.BindUtils;
@@ -19,27 +18,26 @@ import br.ufjf.egresso.model.Turma;
 public class FbTurmaController {
 
 	private List<Aluno> alunos, filtraAlunos;
-	private HashSet<Integer> anos, semestres;
+	private List<String> semestres;
 	private List<Turma> turmas;
-	private Turma turma;
+	private TurmaBusiness turmaBusiness = new TurmaBusiness();
 	private String pesquisa,
-			emptyMessage = "Nenhum aluno desta turma se cadastrou no aplicativo ainda", descricao;
+			emptyMessage = "Nenhum aluno desta turma se cadastrou no aplicativo ainda",
+			descricao;
 
 	@Init
 	public void init() {
-		TurmaBusiness turmaBusiness = new TurmaBusiness();
-		turma = turmaBusiness.getTurma(Integer.parseInt(Executions.getCurrent().getParameter("id")));
+		Turma turma = turmaBusiness.getTurma(Integer.parseInt(Executions
+				.getCurrent().getParameter("id")));
 		turmas = turmaBusiness.getTodas();
-		
-		anos = new HashSet<Integer>();
-		semestres = new HashSet<Integer>();
-		for (Turma t : turmas){
-			anos.add(t.getAno());
+
+		semestres = new ArrayList<String>();
+		for (Turma t : turmas) {
+			semestres.add(t.getAno() + " " + t.getSemestre() + "º semestre");
 		}
-		semestres.add(1);
-		semestres.add(2);
-		
-		descricao = "Turma do "+turma.getSemestre()+"º semestre de "+turma.getAno();
+
+		descricao = "Turma do " + turma.getSemestre() + "º semestre de "
+				+ turma.getAno();
 		alunos = new AlunoBusiness().getAlunos(turma);
 		filtraAlunos = alunos;
 	}
@@ -50,10 +48,6 @@ public class FbTurmaController {
 
 	public List<Aluno> getFiltraAlunos() {
 		return filtraAlunos;
-	}
-
-	public Turma getTurma() {
-		return turma;
 	}
 
 	public String getPesquisa() {
@@ -68,11 +62,7 @@ public class FbTurmaController {
 		return emptyMessage;
 	}
 
-	public HashSet<Integer> getAnos() {
-		return anos;
-	}
-
-	public HashSet<Integer> getSemestres() {
+	public List<String> getSemestres() {
 		return semestres;
 	}
 
@@ -98,6 +88,16 @@ public class FbTurmaController {
 	@Command
 	public void verPerfil(@BindingParam("aluno") Aluno aluno) {
 		Executions.sendRedirect("perfil.zul?id=" + aluno.getFacebookId());
+	}
+
+	@Command
+	public void trocaTurma(@BindingParam("turma") String turmaDesc) {
+		alunos = new AlunoBusiness().getAlunos(turmaBusiness.getTurma(Integer
+				.parseInt(turmaDesc.substring(0, turmaDesc.indexOf(" "))),
+				Integer.parseInt(turmaDesc.substring(
+						turmaDesc.indexOf("º") - 1, turmaDesc.indexOf("º")))));
+		filtraAlunos = alunos;
+		BindUtils.postNotifyChange(null, null, this, "filtraAlunos");
 	}
 
 }
