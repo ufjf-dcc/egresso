@@ -5862,12 +5862,9 @@ button.close {
 	margin-top:50px;
 }
 .editar_exp{
-	margin-left:540px;
+	float: right;
 	margin-top:25px;
-}
-.exp{
-	margin:25px;
-	margin-left:200px;
+	text-align:right;
 }
 
 /*# sourceMappingURL=bootstrap.css.map */

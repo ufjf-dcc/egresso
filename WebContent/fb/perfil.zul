@@ -2,8 +2,8 @@
 
 <zk>
 
-	<style src="/bootstrap/css/bootstrap.css"/>
-	<style src="/styles.css"/>
+	<style src="/bootstrap/css/bootstrap.css" />
+	<style src="/styles.css" />
 
 	<div apply="org.zkoss.bind.BindComposer" width="100%"
 		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbPerfilController')"
@@ -26,59 +26,40 @@
 					<button class="btn"
 						label="Adicionar experiência, formação ou projeto..." />
 				</div>
-				<template name="noneditable">
-					<hlayout>
-						<vlayout>
+				<hlayout>
+					<vlayout>
 
 
-							<div class="ocupacaoAtual">
-								<div>
-									<label value="Ocupação Atual:" />
-								</div>
-								<div class="ocupacao_atual">
-									<label sclass="cargo"
-										value="@load(vm.atuacaoAtual.cargo)" />
-								</div>
-								<div class="ocupacao_atual">
-									<label sclass="local"
-										value="@load(vm.atuacaoAtual.local)" />
-								</div>
-								<div class="ocupacao_atual">
-									<label sclass="dt_inicio "
-										value="@load('Desde:'.concat(' ').concat(vm.atuacaoAtual.dataInicio))" />
-								</div>
+						<div class="ocupacaoAtual">
+							<div>
+								<label value="Ocupação Atual:" />
 							</div>
-						</vlayout>
-
-						<div class="editar_atual ">
-							<button class="btn" label="Editar"
-								onClick="@command('changeEditableStatus', atuacaoAtual=each)" />
+							<div class="ocupacao_atual">
+								<label sclass="cargo"
+									value="@load(vm.atuacaoAtual.cargo)" />
+							</div>
+							<div class="ocupacao_atual">
+								<label sclass="local"
+									value="@load(vm.atuacaoAtual.local)" />
+							</div>
+							<div class="ocupacao_atual">
+								<label sclass="dt_inicio "
+									value="@load('Desde:'.concat(' ').concat(vm.atuacaoAtual.dataInicio))" />
+							</div>
 						</div>
-					</hlayout>
-				</template>
-				<template name="editable">
+					</vlayout>
 
-					<textbox
-						value="@load(each.atuacaoAtual.cargo) @save(each.atuacaoAtual.cargo, before='confirm')" />
-					<textbox
-						value="@load(each.atuacaoAtual.local) @save(each.atuacaoAtuallocal, before='confirm')" />
-					<textbox
-						value="@load(each.atuacaoAtual.dataInicio) @save(each.atuacaoAtual.dataInicio, before='confirm')" />
-					<div>
-						<button label="OK"
-							onClick="@command('confirm', atuacaoAtual=each)" />
-						<button label="cancel"
-							onClick="@command('changeEditableStatusAtual',atuacaoAtual=each)" />
+					<div class="editar_atual ">
+						<button class="btn" label="Editar" />
 					</div>
+				</hlayout>
 
-				</template>
-
-				<div class="exp">
+				<div width="100%" style="margin-bottom:25px">
 					<label value="Experiências :" />
-					<vlayout children="@load(vm.filtraEmpregos)">
+					<vlayout children="@load(vm.filtraEmpregos)" width="100%">
 
 						<template name="children" var="atuacao">
-							<hlayout>
+							<hlayout width="100%">
 								<vlayout>
 									<label sclass="cargo"
 										value="@load(atuacao.cargo)" />
@@ -89,57 +70,145 @@
 									<label sclass="dt_inicio"
 										value="@load('Até :'.concat(' ').concat(atuacao.dataTermino))" />
 								</vlayout>
-								<div class="editar_exp">
-									<button class="btn" label="Editar" />
-								</div>
-							</hlayout>
-						</template>
-					</vlayout>
-					<vlayout children="@load(vm.filtraProjetos)">
-
-						<template name="children" var="atuacao">
-							<hlayout>
-								<vlayout>
-									<label sclass="cargo"
-										value="@load(atuacao.cargo)" />
-									<label sclass="local"
-										value="@load(atuacao.local)" />
-									<label sclass="dt_inicio"
-										value="@load('De:'.concat(' ').concat(atuacao.dataInicio))" />
-									<label sclass="dt_inicio"
-										value="@load('Até :'.concat(' ').concat(atuacao.dataTermino))" />
+								<vlayout visible="false">
+									<hlayout>
+										<label sclass="cargo"
+											value="Cargo: " />
+										<textbox
+											value="@bind(vm.atuacaoEmEdicao.cargo)" />
+									</hlayout>
+									<hlayout>
+										<label sclass="local"
+											value="Local: " />
+										<textbox
+											value="@bind(vm.atuacaoEmEdicao.local)" />
+									</hlayout>
+									<hlayout>
+										<label sclass="dt_inicio"
+											value="De:" />
+										<textbox
+											value="@bind(vm.atuacaoEmEdicao.dataInicio)" />
+									</hlayout>
+									<hlayout>
+										<label sclass="dt_inicio"
+											value="Até :" />
+										<textbox
+											value="@bind(vm.atuacaoEmEdicao.dataTermino)" />
+									</hlayout>
 								</vlayout>
-								<div class="editar_exp">
-									<button class="btn" label="Editar" />
-								</div>
-							</hlayout>
-						</template>
-					</vlayout>
-				</div>
-
-				<div class="exp">
-					<label value="Formações :" />
-					<vlayout children="@load(vm.filtraFormacoes)">
-
-						<template name="children" var="atuacao">
-							<hlayout>
-								<vlayout>
-									<label sclass="cargo"
-										value="@load(atuacao.cargo)" />
-									<label sclass="local"
-										value="@load(atuacao.local)" />
-									<label sclass="dt_inicio"
-										value="@load('De:'.concat(' ').concat(atuacao.dataInicio))" />
-									<label sclass="dt_inicio"
-										value="@load('Até :'.concat(' ').concat(atuacao.dataTermino))" />
-								</vlayout>
-								<div class="editar_exp">
-									<button class="btn" label="Editar" />
+								<div class="editar_exp" hflex="1">
+									<button class="btn" label="Editar"
+										onClick="@command('editarAtuacao', botao=self,sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling, cancelar=self.nextSibling, atuacao=atuacao)" />
+									<button class="btn" label="Cancelar" visible="false" onClick="@command('cancelarEdicao', editar=self.previousSibling, cancelar=self, sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling)"/>
 								</div>
 							</hlayout>
 						</template>
 					</vlayout>
 				</div>
+				
+				<div width="100%" style="margin-bottom:25px">
+					<label value="Formação :" />
+					<vlayout children="@load(vm.filtraFormacoes)" width="100%">
+
+						<template name="children" var="atuacao">
+							<hlayout width="100%">
+								<vlayout>
+									<label sclass="cargo"
+										value="@load(atuacao.cargo)" />
+									<label sclass="local"
+										value="@load(atuacao.local)" />
+									<label sclass="dt_inicio"
+										value="@load('De:'.concat(' ').concat(atuacao.dataInicio))" />
+									<label sclass="dt_inicio"
+										value="@load('Até :'.concat(' ').concat(atuacao.dataTermino))" />
+								</vlayout>
+								<vlayout visible="false">
+									<hlayout>
+										<label sclass="cargo"
+											value="Cargo: " />
+										<textbox
+											value="@bind(vm.atuacaoEmEdicao.cargo)" />
+									</hlayout>
+									<hlayout>
+										<label sclass="local"
+											value="Local: " />
+										<textbox
+											value="@bind(vm.atuacaoEmEdicao.local)" />
+									</hlayout>
+									<hlayout>
+										<label sclass="dt_inicio"
+											value="De:" />
+										<textbox
+											value="@bind(vm.atuacaoEmEdicao.dataInicio)" />
+									</hlayout>
+									<hlayout>
+										<label sclass="dt_inicio"
+											value="Até :" />
+										<textbox
+											value="@bind(vm.atuacaoEmEdicao.dataTermino)" />
+									</hlayout>
+								</vlayout>
+								<div class="editar_exp" hflex="1">
+									<button class="btn" label="Editar"
+										onClick="@command('editarAtuacao', botao=self,sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling, cancelar=self.nextSibling, atuacao=atuacao)" />
+									<button class="btn" label="Cancelar" visible="false" onClick="@command('cancelarEdicao', editar=self.previousSibling, cancelar=self, sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling)"/>
+								</div>
+							</hlayout>
+						</template>
+					</vlayout>
+				</div>
+				
+				<div width="100%" style="margin-bottom:25px">
+					<label value="Projetos :" />
+					<vlayout children="@load(vm.filtraProjetos)" width="100%">
+
+						<template name="children" var="atuacao">
+							<hlayout width="100%">
+								<vlayout>
+									<label sclass="cargo"
+										value="@load(atuacao.cargo)" />
+									<label sclass="local"
+										value="@load(atuacao.local)" />
+									<label sclass="dt_inicio"
+										value="@load('De:'.concat(' ').concat(atuacao.dataInicio))" />
+									<label sclass="dt_inicio"
+										value="@load('Até :'.concat(' ').concat(atuacao.dataTermino))" />
+								</vlayout>
+								<vlayout visible="false">
+									<hlayout>
+										<label sclass="cargo"
+											value="Cargo: " />
+										<textbox
+											value="@bind(vm.atuacaoEmEdicao.cargo)" />
+									</hlayout>
+									<hlayout>
+										<label sclass="local"
+											value="Local: " />
+										<textbox
+											value="@bind(vm.atuacaoEmEdicao.local)" />
+									</hlayout>
+									<hlayout>
+										<label sclass="dt_inicio"
+											value="De:" />
+										<textbox
+											value="@bind(vm.atuacaoEmEdicao.dataInicio)" />
+									</hlayout>
+									<hlayout>
+										<label sclass="dt_inicio"
+											value="Até :" />
+										<textbox
+											value="@bind(vm.atuacaoEmEdicao.dataTermino)" />
+									</hlayout>
+								</vlayout>
+								<div class="editar_exp" hflex="1">
+									<button class="btn" label="Editar"
+										onClick="@command('editarAtuacao', botao=self,sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling, cancelar=self.nextSibling, atuacao=atuacao)" />
+									<button class="btn" label="Cancelar" visible="false" onClick="@command('cancelarEdicao', editar=self.previousSibling, cancelar=self, sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling)"/>
+								</div>
+							</hlayout>
+						</template>
+					</vlayout>
+				</div>			
 
 			</vlayout>
 		</hlayout>

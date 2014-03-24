@@ -13,9 +13,11 @@ import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.util.Clients;
+import org.zkoss.zul.Button;
 import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.Vlayout;
 import org.zkoss.zul.Window;
 
 import br.ufjf.egresso.business.AlunoBusiness;
@@ -29,14 +31,17 @@ public class FbPerfilController {
 
 	private Aluno aluno;
 	private AtuacaoBusiness atuacaoBusiness = new AtuacaoBusiness();
-	private List<Atuacao> empregos = new ArrayList<Atuacao>(), projetos = new ArrayList<Atuacao>(), formacoes = new ArrayList<Atuacao>();
+	private List<Atuacao> empregos = new ArrayList<Atuacao>(),
+			projetos = new ArrayList<Atuacao>(),
+			formacoes = new ArrayList<Atuacao>();
 	private List<Atuacao> filtraEmpregos, filtraProjetos, filtraFormacoes;
 	private Atuacao novaAtuacao = new Atuacao();
 	private Map<Integer, Atuacao> editTemp = new HashMap<Integer, Atuacao>();
 	private String filterString = "";
-	private Atuacao atuacaoAtual;
+	private Atuacao atuacaoAtual, atuacaoEmEdicao;
 	private List<TipoAtuacao> tipoAtuacao = new TipoAtuacaoDAO().getTodas();
 	private boolean podeEditar = false;
+	private boolean emEdicao = false;
 
 	@Init
 	public void init() {
@@ -48,12 +53,12 @@ public class FbPerfilController {
 			podeEditar = true;
 		}
 		List<Atuacao> todasAtuacoes = new AtuacaoBusiness().getPorAluno(aluno);
-		if(todasAtuacoes != null)
-			for (Atuacao a : todasAtuacoes){
+		if (todasAtuacoes != null)
+			for (Atuacao a : todasAtuacoes) {
 				if (a.getAtual())
 					atuacaoAtual = a;
-				
-				switch(a.getTipoAtuacao().getId()){
+
+				switch (a.getTipoAtuacao().getId()) {
 				case TipoAtuacao.EMPREGO:
 					empregos.add(a);
 					break;
@@ -65,10 +70,60 @@ public class FbPerfilController {
 					break;
 				}
 			}
-		
+
 		filtraEmpregos = empregos;
 		filtraProjetos = projetos;
 		filtraFormacoes = formacoes;
+	}
+
+	@Command
+	public void editarAtuacao(@BindingParam("botao") Button btn,
+			@BindingParam("sumir") Vlayout v1,
+			@BindingParam("aparecer") Vlayout v2,
+			@BindingParam("cancelar") Button btnCancelar,
+			@BindingParam("atuacao") Atuacao atuacao) {
+		if (btn.getLabel().equals("Editar")) {
+			btn.setLabel("Salvar");
+			atuacaoEmEdicao = new Atuacao();
+			atuacaoEmEdicao.copy(atuacao);
+			BindUtils.postNotifyChange(null, null, this, "atuacaoEmEdicao");
+		} else {
+			btn.setLabel("Editar");
+			atuacao.copy(atuacaoEmEdicao);
+			atuacaoBusiness.salvaOuEdita(atuacaoEmEdicao);
+			BindUtils.postNotifyChange(null, null, this, "filtraProjetos");
+			BindUtils.postNotifyChange(null, null, this, "filtraEmpregos");
+			BindUtils.postNotifyChange(null, null, this, "filtraFormacoes");
+		}
+		v1.setVisible(!v1.isVisible());
+		v2.setVisible(!v2.isVisible());
+		btnCancelar.setVisible(!btnCancelar.isVisible());
+		emEdicao = btnCancelar.isVisible();
+		BindUtils.postNotifyChange(null, null, this, "emEdicao");
+	}
+
+	@Command
+	public void cancelarEdicao(@BindingParam("editar") Button btnEditar,
+			@BindingParam("cancelar") Button btnCancelar,
+			@BindingParam("sumir") Vlayout v1,
+			@BindingParam("aparecer") Vlayout v2) {
+		btnCancelar.setVisible(false);
+		btnEditar.setLabel("Editar");
+		btnEditar.setVisible(true);
+		v1.setVisible(!v1.isVisible());
+		v2.setVisible(!v2.isVisible());
+	}
+
+	public boolean isEmEdicao() {
+		return emEdicao;
+	}
+
+	public void setEmEdicao(boolean emEdicao) {
+		this.emEdicao = emEdicao;
+	}
+
+	public Atuacao getAtuacaoEmEdicao() {
+		return atuacaoEmEdicao;
 	}
 
 	public boolean isPodeEditar() {
@@ -128,33 +183,36 @@ public class FbPerfilController {
 		filtraEmpregos = new ArrayList<Atuacao>();
 		String filter = filterString.toLowerCase().trim();
 		for (Atuacao c : empregos) {
-			if (c.getCargo().toLowerCase().contains(filter) || c.getLocal().toLowerCase().contains(filter)) {
+			if (c.getCargo().toLowerCase().contains(filter)
+					|| c.getLocal().toLowerCase().contains(filter)) {
 				filtraEmpregos.add(c);
 			}
 
 		}
 		BindUtils.postNotifyChange(null, null, this, "filtraEmpregos");
 	}
-	
+
 	@Command
 	public void filtraProjetos() {
 		filtraProjetos = new ArrayList<Atuacao>();
 		String filter = filterString.toLowerCase().trim();
 		for (Atuacao c : projetos) {
-			if (c.getCargo().toLowerCase().contains(filter) || c.getLocal().toLowerCase().contains(filter)) {
+			if (c.getCargo().toLowerCase().contains(filter)
+					|| c.getLocal().toLowerCase().contains(filter)) {
 				filtraProjetos.add(c);
 			}
 
 		}
 		BindUtils.postNotifyChange(null, null, this, "filtraProjetos");
 	}
-	
+
 	@Command
 	public void filtraFormacoes() {
 		filtraFormacoes = new ArrayList<Atuacao>();
 		String filter = filterString.toLowerCase().trim();
 		for (Atuacao c : formacoes) {
-			if (c.getCargo().toLowerCase().contains(filter) || c.getLocal().toLowerCase().contains(filter)) {
+			if (c.getCargo().toLowerCase().contains(filter)
+					|| c.getLocal().toLowerCase().contains(filter)) {
 				filtraFormacoes.add(c);
 			}
 
@@ -163,7 +221,8 @@ public class FbPerfilController {
 	}
 
 	@Command
-	public void changeEditableStatusAtual(@BindingParam("atuacaoAtual") Atuacao atuacaoAtual) {
+	public void changeEditableStatusAtual(
+			@BindingParam("atuacaoAtual") Atuacao atuacaoAtual) {
 		if (!atuacaoAtual.getEditingStatus()) {
 			Atuacao temp = new Atuacao();
 			temp.copy(atuacaoAtual);
@@ -180,30 +239,30 @@ public class FbPerfilController {
 	@Command
 	public void addEmprego(@BindingParam("window") Window window) {
 		this.limpa();
-		for(TipoAtuacao t : tipoAtuacao)
-			if(t.getId() == TipoAtuacao.EMPREGO){
+		for (TipoAtuacao t : tipoAtuacao)
+			if (t.getId() == TipoAtuacao.EMPREGO) {
 				novaAtuacao.setTipoAtuacao(t);
 				break;
 			}
 		window.doModal();
 	}
-	
+
 	@Command
 	public void addProjeto(@BindingParam("window") Window window) {
 		this.limpa();
-		for(TipoAtuacao t : tipoAtuacao)
-			if(t.getId() == TipoAtuacao.PROJETO){
+		for (TipoAtuacao t : tipoAtuacao)
+			if (t.getId() == TipoAtuacao.PROJETO) {
 				novaAtuacao.setTipoAtuacao(t);
 				break;
 			}
 		window.doModal();
 	}
-	
+
 	@Command
 	public void addFormacao(@BindingParam("window") Window window) {
 		this.limpa();
-		for(TipoAtuacao t : tipoAtuacao)
-			if(t.getId() == TipoAtuacao.FORMACAO){
+		for (TipoAtuacao t : tipoAtuacao)
+			if (t.getId() == TipoAtuacao.FORMACAO) {
 				novaAtuacao.setTipoAtuacao(t);
 				break;
 			}
@@ -216,7 +275,7 @@ public class FbPerfilController {
 
 		if (atuacaoBusiness.validar(novaAtuacao)) {
 			if (atuacaoBusiness.salvar(novaAtuacao)) {
-				switch(novaAtuacao.getTipoAtuacao().getId()){
+				switch (novaAtuacao.getTipoAtuacao().getId()) {
 				case TipoAtuacao.EMPREGO:
 					empregos.add(novaAtuacao);
 					filtraEmpregos = empregos;
@@ -260,17 +319,17 @@ public class FbPerfilController {
 	public void notificaEmpregos() {
 		BindUtils.postNotifyChange(null, null, this, "filtraEmpregos");
 	}
-	
+
 	public void notificaFormacoes() {
 		BindUtils.postNotifyChange(null, null, this, "filtraFormacoes");
 	}
-	
+
 	public void notificaProjetos() {
 		BindUtils.postNotifyChange(null, null, this, "filtraProjetos");
 	}
 
 	public void removeFromList(Atuacao atuacao) {
-		switch(atuacao.getTipoAtuacao().getId()){
+		switch (atuacao.getTipoAtuacao().getId()) {
 		case TipoAtuacao.EMPREGO:
 			filtraEmpregos.remove(atuacao);
 			empregos.remove(atuacao);
@@ -336,8 +395,6 @@ public class FbPerfilController {
 					}
 				});
 	}
-
-
 
 	@Command
 	public void dataTermino(@BindingParam("checkbox") Checkbox checkbox,

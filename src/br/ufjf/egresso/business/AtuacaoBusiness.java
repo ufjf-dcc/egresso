@@ -58,9 +58,17 @@ public class AtuacaoBusiness {
 	public boolean salvar(Atuacao novaAtuacao) {
 		return atuacaoDao.salvar(novaAtuacao);
 	}
+	
+	public boolean salvaOuEdita(Atuacao novaAtuacao) {
+		return atuacaoDao.salvaOuEdita(novaAtuacao);
+	}
 
 	public List<Atuacao> getTodas() {
 		return new AtuacaoDAO().getTodas();
+	}
+	
+	public Atuacao get(int id) {
+		return (Atuacao) new AtuacaoDAO().procuraId(id, Atuacao.class);
 	}
 
 }
