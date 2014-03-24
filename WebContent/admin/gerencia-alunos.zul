@@ -106,7 +106,7 @@
 							value="@load(vm.novoAluno.turma.semestre ne null ? vm.novoAluno.turma.semestre : 'Nenhum')"
 							selectedItem="@bind(vm.novoAluno.turma)">
 							<template name="model">
-								<comboitem label="@load(each.semestre)" />
+								<comboitem label="@load(''.concat(each.ano).concat(' - ').concat(each.semestre).concat('º semestre'))" />
 							</template>
 						</combobox>
 					</row>
