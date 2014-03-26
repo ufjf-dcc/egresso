@@ -30,10 +30,10 @@
 			</auxhead>
 			<columns>
 				<column width="50px" label="Foto" />
-				<column label="Nome" sort="auto(aluno.nome)" />
+				<column label="Nome" sort="auto(nome)" />
 				<column width="165px" label="Matrícula"
-					sort="auto(aluno.matricula)" />
-				<column width="165px" label="Turma" />
+					sort="auto(matricula)" />
+				<column width="165px" label="Turma" sort="auto(turma.ano)"/>
 				<column width="190px" label="Ações" />
 			</columns>
 			<template name="editable">
@@ -44,10 +44,10 @@
 					<textbox
 						value="@load(each.matricula) @save(each.matricula, before='confirm')" />
 					<combobox id="cmbTurma" width="100%" readonly="true"
-						model="@load(vm.turmas)" value="@load(each.turma.semestre)"
+						model="@load(vm.turmas)" value="@load(''.concat(each.turma.ano).concat(' - ').concat(each.turma.semestre).concat('º semestre'))"
 						selectedItem="@bind(each.turma)">
 						<template name="model">
-							<comboitem label="@load(each.semestre)" />
+							<comboitem label="@load(''.concat(each.ano).concat(' - ').concat(each.semestre).concat('º semestre'))" />
 						</template>
 					</combobox>
 					<hlayout width="100%" hflex="true">
@@ -63,7 +63,7 @@
 					<image src="@load(each.urlFoto)" width="100%"/>
 					<label value="@load(each.nome)" />
 					<label value="@load(each.matricula)" />
-					<label value="@load(each.turma.semestre)" />
+					<label value="@load(''.concat(each.turma.ano).concat(' - ').concat(each.turma.semestre).concat('º semestre'))" />
 					<vlayout width="100%">
 						<button label="Ver Perfil no Facebook" width="100%"
 							href="@load(each.linkFacebook)" />

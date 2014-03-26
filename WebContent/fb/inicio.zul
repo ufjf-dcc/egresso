@@ -11,6 +11,9 @@
 				<label value="Álbum de Fotos" class="intro-titulo" />
 				<label value="Curso de Ciência da Computação - UFJF"
 					class="intro-subtitulo" />
+				<label
+					value="@load('Bem-vindo novamente, '.concat(vm.aluno.nome).concat('.'))"
+					class="intro-subtitulo" />
 			</vlayout>
 
 			<vlayout>
@@ -20,9 +23,9 @@
 				<button label="Ver minha turma" class="btn"
 					style="margin-top:20px" onClick="@command('verTurma')"
 					width="300px" height="50px" />
-				<button label="Ver outras turmas" class="btn" disabled="true"
-					style="margin-top:20px" href="turmas.zul" width="300px"
-					height="50px" />
+				<button label="Ver outras turmas" class="btn"
+					disabled="true" style="margin-top:20px" href="turmas.zul"
+					width="300px" height="50px" />
 				<button label="Convidar ex-alunos" class="btn"
 					style="margin-top:20px" onClick="@command('convidar')"
 					width="300px" height="50px" />

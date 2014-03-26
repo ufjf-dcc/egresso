@@ -13,10 +13,10 @@
 					colspan="2" />
 			</auxhead>
 			<auxhead>
-				<auxheader colspan="2">
+				<auxheader colspan="3">
 					<div>
 						<div style="float:left">
-							<textbox id="filtro"
+							<textbox id="filtro" onOK="@command('filtra')"
 								value="@bind(vm.filterInt)" />
 							<button label="Pesquisar"
 								onClick="@command('filtra')" />
@@ -29,11 +29,14 @@
 				</auxheader>
 			</auxhead>
 			<columns>
-				<column label="Semestre" sort="auto(turma.semestre)" />
+				<column label="Ano" sort="auto(ano)" />
+				<column label="Semestre" sort="auto(semestre)" />
 				<column label="Opções" width="180px" />
 			</columns>
 			<template name="editable">
 				<row>
+					<textbox
+						value="@load(each.ano) @save(each.ano, before='confirm')" />
 					<textbox
 						value="@load(each.semestre) @save(each.semestre, before='confirm')" />
 					<div>
@@ -46,8 +49,8 @@
 			</template>
 			<template name="noneditable">
 				<row>
+					<label value="@load(each.ano)" />
 					<label value="@load(each.semestre)" />
-
 					<div align="center">
 						<button label="Editar"
 							onClick="@command('changeEditableStatus', turma=each)" />

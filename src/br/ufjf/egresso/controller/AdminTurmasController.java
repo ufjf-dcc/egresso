@@ -22,7 +22,7 @@ public class AdminTurmasController {
 	private Map<Integer, Turma> editTemp = new HashMap<Integer, Turma>();
 	private List<Turma> todasTurmas = turmaBusiness.getTodas();
 	private List<Turma> filterTurmas = todasTurmas;
-	private int filterInt;
+	private String filterInt;
 
 	public List<Turma> getFilterTurmas() {
 		return filterTurmas;
@@ -36,11 +36,11 @@ public class AdminTurmasController {
 		this.novaTurma = novaTurma;
 	}
 
-	public int getFilterInt() {
+	public String getFilterInt() {
 		return filterInt;
 	}
 
-	public void setFilterInt(int filterInt) {
+	public void setFilterInt(String filterInt) {
 		this.filterInt = filterInt;
 	}
 
@@ -123,7 +123,7 @@ public class AdminTurmasController {
 	public void filtra() {
 		filterTurmas = new ArrayList<Turma>();
 		for (Turma c : todasTurmas) {
-			if (c.getAno() == filterInt) {
+			if (String.valueOf(c.getAno()).contains(filterInt)) {
 				filterTurmas.add(c);
 			}
 		}

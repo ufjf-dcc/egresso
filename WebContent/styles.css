@@ -12,6 +12,11 @@ tbody.z-grid-emptybody td {
 	padding: 10px;
 }
 
+.menu-aluno.z-div{
+	height:30px;
+	background:#EEEEEE;
+}
+
 /**Estilos da página de cadastro **/
 .intro.z-div {
 	width: 350px;

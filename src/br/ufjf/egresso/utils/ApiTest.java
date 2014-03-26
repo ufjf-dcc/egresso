@@ -1,4 +1,4 @@
-package br.ufjf.egresso.controller;
+package br.ufjf.egresso.utils;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -10,7 +10,7 @@ import org.zkoss.zk.ui.Sessions;
 import facebook4j.Facebook;
 import facebook4j.FacebookException;
 
-public class ApiController {
+public class ApiTest {
 	private Facebook facebook;
 
 	@Init

@@ -20,9 +20,9 @@ public class FbMenuController {
 	public void verTurma() {
 		Executions.sendRedirect("turma.zul?id=" + aluno.getTurma().getId());
 	}
-	
-	@Command
-	public void convidar() {
+
+	public Aluno getAluno() {
+		return aluno;
 	}
 
 }

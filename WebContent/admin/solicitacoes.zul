@@ -17,9 +17,9 @@
 				</auxheader>
 			</auxhead>
 			<columns>
-				<column label="Nome" />
-				<column label="Turma" />
-				<column label="Matrícula" />
+				<column label="Nome" sort="auto(nome)"/>
+				<column label="Turma" sort="auto(turma.ano)"/>
+				<column label="Matrícula" sort="auto(matricula)"/>
 				<column label="Opções" width="200px" />
 			</columns>
 			<template name="model">
@@ -50,7 +50,7 @@
 			onClose="self.setVisible(false); event.stopPropagation(); ">
 			<grid>
 				<columns>
-					<column label="Aluno cadastrado" />
+					<column label="Aluno cadastrado"/>
 					<column label="Solicitante" />
 				</columns>
 				<rows>
