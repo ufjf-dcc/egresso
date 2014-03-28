@@ -13,9 +13,9 @@ import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.util.Clients;
-import org.zkoss.zul.Button;
 import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Datebox;
+import org.zkoss.zul.Image;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Vlayout;
 import org.zkoss.zul.Window;
@@ -50,8 +50,11 @@ public class FbPerfilController {
 			aluno = new AlunoBusiness().getAluno(facebookId);
 		else {
 			aluno = (Aluno) Sessions.getCurrent().getAttribute("aluno");
-			podeEditar = true;
 		}
+
+		podeEditar = aluno.getId() == ((Aluno) Sessions.getCurrent()
+				.getAttribute("aluno")).getId();
+
 		List<Atuacao> todasAtuacoes = new AtuacaoBusiness().getPorAluno(aluno);
 		if (todasAtuacoes != null)
 			for (Atuacao a : todasAtuacoes) {
@@ -77,18 +80,19 @@ public class FbPerfilController {
 	}
 
 	@Command
-	public void editarAtuacao(@BindingParam("botao") Button btn,
+	public void editarAtuacao(
+			@BindingParam("editarSalvar") Image imgSalvarEditar,
 			@BindingParam("sumir") Vlayout v1,
 			@BindingParam("aparecer") Vlayout v2,
-			@BindingParam("cancelar") Button btnCancelar,
+			@BindingParam("cancelar") Image imgCancelar,
 			@BindingParam("atuacao") Atuacao atuacao) {
-		if (btn.getLabel().equals("Editar")) {
-			btn.setLabel("Salvar");
+		if (!imgCancelar.isVisible()) {
 			atuacaoEmEdicao = new Atuacao();
 			atuacaoEmEdicao.copy(atuacao);
+			imgSalvarEditar.setSrc("/img/confirmar.png");
 			BindUtils.postNotifyChange(null, null, this, "atuacaoEmEdicao");
 		} else {
-			btn.setLabel("Editar");
+			imgSalvarEditar.setSrc("/img/editar.png");
 			atuacao.copy(atuacaoEmEdicao);
 			atuacaoBusiness.salvaOuEdita(atuacaoEmEdicao);
 			BindUtils.postNotifyChange(null, null, this, "filtraProjetos");
@@ -97,21 +101,9 @@ public class FbPerfilController {
 		}
 		v1.setVisible(!v1.isVisible());
 		v2.setVisible(!v2.isVisible());
-		btnCancelar.setVisible(!btnCancelar.isVisible());
-		emEdicao = btnCancelar.isVisible();
+		imgCancelar.setVisible(!imgCancelar.isVisible());
+		emEdicao = imgCancelar.isVisible();
 		BindUtils.postNotifyChange(null, null, this, "emEdicao");
-	}
-
-	@Command
-	public void cancelarEdicao(@BindingParam("editar") Button btnEditar,
-			@BindingParam("cancelar") Button btnCancelar,
-			@BindingParam("sumir") Vlayout v1,
-			@BindingParam("aparecer") Vlayout v2) {
-		btnCancelar.setVisible(false);
-		btnEditar.setLabel("Editar");
-		btnEditar.setVisible(true);
-		v1.setVisible(!v1.isVisible());
-		v2.setVisible(!v2.isVisible());
 	}
 
 	public boolean isEmEdicao() {

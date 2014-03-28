@@ -6226,7 +6226,7 @@ button.close {
 	background-color: #B22222;
 	margin: 20px;
 	width: 300px;
-	padding: 2px;
+	padding: 20px;
 	height: 700px;
 }
 
@@ -6237,16 +6237,8 @@ button.close {
 }
 
 .foto {
-	margin: 20px;
 	position: relative;
 	left: 1px;
-}
-
-.infos {
-	color: white;
-	margin-top: 50px;
-	margin-left: 20px;
-	padding: 20px;
 }
 
 .nome_perfil.z-label {
@@ -6281,7 +6273,7 @@ button.close {
 	font-size: 15px;
 }
 
-.dt_inicio.z-label {
+.data_atuacao.z-label {
 	font-size: 15px;
 }
 
@@ -6311,9 +6303,6 @@ button.close {
 }
 
 .editar_exp {
-	float: right;
-	margin-top: 25px;
-	text-align: right;
 }
 
 /*# sourceMappingURL=bootstrap.css.map */

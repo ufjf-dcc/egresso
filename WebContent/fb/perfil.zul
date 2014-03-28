@@ -11,47 +11,87 @@
 		<hlayout>
 			<div class="info-aluno">
 				<div class="foto">
-					<image src="@load(vm.aluno.urlFoto)" height="250px"
-						width="250px" />
+					<image src="@load(vm.aluno.urlFoto)" width="100%" />
 				</div>
-				<div class="infos">
-					<label sclass="nome_perfil"
+				<vlayout style="margin-top: 40px; color:white">
+					<label style="font-size:20px"
 						value="@load(vm.aluno.nome)" />
-					<label sclass="turma_perfil"
+					<label style="font-size:18px"
 						value="@load('Turma do '.concat(vm.aluno.turma.semestre).concat('° ').concat('semestre do ano de ').concat(vm.aluno.turma.ano).concat('.'))" />
-				</div>
+
+
+
+					<html>
+						
+						<![CDATA[ <hr style="border-top: dashed 1px;
+						border-color: #c0504d; margin-bottom:20px;
+						margin-top:10px; border-bottom: none" />]]>
+						
+					</html>
+
+					<label value="Atuação atual" style="font-size:16px" />
+
+					<label sclass="cargo"
+						value="@load(vm.atuacaoAtual.cargo)" />
+					<label sclass="local"
+						value="@load(vm.atuacaoAtual.local)" />
+					<div>
+						<label sclass="data_atuacao" value="Desde " />
+						<label sclass="data_atuacao"
+							value="@load(''.concat(vm.atuacaoAtual.dataInicio)) @converter('br.ufjf.egresso.utils.DateFormatConverter')" />
+					</div>
+					
+					<html>
+						
+						<![CDATA[ <hr style="border-top: dashed 1px;
+						border-color: #c0504d; margin-bottom:20px;
+						margin-top:10px; border-bottom: none" />]]>
+						
+					</html>
+
+					<label value="Interesses" style="font-size:16px" />
+					<label value="Engenharia de Software, Banco de Dados, Dispositivos Móveis, Sistemas Web" />
+				</vlayout>
 			</div>
 			<vlayout hflex="1" class="atuacoes-aluno">
 				<hlayout hflex="true" spacing="20px">
 					<div width="100%" style="margin-bottom:25px"
 						hflex="1">
 						<label value="Experiências" class="cabecalho" />
-						<html>							
+						<html>
+
+
+
+							
 							<![CDATA[ <hr style="border-top: dashed 1px;
 							border-color: #c0504d; margin-bottom:20px;
-							margin-top:10px; border-bottom: none" />]]>								
+							margin-top:10px; border-bottom: none" />]]>
+							
+							
+							
+															
 						</html>
 						<vlayout children="@load(vm.filtraEmpregos)"
 							width="100%">
 
 							<template name="children" var="atuacao">
-								<hlayout width="100%"
-									visible="@load(atuacao.dataTermino ne null)">
+								<hlayout width="100%">
 									<vlayout>
 										<label sclass="cargo"
 											value="@load(atuacao.cargo)" />
 										<label sclass="local"
 											value="@load(atuacao.local)" />
 										<div>
-											<label sclass="dt_inicio"
+											<label sclass="data_atuacao"
 												value="De: " />
-											<label sclass="dt_inicio"
+											<label sclass="data_atuacao"
 												value="@load(''.concat(atuacao.dataInicio)) @converter('br.ufjf.egresso.utils.DateFormatConverter')" />
 										</div>
 										<div>
-											<label sclass="dt_inicio"
-												value="Até: " />
-											<label sclass="dt_inicio"
+											<label sclass="data_atuacao"
+												value="@load(atuacao.dataTermino ne null ? 'Até: ' : 'Atual')" />
+											<label sclass="data_atuacao"
+												visible="@load(atuacao.dataTermino ne null)"
 												value="@load(''.concat(atuacao.dataTermino)) @converter('br.ufjf.egresso.utils.DateFormatConverter')" />
 										</div>
 									</vlayout>
@@ -69,13 +109,13 @@
 												value="@bind(vm.atuacaoEmEdicao.local)" />
 										</hlayout>
 										<hlayout>
-											<label sclass="dt_inicio"
+											<label sclass="data_atuacao"
 												value="De:" />
 											<datebox format="dd/MM/yyyy"
 												value="@bind(vm.atuacaoEmEdicao.dataInicio)" />
 										</hlayout>
 										<hlayout>
-											<label sclass="dt_inicio"
+											<label sclass="data_atuacao"
 												value="Até :" />
 											<datebox format="dd/MM/yyyy"
 												value="@bind(vm.atuacaoEmEdicao.dataTermino)" />
@@ -83,12 +123,12 @@
 									</vlayout>
 									<div class="editar_exp" hflex="1"
 										visible="@load(vm.podeEditar)">
-										<button class="btn"
-											label="Editar"
-											onClick="@command('editarAtuacao', botao=self,sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling, cancelar=self.nextSibling, atuacao=atuacao)" />
-										<button class="btn"
-											label="Cancelar" visible="false"
-											onClick="@command('cancelarEdicao', editar=self.previousSibling, cancelar=self, sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling)" />
+										<image src="/img/editar.png"
+											width="15px"
+											onClick="@command('editarAtuacao', editarSalvar=self,sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling, cancelar=self.nextSibling, atuacao=atuacao)" />
+										<image src="/img/cancelar.png"
+											width="15px" visible="false"
+											onClick="@command('editarAtuacao', editarSalvar=self.previousSibling, cancelar=self, sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling)" />
 									</div>
 								</hlayout>
 							</template>
@@ -98,32 +138,40 @@
 					<div width="100%" style="margin-bottom:25px"
 						hflex="1">
 						<label value="Formação" class="cabecalho" />
-						<html>							
+						<html>
+
+
+
+							
 							<![CDATA[ <hr style="border-top: dashed 1px;
 							border-color: #c0504d; margin-bottom:20px;
-							margin-top:10px; border-bottom: none" />]]>								
+							margin-top:10px; border-bottom: none" />]]>
+							
+							
+							
+															
 						</html>
 						<vlayout children="@load(vm.filtraFormacoes)"
 							width="100%">
 
 							<template name="children" var="atuacao">
-								<hlayout width="100%"
-									visible="@load(atuacao.dataTermino ne null)">
+								<hlayout width="100%">
 									<vlayout>
 										<label sclass="cargo"
 											value="@load(atuacao.cargo)" />
 										<label sclass="local"
 											value="@load(atuacao.local)" />
 										<div>
-											<label sclass="dt_inicio"
+											<label sclass="data_atuacao"
 												value="De: " />
-											<label sclass="dt_inicio"
+											<label sclass="data_atuacao"
 												value="@load(''.concat(atuacao.dataInicio)) @converter('br.ufjf.egresso.utils.DateFormatConverter')" />
 										</div>
 										<div>
-											<label sclass="dt_inicio"
-												value="Até: " />
-											<label sclass="dt_inicio"
+											<label sclass="data_atuacao"
+												value="@load(atuacao.dataTermino ne null ? 'Até: ' : 'Atual')" />
+											<label sclass="data_atuacao"
+												visible="@load(atuacao.dataTermino ne null)"
 												value="@load(''.concat(atuacao.dataTermino)) @converter('br.ufjf.egresso.utils.DateFormatConverter')" />
 										</div>
 									</vlayout>
@@ -141,13 +189,13 @@
 												value="@bind(vm.atuacaoEmEdicao.local)" />
 										</hlayout>
 										<hlayout>
-											<label sclass="dt_inicio"
+											<label sclass="data_atuacao"
 												value="De:" />
 											<datebox format="dd/MM/yyyy"
 												value="@bind(vm.atuacaoEmEdicao.dataInicio)" />
 										</hlayout>
 										<hlayout>
-											<label sclass="dt_inicio"
+											<label sclass="data_atuacao"
 												value="Até :" />
 											<datebox format="dd/MM/yyyy"
 												value="@bind(vm.atuacaoEmEdicao.dataTermino)" />
@@ -155,12 +203,12 @@
 									</vlayout>
 									<div class="editar_exp" hflex="1"
 										visible="@load(vm.podeEditar)">
-										<button class="btn"
-											label="Editar"
-											onClick="@command('editarAtuacao', botao=self,sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling, cancelar=self.nextSibling, atuacao=atuacao)" />
-										<button class="btn"
-											label="Cancelar" visible="false"
-											onClick="@command('cancelarEdicao', editar=self.previousSibling, cancelar=self, sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling)" />
+										<image src="/img/editar.png"
+											width="15px"
+											onClick="@command('editarAtuacao', editarSalvar=self,sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling, cancelar=self.nextSibling, atuacao=atuacao)" />
+										<image src="/img/cancelar.png"
+											width="15px" visible="false"
+											onClick="@command('editarAtuacao', editarSalvar=self.previousSibling, cancelar=self, sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling)" />
 									</div>
 								</hlayout>
 							</template>
@@ -170,32 +218,40 @@
 					<div width="100%" style="margin-bottom:25px"
 						hflex="1">
 						<label value="Projetos" class="cabecalho" />
-						<html>							
+						<html>
+
+
+
+							
 							<![CDATA[ <hr style="border-top: dashed 1px;
 							border-color: #c0504d; margin-bottom:20px;
-							margin-top:10px; border-bottom: none" />]]>								
+							margin-top:10px; border-bottom: none" />]]>
+							
+							
+							
+															
 						</html>
 						<vlayout children="@load(vm.filtraProjetos)"
 							width="100%">
 
 							<template name="children" var="atuacao">
-								<hlayout width="100%"
-									visible="@load(atuacao.dataTermino ne null)">
+								<hlayout width="100%">
 									<vlayout>
 										<label sclass="cargo"
 											value="@load(atuacao.cargo)" />
 										<label sclass="local"
 											value="@load(atuacao.local)" />
 										<div>
-											<label sclass="dt_inicio"
+											<label sclass="data_atuacao"
 												value="De: " />
-											<label sclass="dt_inicio"
+											<label sclass="data_atuacao"
 												value="@load(''.concat(atuacao.dataInicio)) @converter('br.ufjf.egresso.utils.DateFormatConverter')" />
 										</div>
 										<div>
-											<label sclass="dt_inicio"
-												value="Até: " />
-											<label sclass="dt_inicio"
+											<label sclass="data_atuacao"
+												value="@load(atuacao.dataTermino ne null ? 'Até: ' : 'Atual')" />
+											<label sclass="data_atuacao"
+												visible="@load(atuacao.dataTermino ne null)"
 												value="@load(''.concat(atuacao.dataTermino)) @converter('br.ufjf.egresso.utils.DateFormatConverter')" />
 										</div>
 									</vlayout>
@@ -213,13 +269,13 @@
 												value="@bind(vm.atuacaoEmEdicao.local)" />
 										</hlayout>
 										<hlayout>
-											<label sclass="dt_inicio"
+											<label sclass="data_atuacao"
 												value="De:" />
 											<datebox format="dd/MM/yyyy"
 												value="@bind(vm.atuacaoEmEdicao.dataInicio)" />
 										</hlayout>
 										<hlayout>
-											<label sclass="dt_inicio"
+											<label sclass="data_atuacao"
 												value="Até :" />
 											<datebox format="dd/MM/yyyy"
 												value="@bind(vm.atuacaoEmEdicao.dataTermino)" />
@@ -227,12 +283,12 @@
 									</vlayout>
 									<div class="editar_exp" hflex="1"
 										visible="@load(vm.podeEditar)">
-										<button class="btn"
-											label="Editar"
-											onClick="@command('editarAtuacao', botao=self,sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling, cancelar=self.nextSibling, atuacao=atuacao)" />
-										<button class="btn"
-											label="Cancelar" visible="false"
-											onClick="@command('cancelarEdicao', editar=self.previousSibling, cancelar=self, sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling)" />
+										<image src="/img/editar.png"
+											width="15px"
+											onClick="@command('editarAtuacao', editarSalvar=self,sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling, cancelar=self.nextSibling, atuacao=atuacao)" />
+										<image src="/img/cancelar.png"
+											width="15px" visible="false"
+											onClick="@command('editarAtuacao', editarSalvar=self.previousSibling, cancelar=self, sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling)" />
 									</div>
 								</hlayout>
 							</template>
