@@ -10,21 +10,19 @@
 		height="100%">
 		<hlayout>
 			<div class="info-aluno">
-				<div class="foto">
-					<image src="@load(vm.aluno.urlFoto)" width="100%" />
+				<div
+					style="width: 100%; height: 260px; overflow: hidden; position: relative;">
+					<image src="@load(vm.aluno.urlFoto)" class="aluno" />
 				</div>
 				<vlayout style="margin-top: 40px; color:white">
 					<label style="font-size:20px"
 						value="@load(vm.aluno.nome)" />
 					<label style="font-size:18px"
 						value="@load('Turma do '.concat(vm.aluno.turma.semestre).concat('° ').concat('semestre do ano de ').concat(vm.aluno.turma.ano).concat('.'))" />
-
-
-
 					<html>
 						
 						<![CDATA[ <hr style="border-top: dashed 1px;
-						border-color: #c0504d; margin-bottom:20px;
+						border-color: white; margin-bottom:20px;
 						margin-top:10px; border-bottom: none" />]]>
 						
 					</html>
@@ -40,25 +38,56 @@
 						<label sclass="data_atuacao"
 							value="@load(''.concat(vm.atuacaoAtual.dataInicio)) @converter('br.ufjf.egresso.utils.DateFormatConverter')" />
 					</div>
-					
+
 					<html>
+
+
+
+
+
+
+
+
+
 						
 						<![CDATA[ <hr style="border-top: dashed 1px;
-						border-color: #c0504d; margin-bottom:20px;
+						border-color: white; margin-bottom:20px;
 						margin-top:10px; border-bottom: none" />]]>
+						
+						
+						
+						
+						
+						
+						
+						
+						
 						
 					</html>
 
 					<label value="Interesses" style="font-size:16px" />
-					<label value="Engenharia de Software, Banco de Dados, Dispositivos Móveis, Sistemas Web" />
+					<label value="@load(vm.aluno.interesses)" />
 				</vlayout>
 			</div>
 			<vlayout hflex="1" class="atuacoes-aluno">
+
 				<hlayout hflex="true" spacing="20px">
 					<div width="100%" style="margin-bottom:25px"
 						hflex="1">
-						<label value="Experiências" class="cabecalho" />
+						<div>
+							<label value="Empregos" class="cabecalho" />
+							<label
+								style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:20px"
+								value="Adicionar..."
+								onClick="@command('adicionaAtuacao', window=adicionaAtuacao, tipo=0)" />
+						</div>
 						<html>
+
+
+
+
+
+
 
 
 
@@ -69,7 +98,13 @@
 							
 							
 							
-															
+							
+							
+							
+							
+							
+							
+							
 						</html>
 						<vlayout children="@load(vm.filtraEmpregos)"
 							width="100%">
@@ -128,7 +163,11 @@
 											onClick="@command('editarAtuacao', editarSalvar=self,sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling, cancelar=self.nextSibling, atuacao=atuacao)" />
 										<image src="/img/cancelar.png"
 											width="15px" visible="false"
-											onClick="@command('editarAtuacao', editarSalvar=self.previousSibling, cancelar=self, sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling)" />
+											onClick="@command('cancelarEdicao', editarSalvar=self.previousSibling, cancelar=self, sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling)" />
+										<checkbox label="Atual"
+											value="@load(vm.atuacaoEmEdicao.atual)"
+											checked="@bind(vm.novaAtuacao.atual)"
+											onCheck="self.previousSibling.disabled = self.checked; self.previousSibling.value = null" />
 									</div>
 								</hlayout>
 							</template>
@@ -137,8 +176,20 @@
 
 					<div width="100%" style="margin-bottom:25px"
 						hflex="1">
-						<label value="Formação" class="cabecalho" />
+						<div>
+							<label value="Formação" class="cabecalho" />
+							<label
+								style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:20px"
+								value="Adicionar..."
+								onClick="@command('adicionaAtuacao', window=adicionaAtuacao, tipo=1)" />
+						</div>
 						<html>
+
+
+
+
+
+
 
 
 
@@ -149,7 +200,13 @@
 							
 							
 							
-															
+							
+							
+							
+							
+							
+							
+							
 						</html>
 						<vlayout children="@load(vm.filtraFormacoes)"
 							width="100%">
@@ -199,6 +256,10 @@
 												value="Até :" />
 											<datebox format="dd/MM/yyyy"
 												value="@bind(vm.atuacaoEmEdicao.dataTermino)" />
+											<checkbox label="Atual"
+												value="@load(vm.atuacaoEmEdicao.atual)"
+												checked="@bind(vm.novaAtuacao.atual)"
+												onCheck="self.previousSibling.disabled = self.checked; self.previousSibling.value = null" />
 										</hlayout>
 									</vlayout>
 									<div class="editar_exp" hflex="1"
@@ -208,7 +269,7 @@
 											onClick="@command('editarAtuacao', editarSalvar=self,sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling, cancelar=self.nextSibling, atuacao=atuacao)" />
 										<image src="/img/cancelar.png"
 											width="15px" visible="false"
-											onClick="@command('editarAtuacao', editarSalvar=self.previousSibling, cancelar=self, sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling)" />
+											onClick="@command('cancelarEdicao', editarSalvar=self.previousSibling, cancelar=self, sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling)" />
 									</div>
 								</hlayout>
 							</template>
@@ -217,8 +278,20 @@
 
 					<div width="100%" style="margin-bottom:25px"
 						hflex="1">
-						<label value="Projetos" class="cabecalho" />
+						<div>
+							<label value="Projetos" class="cabecalho" />
+							<label
+								style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:20px"
+								value="Adicionar..."
+								onClick="@command('adicionaAtuacao', window=adicionaAtuacao, tipo=2)" />
+						</div>
 						<html>
+
+
+
+
+
+
 
 
 
@@ -229,7 +302,13 @@
 							
 							
 							
-															
+							
+							
+							
+							
+							
+							
+							
 						</html>
 						<vlayout children="@load(vm.filtraProjetos)"
 							width="100%">
@@ -279,6 +358,10 @@
 												value="Até :" />
 											<datebox format="dd/MM/yyyy"
 												value="@bind(vm.atuacaoEmEdicao.dataTermino)" />
+											<checkbox label="Atual"
+												value="@load(vm.atuacaoEmEdicao.atual)"
+												checked="@bind(vm.novaAtuacao.atual)"
+												onCheck="self.previousSibling.disabled = self.checked; self.previousSibling.value = null" />
 										</hlayout>
 									</vlayout>
 									<div class="editar_exp" hflex="1"
@@ -288,7 +371,7 @@
 											onClick="@command('editarAtuacao', editarSalvar=self,sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling, cancelar=self.nextSibling, atuacao=atuacao)" />
 										<image src="/img/cancelar.png"
 											width="15px" visible="false"
-											onClick="@command('editarAtuacao', editarSalvar=self.previousSibling, cancelar=self, sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling)" />
+											onClick="@command('cancelarEdicao', editarSalvar=self.previousSibling, cancelar=self, sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling)" />
 									</div>
 								</hlayout>
 							</template>
@@ -298,15 +381,79 @@
 			</vlayout>
 		</hlayout>
 
-		<div class="rede_sociais">
+		<window id="adicionaAtuacao" title="Cadastrar Atuação"
+			visible="false" width="350px" border="normal"
+			position="center,center" closable="true"
+			onClose="self.setVisible(false); event.stopPropagation();">
+			<grid>
+				<columns>
+					<column hflex="1" />
+					<column hflex="2" />
+
+				</columns>
+				<rows>
+					<row>
+						<label value="Cargo:" />
+						<textbox
+							value="@load(vm.novaAtuacao.cargo)@save(vm.novaAtuacao.cargo, before='submitAtuacao')"
+							tabindex="1" id="cargo" width="100%" />
+
+					</row>
+
+					<row>
+						<label value="Local:" />
+						<textbox
+							value="@load(vm.novaAtuacao.local)@save(vm.novaAtuacao.local, before='submitAtuacao')"
+							tabindex="2" id="local" width="100%" />
+					</row>
+					<row>
+						<label value="Data Início:" />
+						<datebox format="medium"
+							onCreate="self.value = new Date()"
+							value="@load(vm.novaAtuacao.dataInicio)@save(vm.novaAtuacao.dataInicio, before='submitAtuacao')"
+							tabindex="3" id="dataInicio" width="100%" />
+					</row>
+					<row>
+						<label value="Data Término:" />
+						<div>
+							<datebox name="dt" format="medium"
+								onCreate="self.value = new Date()"
+								value="@load(vm.novaAtuacao.dataTermino)@save(vm.novaAtuacao.dataTermino, before='submitAtuacao')"
+								tabindex="4" id="dataTermino" hflex="1" />
+							<checkbox label="Atual"
+								value="@load(vm.novaAtuacao.atual)"
+								checked="@bind(vm.novaAtuacao.atual)"
+								onCheck="self.previousSibling.disabled = self.checked; self.previousSibling.value = null" />
+						</div>
+					</row>
+					<row>
+						<label value="Tipo da Atuação:" />
+						<combobox id="cmbTipoAtuacao" width="100%"
+							readonly="true" model="@load(vm.tipoAtuacao)"
+							value="@load(vm.novaAtuacao.tipoAtuacao.nome ne null ? vm.novaAtuacao.tipoAtuacao.nome : 'Nenhum')"
+							selectedItem="@bind(vm.novaAtuacao.tipoAtuacao)">
+							<template name="model">
+								<comboitem label="@load(each.nome)" />
+							</template>
+						</combobox>
+					</row>
+				</rows>
+			</grid>
+			<div align="center">
+				<button label="Cadastrar"
+					onClick="@command('submitAtuacao', window=adicionaAtuacao)"
+					width="75px" style="margin-top:5px" />
+			</div>
+		</window>
+
+		<div>
 
 			<a href="@load(vm.aluno.linkFacebook)" target="_blank"
-				image="/img/02_facebook.png" />
-
-			<image src="/img/07_linkedin.png" />
-			<image src="/img/01_twitter.png" />
-			<image src="/img/03_youtube.png" />
-			<image src="/img/14_google_plus.png" />
+				image="/img/02_facebook.png" target="_blank"/>
+			<image src="/img/07_linkedin.png" target="_blank"/>
+			<image src="/img/01_twitter.png" target="_blank"/>
+			<image src="/img/03_youtube.png" target="_blank"/>
+			<image src="/img/14_google_plus.png" target="_blank"/>
 
 		</div>
 	</div>

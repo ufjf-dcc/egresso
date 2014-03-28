@@ -6223,11 +6223,11 @@ button.close {
 }
 
 .info-aluno {
-	background-color: #B22222;
+	background-color: #c0504d;
 	margin: 20px;
 	width: 300px;
 	padding: 20px;
-	height: 700px;
+	height: 650px;
 }
 
 .atuacoes-aluno.z-vlayout {
@@ -6237,8 +6237,14 @@ button.close {
 }
 
 .foto {
-	position: relative;
-	left: 1px;
+	position:absolute;
+    left: -100%;
+    right: -100%;
+    top: -100%;
+    bottom: -100%;
+    margin: auto; 
+    min-height: 100%;
+    min-width: 100%;
 }
 
 .nome_perfil.z-label {
@@ -6249,11 +6255,6 @@ button.close {
 	margin-top: 20px;
 	font-size: 20px;
 	float: right;
-}
-
-.btnAdd {
-	margin: 25px;
-	margin-left: 200px;
 }
 
 .ocupacaoAtual {
@@ -6300,9 +6301,6 @@ button.close {
 .editar_atual {
 	margin-left: 500px;
 	margin-top: 50px;
-}
-
-.editar_exp {
 }
 
 /*# sourceMappingURL=bootstrap.css.map */

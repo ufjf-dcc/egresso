@@ -9,6 +9,7 @@ import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.Sessions;
 
 import br.ufjf.egresso.business.AlunoBusiness;
 import br.ufjf.egresso.business.TurmaBusiness;
@@ -27,8 +28,8 @@ public class FbTurmaController {
 
 	@Init
 	public void init() {
-		Turma turma = turmaBusiness.getTurma(Integer.parseInt(Executions
-				.getCurrent().getParameter("id")));
+		Turma turma = turmaBusiness.getTurma(((Aluno) Sessions.getCurrent()
+				.getAttribute("aluno")).getId());
 		turmas = turmaBusiness.getTodas();
 
 		semestres = new ArrayList<String>();

@@ -105,6 +105,19 @@ public class FbPerfilController {
 		emEdicao = imgCancelar.isVisible();
 		BindUtils.postNotifyChange(null, null, this, "emEdicao");
 	}
+	
+	@Command
+	public void cancelarEdicao(@BindingParam("editarSalvar") Image imgSalvarEditar,
+			@BindingParam("cancelar") Image imgCancelar,
+			@BindingParam("sumir") Vlayout v1,
+			@BindingParam("aparecer") Vlayout v2) {
+		imgCancelar.setVisible(false);
+		imgSalvarEditar.setSrc("/img/editar.png");
+		imgSalvarEditar.setVisible(true);
+		v1.setVisible(!v1.isVisible());
+		v2.setVisible(!v2.isVisible());
+		atuacaoEmEdicao = null;
+	}
 
 	public boolean isEmEdicao() {
 		return emEdicao;
@@ -227,34 +240,12 @@ public class FbPerfilController {
 		}
 		refreshRowTemplate(atuacaoAtual);
 	}
-
+	
 	@Command
-	public void addEmprego(@BindingParam("window") Window window) {
+	public void adicionaAtuacao(@BindingParam("window") Window window, @BindingParam("tipo") int tipo) {
 		this.limpa();
 		for (TipoAtuacao t : tipoAtuacao)
-			if (t.getId() == TipoAtuacao.EMPREGO) {
-				novaAtuacao.setTipoAtuacao(t);
-				break;
-			}
-		window.doModal();
-	}
-
-	@Command
-	public void addProjeto(@BindingParam("window") Window window) {
-		this.limpa();
-		for (TipoAtuacao t : tipoAtuacao)
-			if (t.getId() == TipoAtuacao.PROJETO) {
-				novaAtuacao.setTipoAtuacao(t);
-				break;
-			}
-		window.doModal();
-	}
-
-	@Command
-	public void addFormacao(@BindingParam("window") Window window) {
-		this.limpa();
-		for (TipoAtuacao t : tipoAtuacao)
-			if (t.getId() == TipoAtuacao.FORMACAO) {
+			if (t.getId() == tipo) {
 				novaAtuacao.setTipoAtuacao(t);
 				break;
 			}
