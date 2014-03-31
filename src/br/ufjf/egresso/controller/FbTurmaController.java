@@ -1,5 +1,7 @@
 package br.ufjf.egresso.controller;
 
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +21,7 @@ import br.ufjf.egresso.model.Turma;
 public class FbTurmaController {
 
 	private List<Aluno> alunos, filtraAlunos;
+	private List<List<Aluno>> linhas;
 	private List<String> semestres;
 	private List<Turma> turmas;
 	private TurmaBusiness turmaBusiness = new TurmaBusiness();
@@ -27,7 +30,8 @@ public class FbTurmaController {
 			descricao;
 
 	@Init
-	public void init() {
+	public void init() {	
+		
 		Turma turma = turmaBusiness.getTurma(((Aluno) Sessions.getCurrent()
 				.getAttribute("aluno")).getId());
 		turmas = turmaBusiness.getTodas();
@@ -41,14 +45,34 @@ public class FbTurmaController {
 				+ turma.getAno();
 		alunos = new AlunoBusiness().getAlunos(turma);
 		filtraAlunos = alunos;
+		
+		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();		
+		int width = gd.getDisplayMode().getWidth() - 600;
+		int inseridos = 0;
+		linhas = new ArrayList<List<Aluno>>();
+		
+		List<Aluno> linha = new ArrayList<Aluno>();		
+		
+		for(Aluno a : filtraAlunos){
+			if(width / 220 < (inseridos + 1)){
+				linhas.add(linha);
+				inseridos = 0;
+				linha = new ArrayList<Aluno>();
+			}
+			linha.add(a);
+			inseridos++;
+		}
+		
+		if(linha.size() > 0)
+			linhas.add(linha);
+	}	
+
+	public List<List<Aluno>> getLinhas() {
+		return linhas;
 	}
 
 	public String getDescricao() {
 		return descricao;
-	}
-
-	public List<Aluno> getFiltraAlunos() {
-		return filtraAlunos;
 	}
 
 	public String getPesquisa() {
