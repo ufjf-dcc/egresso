@@ -6,8 +6,9 @@ import java.util.List;
 
 
 
+
 import br.ufjf.egresso.model.Turma;
-import br.ufjf.egresso.persistent.impl.TurmaDAO;
+import br.ufjf.egresso.persistent.TurmaDAO;
 
 public class TurmaBusiness {
 	

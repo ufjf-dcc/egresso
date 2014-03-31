@@ -1,16 +1,14 @@
-package br.ufjf.egresso.persistent.impl;
+package br.ufjf.egresso.persistent;
 
 import java.util.List;
 
 import org.hibernate.Query;
 
 import br.ufjf.egresso.model.Turma;
-import br.ufjf.egresso.persistent.GenericoDAO;
-import br.ufjf.egresso.persistent.ITurmaDAO;
 
-public class TurmaDAO extends GenericoDAO implements ITurmaDAO {
+public class TurmaDAO extends GenericoDAO {
 
-	@Override
+	
 	@SuppressWarnings("unchecked")
 	public List<Turma> getTodas() {
 		try {

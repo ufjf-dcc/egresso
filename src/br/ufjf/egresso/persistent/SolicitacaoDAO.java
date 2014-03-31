@@ -1,14 +1,12 @@
-package br.ufjf.egresso.persistent.impl;
+package br.ufjf.egresso.persistent;
 
 import java.util.List;
 
 import org.hibernate.Query;
 
 import br.ufjf.egresso.model.Solicitacao;
-import br.ufjf.egresso.persistent.GenericoDAO;
-import br.ufjf.egresso.persistent.ISolicitacaoDAO;
 
-public class SolicitacaoDAO extends GenericoDAO implements ISolicitacaoDAO {
+public class SolicitacaoDAO extends GenericoDAO {
 
 	public Solicitacao getSolicitacao(String facebookId) {
 		try {

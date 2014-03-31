@@ -1,12 +1,10 @@
-package br.ufjf.egresso.persistent.impl;
+package br.ufjf.egresso.persistent;
 
 import org.hibernate.Query;
 
 import br.ufjf.egresso.model.Administrador;
-import br.ufjf.egresso.persistent.GenericoDAO;
-import br.ufjf.egresso.persistent.IAdministradorDAO;
 
-public class AdministradorDAO extends GenericoDAO implements IAdministradorDAO {
+public class AdministradorDAO extends GenericoDAO {
 
 	public Administrador entrar(String identificador, String senhaEncriptada) {
 		try {

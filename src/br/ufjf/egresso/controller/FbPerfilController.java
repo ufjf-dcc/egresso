@@ -25,7 +25,7 @@ import br.ufjf.egresso.business.AtuacaoBusiness;
 import br.ufjf.egresso.model.Aluno;
 import br.ufjf.egresso.model.Atuacao;
 import br.ufjf.egresso.model.TipoAtuacao;
-import br.ufjf.egresso.persistent.impl.TipoAtuacaoDAO;
+import br.ufjf.egresso.persistent.TipoAtuacaoDAO;
 
 public class FbPerfilController {
 
@@ -105,9 +105,10 @@ public class FbPerfilController {
 		emEdicao = imgCancelar.isVisible();
 		BindUtils.postNotifyChange(null, null, this, "emEdicao");
 	}
-	
+
 	@Command
-	public void cancelarEdicao(@BindingParam("editarSalvar") Image imgSalvarEditar,
+	public void cancelarEdicao(
+			@BindingParam("editarSalvar") Image imgSalvarEditar,
 			@BindingParam("cancelar") Image imgCancelar,
 			@BindingParam("sumir") Vlayout v1,
 			@BindingParam("aparecer") Vlayout v2) {
@@ -240,9 +241,10 @@ public class FbPerfilController {
 		}
 		refreshRowTemplate(atuacaoAtual);
 	}
-	
+
 	@Command
-	public void adicionaAtuacao(@BindingParam("window") Window window, @BindingParam("tipo") int tipo) {
+	public void adicionaAtuacao(@BindingParam("window") Window window,
+			@BindingParam("tipo") int tipo) {
 		this.limpa();
 		for (TipoAtuacao t : tipoAtuacao)
 			if (t.getId() == tipo) {
@@ -385,6 +387,13 @@ public class FbPerfilController {
 		datebox.setDisabled(checkbox.isChecked());
 		if (checkbox.isChecked())
 			datebox.setValue(null);
+	}
+
+	/** Método para a integração com o LinkedIn **/
+	@Command
+	public void integrarLinkedIn() {
+		Executions.getCurrent().sendRedirect(
+				"/lk/index.zul?id=" + aluno.getId(), "_blank");
 	}
 
 }

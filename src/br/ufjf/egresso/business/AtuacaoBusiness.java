@@ -5,7 +5,7 @@ import java.util.List;
 
 import br.ufjf.egresso.model.Aluno;
 import br.ufjf.egresso.model.Atuacao;
-import br.ufjf.egresso.persistent.impl.AtuacaoDAO;
+import br.ufjf.egresso.persistent.AtuacaoDAO;
 
 public class AtuacaoBusiness {
 

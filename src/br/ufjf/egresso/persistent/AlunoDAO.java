@@ -1,4 +1,4 @@
-package br.ufjf.egresso.persistent.impl;
+package br.ufjf.egresso.persistent;
 
 import java.util.List;
 
@@ -6,12 +6,10 @@ import org.hibernate.Query;
 
 import br.ufjf.egresso.model.Aluno;
 import br.ufjf.egresso.model.Turma;
-import br.ufjf.egresso.persistent.GenericoDAO;
-import br.ufjf.egresso.persistent.IAlunoDAO;
 
-public class AlunoDAO extends GenericoDAO implements IAlunoDAO {
+public class AlunoDAO extends GenericoDAO {
 
-	@Override
+	
 	public Aluno getAluno(String facebookId) {
 		try {
 			Query query = getSession()
@@ -30,8 +28,28 @@ public class AlunoDAO extends GenericoDAO implements IAlunoDAO {
 		}
 		return null;
 	}
+	
+	
+	public Aluno getAluno(int id) {
+		try {
+			Query query = getSession()
+					.createQuery(
+							"SELECT a FROM Aluno AS a LEFT JOIN FETCH a.turma WHERE a.id = :id");
+			query.setParameter("aluno_id", id);
 
-	@Override
+			Aluno aluno = (Aluno) query.uniqueResult();
+
+			getSession().close();
+
+			return aluno;
+		} catch (Exception e) {
+			System.out.println(e);
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	
 	@SuppressWarnings("unchecked")
 	public List<Aluno> getTodos() {
 		try {
@@ -49,7 +67,7 @@ public class AlunoDAO extends GenericoDAO implements IAlunoDAO {
 		return null;
 	}
 
-	@Override
+	
 	@SuppressWarnings("unchecked")
 	public List<Aluno> getAlunos(Turma turma) {
 		try {
@@ -69,7 +87,7 @@ public class AlunoDAO extends GenericoDAO implements IAlunoDAO {
 		return null;
 	}
 
-	@Override
+	
 	public Aluno buscaPorMatricula(String matricula) {
 		try {
 			Query query = getSession().createQuery(

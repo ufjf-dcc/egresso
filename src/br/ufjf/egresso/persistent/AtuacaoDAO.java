@@ -1,4 +1,4 @@
-package br.ufjf.egresso.persistent.impl;
+package br.ufjf.egresso.persistent;
 
 import java.util.List;
 
@@ -6,11 +6,9 @@ import org.hibernate.Query;
 
 import br.ufjf.egresso.model.Aluno;
 import br.ufjf.egresso.model.Atuacao;
-import br.ufjf.egresso.persistent.GenericoDAO;
-import br.ufjf.egresso.persistent.IAtuacaoDAO;
 
-public class AtuacaoDAO extends GenericoDAO implements IAtuacaoDAO {
-	@Override
+public class AtuacaoDAO extends GenericoDAO {
+	
 	@SuppressWarnings("unchecked")
 	public List<Atuacao> getTodas() {
 		try {

@@ -33,9 +33,12 @@ public class Aluno {
 
 	@Column(name = "url_foto", nullable = true, length = 255)
 	String urlFoto;
-	
+
 	@Column(name = "interesses", nullable = true, length = 100)
 	String interesses;
+
+	@Column(name = "linkedin_access_token", nullable = true, length = 255)
+	String lkAccessToken;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "turma_id")
@@ -81,6 +84,14 @@ public class Aluno {
 
 	public void setInteresses(String interesses) {
 		this.interesses = interesses;
+	}
+
+	public String getLkAccessToken() {
+		return lkAccessToken;
+	}
+
+	public void setLkAccessToken(String lkAccessToken) {
+		this.lkAccessToken = lkAccessToken;
 	}
 
 	public String getMatricula() {

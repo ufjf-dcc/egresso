@@ -1,4 +1,4 @@
-package br.ufjf.egresso.persistent.impl;
+package br.ufjf.egresso.persistent;
 
 import java.util.List;
 
@@ -6,10 +6,7 @@ import org.hibernate.Query;
 
 import br.ufjf.egresso.model.TipoAtuacao;
 
-import br.ufjf.egresso.persistent.GenericoDAO;
-import br.ufjf.egresso.persistent.ITipoAtuacaoDAO;
-
-public class TipoAtuacaoDAO extends GenericoDAO implements ITipoAtuacaoDAO {
+public class TipoAtuacaoDAO extends GenericoDAO {
 	
 	@SuppressWarnings("unchecked")
 	public List<TipoAtuacao> getTodas() {

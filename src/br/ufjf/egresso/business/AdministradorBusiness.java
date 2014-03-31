@@ -5,7 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import jonelo.jacksum.JacksumAPI;
 import jonelo.jacksum.algorithm.AbstractChecksum;
 import br.ufjf.egresso.model.Administrador;
-import br.ufjf.egresso.persistent.impl.AdministradorDAO;
+import br.ufjf.egresso.persistent.AdministradorDAO;
 
 public class AdministradorBusiness {
 	private AdministradorDAO adminisytradorDao;

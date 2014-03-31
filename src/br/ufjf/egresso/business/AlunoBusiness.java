@@ -7,7 +7,7 @@ import org.hibernate.HibernateException;
 
 import br.ufjf.egresso.model.Aluno;
 import br.ufjf.egresso.model.Turma;
-import br.ufjf.egresso.persistent.impl.AlunoDAO;
+import br.ufjf.egresso.persistent.AlunoDAO;
 
 public class AlunoBusiness {
 	private AlunoDAO alunoDao;
@@ -65,6 +65,10 @@ public class AlunoBusiness {
 
 	public Aluno getAluno(String facebookId) {
 		return alunoDao.getAluno(facebookId);
+	}
+	
+	public Aluno getAluno(int id) {
+		return alunoDao.getAluno(id);
 	}
 
 	public boolean checaLogin(Aluno aluno) throws HibernateException, Exception {

@@ -449,11 +449,11 @@
 		<div>
 
 			<a href="@load(vm.aluno.linkFacebook)" target="_blank"
-				image="/img/02_facebook.png" target="_blank"/>
-			<image src="/img/07_linkedin.png" target="_blank"/>
-			<image src="/img/01_twitter.png" target="_blank"/>
-			<image src="/img/03_youtube.png" target="_blank"/>
-			<image src="/img/14_google_plus.png" target="_blank"/>
+				image="/img/facebook.png" />
+			<a href="@load('/lk/index.zul?id='.concat(vm.aluno.id))" image="/img/linkedin.png" target="_blank"/>
+			<a image="/img/twitter.png" target="_blank"/>
+			<a image="/img/youtube.png" target="_blank"/>
+			<a image="/img/google_plus.png" target="_blank"/>
 
 		</div>
 	</div>

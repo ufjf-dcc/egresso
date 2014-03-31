@@ -9,7 +9,7 @@ import org.zkoss.zk.ui.Sessions;
 
 import br.ufjf.egresso.model.Solicitacao;
 import br.ufjf.egresso.model.Turma;
-import br.ufjf.egresso.persistent.impl.SolicitacaoDAO;
+import br.ufjf.egresso.persistent.SolicitacaoDAO;
 
 public class SolicitacaoBusiness {
 	private SolicitacaoDAO solicitacaoDAO;
