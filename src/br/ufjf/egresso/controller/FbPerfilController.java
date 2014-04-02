@@ -392,8 +392,9 @@ public class FbPerfilController {
 	/** Método para a integração com o LinkedIn **/
 	@Command
 	public void integrarLinkedIn() {
-		Executions.getCurrent().sendRedirect(
-				"/lk/index.zul?id=" + aluno.getId(), "_blank");
+		if (aluno.getLkAccessToken() == null)
+			Executions.getCurrent().sendRedirect(
+					"/lk/index.zul?id=" + aluno.getId(), "_blank");
 	}
 
 }

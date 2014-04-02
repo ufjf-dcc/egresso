@@ -7,7 +7,6 @@ import org.hibernate.HibernateException;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.zk.ui.Executions;
-import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Label;
 
@@ -24,8 +23,7 @@ public class LkIndexController {
 	@Command
 	public void autentica(@BindingParam("lbl") Label lbl)
 			throws HibernateException, Exception {
-		int alunoId = Integer.parseInt(Executions.getCurrent().getParameter(
-				"id"));
+		String alunoId = (String) Executions.getCurrent().getParameter("id");
 
 		String lkSecretKey = "zRBXDl6cNLEp8VbH";
 		String lkApiKey = "77gl5puzk1zfno";
@@ -72,8 +70,6 @@ public class LkIndexController {
 						+ "&client_secret="
 						+ lkSecretKey;
 
-				lbl.setValue(lbl.getValue() + "</br>" + lkRequestTokenPage);
-
 				String receivedJSON = IOUtils.toString(new URL(
 						lkRequestTokenPage));
 				System.out.println(receivedJSON);
@@ -81,13 +77,12 @@ public class LkIndexController {
 						receivedJSON.indexOf("_token\":\"") + 9,
 						receivedJSON.indexOf("\"}"));
 
-				alunoId = Integer.parseInt((String) Executions
-						.getCurrent().getAttribute("alunoId"));
-
 				AlunoBusiness alunoBusiness = new AlunoBusiness();
-				Aluno aluno = alunoBusiness.getAluno(alunoId);
+				Aluno aluno = alunoBusiness.getAluno(Integer.parseInt(alunoId));
 				aluno.setLkAccessToken(lkAccessToken);
 				alunoBusiness.editar(aluno);
+				
+				//fecha a aba atual
 				Clients.evalJavaScript("close()");
 
 			} else if (error != null) {
@@ -99,7 +94,6 @@ public class LkIndexController {
 
 		} else {
 			// Redireciona para a página de autenticação
-			Sessions.getCurrent().setAttribute("alunoId", alunoId);
 			Executions.sendRedirect(lkAuthenticationPage);
 		}
 	}

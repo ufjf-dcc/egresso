@@ -35,7 +35,7 @@ public class AlunoDAO extends GenericoDAO {
 			Query query = getSession()
 					.createQuery(
 							"SELECT a FROM Aluno AS a LEFT JOIN FETCH a.turma WHERE a.id = :id");
-			query.setParameter("aluno_id", id);
+			query.setParameter("id", id);
 
 			Aluno aluno = (Aluno) query.uniqueResult();
 
