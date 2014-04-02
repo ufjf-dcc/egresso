@@ -8,13 +8,10 @@ public class DateFormatConverter implements Converter<String, String, Label> {
 
 	@Override
 	public String coerceToUi(String beanProp, Label component, BindContext ctx) {
+		String[] data = beanProp.split("-");
 		try {
-			if (beanProp == "")
-				return beanProp;
-			String[] data = beanProp.split("-");
 			return data[2] + "/" + data[1] + "/" + data[0];
 		} catch (IndexOutOfBoundsException e) {
-			System.out.println("Erro ao formatar string para data");
 			return "";
 		}
 	}

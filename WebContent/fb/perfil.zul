@@ -450,7 +450,7 @@
 
 			<a href="@load(vm.aluno.linkFacebook)" target="_blank"
 				image="/img/facebook.png" />
-			<a href="@load('/lk/index.zul?id='.concat(vm.aluno.id))" image="/img/linkedin.png" target="_blank"/>
+			<a href="@load(vm.aluno.lkAccessToken eq null ? '/lk/index.zul?id='.concat(vm.aluno.id) : '')" image="/img/linkedin.png" target="_blank"/>
 			<a image="/img/twitter.png" target="_blank"/>
 			<a image="/img/youtube.png" target="_blank"/>
 			<a image="/img/google_plus.png" target="_blank"/>

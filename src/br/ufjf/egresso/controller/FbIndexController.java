@@ -16,6 +16,7 @@ import org.zkoss.zk.ui.Sessions;
 import br.ufjf.egresso.business.AlunoBusiness;
 import br.ufjf.egresso.business.SolicitacaoBusiness;
 import br.ufjf.egresso.model.Aluno;
+import br.ufjf.egresso.utils.ConfHandler;
 import facebook4j.Facebook;
 import facebook4j.FacebookFactory;
 import facebook4j.auth.AccessToken;
@@ -24,11 +25,10 @@ public class FbIndexController {
 
 	@Init
 	public void autentica() throws HibernateException, Exception {
-		String fbSecretKey = "39fa8aca462711f08f9eeaf084413a64";
-		String fbAppId = "679414068740684";
-		String redirectUrl = "http://localhost:8080/egresso/fb/";
-		//String redirectUrl = "http://monografias.nrc.ice.ufjf.br/egresso/fb/";
-		String fbCanvasPage = "https://apps.facebook.com/ufjf-dcc-egresso/";
+		String fbSecretKey = ConfHandler.getConf("FB.APPSECRET");
+		String fbAppId = ConfHandler.getConf("FB.APPID");
+		String redirectUrl = ConfHandler.getConf("FB.REDIRECTURL");
+		String fbCanvasPage = ConfHandler.getConf("FB.CANVASPAGE");
 
 		if (Executions.getCurrent().getParameter("signed_request") != null) {
 
@@ -61,7 +61,7 @@ public class FbIndexController {
 						"https://www.facebook.com/dialog/oauth?client_id="
 								+ fbAppId + "&redirect_uri="
 								+ URLEncoder.encode(redirectUrl, "UTF-8")
-								+ "&scope=publish_stream,offline_access,email",
+								+ "&scope=" + ConfHandler.getConf("FB.PERMISSIONS"),
 						"_top");
 			} else {
 				AccessToken accessToken = new AccessToken(

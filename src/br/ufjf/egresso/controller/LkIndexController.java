@@ -12,9 +12,15 @@ import org.zkoss.zul.Label;
 
 import br.ufjf.egresso.business.AlunoBusiness;
 import br.ufjf.egresso.model.Aluno;
+import br.ufjf.egresso.utils.ConfHandler;
 
-/** Classe para controlar a página de integração com o LinkedIn **/
+/** Classe para controlar a página de integração com o LinkedIn
+ * 
+ *  @author Jorge Augusto da Silva Moreira **/
 public class LkIndexController {
+	private String lkSecretKey = ConfHandler.getConf("LK.SECRET");
+	private String lkApiKey = ConfHandler.getConf("LK.APIKEY");
+	//private Aluno aluno = (Aluno) Executions.getCurrent().getAttribute("aluno");
 
 	/**
 	 * Método para solicitar autenticação do usuário do LinkedIn, obter um
@@ -25,9 +31,8 @@ public class LkIndexController {
 			throws HibernateException, Exception {
 		String alunoId = (String) Executions.getCurrent().getParameter("id");
 
-		String lkSecretKey = "zRBXDl6cNLEp8VbH";
-		String lkApiKey = "77gl5puzk1zfno";
-		String myState = "DUIGYTeffuhEWIU78fmnIu";
+		
+		String myState = ConfHandler.getConf("LK.STATE");
 		String redirectUri = "http://localhost:8080/egresso/lk/index.zul?id="
 				+ alunoId;
 		// String redirectUri =
@@ -81,8 +86,8 @@ public class LkIndexController {
 				Aluno aluno = alunoBusiness.getAluno(Integer.parseInt(alunoId));
 				aluno.setLkAccessToken(lkAccessToken);
 				alunoBusiness.editar(aluno);
-				
-				//fecha a aba atual
+
+				// fecha a aba atual
 				Clients.evalJavaScript("close()");
 
 			} else if (error != null) {
@@ -97,4 +102,5 @@ public class LkIndexController {
 			Executions.sendRedirect(lkAuthenticationPage);
 		}
 	}
+
 }
