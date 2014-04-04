@@ -81,11 +81,15 @@ public class FbPerfilController {
 
 	@Command
 	public void editarAtuacao(
+			
 			@BindingParam("editarSalvar") Image imgSalvarEditar,
 			@BindingParam("sumir") Vlayout v1,
 			@BindingParam("aparecer") Vlayout v2,
 			@BindingParam("cancelar") Image imgCancelar,
 			@BindingParam("atuacao") Atuacao atuacao) {
+		
+		
+	
 		if (!imgCancelar.isVisible()) {
 			atuacaoEmEdicao = new Atuacao();
 			atuacaoEmEdicao.copy(atuacao);
@@ -225,7 +229,7 @@ public class FbPerfilController {
 		}
 		BindUtils.postNotifyChange(null, null, this, "filtraFormacoes");
 	}
-
+	
 	@Command
 	public void changeEditableStatusAtual(
 			@BindingParam("atuacaoAtual") Atuacao atuacaoAtual) {
@@ -378,7 +382,7 @@ public class FbPerfilController {
 
 						}
 					}
-				});
+ 				});
 	}
 
 	@Command

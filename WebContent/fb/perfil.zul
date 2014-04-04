@@ -426,17 +426,7 @@
 								onCheck="self.previousSibling.disabled = self.checked; self.previousSibling.value = null" />
 						</div>
 					</row>
-					<row>
-						<label value="Tipo da Atuação:" />
-						<combobox id="cmbTipoAtuacao" width="100%"
-							readonly="true" model="@load(vm.tipoAtuacao)"
-							value="@load(vm.novaAtuacao.tipoAtuacao.nome ne null ? vm.novaAtuacao.tipoAtuacao.nome : 'Nenhum')"
-							selectedItem="@bind(vm.novaAtuacao.tipoAtuacao)">
-							<template name="model">
-								<comboitem label="@load(each.nome)" />
-							</template>
-						</combobox>
-					</row>
+					
 				</rows>
 			</grid>
 			<div align="center">
