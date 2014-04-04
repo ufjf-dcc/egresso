@@ -4,6 +4,11 @@ import org.zkoss.bind.BindContext;
 import org.zkoss.bind.Converter;
 import org.zkoss.zul.Label;
 
+/**Classe para converter datas obtidas do banco para o formato dd/MM/yyyy
+ * 
+ * @author Jorge Augusto da Silva Moreira
+ *
+ */
 public class DateFormatConverter implements Converter<String, String, Label> {
 
 	@Override

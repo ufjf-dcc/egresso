@@ -10,25 +10,25 @@ import java.util.regex.Pattern;
 import org.apache.commons.io.IOUtils;
 
 /**
- * Classe para retornar configurações-padrão
+ * Classe para retornar configurações-padrão.
  * 
- * @author Matheus Marques         
+ * @author Matheus Marques
  **/
 public class ConfHandler {
-	private static ConfHandler instance = null;
-	private HashMap<String, String> confs;
+	private static ConfHandler instancia = null;
+	private HashMap<String, String> configuracoes;
 
 	private ConfHandler() {
 		try {
 			InputStream inputStream = getClass().getResourceAsStream(
 					"config.txt");
 			String arquivo = IOUtils.toString(inputStream);
-			confs = new HashMap<String, String>();
+			configuracoes = new HashMap<String, String>();
 			Pattern patternConf = Pattern.compile("^([A-Z]+\\.[A-Z]+) = (.*)$",
 					Pattern.MULTILINE);
 			Matcher conf = patternConf.matcher(arquivo);
 			while (conf.find()) {
-				confs.put(conf.group(1), conf.group(2));
+				configuracoes.put(conf.group(1), conf.group(2));
 			}
 			inputStream.close();
 		} catch (FileNotFoundException e) {
@@ -39,13 +39,15 @@ public class ConfHandler {
 	}
 
 	/**
-	 * Retorna o valor de determinada chave do arquivo de configuração
-	 * @param key Nome da chave
+	 * Retorna o valor do arquivo de configuração que corresponde à chave dada.
+	 * 
+	 * @param chave
+	 *            Nome da chave
 	 * @return {@link String} com o valor da chave
 	 */
-	public static String getConf(String key) {
-		if (instance == null)
-			instance = new ConfHandler();
-		return instance.confs.get(key);
+	public static String getConf(String chave) {
+		if (instancia == null)
+			instancia = new ConfHandler();
+		return instancia.configuracoes.get(chave);
 	}
 }

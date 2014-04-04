@@ -6,7 +6,7 @@ import br.ufjf.egresso.model.Administrador;
 
 public class AdministradorDAO extends GenericoDAO {
 
-	public Administrador entrar(String identificador, String senhaEncriptada) {
+	public Administrador autenticar(String identificador, String senhaEncriptada) {
 		try {
 			Query query = getSession()
 					.createQuery(

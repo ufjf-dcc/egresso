@@ -14,7 +14,7 @@ public class AdminLoginController {
 	@Command
 	public void entrar(@BindingParam("identificador") String identificador,
 			@BindingParam("senha") String senha) {
-		Administrador admin = new AdministradorBusiness().entrar(identificador,
+		Administrador admin = new AdministradorBusiness().autenticar(identificador,
 				senha);
 		if (admin != null) {
 			Sessions.getCurrent().setAttribute("admin", admin);
