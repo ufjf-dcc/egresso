@@ -20,10 +20,12 @@
 					<label style="font-size:18px"
 						value="@load('Turma do '.concat(vm.aluno.turma.semestre).concat('° ').concat('semestre do ano de ').concat(vm.aluno.turma.ano).concat('.'))" />
 					<html>
+
 						
 						<![CDATA[ <hr style="border-top: dashed 1px;
 						border-color: white; margin-bottom:20px;
 						margin-top:10px; border-bottom: none" />]]>
+						
 						
 					</html>
 
@@ -49,10 +51,12 @@
 
 
 
+
 						
 						<![CDATA[ <hr style="border-top: dashed 1px;
 						border-color: white; margin-bottom:20px;
 						margin-top:10px; border-bottom: none" />]]>
+						
 						
 						
 						
@@ -79,9 +83,10 @@
 							<label
 								style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:20px"
 								value="Adicionar..."
-								onClick="@command('adicionaAtuacao', window=adicionaAtuacao, tipo=0)" />
+								onClick="@command('adicionaAtuacao', window=adicionaAtuacao, tipo=3)" />
 						</div>
 						<html>
+
 
 
 
@@ -95,6 +100,7 @@
 							<![CDATA[ <hr style="border-top: dashed 1px;
 							border-color: #c0504d; margin-bottom:20px;
 							margin-top:10px; border-bottom: none" />]]>
+							
 							
 							
 							
@@ -154,6 +160,10 @@
 												value="Até :" />
 											<datebox format="dd/MM/yyyy"
 												value="@bind(vm.atuacaoEmEdicao.dataTermino)" />
+											<checkbox label="Atual"
+												value="@load(vm.atuacaoEmEdicao.atual)"
+												checked="@bind(vm.novaAtuacao.atual)"
+												onCheck="self.previousSibling.disabled = self.checked; self.previousSibling.value = null" />
 										</hlayout>
 									</vlayout>
 									<div class="editar_exp" hflex="1"
@@ -164,10 +174,6 @@
 										<image src="/img/cancelar.png"
 											width="15px" visible="false"
 											onClick="@command('cancelarEdicao', editarSalvar=self.previousSibling, cancelar=self, sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling)" />
-										<checkbox label="Atual"
-											value="@load(vm.atuacaoEmEdicao.atual)"
-											checked="@bind(vm.novaAtuacao.atual)"
-											onCheck="self.previousSibling.disabled = self.checked; self.previousSibling.value = null" />
 									</div>
 								</hlayout>
 							</template>
@@ -193,10 +199,12 @@
 
 
 
+
 							
 							<![CDATA[ <hr style="border-top: dashed 1px;
 							border-color: #c0504d; margin-bottom:20px;
 							margin-top:10px; border-bottom: none" />]]>
+							
 							
 							
 							
@@ -295,10 +303,12 @@
 
 
 
+
 							
 							<![CDATA[ <hr style="border-top: dashed 1px;
 							border-color: #c0504d; margin-bottom:20px;
 							margin-top:10px; border-bottom: none" />]]>
+							
 							
 							
 							
@@ -426,7 +436,7 @@
 								onCheck="self.previousSibling.disabled = self.checked; self.previousSibling.value = null" />
 						</div>
 					</row>
-					
+
 				</rows>
 			</grid>
 			<div align="center">
@@ -440,10 +450,12 @@
 
 			<a href="@load(vm.aluno.linkFacebook)" target="_blank"
 				image="/img/facebook.png" />
-			<a href="@load(vm.aluno.lkAccessToken eq null ? '/lk/index.zul?id='.concat(vm.aluno.id) : '')" image="/img/linkedin.png" target="_blank"/>
-			<a image="/img/twitter.png" target="_blank"/>
-			<a image="/img/youtube.png" target="_blank"/>
-			<a image="/img/google_plus.png" target="_blank"/>
+			<a
+				href="@load(vm.aluno.lkAccessToken eq null ? '/lk/index.zul?id='.concat(vm.aluno.id) : '')"
+				image="/img/linkedin.png" target="_blank" />
+			<a image="/img/twitter.png" target="_blank" />
+			<a image="/img/youtube.png" target="_blank" />
+			<a image="/img/google_plus.png" target="_blank" />
 
 		</div>
 	</div>

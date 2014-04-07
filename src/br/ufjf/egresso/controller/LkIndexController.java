@@ -102,5 +102,7 @@ public class LkIndexController {
 			Executions.sendRedirect(lkAuthenticationPage);
 		}
 	}
+	
+	//https://developer.linkedin.com/documents/reading-data
 
 }

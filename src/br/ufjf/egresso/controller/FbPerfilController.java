@@ -12,7 +12,6 @@ import org.zkoss.bind.annotation.Init;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
-import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Image;
@@ -39,7 +38,8 @@ public class FbPerfilController {
 	private Map<Integer, Atuacao> editTemp = new HashMap<Integer, Atuacao>();
 	private String filterString = "";
 	private Atuacao atuacaoAtual, atuacaoEmEdicao;
-	private List<TipoAtuacao> tipoAtuacao = new TipoAtuacaoDAO().getTodas();
+	private final List<TipoAtuacao> tipoAtuacao = new TipoAtuacaoDAO()
+			.getTodas();
 	private boolean podeEditar = false;
 	private boolean emEdicao = false;
 
@@ -81,15 +81,12 @@ public class FbPerfilController {
 
 	@Command
 	public void editarAtuacao(
-			
 			@BindingParam("editarSalvar") Image imgSalvarEditar,
 			@BindingParam("sumir") Vlayout v1,
 			@BindingParam("aparecer") Vlayout v2,
 			@BindingParam("cancelar") Image imgCancelar,
 			@BindingParam("atuacao") Atuacao atuacao) {
-		
-		
-	
+
 		if (!imgCancelar.isVisible()) {
 			atuacaoEmEdicao = new Atuacao();
 			atuacaoEmEdicao.copy(atuacao);
@@ -184,10 +181,6 @@ public class FbPerfilController {
 		return atuacaoAtual;
 	}
 
-	public void refreshRowTemplate(Atuacao atuacao) {
-		BindUtils.postNotifyChange(null, null, atuacao, "editingStatus");
-	}
-
 	@Command
 	public void filtraEmpregos() {
 		filtraEmpregos = new ArrayList<Atuacao>();
@@ -229,22 +222,6 @@ public class FbPerfilController {
 		}
 		BindUtils.postNotifyChange(null, null, this, "filtraFormacoes");
 	}
-	
-	@Command
-	public void changeEditableStatusAtual(
-			@BindingParam("atuacaoAtual") Atuacao atuacaoAtual) {
-		if (!atuacaoAtual.getEditingStatus()) {
-			Atuacao temp = new Atuacao();
-			temp.copy(atuacaoAtual);
-			editTemp.put(atuacaoAtual.getId(), temp);
-			atuacaoAtual.setEditingStatus(true);
-		} else {
-			atuacaoAtual.copy(editTemp.get(atuacaoAtual.getId()));
-			editTemp.remove(atuacaoAtual.getId());
-			atuacaoAtual.setEditingStatus(false);
-		}
-		refreshRowTemplate(atuacaoAtual);
-	}
 
 	@Command
 	public void adicionaAtuacao(@BindingParam("window") Window window,
@@ -281,12 +258,10 @@ public class FbPerfilController {
 					notificaFormacoes();
 					break;
 				}
-				Clients.clearBusy(window);
 				Messagebox.show("Atuacão Adicionada!", "Sucesso",
 						Messagebox.OK, Messagebox.INFORMATION);
 				limpa();
 			} else {
-				Clients.clearBusy(window);
 				Messagebox.show("A atuação não foi adicionada!", "Erro",
 						Messagebox.OK, Messagebox.ERROR);
 			}
@@ -297,6 +272,7 @@ public class FbPerfilController {
 			Messagebox.show(errorMessage, "Dados insuficientes / inválidos",
 					Messagebox.OK, Messagebox.ERROR);
 		}
+		window.detach();
 	}
 
 	public void limpa() {
@@ -345,7 +321,6 @@ public class FbPerfilController {
 						Messagebox.OK, Messagebox.ERROR);
 			editTemp.remove(atuacao.getId());
 			atuacao.setEditingStatus(false);
-			refreshRowTemplate(atuacao);
 		} else {
 			String errorMessage = "";
 			for (String error : atuacaoBusiness.getErrors())
@@ -382,7 +357,7 @@ public class FbPerfilController {
 
 						}
 					}
- 				});
+				});
 	}
 
 	@Command
