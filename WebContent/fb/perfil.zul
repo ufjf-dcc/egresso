@@ -21,10 +21,16 @@
 						value="@load('Turma do '.concat(vm.aluno.turma.semestre).concat('° ').concat('semestre do ano de ').concat(vm.aluno.turma.ano).concat('.'))" />
 					<html>
 
+
+
+
 						
 						<![CDATA[ <hr style="border-top: dashed 1px;
 						border-color: white; margin-bottom:20px;
 						margin-top:10px; border-bottom: none" />]]>
+						
+						
+						
 						
 						
 					</html>
@@ -46,21 +52,10 @@
 
 
 
-
-
-
-
-
-
 						
 						<![CDATA[ <hr style="border-top: dashed 1px;
-						border-color: white; margin-bottom:20px;
-						margin-top:10px; border-bottom: none" />]]>
-						
-						
-						
-						
-						
+						border-color: #c0504d; margin-top:10px;
+						border-bottom: none" />]]>
 						
 						
 						
@@ -90,25 +85,14 @@
 
 
 
-
-
-
-
-
-
 							
 							<![CDATA[ <hr style="border-top: dashed 1px;
-							border-color: #c0504d; margin-bottom:20px;
-							margin-top:10px; border-bottom: none" />]]>
+							border-color: #c0504d; margin-top:10px;
+							border-bottom: none" />]]>
 							
 							
 							
-							
-							
-							
-							
-							
-							
+											
 							
 							
 						</html>
@@ -116,7 +100,8 @@
 							width="100%">
 
 							<template name="children" var="atuacao">
-								<hlayout width="100%">
+								<hlayout width="100%"
+									style="margin-top: 20px">
 									<vlayout>
 										<label sclass="cargo"
 											value="@load(atuacao.cargo)" />
@@ -159,21 +144,24 @@
 											<label sclass="data_atuacao"
 												value="Até :" />
 											<datebox format="dd/MM/yyyy"
-												value="@bind(vm.atuacaoEmEdicao.dataTermino)" />
+												value="@bind(vm.atuacaoEmEdicao.dataTermino)"
+												disabled="@load(not self.nextSibling.checked)" />
 											<checkbox label="Atual"
-												value="@load(vm.atuacaoEmEdicao.atual)"
-												checked="@bind(vm.novaAtuacao.atual)"
-												onCheck="self.previousSibling.disabled = self.checked; self.previousSibling.value = null" />
+												checked="@load(vm.atuacaoEmEdicao.dataTermino eq null)"
+												onCheck="@command('marcarAtual', atual = self.checked, datebox = self.previousSibling)" />
 										</hlayout>
 									</vlayout>
 									<div class="editar_exp" hflex="1"
-										visible="@load(vm.podeEditar)">
+										visible="@load(vm.podeEditar and (not vm.emEdicao or (vm.emEdicao and atuacao.id eq vm.atuacaoEmEdicao.id)))">
 										<image src="/img/editar.png"
 											width="15px"
 											onClick="@command('editarAtuacao', editarSalvar=self,sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling, cancelar=self.nextSibling, atuacao=atuacao)" />
 										<image src="/img/cancelar.png"
 											width="15px" visible="false"
 											onClick="@command('cancelarEdicao', editarSalvar=self.previousSibling, cancelar=self, sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling)" />
+										<image src="/img/excluir.png"
+											width="15px"
+											onClick="@command('excluirAtuacao', atuacao=atuacao)" />
 									</div>
 								</hlayout>
 							</template>
@@ -186,30 +174,18 @@
 							<label value="Formação" class="cabecalho" />
 							<label
 								style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:20px"
-								value="Adicionar..." visible="@load(vm.podeEditar)" 
-								onClick="@command('adicionaAtuacao', window=adicionaAtuacao, tipo=1)"/>
+								value="Adicionar..." visible="@load(vm.podeEditar)"
+								onClick="@command('adicionaAtuacao', window=adicionaAtuacao, tipo=1)" />
 						</div>
 						<html>
 
 
 
 
-
-
-
-
-
-
 							
 							<![CDATA[ <hr style="border-top: dashed 1px;
-							border-color: #c0504d; margin-bottom:20px;
-							margin-top:10px; border-bottom: none" />]]>
-							
-							
-							
-							
-							
-							
+							border-color: #c0504d; margin-top:10px;
+							border-bottom: none" />]]>
 							
 							
 							
@@ -220,7 +196,8 @@
 							width="100%">
 
 							<template name="children" var="atuacao">
-								<hlayout width="100%">
+								<hlayout width="100%"
+									style="margin-top: 20px">
 									<vlayout>
 										<label sclass="cargo"
 											value="@load(atuacao.cargo)" />
@@ -263,21 +240,24 @@
 											<label sclass="data_atuacao"
 												value="Até :" />
 											<datebox format="dd/MM/yyyy"
-												value="@bind(vm.atuacaoEmEdicao.dataTermino)" />
+												value="@bind(vm.atuacaoEmEdicao.dataTermino)"
+												disabled="@load(not self.nextSibling.checked)" />
 											<checkbox label="Atual"
-												value="@load(vm.atuacaoEmEdicao.atual)"
-												checked="@bind(vm.novaAtuacao.atual)"
-												onCheck="self.previousSibling.disabled = self.checked; self.previousSibling.value = null" />
+												checked="@load(vm.atuacaoEmEdicao.dataTermino eq null)"
+												onCheck="@command('marcarAtual', atual = self.checked, datebox = self.previousSibling)" />
 										</hlayout>
 									</vlayout>
 									<div class="editar_exp" hflex="1"
-										visible="@load(vm.podeEditar)">
+										visible="@load(vm.podeEditar and (not vm.emEdicao or (vm.emEdicao and atuacao.id eq vm.atuacaoEmEdicao.id)))">
 										<image src="/img/editar.png"
 											width="15px"
 											onClick="@command('editarAtuacao', editarSalvar=self,sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling, cancelar=self.nextSibling, atuacao=atuacao)" />
 										<image src="/img/cancelar.png"
 											width="15px" visible="false"
 											onClick="@command('cancelarEdicao', editarSalvar=self.previousSibling, cancelar=self, sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling)" />
+										<image src="/img/excluir.png"
+											width="15px"
+											onClick="@command('excluirAtuacao', atuacao=atuacao)" />
 									</div>
 								</hlayout>
 							</template>
@@ -298,22 +278,10 @@
 
 
 
-
-
-
-
-
-
 							
 							<![CDATA[ <hr style="border-top: dashed 1px;
-							border-color: #c0504d; margin-bottom:20px;
-							margin-top:10px; border-bottom: none" />]]>
-							
-							
-							
-							
-							
-							
+							border-color: #c0504d; margin-top:10px;
+							border-bottom: none" />]]>
 							
 							
 							
@@ -324,7 +292,8 @@
 							width="100%">
 
 							<template name="children" var="atuacao">
-								<hlayout width="100%">
+								<hlayout width="100%"
+									style="margin-top: 20px">
 									<vlayout>
 										<label sclass="cargo"
 											value="@load(atuacao.cargo)" />
@@ -367,21 +336,24 @@
 											<label sclass="data_atuacao"
 												value="Até :" />
 											<datebox format="dd/MM/yyyy"
-												value="@bind(vm.atuacaoEmEdicao.dataTermino)" />
+												value="@bind(vm.atuacaoEmEdicao.dataTermino)"
+												disabled="@load(not self.nextSibling.checked)" />
 											<checkbox label="Atual"
-												value="@load(vm.atuacaoEmEdicao.atual)"
-												checked="@bind(vm.novaAtuacao.atual)"
-												onCheck="self.previousSibling.disabled = self.checked; self.previousSibling.value = null" />
+												checked="@load(vm.atuacaoEmEdicao.dataTermino eq null)"
+												onCheck="@command('marcarAtual', atual = self.checked, datebox = self.previousSibling)" />
 										</hlayout>
 									</vlayout>
 									<div class="editar_exp" hflex="1"
-										visible="@load(vm.podeEditar)">
+										visible="@load(vm.podeEditar and (not vm.emEdicao or (vm.emEdicao and atuacao.id eq vm.atuacaoEmEdicao.id)))">
 										<image src="/img/editar.png"
 											width="15px"
 											onClick="@command('editarAtuacao', editarSalvar=self,sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling, cancelar=self.nextSibling, atuacao=atuacao)" />
 										<image src="/img/cancelar.png"
 											width="15px" visible="false"
 											onClick="@command('cancelarEdicao', editarSalvar=self.previousSibling, cancelar=self, sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling)" />
+										<image src="/img/excluir.png"
+											width="15px"
+											onClick="@command('excluirAtuacao', atuacao=atuacao)" />
 									</div>
 								</hlayout>
 							</template>
@@ -430,10 +402,7 @@
 								onCreate="self.value = new Date()"
 								value="@load(vm.novaAtuacao.dataTermino)@save(vm.novaAtuacao.dataTermino, before='submitAtuacao')"
 								tabindex="4" id="dataTermino" hflex="1" />
-							<checkbox label="Atual"
-								value="@load(vm.novaAtuacao.atual)"
-								checked="@bind(vm.novaAtuacao.atual)"
-								onCheck="self.previousSibling.disabled = self.checked; self.previousSibling.value = null" />
+							<checkbox label="Atual" />
 						</div>
 					</row>
 
@@ -445,12 +414,13 @@
 					width="75px" style="margin-top:5px" />
 			</div>
 		</window>
-		<div>
-		<a href="turma.zul" image="/img/voltar.png" tooltip="filterHelp" style="cursor: help"  />
-		</div>
-		
-		<div>
 
+		<div>
+			<a href="turma.zul" image="/img/voltar.png"
+				tooltip="filterHelp" style="cursor: help" />
+		</div>
+
+		<div>
 			<a href="@load(vm.aluno.linkFacebook)" target="_blank"
 				image="/img/facebook.png" />
 			<a
@@ -462,12 +432,15 @@
 
 		</div>
 	</div>
+
 	<popup id="filterHelp">
-<html>
+		<html>
 
-<![CDATA[ Voltar para turmas.]]>
-
-</html>
-</popup>
+			
+			<![CDATA[ Voltar para turmas.]]>
+			
+			
+		</html>
+	</popup>
 
 </zk>

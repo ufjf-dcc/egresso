@@ -1,9 +1,7 @@
 package br.ufjf.egresso.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
@@ -35,7 +33,6 @@ public class FbPerfilController {
 			formacoes = new ArrayList<Atuacao>();
 	private List<Atuacao> filtraEmpregos, filtraProjetos, filtraFormacoes;
 	private Atuacao novaAtuacao = new Atuacao();
-	private Map<Integer, Atuacao> editTemp = new HashMap<Integer, Atuacao>();
 	private String filterString = "";
 	private Atuacao atuacaoAtual, atuacaoEmEdicao;
 	private final List<TipoAtuacao> tipoAtuacao = new TipoAtuacaoDAO()
@@ -58,7 +55,7 @@ public class FbPerfilController {
 		List<Atuacao> todasAtuacoes = new AtuacaoBusiness().getPorAluno(aluno);
 		if (todasAtuacoes != null)
 			for (Atuacao a : todasAtuacoes) {
-				if (a.getAtual())
+				if (a.getDataTermino() == null)
 					atuacaoAtual = a;
 
 				switch (a.getTipoAtuacao().getId()) {
@@ -95,7 +92,7 @@ public class FbPerfilController {
 		} else {
 			imgSalvarEditar.setSrc("/img/editar.png");
 			atuacao.copy(atuacaoEmEdicao);
-			atuacaoBusiness.salvaOuEdita(atuacaoEmEdicao);
+			atuacaoBusiness.salvaOuEdita(atuacao);
 			BindUtils.postNotifyChange(null, null, this, "filtraProjetos");
 			BindUtils.postNotifyChange(null, null, this, "filtraEmpregos");
 			BindUtils.postNotifyChange(null, null, this, "filtraFormacoes");
@@ -119,6 +116,20 @@ public class FbPerfilController {
 		v1.setVisible(!v1.isVisible());
 		v2.setVisible(!v2.isVisible());
 		atuacaoEmEdicao = null;
+		emEdicao = false;
+		BindUtils.postNotifyChange(null, null, this, "emEdicao");
+	}
+	
+	@Command
+	public void marcarAtual(@BindingParam("atual") boolean atual,
+			@BindingParam("datebox") Datebox datebox) {
+		if (atual) {
+			datebox.setValue(null);
+			datebox.setDisabled(true);
+			atuacaoEmEdicao.setDataTermino(null);
+		} else {
+			datebox.setDisabled(false);
+		}
 	}
 
 	public boolean isEmEdicao() {
@@ -277,7 +288,6 @@ public class FbPerfilController {
 
 	public void limpa() {
 		novaAtuacao = new Atuacao();
-		novaAtuacao.setAtual(false);
 		BindUtils.postNotifyChange(null, null, this, "novaAtuacao");
 	}
 
@@ -313,29 +323,11 @@ public class FbPerfilController {
 		}
 	}
 
-	@Command
-	public void confirm(@BindingParam("atuacao") Atuacao atuacao) {
-		if (atuacaoBusiness.validar(atuacao)) {
-			if (!atuacaoBusiness.editar(atuacao))
-				Messagebox.show("Não foi possível editar a atuação.", "Erro",
-						Messagebox.OK, Messagebox.ERROR);
-			editTemp.remove(atuacao.getId());
-			atuacao.setEditingStatus(false);
-		} else {
-			String errorMessage = "";
-			for (String error : atuacaoBusiness.getErrors())
-				errorMessage += error;
-			Messagebox.show(errorMessage, "Dados insuficientes / inválidos",
-					Messagebox.OK, Messagebox.ERROR);
-		}
-	}
-
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Command
-	public void delete(@BindingParam("atuacao") final Atuacao atuacao) {
+	public void excluirAtuacao(@BindingParam("atuacao") final Atuacao atuacao) {
 		Messagebox.show("Você tem certeza que deseja excluir a atuação "
-				+ atuacao.getCargo() + "  " + atuacao.getDataInicio() + "/"
-				+ atuacao.getDataTermino() + "?", "Confirmação", Messagebox.OK
+				+ atuacao.getCargo() + "?", "Confirmação", Messagebox.OK
 				| Messagebox.CANCEL, Messagebox.QUESTION,
 				new org.zkoss.zk.ui.event.EventListener() {
 					public void onEvent(Event e) {
@@ -344,11 +336,11 @@ public class FbPerfilController {
 							if (atuacaoBusiness.exclui(atuacao)) {
 								removeFromList(atuacao);
 								Messagebox.show(
-										"A atuacao foi excluida com sucesso.",
+										"A atuação foi excluída com sucesso.",
 										"Sucesso", Messagebox.OK,
 										Messagebox.INFORMATION);
 							} else {
-								String errorMessage = "A atuacao não pode ser excluída.\n";
+								String errorMessage = "A atuação não pôde ser excluída.\n";
 								for (String error : atuacaoBusiness.getErrors())
 									errorMessage += error;
 								Messagebox.show(errorMessage, "Erro",

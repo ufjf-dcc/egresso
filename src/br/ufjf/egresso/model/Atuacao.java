@@ -30,9 +30,6 @@ public class Atuacao {
 	@Column(name = "data_final", nullable = true)
 	Date dataTermino;
 
-	@Column(name = "atual", nullable = true)
-	boolean atual;
-
 	@Column(name = "local", length = 45, nullable = false)
 	String local;
 
@@ -49,14 +46,6 @@ public class Atuacao {
 	
 	@Transient
 	private boolean editingStatus;
-
-	public boolean getAtual() {
-		return atual;
-	}
-
-	public void setAtual(boolean atual) {
-		this.atual = atual;
-	}
 
 	public int getId() {
 		return id;
