@@ -82,7 +82,7 @@
 							<label value="Empregos" class="cabecalho" />
 							<label
 								style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:20px"
-								value="Adicionar..."
+								value="Adicionar..." visible="@load(vm.podeEditar)"
 								onClick="@command('adicionaAtuacao', window=adicionaAtuacao, tipo=3)" />
 						</div>
 						<html>
@@ -186,8 +186,8 @@
 							<label value="Formação" class="cabecalho" />
 							<label
 								style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:20px"
-								value="Adicionar..."
-								onClick="@command('adicionaAtuacao', window=adicionaAtuacao, tipo=1)" />
+								value="Adicionar..." visible="@load(vm.podeEditar)" 
+								onClick="@command('adicionaAtuacao', window=adicionaAtuacao, tipo=1)"/>
 						</div>
 						<html>
 
@@ -290,7 +290,7 @@
 							<label value="Projetos" class="cabecalho" />
 							<label
 								style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:20px"
-								value="Adicionar..."
+								value="Adicionar..." visible="@load(vm.podeEditar)"
 								onClick="@command('adicionaAtuacao', window=adicionaAtuacao, tipo=2)" />
 						</div>
 						<html>
@@ -445,7 +445,10 @@
 					width="75px" style="margin-top:5px" />
 			</div>
 		</window>
-
+		<div>
+		<a href="turma.zul" image="/img/voltar.png" tooltip="filterHelp" style="cursor: help"  />
+		</div>
+		
 		<div>
 
 			<a href="@load(vm.aluno.linkFacebook)" target="_blank"
@@ -459,6 +462,12 @@
 
 		</div>
 	</div>
+	<popup id="filterHelp">
+<html>
 
+<![CDATA[ Voltar para turmas.]]>
+
+</html>
+</popup>
 
 </zk>
