@@ -1,7 +1,5 @@
 package br.ufjf.egresso.controller;
 
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +10,7 @@ import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
+import org.zkoss.zk.ui.event.ClientInfoEvent;
 
 import br.ufjf.egresso.business.AlunoBusiness;
 import br.ufjf.egresso.business.TurmaBusiness;
@@ -45,16 +44,19 @@ public class FbTurmaController {
 				+ turma.getAno();
 		alunos = new AlunoBusiness().getAlunos(turma);
 		filtraAlunos = alunos;
-		
-		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();		
-		int width = gd.getDisplayMode().getWidth() - 600;
+	}
+	
+	@Command
+	public void montaTabela(@BindingParam("event") ClientInfoEvent evt){
+		int largura = evt.getDesktopWidth() - 300;
+		System.out.println(largura);
 		int inseridos = 0;
 		linhas = new ArrayList<List<Aluno>>();
 		
 		List<Aluno> linha = new ArrayList<Aluno>();		
 		
 		for(Aluno a : filtraAlunos){
-			if(width / 220 < (inseridos + 1)){
+			if(largura / 220 < (inseridos + 1)){
 				linhas.add(linha);
 				inseridos = 0;
 				linha = new ArrayList<Aluno>();
@@ -65,7 +67,9 @@ public class FbTurmaController {
 		
 		if(linha.size() > 0)
 			linhas.add(linha);
-	}	
+		
+		BindUtils.postNotifyChange(null, null, this, "linhas");
+	}
 
 	public List<List<Aluno>> getLinhas() {
 		return linhas;

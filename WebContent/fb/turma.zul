@@ -4,11 +4,13 @@
 	<script type="text/javascript" src="/watermarkinput.js" />
 	<script type="text/javascript">
 		zk.afterMount(function() {
-		jq("$txtpesquisa").Watermark("Nome","gray"); });
+		jq("$txtpesquisa").Watermark("Nome","gray");
+		jq("$txtpost").Watermark("Escreva algo aqui","gray"); });
 	</script>
+
 	<div apply="org.zkoss.bind.BindComposer" width="100%"
 		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbTurmaController')"
-		height="100%">
+		height="100%" onClientInfo="@command('montaTabela', event=event)">
 		<hlayout>
 			<div class="cabecalho" hflex="1">
 
@@ -40,20 +42,39 @@
 			</div>
 		</hlayout>
 		<html>
+
+
 			
 			<![CDATA[ <hr style="border-top: dashed 1px; border-color:
 			#c0504d; margin-bottom:20px; border-bottom: none" />]]>
 			
+			
+			
 		</html>
 		<hlayout class="conteudo">
 			<div class="mural">
-				<div class="caixa-mural">
-					<label value="Mural" />
-				</div>
+				<vlayout class="caixa-mural">
+					<label value="Mural da turma" class="titulo-mural" />
+					<textbox id="txtpost" rows="4" width="100%"
+						maxlength="500" onOK="self.nextSibling.onClick()"/>
+					<hlayout width="100%">
+						<checkbox label="Privado para a turma" hflex="1"/>
+						<button style="float:right" label="Publicar" />
+					</hlayout>
+
+					<html>
+						
+						<![CDATA[ <hr style="border-top: dashed 1px;
+						border-color: #c0504d; margin-top:20px;
+						border-bottom: none" />]]>
+						
+					</html>
+
+				</vlayout>
 			</div>
 			<vlayout children="@load(vm.linhas)">
 				<template name="children" var="linha">
-					
+
 					<hlayout children="@load(linha)">
 						<template name="children" var="aluno">
 							<vlayout class="aluno">

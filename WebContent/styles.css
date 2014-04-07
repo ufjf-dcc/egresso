@@ -88,10 +88,17 @@ z-vlayout {
 	padding: 5px;
 }
 
-.caixa-mural.z-div {
+.caixa-mural.z-vlayout {
 	width: 400px;
 	background: #f0f0f0;
 	min-height: 500px;
+	padding-left:10px;
+	padding-right:10px;
+}
+
+.titulo-mural.z-label{
+	font-size:20px;	
+	color: black;
 }
 
 .aluno.z-label {
