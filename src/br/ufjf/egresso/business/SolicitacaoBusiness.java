@@ -95,7 +95,7 @@ public class SolicitacaoBusiness {
 	 * @return Uma {@link List} de {@link Solicitacao}s.
 	 */
 	public List<Solicitacao> getTodos(){
-		return solicitacaoDAO.getTodos();
+		return solicitacaoDAO.getTodas();
 	}
 
 	/**Exclui um {@link Solicitacao} do banco.

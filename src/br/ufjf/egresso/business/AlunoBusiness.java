@@ -115,7 +115,7 @@ public class AlunoBusiness {
 	 * @return {@link Aluno}.
 	 */
 	public Aluno buscaPorMatricula(String matricula) {
-		return alunoDao.buscaPorMatricula(matricula);
+		return alunoDao.getAlunoPorMatricula(matricula);
 	}
 
 	/**Retorna uma {@link List} de {@link Aluno}s de uma turma e que se cadastraram no sistema.

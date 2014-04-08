@@ -20,19 +20,19 @@ public class Solicitacao {
 	@Column(name = "id", unique = true, nullable = false)
 	@GeneratedValue(generator = "increment")
 	@GenericGenerator(name = "increment", strategy = "increment")
-	int id;
+	private int id;
 
 	@Column(name = "matricula", nullable = false, unique = true, length = 15)
-	String matricula;
+	private String matricula;
 
 	@Column(name = "nome", length = 65, unique = false, nullable = true)
-	String nome;
+	private String nome;
 
 	@Column(name = "facebook_id", nullable = false, unique = true, length = 20)
-	String idFacebook;
+	private String idFacebook;
 
-	@Column(name = "url_foto", nullable = true, length = 255)
-	String urlFoto;
+	@Column(name = "url_foto", nullable = false, length = 255)
+	private String urlFoto;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "turma_id", nullable = false)

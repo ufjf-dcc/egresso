@@ -41,7 +41,7 @@ public class Aluno {
 	String lkAccessToken;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "turma_id")
+	@JoinColumn(name = "turma_id", nullable = false)
 	private Turma turma;
 
 	@Transient

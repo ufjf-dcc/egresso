@@ -26,7 +26,7 @@ public class AtuacaoDAO extends GenericoDAO {
 		return null;
 	}
 
-	public List<Atuacao> getPorAluno(Aluno aluno) {
+	public List<Atuacao> getAtuacoes(Aluno aluno) {
 		try {
 			Query query = getSession().createQuery(
 					"SELECT a FROM Atuacao AS a LEFT JOIN fetch a.tipoAtuacao WHERE a.aluno = :aluno ORDER BY a.id");
@@ -44,7 +44,7 @@ public class AtuacaoDAO extends GenericoDAO {
 		return null;
 	}
 
-	public boolean excluiPorAluno(Aluno aluno) {
+	public boolean excluir(Aluno aluno) {
 		try {
 		Query query = getSession().createQuery("DELETE Atuacao WHERE aluno = :aluno");
 		query.setParameter("aluno", aluno);

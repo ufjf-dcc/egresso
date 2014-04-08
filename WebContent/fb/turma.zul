@@ -44,9 +44,12 @@
 		<html>
 
 
+
+
 			
 			<![CDATA[ <hr style="border-top: dashed 1px; border-color:
 			#c0504d; margin-bottom:20px; border-bottom: none" />]]>
+			
 			
 			
 			
@@ -56,22 +59,56 @@
 				<vlayout class="caixa-mural">
 					<label value="Mural da turma" class="titulo-mural" />
 					<textbox id="txtpost" rows="4" width="100%"
-						maxlength="500" onOK="self.nextSibling.onClick()"/>
+						maxlength="500" onOK="self.nextSibling.onClick()"
+						onChanging="btnPost.disabled = event.value.empty" />
 					<hlayout width="100%">
-						<checkbox label="Privado para a turma" hflex="1"/>
-						<button style="float:right" label="Publicar" />
+						<checkbox id="chkPrivado"
+							label="Privado para a turma" hflex="1" />
+						<button label="Imagem" upload="true"
+							onUpload="@command('upload', button=self, evt=event)" />
+						<button id="btnPost" label="Publicar"
+							disabled="true"
+							onClick="@command('postar', texto=txtpost.value, imagem='dfs', privado=chkPrivado.checked)" />
 					</hlayout>
 
 					<html>
+
+
+
 						
 						<![CDATA[ <hr style="border-top: dashed 1px;
-						border-color: #c0504d; margin-top:20px;
-						border-bottom: none" />]]>
+						border-color: #c0504d; border-bottom: none"
+						/>]]>
+						
+						
+						
+						
 						
 					</html>
 
+					<vlayout children="@load(vm.postagensTurma)"
+						style="margin-bottom:10px">
+						<template name="children" var="postagem">
+							<vlayout
+								visible="@load(not postagem.privado or (postagem.privado and postagem.turma.id eq vm.turma.id))" />
+							<hlayout width="100%">
+								<label value="@load(postagem.texto)"
+									style="font-size:16px;" hflex="1" />
+								<button label="Ver imagem" visible="@load(postagem.imagem ne null)" />
+							</hlayout>
+							<hlayout width="100%">
+								<label
+									value="@load('Por '.concat(postagem.aluno.nome))"
+									style="font-size:12px;" hflex="1" />
+								<label
+									onCreate="@command('descricaoDataPostagem', dataHora=postagem.dataHora, label=self)"
+									style="font-size:12px;" />
+							</hlayout>
+						</template>
+					</vlayout>
 				</vlayout>
 			</div>
+
 			<vlayout children="@load(vm.linhas)">
 				<template name="children" var="linha">
 

@@ -20,10 +20,10 @@ public class TipoAtuacao {
 	@Column(name = "id", unique = true, nullable = false)
 	@GeneratedValue(generator = "increment")
 	@GenericGenerator(name = "increment", strategy = "increment")
-	int id;
+	private int id;
 
 	@Column(name = "nome", length = 45, nullable = false)
-	String nome;
+	private String nome;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tipoAtuacao")
 	private List<Atuacao> atuacoes = new ArrayList<Atuacao>();

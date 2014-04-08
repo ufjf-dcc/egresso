@@ -21,13 +21,13 @@ public class Turma {
 	@Column(name = "id", unique = true, nullable = false)
 	@GeneratedValue(generator = "increment")
 	@GenericGenerator(name = "increment", strategy = "increment")
-	int id;
+	private int id;
 
 	@Column(name = "semestre", unique = true, length = 1, nullable = false)
-	int semestre;
+	private int semestre;
 
 	@Column(name = "ano", unique = true, length = 4, nullable = false)
-	int ano;
+	private int ano;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "turma")
 	private List<Aluno> alunos = new ArrayList<Aluno>();

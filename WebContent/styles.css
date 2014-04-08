@@ -3,8 +3,8 @@
 body {
 	background: url('img/bg.png') repeat repeat;
 	font-family: times;
-	margin-left:50px;
-	margin-right:50px
+	margin-left: 50px;
+	margin-right: 50px
 }
 
 tbody.z-grid-emptybody td {
@@ -12,9 +12,9 @@ tbody.z-grid-emptybody td {
 	padding: 10px;
 }
 
-.menu-aluno.z-div{
-	height:30px;
-	background:#EEEEEE;
+.menu-aluno.z-div {
+	height: 30px;
+	background: #EEEEEE;
 }
 
 /**Estilos da página de cadastro **/
@@ -68,10 +68,6 @@ tbody.z-grid-emptybody td {
 	background-image: url('xxx.jpg');
 }
 
-z-vlayout {
-	margin-top: 20px;
-}
-
 .intro-semestre.z-radio {
 	color: white;
 	margin: 5px;
@@ -92,12 +88,12 @@ z-vlayout {
 	width: 400px;
 	background: #f0f0f0;
 	min-height: 500px;
-	padding-left:10px;
-	padding-right:10px;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
-.titulo-mural.z-label{
-	font-size:20px;	
+.titulo-mural.z-label {
+	font-size: 20px;
 	color: black;
 }
 
@@ -112,25 +108,25 @@ z-vlayout {
 	padding: 5px;
 	width: 150px;
 	height: 200px;
-	margin-bottom:30px;
+	margin-bottom: 30px;
 }
 
-.aluno.z-div{
+.aluno.z-div {
 	width: 100%;
-    height: 125px;
-    overflow: hidden;
-    position: relative;
+	height: 125px;
+	overflow: hidden;
+	position: relative;
 }
 
 .aluno.z-image {
-	position:absolute;
-    left: -100%;
-    right: -100%;
-    top: -100%;
-    bottom: -100%;
-    margin: auto; 
-    min-height: 100%;
-    min-width: 100%;
+	position: absolute;
+	left: -100%;
+	right: -100%;
+	top: -100%;
+	bottom: -100%;
+	margin: auto;
+	min-height: 100%;
+	min-width: 100%;
 }
 
 .cabecalho.z-label {
@@ -143,19 +139,18 @@ z-vlayout {
 	margin-bottom: 30px;
 }
 
-.pesquisa-turma.z-div{
+.pesquisa-turma.z-div {
 	background: #c0504d;
 	padding: 20px;
 }
 
-.pesquisa-turma.z-label{
+.pesquisa-turma.z-label {
 	font-size: 14px;
 	color: white;
 }
 
 .conteudo.z-hlayout {
 	font-size: 30px;
-	margin-bottom: 50px;
 }
 
 .pesquisa.z-textbox {
@@ -163,12 +158,12 @@ z-vlayout {
 }
 
 /** Relação de turmas **/
-.turma-ano{
+.turma-ano {
 	color: white;
 	size: 36px;
 }
 
-.turma-semestre{
-	color:white;
-	size:18px;
+.turma-semestre {
+	color: white;
+	size: 18px;
 }

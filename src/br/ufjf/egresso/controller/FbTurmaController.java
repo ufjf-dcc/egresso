@@ -1,6 +1,10 @@
 package br.ufjf.egresso.controller;
 
+import java.io.InputStream;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.zkoss.bind.BindUtils;
@@ -11,12 +15,24 @@ import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.ClientInfoEvent;
+import org.zkoss.zk.ui.event.UploadEvent;
+import org.zkoss.zul.Label;
+import org.zkoss.zul.Messagebox;
 
 import br.ufjf.egresso.business.AlunoBusiness;
+import br.ufjf.egresso.business.PostagemBusiness;
 import br.ufjf.egresso.business.TurmaBusiness;
 import br.ufjf.egresso.model.Aluno;
+import br.ufjf.egresso.model.Postagem;
 import br.ufjf.egresso.model.Turma;
+import br.ufjf.egresso.utils.FileManager;
 
+/**
+ * Classe para controlar a página /fb/turma.zul
+ * 
+ * @author Jorge Augusto da Silva Moreira
+ * 
+ */
 public class FbTurmaController {
 
 	private List<Aluno> alunos, filtraAlunos;
@@ -24,14 +40,17 @@ public class FbTurmaController {
 	private List<String> semestres;
 	private List<Turma> turmas;
 	private TurmaBusiness turmaBusiness = new TurmaBusiness();
-	private String pesquisa,
-			emptyMessage = "Nenhum aluno desta turma se cadastrou no aplicativo ainda",
-			descricao;
+	private String pesquisa, descricao;
+	private Turma turma;
+	private List<Postagem> postagensTurma;
+	private int largura;
+	private InputStream imgPostagem;
+	private String imgExtensao;
 
 	@Init
-	public void init() {	
-		
-		Turma turma = turmaBusiness.getTurma(((Aluno) Sessions.getCurrent()
+	public void init() {
+
+		turma = turmaBusiness.getTurma(((Aluno) Sessions.getCurrent()
 				.getAttribute("aluno")).getId());
 		turmas = turmaBusiness.getTodas();
 
@@ -44,19 +63,20 @@ public class FbTurmaController {
 				+ turma.getAno();
 		alunos = new AlunoBusiness().getAlunos(turma);
 		filtraAlunos = alunos;
+		postagensTurma = new PostagemBusiness().getPostagens(turma);
 	}
-	
+
 	@Command
-	public void montaTabela(@BindingParam("event") ClientInfoEvent evt){
-		int largura = evt.getDesktopWidth() - 300;
-		System.out.println(largura);
+	public void montaTabela(@BindingParam("event") ClientInfoEvent evt) {
+		if (evt != null)
+			largura = evt.getDesktopWidth() - 300;
 		int inseridos = 0;
 		linhas = new ArrayList<List<Aluno>>();
-		
-		List<Aluno> linha = new ArrayList<Aluno>();		
-		
-		for(Aluno a : filtraAlunos){
-			if(largura / 220 < (inseridos + 1)){
+
+		List<Aluno> linha = new ArrayList<Aluno>();
+
+		for (Aluno a : filtraAlunos) {
+			if (largura / 220 < (inseridos + 1)) {
 				linhas.add(linha);
 				inseridos = 0;
 				linha = new ArrayList<Aluno>();
@@ -64,10 +84,11 @@ public class FbTurmaController {
 			linha.add(a);
 			inseridos++;
 		}
-		
-		if(linha.size() > 0)
+
+		if (linha.size() > 0)
 			linhas.add(linha);
-		
+
+		BindUtils.postNotifyChange(null, null, this, "postagensTurma");
 		BindUtils.postNotifyChange(null, null, this, "linhas");
 	}
 
@@ -87,12 +108,16 @@ public class FbTurmaController {
 		this.pesquisa = pesquisa;
 	}
 
-	public String getEmptyMessage() {
-		return emptyMessage;
-	}
-
 	public List<String> getSemestres() {
 		return semestres;
+	}
+
+	public List<Postagem> getPostagensTurma() {
+		return postagensTurma;
+	}
+
+	public Turma getTurma() {
+		return turma;
 	}
 
 	@Command
@@ -104,14 +129,13 @@ public class FbTurmaController {
 					.contains(pesquisa.trim().toLowerCase()))
 				resultados.add(aluno);
 		filtraAlunos = resultados;
-		emptyMessage = "Nenhum resultado encontrado para \"" + pesquisa + "\"";
-		BindUtils.postNotifyChange(null, null, this, "filtraAlunos");
+		montaTabela(null);
 	}
 
 	@Command("limparPesquisa")
 	public void limparPesquisa() {
 		filtraAlunos = alunos;
-		BindUtils.postNotifyChange(null, null, this, "filtraAlunos");
+		montaTabela(null);
 	}
 
 	@Command
@@ -121,12 +145,87 @@ public class FbTurmaController {
 
 	@Command
 	public void trocaTurma(@BindingParam("turma") String turmaDesc) {
-		alunos = new AlunoBusiness().getAlunos(turmaBusiness.getTurma(Integer
-				.parseInt(turmaDesc.substring(0, turmaDesc.indexOf(" "))),
-				Integer.parseInt(turmaDesc.substring(
-						turmaDesc.indexOf("º") - 1, turmaDesc.indexOf("º")))));
+		turma = turmaBusiness.getTurma(Integer.parseInt(turmaDesc.substring(0,
+				turmaDesc.indexOf(" "))), Integer.parseInt(turmaDesc.substring(
+				turmaDesc.indexOf("º") - 1, turmaDesc.indexOf("º"))));
+		alunos = new AlunoBusiness().getAlunos(turma);
 		filtraAlunos = alunos;
-		BindUtils.postNotifyChange(null, null, this, "filtraAlunos");
+		postagensTurma = new PostagemBusiness().getPostagens(turma);
+		montaTabela(null);
+	}
+
+	/**
+	 * Retorna para a página zul a descrição da data da {@link Postagem}.
+	 * 
+	 * @param dataHora
+	 *            Data e hora da publicação da {@link Postagem}.
+	 * @param label
+	 *            {@link Label} que mostrará a data.
+	 */
+	@Command
+	public void descricaoDataPostagem(
+			@BindingParam("dataHora") Timestamp dataHora,
+			@BindingParam("label") Label label) {
+		if (dataHora
+				.toString()
+				.substring(0, 11)
+				.equals(new Timestamp(new Date().getTime()).toString()
+						.substring(0, 11)))
+			label.setValue("Hoje, "
+					+ new SimpleDateFormat("HH:mm").format(dataHora));
+		else
+			label.setValue(new SimpleDateFormat("MM/dd/yyyy, HH:mm")
+					.format(dataHora));
+	}
+
+	/**
+	 * Salva a {@link Postagem} criada pelo usuário e atualiza a lista.
+	 * 
+	 * @param texto
+	 *            Texto escrito pelo usuário.
+	 * @param imagem
+	 *            Endereço da imagem.
+	 * @param privado
+	 *            Se será ou não exibida para todos os ex-alunos.
+	 */
+	@Command
+	public void postar(@BindingParam("texto") String texto,
+			@BindingParam("privado") boolean privado) {
+		String imagem = null;
+		if (imgPostagem != null)
+			imagem = FileManager.saveFileInputSream(imgPostagem, imgExtensao);
+		if (imgPostagem == null || (imgPostagem != null && imagem != null)) {
+			Postagem postagem = new Postagem((Aluno) Sessions.getCurrent()
+					.getAttribute("aluno"), turma, privado, texto, imagem,
+					new Timestamp(new Date().getTime()));
+			imgPostagem = null;
+			if (new PostagemBusiness().salvar(postagem)) {
+				postagensTurma.add(0, postagem);
+				BindUtils.postNotifyChange(null, null, this, "postagensTurma");
+				return;
+			}
+		}
+
+		Messagebox.show(
+				"Não foi possível publicar, tente novamente mais tarde.",
+				"Erro", Messagebox.OK, Messagebox.ERROR);
+
+	}
+
+	@Command
+	public void upload(@BindingParam("evt") UploadEvent evt) {
+		String[] extensoes = new String[] { "jpg", "png", "gif" };
+
+		for (String s : extensoes)
+			if (evt.getMedia().getName().contains(s)) {
+				imgPostagem = evt.getMedia().getStreamData();
+				imgExtensao = s;
+				return;
+			}
+
+		Messagebox.show("Este não é um arquivo de imagem.", "Formato inválido",
+				Messagebox.OK, Messagebox.INFORMATION);
+		imgPostagem = null;
 	}
 
 }

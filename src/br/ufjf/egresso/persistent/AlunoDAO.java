@@ -23,7 +23,6 @@ public class AlunoDAO extends GenericoDAO {
 
 			return aluno;
 		} catch (Exception e) {
-			System.out.println(e);
 			e.printStackTrace();
 		}
 		return null;
@@ -43,7 +42,6 @@ public class AlunoDAO extends GenericoDAO {
 
 			return aluno;
 		} catch (Exception e) {
-			System.out.println(e);
 			e.printStackTrace();
 		}
 		return null;
@@ -88,7 +86,7 @@ public class AlunoDAO extends GenericoDAO {
 	}
 
 	
-	public Aluno buscaPorMatricula(String matricula) {
+	public Aluno getAlunoPorMatricula(String matricula) {
 		try {
 			Query query = getSession().createQuery(
 					"SELECT a FROM Aluno as a LEFT JOIN FETCH a.turma WHERE a.matricula = :matricula");

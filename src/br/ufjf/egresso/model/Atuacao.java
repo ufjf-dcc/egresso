@@ -22,19 +22,19 @@ public class Atuacao {
 	@Column(name = "id", unique = true, nullable = false)
 	@GeneratedValue(generator = "increment")
 	@GenericGenerator(name = "increment", strategy = "increment")
-	int id;
+	private int id;
 
 	@Column(name = "data_inicio", nullable = false)
-	Date dataInicio;
+	private Date dataInicio;
 
 	@Column(name = "data_final", nullable = true)
-	Date dataTermino;
+	private Date dataTermino;
 
 	@Column(name = "local", length = 45, nullable = false)
-	String local;
+	private String local;
 
 	@Column(name = "cargo", length = 45, nullable = false)
-	String cargo;
+	private String cargo;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "aluno_id", nullable = false)

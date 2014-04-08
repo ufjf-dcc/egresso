@@ -59,11 +59,11 @@ public class AtuacaoBusiness {
 	}
 
 	public List<Atuacao> getPorAluno(Aluno aluno) {
-		return atuacaoDao.getPorAluno(aluno);
+		return atuacaoDao.getAtuacoes(aluno);
 	}
 
 	public boolean excluiPorAluno(Aluno aluno) {
-		return atuacaoDao.excluiPorAluno(aluno);
+		return atuacaoDao.excluir(aluno);
 	}
 
 	/**

@@ -19,7 +19,7 @@ public class Voto {
 	@Column(name = "id", unique = true, nullable = false)
 	@GeneratedValue(generator = "increment")
 	@GenericGenerator(name = "increment", strategy = "increment")
-	int id;
+	private int id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "aluno_id", nullable = false)
@@ -29,7 +29,7 @@ public class Voto {
 	@JoinColumn(name = "solicitacao_id", nullable = false)
 	private Solicitacao solicitacao;
 
-	@Column(name = "resultado", nullable = true)
+	@Column(name = "resultado", nullable = false)
 	private boolean resultado;
 
 	public Aluno getAluno() {

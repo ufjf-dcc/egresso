@@ -26,7 +26,7 @@ public class SolicitacaoDAO extends GenericoDAO {
 		return null;
 	}
 
-	public List<Solicitacao> getTodos() {
+	public List<Solicitacao> getTodas() {
 		try {
 			Query query = getSession().createQuery(
 					"SELECT s FROM Solicitacao AS s LEFT JOIN FETCH s.turma");
