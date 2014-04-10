@@ -131,6 +131,18 @@ public class FbPerfilController {
 			datebox.setDisabled(false);
 		}
 	}
+	
+	@Command
+	public void marcarAtualAdd(@BindingParam("atual") boolean atual,
+			@BindingParam("datebox") Datebox datebox) {
+		if (atual) {
+			datebox.setValue(null);
+			datebox.setDisabled(true);
+			novaAtuacao.setDataTermino(null);
+		} else {
+			datebox.setDisabled(false);
+		}
+	}
 
 	public boolean isEmEdicao() {
 		return emEdicao;

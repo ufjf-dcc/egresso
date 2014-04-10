@@ -402,7 +402,8 @@
 								onCreate="self.value = new Date()"
 								value="@load(vm.novaAtuacao.dataTermino)@save(vm.novaAtuacao.dataTermino, before='submitAtuacao')"
 								tabindex="4" id="dataTermino" hflex="1" />
-							<checkbox label="Atual" />
+							<checkbox label="Atual"
+							checked="@load(vm.novaAtuacao.dataTermino eq null)" onCheck="@command('marcarAtualAdd', atual = self.checked, datebox = self.previousSibling)"/>
 						</div>
 					</row>
 
