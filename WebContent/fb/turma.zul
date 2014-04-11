@@ -90,7 +90,7 @@
 						style="margin-bottom:10px">
 						<template name="children" var="postagem">
 							<vlayout
-								visible="@load(not postagem.privado or (postagem.privado and postagem.turma.id eq vm.turma.id))" />
+								visible="@load(not postagem.privado or (postagem.privado and postagem.turma eq turma))" />
 							<hlayout width="100%">
 								<label value="@load(postagem.texto)"
 									style="font-size:16px;" hflex="1" />
