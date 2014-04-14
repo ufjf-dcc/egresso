@@ -16,8 +16,10 @@ import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.ClientInfoEvent;
 import org.zkoss.zk.ui.event.UploadEvent;
+import org.zkoss.zul.Image;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.Window;
 
 import br.ufjf.egresso.business.AlunoBusiness;
 import br.ufjf.egresso.business.PostagemBusiness;
@@ -25,6 +27,7 @@ import br.ufjf.egresso.business.TurmaBusiness;
 import br.ufjf.egresso.model.Aluno;
 import br.ufjf.egresso.model.Postagem;
 import br.ufjf.egresso.model.Turma;
+import br.ufjf.egresso.utils.ConfHandler;
 import br.ufjf.egresso.utils.FileManager;
 
 /**
@@ -40,12 +43,11 @@ public class FbTurmaController {
 	private List<String> semestres;
 	private List<Turma> turmas;
 	private TurmaBusiness turmaBusiness = new TurmaBusiness();
-	private String pesquisa, descricao;
+	private String pesquisa, descricao, imgExtensao;
 	private Turma turma;
 	private List<Postagem> postagensTurma;
 	private int largura;
 	private InputStream imgPostagem;
-	private String imgExtensao;
 
 	@Init
 	public void init() {
@@ -229,6 +231,14 @@ public class FbTurmaController {
 		Messagebox.show("Este não é um arquivo de imagem.", "Formato inválido",
 				Messagebox.OK, Messagebox.INFORMATION);
 		imgPostagem = null;
+	}
+
+	@Command
+	public void verImagem(@BindingParam("window") Window window,
+			@BindingParam("imgSrc") String imgSrc) {
+		((Image) window.getChildren().get(0)).setSrc("file:///" + ConfHandler
+				.getConf("FILE.PATH") + imgSrc);
+		window.doModal();
 	}
 
 }
