@@ -66,7 +66,7 @@ public class FbCadastroController {
 	@Command
 	public void checaMatricula(@BindingParam("txt") Textbox txt) {
 		String matricula = txt.getValue();
-		if (matricula != null) {
+		if (matricula != null && matricula.trim().length() > 0) {
 			Aluno aluno = new AlunoBusiness().buscaPorMatricula(matricula);
 			if (aluno == null)
 				Messagebox

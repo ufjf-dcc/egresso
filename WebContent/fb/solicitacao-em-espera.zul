@@ -1,16 +1,18 @@
 <?page title="Controle de Egresso UFJF - Lista de Espera" contentType="text/html;charset=UTF-8"?>
 <zk>
 	<style src="/styles.css" />
-	<div align="center" apply="org.zkoss.bind.BindComposer">
+	<div id="principal" class="intro" align="center" width="100%">
 		<vlayout class="intro-cabecalho">
 			<label value="Álbum de Fotos" class="intro-titulo" />
 			<label value="Curso de Ciência da Computação - UFJF"
 				class="intro-subtitulo" />
 		</vlayout>
+	</div>
 
+	<div id="mensagem" align="center">
 		<div class="intro-mensagem">
 			<label
-				value="Seu cadastro ainda não foi aprovado. Tente mais tarde." />
+				value="Seu cadastro ainda não foi aprovado. Volte mais tarde." />
 		</div>
 		<div class="intro-coord">
 			<label

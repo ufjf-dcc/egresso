@@ -50,8 +50,8 @@ public class FbTurmaController {
 	@Init
 	public void init() {
 
-		turma = turmaBusiness.getTurma(((Aluno) Sessions.getCurrent()
-				.getAttribute("aluno")).getId());
+		turma = ((Aluno) Sessions.getCurrent().getAttribute("aluno"))
+				.getTurma();
 		turmas = turmaBusiness.getTodas();
 
 		semestres = new ArrayList<String>();
@@ -140,7 +140,10 @@ public class FbTurmaController {
 
 	@Command
 	public void verPerfil(@BindingParam("aluno") Aluno aluno) {
-		Executions.sendRedirect("perfil.zul?id=" + aluno.getFacebookId());
+		if (aluno.getFacebookId() != null)
+			Executions.sendRedirect("perfil.zul?id=" + aluno.getFacebookId());
+		else
+			Executions.sendRedirect("convida.zul?id=" + aluno.getId());
 	}
 
 	@Command
