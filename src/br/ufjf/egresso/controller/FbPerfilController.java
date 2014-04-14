@@ -14,6 +14,7 @@ import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Image;
 import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Vlayout;
 import org.zkoss.zul.Window;
 
@@ -245,7 +246,14 @@ public class FbPerfilController {
 		}
 		BindUtils.postNotifyChange(null, null, this, "filtraFormacoes");
 	}
-
+	@Command
+	public void escondeTextBox( @BindingParam("textbox") Textbox textbox ){
+		if(textbox.isVisible())
+			textbox.setVisible(false);
+		else
+			textbox.setVisible(true);
+		
+		}
 	@Command
 	public void adicionaAtuacao(@BindingParam("window") Window window,
 			@BindingParam("tipo") int tipo) {

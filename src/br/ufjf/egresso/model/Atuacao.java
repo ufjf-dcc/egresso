@@ -35,6 +35,16 @@ public class Atuacao {
 
 	@Column(name = "cargo", length = 45, nullable = false)
 	private String cargo;
+	@Column(name = "descricao", length = 255, nullable = true)
+	private String descricao;
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "aluno_id", nullable = false)

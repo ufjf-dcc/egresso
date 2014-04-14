@@ -120,6 +120,14 @@
 												visible="@load(atuacao.dataTermino ne null)"
 												value="@load(''.concat(atuacao.dataTermino)) @converter('br.ufjf.egresso.utils.DateFormatConverter')" />
 										</div>
+										<div>
+												<image src="/img/expandIcon.png" width="15px" 
+												onClick="@command('escondeTextBox', textbox=self.parent.nextSibling)"/>
+											</div>
+											
+											<textbox visible ="false"  readonly="true"
+												cols="20" rows ="5" />
+											
 									</vlayout>
 									<vlayout visible="false">
 										<hlayout>
@@ -216,6 +224,14 @@
 												visible="@load(atuacao.dataTermino ne null)"
 												value="@load(''.concat(atuacao.dataTermino)) @converter('br.ufjf.egresso.utils.DateFormatConverter')" />
 										</div>
+											<div>
+												<image src="/img/expandIcon.png" width="15px" 
+												onClick="@command('escondeTextBox', textbox=self.parent.nextSibling)"/>
+											</div>
+											
+											<textbox  readonly="true" visible ="false"
+												cols="20" rows ="5" />
+											
 									</vlayout>
 									<vlayout visible="false">
 										<hlayout>
@@ -312,6 +328,14 @@
 												visible="@load(atuacao.dataTermino ne null)"
 												value="@load(''.concat(atuacao.dataTermino)) @converter('br.ufjf.egresso.utils.DateFormatConverter')" />
 										</div>
+											<div>
+												<image src="/img/expandIcon.png" width="15px" 
+												onClick="@command('escondeTextBox', textbox=self.parent.nextSibling)"/>
+											</div>
+											
+											<textbox  readonly="true" visible ="false"
+												cols="20" rows ="5" />
+											
 									</vlayout>
 									<vlayout visible="false">
 										<hlayout>
@@ -342,6 +366,7 @@
 												checked="@load(vm.atuacaoEmEdicao.dataTermino eq null)"
 												onCheck="@command('marcarAtual', atual = self.checked, datebox = self.previousSibling)" />
 										</hlayout>
+								
 									</vlayout>
 									<div class="editar_exp" hflex="1"
 										visible="@load(vm.podeEditar and (not vm.emEdicao or (vm.emEdicao and atuacao.id eq vm.atuacaoEmEdicao.id)))">
@@ -406,7 +431,12 @@
 							 onCheck="@command('marcarAtualAdd', atual = self.checked, datebox = self.previousSibling)"/>
 						</div>
 					</row>
-
+					<row>
+						
+						<div>
+							<image src="/img/expandIcon.png" width="15px"/>
+						</div>
+					</row>
 				</rows>
 			</grid>
 			<div align="center">
