@@ -71,14 +71,15 @@ public class FbTurmaController {
 	@Command
 	public void montaTabela(@BindingParam("event") ClientInfoEvent evt) {
 		if (evt != null)
-			largura = evt.getDesktopWidth() - 300;
+			largura = evt.getDesktopWidth();
+		BindUtils.postNotifyChange(null, null, this, "largura");
 		int inseridos = 0;
 		linhas = new ArrayList<List<Aluno>>();
 
 		List<Aluno> linha = new ArrayList<Aluno>();
 
 		for (Aluno a : filtraAlunos) {
-			if (largura / 220 < (inseridos + 1)) {
+			if ((largura - 565) / 180 < (inseridos + 1)) {
 				linhas.add(linha);
 				inseridos = 0;
 				linha = new ArrayList<Aluno>();
@@ -120,6 +121,10 @@ public class FbTurmaController {
 
 	public Turma getTurma() {
 		return turma;
+	}
+
+	public int getLargura() {
+		return largura;
 	}
 
 	@Command

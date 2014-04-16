@@ -64,10 +64,6 @@ tbody.z-grid-emptybody td {
 	font-size: 16px;
 }
 
-.intro-cabecalho.body {
-	background-image: url('xxx.jpg');
-}
-
 .intro-semestre.z-radio {
 	color: white;
 	margin: 5px;
@@ -104,11 +100,12 @@ tbody.z-grid-emptybody td {
 
 .aluno.z-vlayout {
 	background: #c0504d;
-	margin-left: 30px;
+	margin-right: 30px;
 	padding: 5px;
 	width: 150px;
 	height: 200px;
 	margin-bottom: 30px;
+	cursor: pointer;
 }
 
 .aluno.z-div {

@@ -35,7 +35,7 @@ public class Atuacao {
 
 	@Column(name = "cargo", length = 45, nullable = false)
 	private String cargo;
-	@Column(name = "descricao", length = 255, nullable = true)
+	@Column(name = "descricao", length = 300, nullable = true)
 	private String descricao;
 
 	public String getDescricao() {

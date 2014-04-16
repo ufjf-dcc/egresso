@@ -22,14 +22,10 @@
 					<html>
 
 
-
-
 						
 						<![CDATA[ <hr style="border-top: dashed 1px;
 						border-color: white; margin-bottom:20px;
 						margin-top:10px; border-bottom: none" />]]>
-						
-						
 						
 						
 						
@@ -50,15 +46,10 @@
 					<html>
 
 
-
-
 						
 						<![CDATA[ <hr style="border-top: dashed 1px;
 						border-color: #c0504d; margin-top:10px;
 						border-bottom: none" />]]>
-						
-						
-						
 						
 						
 						
@@ -85,10 +76,16 @@
 
 
 
+
+
+
 							
 							<![CDATA[ <hr style="border-top: dashed 1px;
 							border-color: #c0504d; margin-top:10px;
 							border-bottom: none" />]]>
+							
+							
+							
 							
 							
 							
@@ -121,13 +118,14 @@
 												value="@load(''.concat(atuacao.dataTermino)) @converter('br.ufjf.egresso.utils.DateFormatConverter')" />
 										</div>
 										<div>
-												<image src="/img/expandIcon.png" width="15px" 
-												onClick="@command('escondeTextBox', textbox=self.parent.nextSibling)"/>
-											</div>
-											
-											<textbox visible ="false"  readonly="true"
-												cols="20" rows ="5" />
-											
+											<image
+												src="/img/expandIcon.png" width="15px"
+												onClick="@command('escondeTextBox', textbox=self.parent.nextSibling)" />
+										</div>
+
+										<textbox visible="false"
+											readonly="true" cols="20" rows="5" />
+
 									</vlayout>
 									<vlayout visible="false">
 										<hlayout>
@@ -190,10 +188,16 @@
 
 
 
+
+
+
 							
 							<![CDATA[ <hr style="border-top: dashed 1px;
 							border-color: #c0504d; margin-top:10px;
 							border-bottom: none" />]]>
+							
+							
+							
 							
 							
 							
@@ -224,14 +228,15 @@
 												visible="@load(atuacao.dataTermino ne null)"
 												value="@load(''.concat(atuacao.dataTermino)) @converter('br.ufjf.egresso.utils.DateFormatConverter')" />
 										</div>
-											<div>
-												<image src="/img/expandIcon.png" width="15px" 
-												onClick="@command('escondeTextBox', textbox=self.parent.nextSibling)"/>
-											</div>
-											
-											<textbox  readonly="true" visible ="false"
-												cols="20" rows ="5" />
-											
+										<div>
+											<image
+												src="/img/expandIcon.png" width="15px"
+												onClick="@command('escondeTextBox', textbox=self.parent.nextSibling)" />
+										</div>
+
+										<textbox readonly="true"
+											visible="false" cols="20" rows="5" />
+
 									</vlayout>
 									<vlayout visible="false">
 										<hlayout>
@@ -294,10 +299,16 @@
 
 
 
+
+
+
 							
 							<![CDATA[ <hr style="border-top: dashed 1px;
 							border-color: #c0504d; margin-top:10px;
 							border-bottom: none" />]]>
+							
+							
+							
 							
 							
 							
@@ -328,45 +339,54 @@
 												visible="@load(atuacao.dataTermino ne null)"
 												value="@load(''.concat(atuacao.dataTermino)) @converter('br.ufjf.egresso.utils.DateFormatConverter')" />
 										</div>
-											<div>
-												<image src="/img/expandIcon.png" width="15px" 
-												onClick="@command('escondeTextBox', textbox=self.parent.nextSibling)"/>
-											</div>
-											
-											<textbox  readonly="true" visible ="false"
-												cols="20" rows ="5" />
-											
+										<div>
+											<label sclass="data_atuacao"
+												value="Descrição" visible="@load(atuacao.descricao ne null)"/>
+											<label sclass="data_atuacao"
+												value="@load(atuacao.descricao)" />
+										</div>
+
+										<textbox readonly="true"
+											visible="false" cols="20" rows="5" />
+
 									</vlayout>
 									<vlayout visible="false">
 										<hlayout>
 											<label sclass="cargo"
 												value="Cargo: " />
-											<textbox
+											<textbox hflex="1"
 												value="@bind(vm.atuacaoEmEdicao.cargo)" />
 										</hlayout>
 										<hlayout>
 											<label sclass="local"
 												value="Local: " />
-											<textbox
+											<textbox hflex="1"
 												value="@bind(vm.atuacaoEmEdicao.local)" />
 										</hlayout>
 										<hlayout>
 											<label sclass="data_atuacao"
 												value="De:" />
-											<datebox format="dd/MM/yyyy"
+											<datebox format="dd/MM/yyyy" hflex="1"
 												value="@bind(vm.atuacaoEmEdicao.dataInicio)" />
 										</hlayout>
 										<hlayout>
 											<label sclass="data_atuacao"
 												value="Até :" />
-											<datebox format="dd/MM/yyyy"
+											<datebox format="dd/MM/yyyy" hflex="1"
 												value="@bind(vm.atuacaoEmEdicao.dataTermino)"
 												disabled="@load(not self.nextSibling.checked)" />
 											<checkbox label="Atual"
 												checked="@load(vm.atuacaoEmEdicao.dataTermino eq null)"
 												onCheck="@command('marcarAtual', atual = self.checked, datebox = self.previousSibling)" />
 										</hlayout>
-								
+										<vlayout>
+											<label sclass="data_atuacao"
+												value="Descrição:" />
+											<textbox width="100%"
+												value="@bind(vm.atuacaoEmEdicao.descricao)" rows="4"
+												maxlength="300" />
+										</vlayout>
+
 									</vlayout>
 									<div class="editar_exp" hflex="1"
 										visible="@load(vm.podeEditar and (not vm.emEdicao or (vm.emEdicao and atuacao.id eq vm.atuacaoEmEdicao.id)))">
@@ -428,14 +448,15 @@
 								value="@load(vm.novaAtuacao.dataTermino)@save(vm.novaAtuacao.dataTermino, before='submitAtuacao')"
 								tabindex="4" id="dataTermino" hflex="1" />
 							<checkbox label="Atual"
-							 onCheck="@command('marcarAtualAdd', atual = self.checked, datebox = self.previousSibling)"/>
+								onCheck="@command('marcarAtualAdd', atual = self.checked, datebox = self.previousSibling)" />
 						</div>
 					</row>
 					<row>
-						
-						<div>
-							<image src="/img/expandIcon.png" width="15px"/>
-						</div>
+						<label value="Descrição:" />
+						<textbox
+							value="@load(vm.novaAtuacao.descricao)@save(vm.novaAtuacao.descricao, before='submitAtuacao')"
+							tabindex="5" id="descricao" width="100%" rows="4"
+							maxlength="300" />
 					</row>
 				</rows>
 			</grid>
@@ -467,8 +488,14 @@
 	<popup id="filterHelp">
 		<html>
 
+
+
+
 			
 			<![CDATA[ Voltar para turmas.]]>
+			
+			
+			
 			
 			
 		</html>
