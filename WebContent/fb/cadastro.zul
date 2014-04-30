@@ -6,20 +6,33 @@
 		jq("$matriculatxt").Watermark("ex:200035001","gray"); });
 	</script>
 	<script type="text/javascript">
+
+
+
+
+
+
+
+
 		
 		<![CDATA[
-		
-		function formMatricula(){
-		jq("$intro").fadeOut('fast', function(){
-		jq("$matricula").fadeIn('fast'); }); }
-		
-		function formTurma(){
-		jq("$matricula").fadeOut('fast', function(){
+
+		function formMatricula(){ jq("$intro").fadeOut('fast',
+		function(){ jq("$siga").fadeIn('fast'); }); }
+
+		function formTurma(){ jq("$siga").fadeOut('fast', function(){
 		jq("$turma").fadeIn('fast'); }); }
-		
-		function concluido(){
-		jq("$turma").fadeOut('fast', function(){
+
+		function concluido(){ jq("$turma").fadeOut('fast', function(){
 		jq("$mensagem").fadeIn('fast'); }); }]]>
+		
+		
+		
+		
+		
+		
+		
+		
 		
 	</script>
 	<style src="/bootstrap/css/bootstrap.css" />
@@ -40,29 +53,35 @@
 					c:onClick="formMatricula()" />
 			</vlayout>
 
-			<vlayout visible="false" id="matricula"
-				class="intro-form">
+			<vlayout visible="false" id="siga" class="intro-form">
 				<label
-					value="Por favor, informe seu número de matrícula:"
+					value="Por favor, informe seus dados de login usados no SIGA:"
 					class="intro-form" />
-				<hlayout width="100%">
-					<textbox class="intro-form" id="matriculatxt"
-						onOK="@command('checaMatricula', txt=self)" />
-					<button
-						onClick="@command('checaMatricula', txt=self.previousSibling)" label=">>" />
+				<hlayout>
+					<label class="intro-form" value="CPF" width="50px" />
+					<textbox class="intro-form" id="cpftxt"
+						onOK="@command('checaMatricula', cpf=self.value, senha=self.nextSibling.value)" />
+				</hlayout>
+				<hlayout>
+					<label class="intro-form" value="Senha"
+						width="50px" />
+					<textbox class="intro-form" id="senhatxt"
+						type="password"
+						onOK="@command('checaMatricula', cpf=cpftxt.value, senha=self.value)" />
+				</hlayout>
+				<hlayout>
+					<button label="Autenticar" class="btn"
+						onClick="@command('checaMatricula', cpf=cpftxt.value, senha=senhatxt.value)" />
+					<button label="Esqueci a senha" class="btn"
+						href="http://siga.ufjf.br/" target="_blank" />
 				</hlayout>
 
 			</vlayout>
 
 			<vlayout visible="false" id="turma" class="intro-form">
-				<label value="Em que semestre você entrou no curso?"
+				<label
+					value="@load('Você entrou no curso em qual semestre de '.concat(vm.ano).concat('?'))"
 					class="intro-form" />
-				<combobox id="combo" autodrop="true"
-					model="@load(vm.turmas)">
-					<template name="model">
-						<comboitem label="@load(each.ano)" />
-					</template>
-				</combobox>
 				<radiogroup id="semestres">
 					<radio label="1º semestre" radiogroup="semestres"
 						class="intro-semestre" />
@@ -71,7 +90,7 @@
 				</radiogroup>
 				<button label="Solicitar cadastro"
 					c:onClick="concluido()"
-					onClick="@command('checaTurma', ano=self.previousSibling.previousSibling.value, semestres=semestres)" />
+					onClick="@command('checaTurma', semestre=semestres.selectedIndex)" />
 			</vlayout>
 		</div>
 

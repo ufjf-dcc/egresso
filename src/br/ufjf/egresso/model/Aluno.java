@@ -45,10 +45,7 @@ public class Aluno {
 	private Turma turma;
 
 	@Transient
-	private String linkFacebook;
-
-	@Transient
-	private boolean editingStatus;
+	private boolean editingStatus;	
 
 	public int getId() {
 		return id;
@@ -64,10 +61,6 @@ public class Aluno {
 
 	public void setFacebookId(String facebookId) {
 		this.facebookId = facebookId;
-	}
-
-	public void setLinkFacebook(String linkFacebook) {
-		this.linkFacebook = linkFacebook;
 	}
 
 	public String getUrlFoto() {
@@ -137,7 +130,6 @@ public class Aluno {
 		this.facebookId = outro.facebookId;
 		this.turma = outro.turma;
 		this.urlFoto = outro.urlFoto;
-		this.linkFacebook = outro.linkFacebook;
 	}
 
 }

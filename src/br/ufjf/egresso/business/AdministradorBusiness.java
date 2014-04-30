@@ -13,10 +13,10 @@ import br.ufjf.egresso.persistent.AdministradorDAO;
  *
  */
 public class AdministradorBusiness {
-	private AdministradorDAO adminisytradorDao;
+	private AdministradorDAO administradorDao;
 	
 	public AdministradorBusiness(){
-		adminisytradorDao = new AdministradorDAO();
+		administradorDao = new AdministradorDAO();
 	}
 	
 	/**Verifica se existe um {@link Administrador} com os dados informados.
@@ -26,7 +26,7 @@ public class AdministradorBusiness {
 	 * @return O respectivo {@link Administrador} ou {@link null} caso ele não exista.
 	 */
 	public Administrador autenticar(String identificador, String senha){
-		return adminisytradorDao.autenticar(identificador, encripta(senha));
+		return administradorDao.autenticar(identificador, encripta(senha));
 	}
 	
 	/**Encripta uma {@link String} utilizando whirlpool-1.
