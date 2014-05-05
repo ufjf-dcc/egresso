@@ -124,7 +124,7 @@
 										</div>
 
 										<textbox visible="false"
-											readonly="true" cols="20" rows="5" />
+											readonly="true" cols="20" rows="5" value = "@load(atuacao.descricao)"/>
 
 									</vlayout>
 									<vlayout visible="false">
@@ -156,9 +156,19 @@
 												checked="@load(vm.atuacaoEmEdicao.dataTermino eq null)"
 												onCheck="@command('marcarAtual', atual = self.checked, datebox = self.previousSibling)" />
 										</hlayout>
+											
+												<vlayout>
+													<label sclass="data_atuacao"
+													value="Descricao:" />
+												
+													<textbox width="100%"
+													value="@bind(vm.atuacaoEmEdicao.descricao)" rows="4"
+													maxlength="300" />
+												</vlayout>
+								
 									</vlayout>
 									<div class="editar_exp" hflex="1"
-										visible="@load(vm.podeEditar and (not vm.emEdicao or (vm.emEdicao and atuacao.id eq vm.atuacaoEmEdicao.id)))">
+								qwqwqw		visible="@load(vm.podeEditar and (not vm.emEdicao or (vm.emEdicao and atuacao.id eq vm.atuacaoEmEdicao.id)))">
 										<image src="/img/editar.png"
 											width="15px"
 											onClick="@command('editarAtuacao', editarSalvar=self,sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling, cancelar=self.nextSibling, atuacao=atuacao)" />
@@ -235,7 +245,7 @@
 										</div>
 
 										<textbox readonly="true"
-											visible="false" cols="20" rows="5" />
+											visible="false" cols="20" rows="5" value = "@load(atuacao.descricao)"/>
 
 									</vlayout>
 									<vlayout visible="false">
@@ -267,6 +277,13 @@
 												checked="@load(vm.atuacaoEmEdicao.dataTermino eq null)"
 												onCheck="@command('marcarAtual', atual = self.checked, datebox = self.previousSibling)" />
 										</hlayout>
+											<vlayout>
+												<label sclass="data_atuacao"
+												value="Descricao:" />
+												<textbox width="100%"
+												value="@bind(vm.atuacaoEmEdicao.descricao)" rows="4"
+												maxlength="300" />
+										</vlayout>
 									</vlayout>
 									<div class="editar_exp" hflex="1"
 										visible="@load(vm.podeEditar and (not vm.emEdicao or (vm.emEdicao and atuacao.id eq vm.atuacaoEmEdicao.id)))">
@@ -317,7 +334,7 @@
 						</html>
 						<vlayout children="@load(vm.filtraProjetos)"
 							width="100%">
-
+qwqwqw
 							<template name="children" var="atuacao">
 								<hlayout width="100%"
 									style="margin-top: 20px">
@@ -340,15 +357,13 @@
 												value="@load(''.concat(atuacao.dataTermino)) @converter('br.ufjf.egresso.utils.DateFormatConverter')" />
 										</div>
 										<div>
-											<label sclass="data_atuacao"
-												value="Descrição" visible="@load(atuacao.descricao ne null)"/>
-											<label sclass="data_atuacao"
-												value="@load(atuacao.descricao)" />
+											<image
+												src="/img/expandIcon.png" width="15px"
+												onClick="@command('escondeTextBox', textbox=self.parent.nextSibling)" />
 										</div>
 
-										<textbox readonly="true"
-											visible="false" cols="20" rows="5" />
-
+										<textbox visible="false"
+											readonly="true" cols="20" rows="5" value = "@load(atuacao.descricao)"/>
 									</vlayout>
 									<vlayout visible="false">
 										<hlayout>
