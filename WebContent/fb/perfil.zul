@@ -22,10 +22,12 @@
 					<html>
 
 
+
 						
 						<![CDATA[ <hr style="border-top: dashed 1px;
 						border-color: white; margin-bottom:20px;
 						margin-top:10px; border-bottom: none" />]]>
+						
 						
 						
 						
@@ -46,10 +48,12 @@
 					<html>
 
 
+
 						
 						<![CDATA[ <hr style="border-top: dashed 1px;
 						border-color: #c0504d; margin-top:10px;
 						border-bottom: none" />]]>
+						
 						
 						
 						
@@ -79,10 +83,12 @@
 
 
 
+
 							
 							<![CDATA[ <hr style="border-top: dashed 1px;
 							border-color: #c0504d; margin-top:10px;
 							border-bottom: none" />]]>
+							
 							
 							
 							
@@ -124,7 +130,8 @@
 										</div>
 
 										<textbox visible="false"
-											readonly="true" cols="20" rows="5" value = "@load(atuacao.descricao)"/>
+											readonly="true" cols="20" rows="5"
+											value="@load(atuacao.descricao)" />
 
 									</vlayout>
 									<vlayout visible="false">
@@ -156,19 +163,19 @@
 												checked="@load(vm.atuacaoEmEdicao.dataTermino eq null)"
 												onCheck="@command('marcarAtual', atual = self.checked, datebox = self.previousSibling)" />
 										</hlayout>
-											
-												<vlayout>
-													<label sclass="data_atuacao"
-													value="Descricao:" />
-												
-													<textbox width="100%"
-													value="@bind(vm.atuacaoEmEdicao.descricao)" rows="4"
-													maxlength="300" />
-												</vlayout>
-								
+
+										<vlayout>
+											<label sclass="data_atuacao"
+												value="Descricao:" />
+
+											<textbox width="100%"
+												value="@bind(vm.atuacaoEmEdicao.descricao)" rows="4"
+												maxlength="300" />
+										</vlayout>
+
 									</vlayout>
 									<div class="editar_exp" hflex="1"
-								qwqwqw		visible="@load(vm.podeEditar and (not vm.emEdicao or (vm.emEdicao and atuacao.id eq vm.atuacaoEmEdicao.id)))">
+										visible="@load(vm.podeEditar and (not vm.emEdicao or (vm.emEdicao and atuacao.id eq vm.atuacaoEmEdicao.id)))">
 										<image src="/img/editar.png"
 											width="15px"
 											onClick="@command('editarAtuacao', editarSalvar=self,sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling, cancelar=self.nextSibling, atuacao=atuacao)" />
@@ -201,10 +208,12 @@
 
 
 
+
 							
 							<![CDATA[ <hr style="border-top: dashed 1px;
 							border-color: #c0504d; margin-top:10px;
 							border-bottom: none" />]]>
+							
 							
 							
 							
@@ -245,7 +254,8 @@
 										</div>
 
 										<textbox readonly="true"
-											visible="false" cols="20" rows="5" value = "@load(atuacao.descricao)"/>
+											visible="false" cols="20" rows="5"
+											value="@load(atuacao.descricao)" />
 
 									</vlayout>
 									<vlayout visible="false">
@@ -277,10 +287,10 @@
 												checked="@load(vm.atuacaoEmEdicao.dataTermino eq null)"
 												onCheck="@command('marcarAtual', atual = self.checked, datebox = self.previousSibling)" />
 										</hlayout>
-											<vlayout>
-												<label sclass="data_atuacao"
+										<vlayout>
+											<label sclass="data_atuacao"
 												value="Descricao:" />
-												<textbox width="100%"
+											<textbox width="100%"
 												value="@bind(vm.atuacaoEmEdicao.descricao)" rows="4"
 												maxlength="300" />
 										</vlayout>
@@ -319,6 +329,7 @@
 
 
 
+
 							
 							<![CDATA[ <hr style="border-top: dashed 1px;
 							border-color: #c0504d; margin-top:10px;
@@ -331,10 +342,10 @@
 							
 							
 							
+							
 						</html>
 						<vlayout children="@load(vm.filtraProjetos)"
 							width="100%">
-qwqwqw
 							<template name="children" var="atuacao">
 								<hlayout width="100%"
 									style="margin-top: 20px">
@@ -363,7 +374,8 @@ qwqwqw
 										</div>
 
 										<textbox visible="false"
-											readonly="true" cols="20" rows="5" value = "@load(atuacao.descricao)"/>
+											readonly="true" cols="20" rows="5"
+											value="@load(atuacao.descricao)" />
 									</vlayout>
 									<vlayout visible="false">
 										<hlayout>
@@ -381,14 +393,14 @@ qwqwqw
 										<hlayout>
 											<label sclass="data_atuacao"
 												value="De:" />
-											<datebox format="dd/MM/yyyy" hflex="1"
-												value="@bind(vm.atuacaoEmEdicao.dataInicio)" />
+											<datebox format="dd/MM/yyyy"
+												hflex="1" value="@bind(vm.atuacaoEmEdicao.dataInicio)" />
 										</hlayout>
 										<hlayout>
 											<label sclass="data_atuacao"
 												value="Até :" />
-											<datebox format="dd/MM/yyyy" hflex="1"
-												value="@bind(vm.atuacaoEmEdicao.dataTermino)"
+											<datebox format="dd/MM/yyyy"
+												hflex="1" value="@bind(vm.atuacaoEmEdicao.dataTermino)"
 												disabled="@load(not self.nextSibling.checked)" />
 											<checkbox label="Atual"
 												checked="@load(vm.atuacaoEmEdicao.dataTermino eq null)"
@@ -506,8 +518,10 @@ qwqwqw
 
 
 
+
 			
 			<![CDATA[ Voltar para turmas.]]>
+			
 			
 			
 			
