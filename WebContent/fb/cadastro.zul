@@ -14,6 +14,8 @@
 
 
 
+
+
 		
 		<![CDATA[
 
@@ -25,6 +27,8 @@
 
 		function concluido(){ jq("$turma").fadeOut('fast', function(){
 		jq("$mensagem").fadeIn('fast'); }); }]]>
+		
+		
 		
 		
 		
@@ -60,18 +64,18 @@
 				<hlayout>
 					<label class="intro-form" value="CPF" width="50px" />
 					<textbox class="intro-form" id="cpftxt"
-						onOK="@command('checaMatricula', cpf=self.value, senha=self.nextSibling.value)" />
+						onOK="@command('checarMatricula', cpf=self.value, senha=senhatxt.value)" />
 				</hlayout>
 				<hlayout>
 					<label class="intro-form" value="Senha"
 						width="50px" />
 					<textbox class="intro-form" id="senhatxt"
 						type="password"
-						onOK="@command('checaMatricula', cpf=cpftxt.value, senha=self.value)" />
+						onOK="@command('checarMatricula', cpf=cpftxt.value, senha=self.value)" />
 				</hlayout>
 				<hlayout>
 					<button label="Autenticar" class="btn"
-						onClick="@command('checaMatricula', cpf=cpftxt.value, senha=senhatxt.value)" />
+						onClick="@command('checarMatricula', cpf=cpftxt.value, senha=senhatxt.value)" />
 					<button label="Esqueci a senha" class="btn"
 						href="http://siga.ufjf.br/" target="_blank" />
 				</hlayout>
@@ -79,9 +83,14 @@
 			</vlayout>
 
 			<vlayout visible="false" id="turma" class="intro-form">
-				<label
-					value="@load('Você entrou no curso em qual semestre de '.concat(vm.ano).concat('?'))"
-					class="intro-form" />
+				<label class="intro-form"
+					value="Em que semestre você entrou no curso?" />
+				<combobox id="comboAno" autodrop="true"
+					model="@load(vm.anos)">
+					<template name="model">
+						<comboitem label="@load(each)" />
+					</template>
+				</combobox>
 				<radiogroup id="semestres">
 					<radio label="1º semestre" radiogroup="semestres"
 						class="intro-semestre" />
@@ -90,14 +99,14 @@
 				</radiogroup>
 				<button label="Solicitar cadastro"
 					c:onClick="concluido()"
-					onClick="@command('checaTurma', semestre=semestres.selectedIndex)" />
+					onClick="@command('checarTurma', ano=comboAno.value, semestre=semestres.selectedIndex)" />
 			</vlayout>
 		</div>
 
 		<div id="mensagem" visible="false">
 			<div class="intro-mensagem">
 				<label
-					value="Obrigado! Analisaremos seu pedido em breve." />
+					value="Bem-vindo! Você será redirecionado em breve." />
 			</div>
 			<div class="intro-coord">
 				<label

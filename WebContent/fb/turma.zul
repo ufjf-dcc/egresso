@@ -1,11 +1,63 @@
 <?page title="Turma" contentType="text/html;charset=UTF-8"?>
-<zk>
+<zk xmlns:c='client'>
 	<style src="/styles.css" />
 	<script type="text/javascript" src="/watermarkinput.js" />
 	<script type="text/javascript">
 		zk.afterMount(function() {
 		jq("$txtpesquisa").Watermark("Nome","gray");
 		jq("$txtpost").Watermark("Escreva algo aqui","gray"); });
+	</script>
+	
+	<script type="text/javascript">
+		
+		<![CDATA[
+		         
+		//Obtém o appId contido no arquivo .txt
+		var appId;
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange=function(){
+			if (xmlhttp.readyState==4 && xmlhttp.status==200){
+				appId=xmlhttp.responseText;
+		  	}
+		}
+		xmlhttp.open("GET","appId.txt",true);
+		xmlhttp.send();
+		
+		// Inicializa o Facebook SDK
+		window.fbAsyncInit = function() {
+		  FB.init({
+		    appId      : appId,
+		    status     : true,
+		    xfbml      : true
+		  });
+		};
+		
+		(function(d, s, id){
+		   var js, fjs = d.getElementsByTagName(s)[0];
+		   if (d.getElementById(id)) {return;}
+		   js = d.createElement(s); js.id = id;
+		   js.src = "//connect.facebook.net/en_US/all.js";
+		   fjs.parentNode.insertBefore(js, fjs);
+		 }(document, 'script', 'facebook-jssdk'));
+		 
+		//Abre a janela de diálogo
+		function convidar(){
+			FB.ui({method: 'apprequests',
+				message: 'Faça parte do aplicativo que reúne os ex-launos do curso de Ciência da Computação da UFJF!',
+				max_recipients: 1
+			}, finalizaConvite);
+		}
+		
+		//Mostra a mensagem
+		function finalizaConvite(){
+			jq("$intro").fadeOut('fast', function(){
+				jq("$mensagem").fadeIn('fast');
+			});
+			setTimeout(function(){
+				window.history.back(-1);
+			}, 5000 );
+		}]]>
+		
 	</script>
 
 	<div apply="org.zkoss.bind.BindComposer" width="100%" 
@@ -104,12 +156,12 @@
 								<div class="aluno">
 									<image class="aluno"
 										src="@load(aluno.urlFoto)"
-										onClick='@command("verPerfil", aluno=aluno)' />
+										onClick='@command("verPerfil", facebookId=aluno.facebookId)' />
 								</div>
 								<div style="line-height: 1em;">
 									<label class="aluno"
 										value="@load(aluno.nome)"
-										onClick='@command("verPerfil", aluno=aluno)' />
+										onClick="@command(verPerfil, facebookId=aluno.facebookId)" />
 								</div>
 							</vlayout>
 						</template>

@@ -44,14 +44,14 @@ public class FbPerfilController {
 	@Init
 	public void init() {
 		String facebookId = (String) Executions.getCurrent().getParameter("id");
-		if (facebookId != null)
+		if (facebookId != null) {
 			aluno = new AlunoBusiness().getAluno(facebookId);
-		else {
+			podeEditar = aluno.getId() == ((Aluno) Sessions.getCurrent()
+					.getAttribute("aluno")).getId();
+		} else {
 			aluno = (Aluno) Sessions.getCurrent().getAttribute("aluno");
+			podeEditar = true;
 		}
-
-		podeEditar = aluno.getId() == ((Aluno) Sessions.getCurrent()
-				.getAttribute("aluno")).getId();
 
 		List<Atuacao> todasAtuacoes = new AtuacaoBusiness().getPorAluno(aluno);
 		if (todasAtuacoes != null)
@@ -69,6 +69,8 @@ public class FbPerfilController {
 				case TipoAtuacao.FORMACAO:
 					formacoes.add(a);
 					break;
+				default:
+					System.out.println("ID inválido de Atuação!.");
 				}
 			}
 
@@ -120,7 +122,7 @@ public class FbPerfilController {
 		emEdicao = false;
 		BindUtils.postNotifyChange(null, null, this, "emEdicao");
 	}
-	
+
 	@Command
 	public void marcarAtual(@BindingParam("atual") boolean atual,
 			@BindingParam("datebox") Datebox datebox) {
@@ -132,7 +134,7 @@ public class FbPerfilController {
 			datebox.setDisabled(false);
 		}
 	}
-	
+
 	@Command
 	public void marcarAtualAdd(@BindingParam("atual") boolean atual,
 			@BindingParam("datebox") Datebox datebox) {
@@ -246,14 +248,16 @@ public class FbPerfilController {
 		}
 		BindUtils.postNotifyChange(null, null, this, "filtraFormacoes");
 	}
+
 	@Command
-	public void escondeTextBox( @BindingParam("textbox") Textbox textbox ){
-		if(textbox.isVisible())
+	public void escondeTextBox(@BindingParam("textbox") Textbox textbox) {
+		if (textbox.isVisible())
 			textbox.setVisible(false);
 		else
 			textbox.setVisible(true);
-		
-		}
+
+	}
+
 	@Command
 	public void adicionaAtuacao(@BindingParam("window") Window window,
 			@BindingParam("tipo") int tipo) {
@@ -288,6 +292,8 @@ public class FbPerfilController {
 					filtraFormacoes = formacoes;
 					notificaFormacoes();
 					break;
+				default:
+					System.out.println("ID inválido de Atuação!.");
 				}
 				Messagebox.show("Atuacão Adicionada!", "Sucesso",
 						Messagebox.OK, Messagebox.INFORMATION);
@@ -340,6 +346,8 @@ public class FbPerfilController {
 			formacoes.remove(atuacao);
 			notificaFormacoes();
 			break;
+		default:
+			System.out.println("ID inválido de Atuação!.");
 		}
 	}
 

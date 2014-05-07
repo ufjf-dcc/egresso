@@ -469,7 +469,7 @@
 
 		<div>
 			<a href="turma.zul" image="/img/voltar.png"
-				tooltip="filterHelp" style="cursor: help" />
+				tooltip="filterHelp" style="cursor: pointer" />
 		</div>
 
 		<div>

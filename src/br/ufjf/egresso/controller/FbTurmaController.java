@@ -146,11 +146,13 @@ public class FbTurmaController {
 	}
 
 	@Command
-	public void verPerfil(@BindingParam("aluno") Aluno aluno) {
-		if (aluno.getFacebookId() != null)
-			Executions.sendRedirect("perfil.zul?id=" + aluno.getFacebookId());
-		else
-			Executions.sendRedirect("convida.zul?id=" + aluno.getId());
+	public void verPerfil(@BindingParam("facebookId") String facebookId) {
+		Executions.sendRedirect("perfil.zul?id=" + facebookId);
+	}
+
+	@Command
+	public void convidar() {
+		Executions.sendRedirect("convida.zul");
 	}
 
 	@Command
@@ -241,8 +243,8 @@ public class FbTurmaController {
 	@Command
 	public void verImagem(@BindingParam("window") Window window,
 			@BindingParam("imgSrc") String imgSrc) {
-		((Image) window.getChildren().get(0)).setSrc("file:///" + ConfHandler
-				.getConf("FILE.PATH") + imgSrc);
+		((Image) window.getChildren().get(0)).setSrc("file:///"
+				+ ConfHandler.getConf("FILE.PATH") + imgSrc);
 		window.doModal();
 	}
 

@@ -6,10 +6,14 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.Init;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Messagebox;
@@ -17,6 +21,7 @@ import org.zkoss.zul.Messagebox;
 import br.ufjf.egresso.business.AlunoBusiness;
 import br.ufjf.egresso.business.TurmaBusiness;
 import br.ufjf.egresso.model.Aluno;
+import br.ufjf.egresso.model.Turma;
 import br.ufjf.egresso.utils.ConfHandler;
 import facebook4j.Facebook;
 import facebook4j.FacebookException;
@@ -26,12 +31,21 @@ import facebook4j.internal.org.json.JSONObject;
 
 public class FbCadastroController {
 
-	private Facebook facebook = (Facebook) Sessions.getCurrent().getAttribute(
-			"facebook");
-	private Aluno aluno = new Aluno();
-	private TurmaBusiness turmaBusiness = new TurmaBusiness();
-	private boolean matriculaExiste = false;
-	private String ano;
+	private Facebook facebook;
+	private Aluno aluno;
+	private Set<Integer> anos;
+	private int intervalo;
+
+	@Init
+	public void init() {
+		intervalo = 4;
+		aluno = new Aluno();
+		facebook = (Facebook) Sessions.getCurrent().getAttribute("facebook");
+		anos = new HashSet<Integer>();
+		for (Turma turma : new TurmaBusiness().getTodas()) {
+			anos.add(turma.getAno());
+		}
+	}
 
 	public Facebook getFacebook() {
 		return facebook;
@@ -41,31 +55,29 @@ public class FbCadastroController {
 		return aluno;
 	}
 
-	public String getAno() {
-		return ano;
+	public Set<Integer> getAnos() {
+		return anos;
 	}
 
-	public boolean isMatriculaExiste() {
-		return matriculaExiste;
-	}
-
-	public void setMatriculaExiste(boolean matriculaExiste) {
-		this.matriculaExiste = matriculaExiste;
+	public int getIntervalo() {
+		return intervalo;
 	}
 
 	/**
 	 * Valida os dados com o integra.
-	 * @param cpf CPF informado.
-	 * @param senha Senha informada.
+	 * 
+	 * @param cpf
+	 *            CPF informado.
+	 * @param senha
+	 *            Senha informada.
 	 * @return Se os dados são válidos ou não.
 	 */
-	private boolean verificaAlunoNoSiga(String cpf, String senha) {
+	private boolean verificarAlunoNoIntegra(String cpf, String senha) {
 		boolean alunoValido = false;
 		BufferedReader reader = null;
 		try {
-			//Recebe o JSON do integra
-			URL url = new URL(
-					ConfHandler.getConf("INTEGRA") + cpf);
+			// Recebe o JSON do integra
+			URL url = new URL(ConfHandler.getConf("INTEGRA.URL") + cpf);
 			reader = new BufferedReader(new InputStreamReader(url.openStream()));
 			StringBuffer buffer = new StringBuffer();
 			int read;
@@ -76,12 +88,12 @@ public class FbCadastroController {
 			try {
 				JSONObject json = new JSONObject(buffer.toString());
 
-				//Verifica se o CPF existe no integra
-				String resultado = (String) json.get("codeResult");
-				if (resultado.equals("OK")) {
+				// Verifica se o CPF existe no integra
+				switch ((String) json.get("codeResult")) {
+				case "OK":
 					JSONObject dadosAluno = (JSONObject) json.get("result");
 
-					//Verifica se a senha confere
+					// Verifica se a senha confere
 					MessageDigest md = MessageDigest.getInstance("MD5");
 					md.update(senha.getBytes());
 					byte[] digest = md.digest();
@@ -90,11 +102,11 @@ public class FbCadastroController {
 						passmd5.append(String.format("%02x", b & 0xff));
 					}
 
-					//Se a senha está correta...
+					// Se a senha está correta...
 					if (((String) dadosAluno.get("passmd5")).equals(passmd5
 							.toString())) {
 
-						//...guarda as informaçẽos do aluno
+						// ...guarda as informaçẽos do aluno
 						aluno = new Aluno();
 						aluno.setNome(facebook.getMe().getName());
 						aluno.setFacebookId(facebook.getMe().getId());
@@ -102,7 +114,6 @@ public class FbCadastroController {
 								facebook.getMe().getId(),
 								PictureSize.valueOf("large")).toExternalForm());
 						aluno.setMatricula((String) dadosAluno.get("profile"));
-						ano = aluno.getMatricula().substring(0, 4);
 						BindUtils.postNotifyChange(null, null, this, "ano");
 						alunoValido = true;
 					} else {
@@ -110,13 +121,24 @@ public class FbCadastroController {
 								"Erro de autenticação", Messagebox.OK,
 								Messagebox.ERROR);
 					}
-				} else if (resultado.equals("E_CPF_NAO_CADASTRADO")) {
+					break;
+				case "E_CPF_NAO_CADASTRADO":
 					Messagebox
 							.show("O CPF "
 									+ cpf
-									+ "não foi encontrado no SIGA. por favor, verifique se o número foi digitado corretamente.",
+									+ "não foi encontrado no SIGA. Por favor, verifique se o número foi digitado corretamente.",
 									"CPF não encontrado", Messagebox.OK,
 									Messagebox.ERROR);
+					break;
+				case "E_CPF_TAM_INV":
+					Messagebox.show(
+							"O formato do CPF digitado está incorreto.",
+							"CPF inválido", Messagebox.OK, Messagebox.ERROR);
+					break;
+				default:
+					Messagebox
+							.show("Não foi possível autenticar. Por favor, verifique se o número foi digitado corretamente.",
+									"Erro", Messagebox.OK, Messagebox.ERROR);
 				}
 
 			} catch (JSONException | FacebookException
@@ -140,17 +162,20 @@ public class FbCadastroController {
 
 	/**
 	 * Método para identificar o aluno.
-	 * @param cpf CPF informado.
-	 * @param senha Senha informada.
+	 * 
+	 * @param cpf
+	 *            CPF informado.
+	 * @param senha
+	 *            Senha informada.
 	 */
 	@Command
-	public void checaMatricula(@BindingParam("cpf") String cpf,
+	public void checarMatricula(@BindingParam("cpf") String cpf,
 			@BindingParam("senha") String senha) {
-		//Se o cpf e a senha foram preenchidos...
+		// Se o cpf e a senha foram preenchidos...
 		if (cpf != null && cpf.trim().length() > 0) {
 			if (senha != null && senha.trim().length() > 0) {
-				if (verificaAlunoNoSiga(cpf, senha))
-					//...lê as informações do SIGA
+				if (verificarAlunoNoIntegra(cpf, senha))
+					// ...lê as informações do SIGA
 					Clients.evalJavaScript("formTurma()");
 			} else
 				Messagebox.show("É necessário informar a senha.", "Erro",
@@ -162,7 +187,8 @@ public class FbCadastroController {
 	}
 
 	@Command
-	public void checaTurma(@BindingParam("semestre") int semestre) {
+	public void checarTurma(@BindingParam("ano") String ano,
+			@BindingParam("semestre") int semestre) {
 		if (ano == null || ano.trim() == "")
 			Messagebox.show(
 					"Por favor, informe o ano em que você ingressou no curso.",
@@ -174,19 +200,35 @@ public class FbCadastroController {
 								"Erro", Messagebox.OK, Messagebox.ERROR);
 
 			else {
-				aluno.setTurma(turmaBusiness.getTurma(Integer.parseInt(ano),
-						semestre + 1));
-				solicitaCadastro();
+				aluno.setTurma(new TurmaBusiness().getTurma(
+						Integer.parseInt(ano), semestre + 1));
+				cadastrar();
 			}
 		}
 	}
 
 	@Command
-	public void solicitaCadastro() {
+	public void cadastrar() {
 		if (!new AlunoBusiness().salvar(aluno))
 			Messagebox
-					.show("Não foi possível solicitar po cadastro. Por favor, tente novamente mais tarde.",
+					.show("Não foi realizar o cadastro. Por favor, tente novamente mais tarde.",
 							"Erro", Messagebox.OK, Messagebox.ERROR);
+		else {
+			while (intervalo > 0) {
+				try {
+					Thread.sleep(1000);
+					System.out.println(intervalo);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				intervalo--;
+				BindUtils.postNotifyChange(null, null, this, "intervalo");
+			}
+
+			Sessions.getCurrent().setAttribute("aluno", aluno);
+			Executions.sendRedirect("perfil.zul");
+		}
 
 	}
 
