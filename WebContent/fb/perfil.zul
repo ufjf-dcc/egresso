@@ -58,8 +58,14 @@
 						
 						
 					</html>
-
-					<label value="Interesses" style="font-size:16px" />
+				<hlayout>
+				<label value="Interesses" style="font-size:16px" />						
+					
+					<image src="/img/add.png" width="15px" 
+								visible="@load(vm.podeEditar)"
+								onClick="@command('adicionaInteresses', window=adicionaInteresses)"/>
+					
+				</hlayout>
 					<label value="@load(vm.aluno.interesses)" />
 				</vlayout>
 			</div>
@@ -434,6 +440,34 @@
 				</hlayout>
 			</vlayout>
 		</hlayout>
+		<window id="adicionaInteresses" title="Cadastrar Interesses"
+			visible="false" width="350px" border="normal"
+			position="center,center" closable="true"
+			onClose="self.setVisible(false); event.stopPropagation();">
+			<grid>
+				<columns>
+					<column hflex = "1"/>
+					<column hflex = "2"/>
+				
+				</columns>
+				<rows>
+					<row>
+						<label value = "Interesses" />
+						 <textbox
+							value="@load(vm.aluno.interesses)@save(vm.aluno.interesses, before='submitInteresses')"
+							tabindex="1" id="interesse" width="100%" />
+						 
+					</row>
+				
+				</rows>
+				
+			</grid>
+			<div align="center">
+				<button label="Cadastrar"
+					onClick="@command('submitInteresses', window=adicionaInteresses)"
+					width="75px" style="margin-top:5px" />
+			</div>
+		</window>
 
 		<window id="adicionaAtuacao" title="Cadastrar Atuação"
 			visible="false" width="350px" border="normal"

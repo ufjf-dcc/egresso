@@ -28,6 +28,7 @@ import br.ufjf.egresso.persistent.TipoAtuacaoDAO;
 public class FbPerfilController {
 
 	private Aluno aluno;
+	private AlunoBusiness alunoBusiness = new AlunoBusiness();
 	private AtuacaoBusiness atuacaoBusiness = new AtuacaoBusiness();
 	private List<Atuacao> empregos = new ArrayList<Atuacao>(),
 			projetos = new ArrayList<Atuacao>(),
@@ -387,5 +388,18 @@ public class FbPerfilController {
 		if (checkbox.isChecked())
 			datebox.setValue(null);
 	}
-
+	
+	@Command
+	public void adicionaInteresses(@BindingParam("window") Window window){
+		window.doModal();
+	}
+	@Command
+	public void submitInteresses(@BindingParam("window") Window window){
+		if(alunoBusiness.editar(aluno))
+			Messagebox.show("Interesse Adicionado!", "Sucesso",
+					Messagebox.OK, Messagebox.INFORMATION);
+			
+		window.detach();
+		
+	}
 }
