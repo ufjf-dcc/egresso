@@ -455,7 +455,7 @@
 						<label value = "Interesses" />
 						 <textbox
 							value="@load(vm.aluno.interesses)@save(vm.aluno.interesses, before='submitInteresses')"
-							tabindex="1" id="interesse" width="100%" />
+							tabindex="1" id="interesse" width="100%" rows = "5"/>
 						 
 					</row>
 				
@@ -548,20 +548,14 @@
 
 	<popup id="filterHelp">
 		<html>
-
-
-
-
-
-			
 			<![CDATA[ Voltar para turmas.]]>
-			
-			
-			
-			
-			
-			
 		</html>
 	</popup>
+	<popup id="interesse">
+		<html>
+			<![CDATA[ Voltar para turmas.]]>
+		</html>
+	</popup>
+	
 
 </zk>

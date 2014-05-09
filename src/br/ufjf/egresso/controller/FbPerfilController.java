@@ -87,7 +87,7 @@ public class FbPerfilController {
 			@BindingParam("aparecer") Vlayout v2,
 			@BindingParam("cancelar") Image imgCancelar,
 			@BindingParam("atuacao") Atuacao atuacao) {
-
+		
 		if (!imgCancelar.isVisible()) {
 			atuacaoEmEdicao = new Atuacao();
 			atuacaoEmEdicao.copy(atuacao);
@@ -310,7 +310,7 @@ public class FbPerfilController {
 			Messagebox.show(errorMessage, "Dados insuficientes / inválidos",
 					Messagebox.OK, Messagebox.ERROR);
 		}
-		window.detach();
+		window.setVisible(false);
 	}
 
 	public void limpa() {
@@ -399,7 +399,8 @@ public class FbPerfilController {
 			Messagebox.show("Interesse Adicionado!", "Sucesso",
 					Messagebox.OK, Messagebox.INFORMATION);
 			
-		window.detach();
-		
+		window.setVisible(false);
 	}
+
+	
 }
