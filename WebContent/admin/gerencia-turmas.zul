@@ -54,7 +54,7 @@
 					<div align="center">
 						<button label="Editar"
 							onClick="@command('changeEditableStatus', turma=each)" />
-						<button label="Excluir"
+						<button label="Excluir"ss
 							onClick="@command('delete', turma=each)" />
 					</div>
 				</row>
