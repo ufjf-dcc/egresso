@@ -106,7 +106,7 @@
 						onChanging="btnPost.disabled = event.value.empty" />
 					<hlayout width="100%">
 						<checkbox id="chkPrivado"
-							label="Privado para a turma" hflex="1" />
+							label="Privado para a turma"  />
 						<button label="Imagem" upload="true"
 							onUpload="@command('upload', button=self, evt=event)" />
 						<button id="btnPost" label="Publicar"

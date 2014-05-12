@@ -255,12 +255,13 @@
 										</div>
 										<div>
 											<image
-												src="/img/expandIcon.png" width="15px"
+											
+												src="/img/expandIcon.png" width="15px" 
 												onClick="@command('escondeTextBox', textbox=self.parent.nextSibling)" />
 										</div>
 
 										<textbox readonly="true"
-											visible="false" cols="20" rows="5"
+											visible="false" rows="5"
 											value="@load(atuacao.descricao)" />
 
 									</vlayout>
@@ -515,6 +516,7 @@
 					<row>
 						<label value="Descrição:" />
 						<textbox
+							
 							value="@load(vm.novaAtuacao.descricao)@save(vm.novaAtuacao.descricao, before='submitAtuacao')"
 							tabindex="5" id="descricao" width="100%" rows="4"
 							maxlength="300" />

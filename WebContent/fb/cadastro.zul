@@ -64,7 +64,11 @@
 				<hlayout>
 					<label class="intro-form" value="CPF" width="50px" />
 					<textbox class="intro-form" id="cpftxt"
-						onOK="@command('checarMatricula', cpf=self.value, senha=senhatxt.value)" />
+						onOK="@command('checarMatricula', cpf=self.value, senha=senhatxt.value)" 
+						maxlength = "11"
+						 constraint="no empty, /[0-9]{11}/ : Campo Obrigatório."
+						
+						/>
 				</hlayout>
 				<hlayout>
 					<label class="intro-form" value="Senha"
