@@ -9,7 +9,6 @@ import br.ufjf.egresso.model.Turma;
 
 public class AlunoDAO extends GenericoDAO {
 
-	
 	public Aluno getAluno(String facebookId) {
 		try {
 			Query query = getSession()
@@ -27,8 +26,7 @@ public class AlunoDAO extends GenericoDAO {
 		}
 		return null;
 	}
-	
-	
+
 	public Aluno getAluno(int id) {
 		try {
 			Query query = getSession()
@@ -47,12 +45,12 @@ public class AlunoDAO extends GenericoDAO {
 		return null;
 	}
 
-	
 	@SuppressWarnings("unchecked")
 	public List<Aluno> getTodos() {
 		try {
-			Query query = getSession().createQuery(
-					"SELECT a FROM Aluno AS a LEFT JOIN FETCH a.turma ORDER BY a.nome");
+			Query query = getSession()
+					.createQuery(
+							"SELECT a FROM Aluno AS a LEFT JOIN FETCH a.turma ORDER BY a.nome");
 
 			List<Aluno> aluno = query.list();
 			getSession().close();
@@ -65,31 +63,11 @@ public class AlunoDAO extends GenericoDAO {
 		return null;
 	}
 
-	
-	@SuppressWarnings("unchecked")
-	public List<Aluno> getAlunos(Turma turma) {
+	public Aluno getAlunoPorMatricula(String matricula) {
 		try {
 			Query query = getSession()
 					.createQuery(
-							"SELECT a FROM Aluno as a WHERE a.turma = :turma ORDER BY a.nome");
-			query.setParameter("turma", turma);
-
-			List<Aluno> administradores = query.list();
-			getSession().close();
-
-			if (administradores != null)
-				return administradores;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	
-	public Aluno getAlunoPorMatricula(String matricula) {
-		try {
-			Query query = getSession().createQuery(
-					"SELECT a FROM Aluno as a LEFT JOIN FETCH a.turma WHERE a.matricula = :matricula");
+							"SELECT a FROM Aluno as a LEFT JOIN FETCH a.turma WHERE a.matricula = :matricula");
 			query.setParameter("matricula", matricula);
 
 			Aluno aluno = (Aluno) query.uniqueResult();
@@ -112,9 +90,8 @@ public class AlunoDAO extends GenericoDAO {
 								"SELECT a FROM Aluno a WHERE a.matricula = :matricula AND a.matricula != :matriculaAntiga");
 				query.setParameter("matriculaAntiga", matriculaAntiga);
 			} else
-				query = getSession()
-						.createQuery(
-								"SELECT a FROM Aluno a WHERE a.matricula = :matricula");
+				query = getSession().createQuery(
+						"SELECT a FROM Aluno a WHERE a.matricula = :matricula");
 
 			query.setParameter("matricula", matricula);
 
@@ -131,7 +108,7 @@ public class AlunoDAO extends GenericoDAO {
 		return false;
 	}
 
-	public List<Aluno> getAlunosCadastrados(Turma turma) {
+	public List<Aluno> getAlunos(Turma turma) {
 		try {
 			Query query = getSession()
 					.createQuery(

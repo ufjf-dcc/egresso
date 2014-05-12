@@ -32,8 +32,6 @@ public class Turma {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "turma")
 	private List<Aluno> alunos = new ArrayList<Aluno>();
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "turma")
-	private List<Solicitacao> solicitacoes = new ArrayList<Solicitacao>();
 	@Transient
 	private boolean editingStatus;
 
@@ -77,19 +75,10 @@ public class Turma {
 		this.alunos = alunos;
 	}
 
-	public List<Solicitacao> getSolicitacoes() {
-		return solicitacoes;
-	}
-
-	public void setSolicitacoes(List<Solicitacao> solicitacoes) {
-		this.solicitacoes = solicitacoes;
-	}
-
 	public void copy(Turma outra) {
 		this.id = outra.id;
 		this.semestre = outra.semestre;
 		this.alunos = outra.alunos;
-		this.solicitacoes = outra.solicitacoes;
 		this.ano = outra.ano;
 
 	}

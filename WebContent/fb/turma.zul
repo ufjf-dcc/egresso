@@ -40,23 +40,25 @@
 		   fjs.parentNode.insertBefore(js, fjs);
 		 }(document, 'script', 'facebook-jssdk'));
 		 
-		//Abre a janela de diálogo
+		//Abre a janela de convite
 		function convidar(){
-			FB.ui({method: 'apprequests',
-				message: 'Faça parte do aplicativo que reúne os ex-launos do curso de Ciência da Computação da UFJF!',
-				max_recipients: 1
-			}, finalizaConvite);
+			FB.ui({method: 'apprequests', 
+				filters: ['app_non_users'],
+				message: 'Faça parte do aplicativo que reúne os ex-launos do curso de Ciência da Computação da UFJF!'
+				
+			}, null);
 		}
 		
-		//Mostra a mensagem
-		function finalizaConvite(){
-			jq("$intro").fadeOut('fast', function(){
-				jq("$mensagem").fadeIn('fast');
-			});
-			setTimeout(function(){
-				window.history.back(-1);
-			}, 5000 );
-		}]]>
+		function fadeOut(){
+			jq("$gradeAlunos").fadeOut('fast');
+			jq("$nenhumAluno").fadeOut('fast');
+		}
+		
+		function fadeIn(){
+			jq("$gradeAlunos").fadeIn('fast');
+			jq("$nenhumAluno").fadeIn('fast');
+		}
+		]]>
 		
 	</script>
 
@@ -100,19 +102,23 @@
 		<hlayout class="conteudo">
 			<div class="mural">
 				<vlayout class="caixa-mural">
-					<label value="Mural da turma" class="titulo-mural" />
+					<div width="100%" >
+						<button label="Convidar ex-alunos" class="btn"
+						c:onClick="convidar()" style="float:right; margin-top:10px"/>
+						<label value="Mural da turma" class="titulo-mural" hflex="1"/>					
+					</div>
 					<textbox id="txtpost" rows="4" width="100%"
 						maxlength="500" onOK="self.nextSibling.onClick()"
 						onChanging="btnPost.disabled = event.value.empty" />
-					<hlayout width="100%">
+					<div width="100%">
 						<checkbox id="chkPrivado"
 							label="Privado para a turma"  />
-						<button label="Imagem" upload="true"
-							onUpload="@command('upload', button=self, evt=event)" />
-						<button id="btnPost" label="Publicar"
+							<button id="btnPost" label="Publicar"
 							disabled="true"
-							onClick="@command('postar', texto=txtpost.value, imagem='dfs', privado=chkPrivado.checked)" />
-					</hlayout>
+							onClick="@command('postar', texto=txtpost.value, imagem='dfs', privado=chkPrivado.checked)" style="float:right; margin-top:10px"/>
+						<button label="Imagem" upload="true"
+							onUpload="@command('upload', button=self, evt=event)" style="float:right; margin-top:10px"/>						
+					</div>
 
 					<html>
 						
@@ -144,10 +150,14 @@
 							</hlayout>
 						</template>
 					</vlayout>
-				</vlayout>
+				</vlayout>	
 			</div>
+			
+			<label id="nenhumAluno" value="Nenhum aluno deste semestre se cadastrou ainda. Deseja convidar ex-alunos?" 
+				c:onClick="convidar()" style="cursor:pointer; text-decoration:underline; margin-left:50px"
+				visible="@load(empty vm.linhas)"/>
 
-			<vlayout style="margin-left:50px" children="@load(vm.linhas)">
+			<vlayout id="gradeAlunos" style="margin-left:50px" children="@load(vm.linhas)">
 				<template name="children" var="linha">
 
 					<hlayout children="@load(linha)">

@@ -16,6 +16,7 @@ import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.ClientInfoEvent;
 import org.zkoss.zk.ui.event.UploadEvent;
+import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Image;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Messagebox;
@@ -93,6 +94,7 @@ public class FbTurmaController {
 
 		BindUtils.postNotifyChange(null, null, this, "postagensTurma");
 		BindUtils.postNotifyChange(null, null, this, "linhas");
+		Clients.evalJavaScript("fadeIn()");
 	}
 
 	public List<List<Aluno>> getLinhas() {
@@ -157,6 +159,7 @@ public class FbTurmaController {
 
 	@Command
 	public void trocaTurma(@BindingParam("turma") String turmaDesc) {
+		Clients.evalJavaScript("fadeOut()");
 		turma = turmaBusiness.getTurma(Integer.parseInt(turmaDesc.substring(0,
 				turmaDesc.indexOf(" "))), Integer.parseInt(turmaDesc.substring(
 				turmaDesc.indexOf("º") - 1, turmaDesc.indexOf("º"))));
@@ -243,8 +246,9 @@ public class FbTurmaController {
 	@Command
 	public void verImagem(@BindingParam("window") Window window,
 			@BindingParam("imgSrc") String imgSrc) {
-		((Image) window.getChildren().get(0)).setSrc("file:///"
-				+ ConfHandler.getConf("FILE.PATH") + imgSrc);
+
+		((Image) window.getChildren().get(0)).setSrc(ConfHandler
+				.getConf("FILE.PATH") + imgSrc);
 		window.doModal();
 	}
 

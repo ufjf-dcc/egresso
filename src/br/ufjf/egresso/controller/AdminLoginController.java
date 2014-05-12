@@ -18,7 +18,7 @@ public class AdminLoginController {
 				senha);
 		if (admin != null) {
 			Sessions.getCurrent().setAttribute("admin", admin);
-			Executions.sendRedirect("/admin/solicitacoes.zul");
+			Executions.sendRedirect("/admin/gerencia-alunos.zul");
 		} else {
 			Messagebox.show("Identificador ou senha incorretos.", "Erro",
 					Messagebox.OK, Messagebox.ERROR);

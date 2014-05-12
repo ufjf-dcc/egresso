@@ -14,7 +14,6 @@ import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 
 import br.ufjf.egresso.business.AlunoBusiness;
-import br.ufjf.egresso.business.SolicitacaoBusiness;
 import br.ufjf.egresso.model.Aluno;
 import br.ufjf.egresso.utils.ConfHandler;
 import facebook4j.Facebook;
@@ -57,12 +56,16 @@ public class FbIndexController {
 
 			if (!data.containsKey("user_id")
 					|| !data.containsKey("oauth_token")) {
-				Executions.getCurrent().sendRedirect(
-						"https://www.facebook.com/dialog/oauth?client_id="
-								+ fbAppId + "&redirect_uri="
-								+ URLEncoder.encode(redirectUrl, "UTF-8")
-								+ "&scope=" + ConfHandler.getConf("FB.PERMISSIONS"),
-						"_top");
+				Executions
+						.getCurrent()
+						.sendRedirect(
+								"https://www.facebook.com/dialog/oauth?client_id="
+										+ fbAppId
+										+ "&redirect_uri="
+										+ URLEncoder.encode(redirectUrl,
+												"UTF-8") + "&scope="
+										+ ConfHandler.getConf("FB.PERMISSIONS"),
+								"_top");
 			} else {
 				AccessToken accessToken = new AccessToken(
 						(String) data.get("oauth_token"));
@@ -76,10 +79,7 @@ public class FbIndexController {
 				if (aluno != null) {
 					Sessions.getCurrent().setAttribute("aluno", aluno);
 					Executions.sendRedirect("/fb/turma.zul");
-				} else if (new SolicitacaoBusiness()
-						.getSolicitacao(facebook.getId()) != null)
-					Executions.sendRedirect("/fb/solicitacao-em-espera.zul");
-				else
+				} else
 					Executions.sendRedirect("/fb/cadastro.zul");
 			}
 

@@ -118,15 +118,6 @@ public class AlunoBusiness {
 		return alunoDao.getAlunoPorMatricula(matricula);
 	}
 
-	/**Retorna uma {@link List} de {@link Aluno}s de uma turma e que se cadastraram no sistema.
-	 * 
-	 * @param turma Turma dos {@link Aluno}s a serem obtidos
-	 * @return
-	 */
-	public List<Aluno> getAlunosCadastrados(Turma turma) {
-		return alunoDao.getAlunosCadastrados(turma);
-	}
-
 	/**Edita um {@link Aluno} e salva no banco.
 	 * 
 	 * @param aluno {@link Aluno} a ser editado.

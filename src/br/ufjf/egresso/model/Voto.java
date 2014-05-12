@@ -25,10 +25,6 @@ public class Voto {
 	@JoinColumn(name = "aluno_id", nullable = false)
 	private Aluno aluno;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "solicitacao_id", nullable = false)
-	private Solicitacao solicitacao;
-
 	@Column(name = "resultado", nullable = false)
 	private boolean resultado;
 
@@ -46,14 +42,6 @@ public class Voto {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public Solicitacao getSolicitacao() {
-		return solicitacao;
-	}
-
-	public void setSolicitacao(Solicitacao solicitacao) {
-		this.solicitacao = solicitacao;
 	}
 
 	public boolean getResultado() {
