@@ -36,6 +36,9 @@ public class Aluno {
 
 	@Column(name = "interesses", nullable = true, length = 100)
 	String interesses;
+	
+	@Column(name = "ativo", nullable = true)
+	private boolean ativo;
 
 	@Column(name = "linkedin_access_token", nullable = true, length = 255)
 	String lkAccessToken;
@@ -77,6 +80,14 @@ public class Aluno {
 
 	public void setInteresses(String interesses) {
 		this.interesses = interesses;
+	}
+
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
 	}
 
 	public String getLkAccessToken() {

@@ -69,18 +69,23 @@ public class FbIndexController {
 			} else {
 				AccessToken accessToken = new AccessToken(
 						(String) data.get("oauth_token"));
-				Facebook facebook = new FacebookFactory()
-						.getInstance(accessToken);
+				Facebook facebook = new FacebookFactory().getInstance();
+				facebook.setOAuthAppId(fbAppId, fbSecretKey);
+				facebook.setOAuthAccessToken(accessToken);
 				Sessions.getCurrent().setAttribute("facebook", facebook);
 
 				// Verifica se o aluno já foi autorizado ou se já solicitou
 				// cadastro.
 				Aluno aluno = new AlunoBusiness().getAluno(facebook.getId());
-				if (aluno != null) {
+				if (aluno != null && aluno.isAtivo()) {
 					Sessions.getCurrent().setAttribute("aluno", aluno);
 					Executions.sendRedirect("/fb/turma.zul");
-				} else
+				} else {
+					if (aluno != null)
+						Sessions.getCurrent().setAttribute("aluno", aluno);
+				
 					Executions.sendRedirect("/fb/cadastro.zul");
+				}
 			}
 
 		} else {

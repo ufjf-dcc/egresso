@@ -3,12 +3,6 @@
  "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
 	<session-factory>
-		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-		<property name="hibernate.connection.url">jdbc:mysql://localhost/controleegressos</property>
-		<property name="hibernate.connection.username">root</property>
-		<property name="hibernate.connection.password">root</property>
-		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
-		<property name="show_sql">true</property>
 
 		<mapping class="br.ufjf.egresso.model.Administrador" />
 		<mapping class="br.ufjf.egresso.model.Aluno" />
@@ -16,7 +10,6 @@
 		<mapping class="br.ufjf.egresso.model.Postagem" />
 		<mapping class="br.ufjf.egresso.model.TipoAtuacao" />
 		<mapping class="br.ufjf.egresso.model.Turma" />
-		<mapping class="br.ufjf.egresso.model.Voto" />
 
 	</session-factory>
 </hibernate-configuration>

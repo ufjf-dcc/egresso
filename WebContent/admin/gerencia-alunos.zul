@@ -10,10 +10,7 @@
 			mold="paging" autopaging="true" vflex="true">
 			<auxhead sclass="text-center">
 				<auxheader label="Alunos cadastrados no sistema"
-					colspan="5" />
-			</auxhead>
-			<auxhead>
-				<auxheader colspan="5">
+					colspan="5">
 					<div>
 						<div style="float:left">
 							<textbox id="filtro"
@@ -60,18 +57,33 @@
 			<template name="noneditable">
 				<row>
 					<image src="@load(each.urlFoto)" width="100%" />
-					<label value="@load(each.nome)" />
+					<label value="@load(each.nome)"
+						style="@load(each.ativo ? '' : 'text-decoration:line-through')" />
 					<label value="@load(each.matricula)" />
 					<label
 						value="@load(''.concat(each.turma.ano).concat(' - ').concat(each.turma.semestre).concat('º semestre'))" />
 					<vlayout width="100%">
-						<button label="Perfil no Facebook"
-							width="100%" href="@load(each.linkFacebook)" />
-						<button hflex="1" label="Excluir"
-							onClick="@command('delete', aluno=each, button=self)" />
+						<button label="Perfil no Facebook" width="100%"
+							href="@load(each.linkFacebook)" />
+						<button hflex="1"
+							label="@load(each.ativo ? 'Desativar' : 'Re-ativar')"
+							tooltip="@load(each.ativo ? 'ajudaDesativacao' : '')"
+							onClick="@command('alterarEstado', aluno=each, button=self)" />
 					</vlayout>
 				</row>
 			</template>
 		</grid>
 	</div>
+	<popup id="ajudaDesativacao">
+		<html>
+			
+			<![CDATA[ Desativar um aluno significa não mais </br>
+			deixá-lo interagir com o sistema e não </br> mais deixar seu
+			perfil visível a </br> outros alunos.</br> <p> Entretanto,
+			suas postagens continuam </br> visíveis e suas informações
+			de experiência</br> profissional, coletadas até o
+			momento</br> de desativação, continuam armazenadas.</br> ]]>
+			
+		</html>
+	</popup>
 </zk>

@@ -59,5 +59,23 @@ public class TurmaDAO extends GenericoDAO {
 		}
 		return null;
 	}
+	
+	public List<Turma> getTurmas(int ano){
+		try {
+			Query query = getSession()
+					.createQuery(
+							"SELECT t FROM Turma AS t WHERE t.ano = :ano");
+			query.setParameter("ano", ano);
+			@SuppressWarnings("unchecked")
+			List<Turma> turmas = query.list();
+
+			getSession().close();
+
+			return turmas;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 }

@@ -108,4 +108,14 @@ public class TurmaBusiness {
 		return turmaDao.getTurma(ano, semestre);
 	}
 
+	/**
+	 * Retorna todas as turmas de determinado ano.
+	 * 
+	 * @param ano Ano desejado.
+	 * @return lista de turmas do ano.
+	 */
+	public List<Turma> getTurmas(int ano) {
+		return turmaDao.getTurmas(ano);
+	}
+
 }

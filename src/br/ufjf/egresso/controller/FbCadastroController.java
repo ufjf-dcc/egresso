@@ -7,6 +7,7 @@ import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.zkoss.bind.BindUtils;
@@ -29,17 +30,28 @@ import facebook4j.PictureSize;
 import facebook4j.internal.org.json.JSONException;
 import facebook4j.internal.org.json.JSONObject;
 
+/**
+ * Classe para controlar a página /fb/cadasro.zul
+ * 
+ * @author Jorge Augusto da Silva Moreira
+ * **/
 public class FbCadastroController {
 
 	private Facebook facebook;
 	private Aluno aluno;
 	private Set<Integer> anos;
 	private int intervalo;
+	/** Variável para indicar a existência dos semestres para determiado ano **/
+	private int semestres = 3;
 
 	@Init
 	public void init() {
 		intervalo = 4;
-		aluno = new Aluno();
+		aluno = (Aluno) Sessions.getCurrent().getAttribute("aluno");
+		if (aluno == null) {
+			aluno = new Aluno();
+			aluno.setAtivo(true);
+		}
 		facebook = (Facebook) Sessions.getCurrent().getAttribute("facebook");
 		anos = new HashSet<Integer>();
 		for (Turma turma : new TurmaBusiness().getTodas()) {
@@ -61,6 +73,18 @@ public class FbCadastroController {
 
 	public int getIntervalo() {
 		return intervalo;
+	}
+
+	public int getSemestres() {
+		return semestres;
+	}
+
+	@Command
+	public void atualizaSemestres(@BindingParam("ano") String ano) {
+		List<Turma> turmas = new TurmaBusiness()
+				.getTurmas(Integer.valueOf(ano));
+		semestres = turmas.size() == 2 ? 3 : turmas.get(0).getSemestre();
+		BindUtils.postNotifyChange(null, null, this, "semestres");
 	}
 
 	/**
@@ -174,6 +198,8 @@ public class FbCadastroController {
 		// Se o cpf e a senha foram preenchidos...
 		if (cpf != null && cpf.trim().length() > 0) {
 			if (senha != null && senha.trim().length() > 0) {
+				cpf = cpf.replace(".", "");
+				cpf = cpf.replace("-", "");
 				if (verificarAlunoNoIntegra(cpf, senha))
 					// ...lê as informações do SIGA
 					Clients.evalJavaScript("formTurma()");
@@ -202,7 +228,6 @@ public class FbCadastroController {
 			else {
 				aluno.setTurma(new TurmaBusiness().getTurma(
 						Integer.parseInt(ano), semestre + 1));
-				cadastrar();
 			}
 		}
 	}
@@ -217,7 +242,6 @@ public class FbCadastroController {
 			while (intervalo > 0) {
 				try {
 					Thread.sleep(1000);
-					System.out.println(intervalo);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

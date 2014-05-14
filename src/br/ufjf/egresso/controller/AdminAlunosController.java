@@ -9,7 +9,6 @@ import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.zk.ui.event.Event;
-import org.zkoss.zul.Button;
 import org.zkoss.zul.Messagebox;
 
 import br.ufjf.egresso.business.AlunoBusiness;
@@ -77,31 +76,31 @@ public class AdminAlunosController {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Command
-	public void delete(@BindingParam("button") final Button button,
-			@BindingParam("aluno") final Aluno aluno) {
+	public void alterarEstado(@BindingParam("aluno") final Aluno aluno) {
 
-		Messagebox.show(
-				"Você tem certeza que deseja deletar o registro do aluno: "
-						+ aluno.getNome() + "?", "Confirmação", Messagebox.OK
-						| Messagebox.CANCEL, Messagebox.QUESTION,
+		Messagebox.show("Você tem certeza que deseja "
+				+ (aluno.isAtivo() ? "desativar" : "re-ativar")
+				+ " o(a) aluno(a) " + aluno.getNome() + ", de matrícula "
+				+ aluno.getMatricula() + "?", "Confirmação", Messagebox.OK
+				| Messagebox.CANCEL, Messagebox.QUESTION,
 				new org.zkoss.zk.ui.event.EventListener() {
 					public void onEvent(Event e) {
 						if (Messagebox.ON_OK.equals(e.getName())) {
-
-							if (alunoBusiness.exclui(aluno)) {
-								removeFromList(aluno);
+							aluno.setAtivo(!aluno.isAtivo());
+							if (alunoBusiness.salvaOuEdita(aluno)) {
 								notifyAlunos();
 								Messagebox.show(
-										"O aluno foi excluído com sucesso.",
+										(!aluno.isAtivo() ? "Desativação"
+												: "Re-ativação")
+												+ " realizada com sucesso.",
 										"Sucesso", Messagebox.OK,
 										Messagebox.INFORMATION);
-
 							} else {
-								String errorMessage = "O aluno não pôde ser excluído.\n";
-								for (String error : alunoBusiness.getErrors())
-									errorMessage += error;
-								Messagebox.show(errorMessage, "Erro",
-										Messagebox.OK, Messagebox.ERROR);
+								Messagebox.show(
+										(!aluno.isAtivo() ? "Desativação"
+												: "Re-ativação")
+												+ " não pôde ser realizada. Por favor, tente mais tarde",
+										"Erro", Messagebox.OK, Messagebox.ERROR);
 							}
 
 						}

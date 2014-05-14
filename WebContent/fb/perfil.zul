@@ -533,7 +533,7 @@
 
 		<div>
 			<a href="turma.zul" image="/img/voltar.png"
-				tooltip="filterHelp" style="cursor: pointer" />
+				tooltip="ajuda" style="cursor: pointer" />
 		</div>
 
 		<div>
@@ -549,12 +549,7 @@
 		</div>
 	</div>
 
-	<popup id="filterHelp">
-		<html>
-			<![CDATA[ Voltar para turmas.]]>
-		</html>
-	</popup>
-	<popup id="interesse">
+	<popup id="ajuda">
 		<html>
 			<![CDATA[ Voltar para turmas.]]>
 		</html>

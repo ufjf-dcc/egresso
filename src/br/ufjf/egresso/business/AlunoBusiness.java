@@ -162,4 +162,8 @@ public class AlunoBusiness {
 		return alunoDao.getAlunos(turma);
 	}
 
+	public boolean salvaOuEdita(Aluno aluno) {
+		return alunoDao.salvaOuEdita(aluno);
+	}
+
 }
