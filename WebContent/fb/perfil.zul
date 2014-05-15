@@ -256,7 +256,7 @@
 										</div>
 										<div>
 											<image
-											
+												visible="@load(atuacao.descricao ne '')"
 												src="/img/expandIcon.png" width="15px" 
 												onClick="@command('escondeTextBox', textbox=self.parent.nextSibling)" />
 										</div>

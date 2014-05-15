@@ -70,7 +70,7 @@ public class FbIndexController {
 				AccessToken accessToken = new AccessToken(
 						(String) data.get("oauth_token"));
 				Facebook facebook = new FacebookFactory().getInstance();
-				facebook.setOAuthAppId(fbAppId, fbSecretKey);
+				
 				facebook.setOAuthAccessToken(accessToken);
 				Sessions.getCurrent().setAttribute("facebook", facebook);
 
