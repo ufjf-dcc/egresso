@@ -24,6 +24,7 @@ public class FbIndexController {
 
 	@Init
 	public void autentica() throws HibernateException, Exception {
+
 		String fbSecretKey = ConfHandler.getConf("FB.APPSECRET");
 		String fbAppId = ConfHandler.getConf("FB.APPID");
 		String redirectUrl = ConfHandler.getConf("FB.REDIRECTURL");
@@ -69,21 +70,28 @@ public class FbIndexController {
 			} else {
 				AccessToken accessToken = new AccessToken(
 						(String) data.get("oauth_token"));
-				Facebook facebook = new FacebookFactory().getInstance();
-				
-				facebook.setOAuthAccessToken(accessToken);
+				Facebook facebook;
+
+				try {
+					facebook = new FacebookFactory().getInstance();
+					facebook.setOAuthAccessToken(accessToken);
+				} catch (IllegalStateException e) {
+					facebook = new FacebookFactory().getInstance();
+					facebook.setOAuthAppId(fbAppId, fbSecretKey);
+					facebook.setOAuthAccessToken(accessToken);
+				}
 				Sessions.getCurrent().setAttribute("facebook", facebook);
 
 				// Verifica se o aluno já foi autorizado ou se já solicitou
 				// cadastro.
 				Aluno aluno = new AlunoBusiness().getAluno(facebook.getId());
-				if (aluno != null && aluno.isAtivo()) {
+				if (aluno != null && aluno.getAtivo() == Aluno.ATIVO) {
 					Sessions.getCurrent().setAttribute("aluno", aluno);
 					Executions.sendRedirect("/fb/turma.zul");
 				} else {
 					if (aluno != null)
 						Sessions.getCurrent().setAttribute("aluno", aluno);
-				
+
 					Executions.sendRedirect("/fb/cadastro.zul");
 				}
 			}

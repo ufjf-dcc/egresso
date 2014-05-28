@@ -40,7 +40,7 @@
 			</vlayout>
 
 			<vlayout id="intro" class="intro-cabecalho"
-				visible="@load(vm.aluno.ativo)">
+				visible="@load(vm.aluno.ativo eq 1)">
 				<label
 					value="Cadastre-se para manter-se em contato com seus ex-colegas de classe!" />
 				<button label="Prosseguir" class="btn" id="introbtn"
@@ -121,9 +121,9 @@
 			</div>
 		</div>
 
-		<div id="desativo" visible="@load(not vm.aluno.ativo)">
+		<div id="desativo" visible="@load(vm.aluno.ativo ne 1)">
 			<div class="intro-mensagem">
-				<label value="O seu perfil foi desativado." />
+				<label value="O seu perfil foi desativado. Contate a Coordenação." />
 			</div>
 			<div class="intro-coord">
 				<label

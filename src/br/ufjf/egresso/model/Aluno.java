@@ -15,6 +15,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name = "aluno")
 public class Aluno {
+	public static final int ATIVO = 1, INATIVO_ALUNO = 0, INATIVO_ADMIN = -1;
 
 	@Id
 	@Column(name = "id", unique = true, nullable = false)
@@ -28,7 +29,7 @@ public class Aluno {
 	@Column(name = "nome", length = 65, nullable = false)
 	String nome;
 
-	@Column(name = "facebook_id", unique = true, nullable = true, length = 20)
+	@Column(name = "facebook_id", unique = true, nullable = false, length = 20)
 	String facebookId;
 
 	@Column(name = "url_foto", nullable = true, length = 255)
@@ -38,7 +39,7 @@ public class Aluno {
 	String interesses;
 	
 	@Column(name = "ativo", nullable = true)
-	private boolean ativo;
+	private int ativo;
 
 	@Column(name = "linkedin_access_token", nullable = true, length = 255)
 	String lkAccessToken;
@@ -82,11 +83,11 @@ public class Aluno {
 		this.interesses = interesses;
 	}
 
-	public boolean isAtivo() {
+	public int getAtivo() {
 		return ativo;
 	}
 
-	public void setAtivo(boolean ativo) {
+	public void setAtivo(int ativo) {
 		this.ativo = ativo;
 	}
 

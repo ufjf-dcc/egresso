@@ -58,7 +58,7 @@
 				<row>
 					<image src="@load(each.urlFoto)" width="100%" />
 					<label value="@load(each.nome)"
-						style="@load(each.ativo ? '' : 'text-decoration:line-through')" />
+						style="@load(each.ativo eq 1 ? '' : 'text-decoration:line-through')" />
 					<label value="@load(each.matricula)" />
 					<label
 						value="@load(''.concat(each.turma.ano).concat(' - ').concat(each.turma.semestre).concat('º semestre'))" />
@@ -66,8 +66,8 @@
 						<button label="Perfil no Facebook" width="100%"
 							href="@load(each.linkFacebook)" />
 						<button hflex="1"
-							label="@load(each.ativo ? 'Desativar' : 'Re-ativar')"
-							tooltip="@load(each.ativo ? 'ajudaDesativacao' : '')"
+							label="@load(each.ativo eq -1 ? 'Ativar' : 'Desativar')"
+							tooltip="@load(each.ativo eq -1 ? '' : 'ajudaDesativacao')"
 							onClick="@command('alterarEstado', aluno=each, button=self)" />
 					</vlayout>
 				</row>

@@ -50,7 +50,7 @@ public class FbCadastroController {
 		aluno = (Aluno) Sessions.getCurrent().getAttribute("aluno");
 		if (aluno == null) {
 			aluno = new Aluno();
-			aluno.setAtivo(true);
+			aluno.setAtivo(Aluno.ATIVO);
 		}
 		facebook = (Facebook) Sessions.getCurrent().getAttribute("facebook");
 		anos = new HashSet<Integer>();
@@ -131,7 +131,6 @@ public class FbCadastroController {
 							.toString())) {
 
 						// ...guarda as informaçẽos do aluno
-						aluno = new Aluno();
 						aluno.setNome(facebook.getMe().getName());
 						aluno.setFacebookId(facebook.getMe().getId());
 						aluno.setUrlFoto(facebook.getPictureURL(

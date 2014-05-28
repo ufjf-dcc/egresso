@@ -62,11 +62,12 @@
 		
 	</script>
 
-	<div apply="org.zkoss.bind.BindComposer" width="100%" 
+	<div apply="org.zkoss.bind.BindComposer" width="100%"
 		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbTurmaController')"
 		height="100%" onClientInfo="@command('montaTabela', event=event)">
 		<hlayout>
-			<div class="cabecalho" width="@load(''.concat(vm.largura - 450).concat('px'))">
+			<div class="cabecalho"
+				width="@load(''.concat(vm.largura - 450).concat('px'))">
 				<label class="cabecalho" value="@load(vm.descricao)" />
 			</div>
 			<div class="pesquisa-turma" width="350px">
@@ -94,40 +95,63 @@
 			</div>
 		</hlayout>
 		<html>
+
+
+
+
 			
 			<![CDATA[ <hr style="border-top: dashed 1px; border-color:
 			#c0504d; margin-bottom:20px; border-bottom: none;" />]]>
 			
+			
+			
+			
+			
 		</html>
 		<hlayout class="conteudo">
+
+			<!-- Mural -->
 			<div class="mural">
-				<vlayout class="caixa-mural">
-					<div width="100%" >
+				<vlayout class="caixa-mural"
+					style="@load('min-height:'.concat(vm.altura).concat('px'))">
+					<div width="100%">
 						<button label="Convidar ex-alunos" class="btn"
-						c:onClick="convidar()" style="float:right; margin-top:10px"/>
-						<label value="Mural da turma" class="titulo-mural" hflex="1"/>					
+							c:onClick="convidar()" style="float:right; margin-top:10px" />
+						<label value="Mural da turma"
+							class="titulo-mural" hflex="1" />
 					</div>
 					<textbox id="txtpost" rows="4" width="100%"
 						maxlength="500" onOK="self.nextSibling.onClick()"
 						onChanging="btnPost.disabled = event.value.empty" />
 					<div width="100%">
 						<checkbox id="chkPrivado"
-							label="Privado para a turma"  />
-							<button id="btnPost" label="Publicar"
+							label="Privado para a turma" />
+						<button id="btnPost" label="Publicar"
 							disabled="true"
-							onClick="@command('postar', texto=txtpost.value, imagem='dfs', privado=chkPrivado.checked)" style="float:right; margin-top:10px"/>
+							onClick="@command('postar', texto=txtpost.value, imagem='dfs', privado=chkPrivado.checked)"
+							style="float:right; margin-top:10px" />
 						<button label="Imagem" upload="true"
-							onUpload="@command('upload', button=self, evt=event)" style="float:right; margin-top:10px"/>						
+							onUpload="@command('upload', button=self, evt=event)"
+							style="float:right; margin-top:10px" />
 					</div>
 
 					<html>
+
+
+
+
 						
 						<![CDATA[ <hr style="border-top: dashed 1px;
 						border-color: #c0504d; border-bottom: none"
 						/>]]>
 						
+						
+						
+						
+						
 					</html>
 
+					<!-- Postagens -->
 					<vlayout children="@load(vm.postagensTurma)"
 						style="margin-bottom:10px">
 						<template name="children" var="postagem">
@@ -143,21 +167,26 @@
 							<hlayout width="100%">
 								<label
 									value="@load('Por '.concat(postagem.aluno.nome))"
-									style="font-size:12px;" hflex="1" />
+									onClick='@command("verPerfil", facebookId=postagem.aluno.facebookId)'
+									style="font-size:12px; text-decoration:underline; cursor: pointer;" hflex="1" />
 								<label
 									onCreate="@command('descricaoDataPostagem', dataHora=postagem.dataHora, label=self)"
 									style="font-size:12px;" />
 							</hlayout>
 						</template>
 					</vlayout>
-				</vlayout>	
+				</vlayout>
 			</div>
-			
-			<label id="nenhumAluno" value="Nenhum aluno deste semestre se cadastrou ainda. Deseja convidar ex-alunos?" 
-				c:onClick="convidar()" style="cursor:pointer; text-decoration:underline; margin-left:50px"
-				visible="@load(empty vm.linhas)"/>
 
-			<vlayout id="gradeAlunos" style="margin-left:50px" children="@load(vm.linhas)">
+			<label id="nenhumAluno"
+				value="Nenhum aluno deste semestre se cadastrou ainda. Deseja convidar ex-alunos?"
+				c:onClick="convidar()"
+				style="cursor:pointer; text-decoration:underline; margin-left:50px"
+				visible="@load(empty vm.linhas)" />
+
+			<!-- Alunos -->
+			<vlayout class="gradeAlunos" style="@load('max-height:'.concat(vm.altura).concat('px'))"
+				children="@load(vm.linhas)">
 				<template name="children" var="linha">
 
 					<hlayout children="@load(linha)">

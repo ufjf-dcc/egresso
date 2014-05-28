@@ -13,8 +13,8 @@ import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Image;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.Messagebox;
-import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Vlayout;
 import org.zkoss.zul.Window;
 
@@ -87,7 +87,7 @@ public class FbPerfilController {
 			@BindingParam("aparecer") Vlayout v2,
 			@BindingParam("cancelar") Image imgCancelar,
 			@BindingParam("atuacao") Atuacao atuacao) {
-		
+
 		if (!imgCancelar.isVisible()) {
 			atuacaoEmEdicao = new Atuacao();
 			atuacaoEmEdicao.copy(atuacao);
@@ -251,12 +251,8 @@ public class FbPerfilController {
 	}
 
 	@Command
-	public void escondeTextBox(@BindingParam("textbox") Textbox textbox) {
-		if (textbox.isVisible())
-			textbox.setVisible(false);
-		else
-			textbox.setVisible(true);
-
+	public void mostraDescricao(@BindingParam("label") Label label) {
+		label.setVisible(!label.isVisible());
 	}
 
 	@Command
@@ -388,19 +384,19 @@ public class FbPerfilController {
 		if (checkbox.isChecked())
 			datebox.setValue(null);
 	}
-	
+
 	@Command
-	public void adicionaInteresses(@BindingParam("window") Window window){
+	public void adicionaInteresses(@BindingParam("window") Window window) {
 		window.doModal();
 	}
+
 	@Command
-	public void submitInteresses(@BindingParam("window") Window window){
-		if(alunoBusiness.editar(aluno))
-			Messagebox.show("Interesse Adicionado!", "Sucesso",
-					Messagebox.OK, Messagebox.INFORMATION);
-			
+	public void submitInteresses(@BindingParam("window") Window window) {
+		if (alunoBusiness.editar(aluno))
+			Messagebox.show("Interesse Adicionado!", "Sucesso", Messagebox.OK,
+					Messagebox.INFORMATION);
+
 		window.setVisible(false);
 	}
 
-	
 }

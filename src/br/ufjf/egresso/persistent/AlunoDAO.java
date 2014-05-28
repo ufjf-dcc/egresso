@@ -112,7 +112,7 @@ public class AlunoDAO extends GenericoDAO {
 		try {
 			Query query = getSession()
 					.createQuery(
-							"SELECT a FROM Aluno AS a LEFT JOIN FETCH a.turma WHERE a.turma = :turma AND a.facebookId IS NOT NULL");
+							"SELECT a FROM Aluno AS a LEFT JOIN FETCH a.turma WHERE a.turma = :turma AND a.ativo = '1'");
 			query.setParameter("turma", turma);
 
 			@SuppressWarnings("unchecked")

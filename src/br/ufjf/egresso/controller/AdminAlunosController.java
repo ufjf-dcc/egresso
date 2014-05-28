@@ -77,27 +77,34 @@ public class AdminAlunosController {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Command
 	public void alterarEstado(@BindingParam("aluno") final Aluno aluno) {
+		if (aluno.getAtivo() == Aluno.INATIVO_ALUNO) {
+			Messagebox
+					.show("Você não pode aivar o perfil deste aluno, pois ele aluno decidiu desativá-lo.",
+							"Não é possível desativar", Messagebox.OK,
+							Messagebox.EXCLAMATION);
+		}
 
 		Messagebox.show("Você tem certeza que deseja "
-				+ (aluno.isAtivo() ? "desativar" : "re-ativar")
+				+ (aluno.getAtivo() == Aluno.ATIVO ? "desativar" : "re-ativar")
 				+ " o(a) aluno(a) " + aluno.getNome() + ", de matrícula "
 				+ aluno.getMatricula() + "?", "Confirmação", Messagebox.OK
 				| Messagebox.CANCEL, Messagebox.QUESTION,
 				new org.zkoss.zk.ui.event.EventListener() {
 					public void onEvent(Event e) {
 						if (Messagebox.ON_OK.equals(e.getName())) {
-							aluno.setAtivo(!aluno.isAtivo());
+							aluno.setAtivo(aluno.getAtivo() == Aluno.ATIVO ? Aluno.INATIVO_ADMIN
+									: Aluno.ATIVO);
 							if (alunoBusiness.salvaOuEdita(aluno)) {
 								notifyAlunos();
 								Messagebox.show(
-										(!aluno.isAtivo() ? "Desativação"
+										(aluno.getAtivo() == Aluno.ATIVO ? "Desativação"
 												: "Re-ativação")
 												+ " realizada com sucesso.",
 										"Sucesso", Messagebox.OK,
 										Messagebox.INFORMATION);
 							} else {
 								Messagebox.show(
-										(!aluno.isAtivo() ? "Desativação"
+										(aluno.getAtivo() == Aluno.ATIVO ? "Desativação"
 												: "Re-ativação")
 												+ " não pôde ser realizada. Por favor, tente mais tarde",
 										"Erro", Messagebox.OK, Messagebox.ERROR);

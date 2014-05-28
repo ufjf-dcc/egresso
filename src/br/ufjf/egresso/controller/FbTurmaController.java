@@ -47,7 +47,7 @@ public class FbTurmaController {
 	private String pesquisa, descricao, imgExtensao;
 	private Turma turma;
 	private List<Postagem> postagensTurma;
-	private int largura;
+	private int largura, altura;
 	private InputStream imgPostagem;
 
 	@Init
@@ -68,12 +68,20 @@ public class FbTurmaController {
 		filtraAlunos = alunos;
 		postagensTurma = new PostagemBusiness().getPostagens(turma);
 	}
+	
+	public int getAltura(){
+		return altura;
+	}
 
 	@Command
 	public void montaTabela(@BindingParam("event") ClientInfoEvent evt) {
-		if (evt != null)
+		if (evt != null){
 			largura = evt.getDesktopWidth();
-		BindUtils.postNotifyChange(null, null, this, "largura");
+			altura = evt.getDesktopHeight() - 180;
+			
+			BindUtils.postNotifyChange(null, null, this, "largura");
+			BindUtils.postNotifyChange(null, null, this, "altura");
+		}		
 		int inseridos = 0;
 		linhas = new ArrayList<List<Aluno>>();
 

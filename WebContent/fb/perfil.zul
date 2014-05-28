@@ -20,16 +20,10 @@
 					<label style="font-size:18px"
 						value="@load('Turma do '.concat(vm.aluno.turma.semestre).concat('° ').concat('semestre do ano de ').concat(vm.aluno.turma.ano).concat('.'))" />
 					<html>
-
-
-
 						
 						<![CDATA[ <hr style="border-top: dashed 1px;
 						border-color: white; margin-bottom:20px;
 						margin-top:10px; border-bottom: none" />]]>
-						
-						
-						
 						
 					</html>
 
@@ -44,28 +38,24 @@
 						<label sclass="data_atuacao"
 							value="@load(''.concat(vm.atuacaoAtual.dataInicio)) @converter('br.ufjf.egresso.utils.DateFormatConverter')" />
 					</div>
-
+					
 					<html>
-
-
-
 						
 						<![CDATA[ <hr style="border-top: dashed 1px;
-						border-color: #c0504d; margin-top:10px;
-						border-bottom: none" />]]>
-						
-						
-						
+						border-color: white; margin-bottom:20px;
+						margin-top:10px; border-bottom: none" />]]>
 						
 					</html>
-				<hlayout>
-				<label value="Interesses" style="font-size:16px" />						
 					
-					<image src="/img/add.png" width="15px" 
-								visible="@load(vm.podeEditar)"
-								onClick="@command('adicionaInteresses', window=adicionaInteresses)"/>
-					
-				</hlayout>
+					<hlayout>
+						<label value="Interesses"
+							style="font-size:16px" />
+
+						<image src="/img/add.png" width="15px"
+							visible="@load(vm.podeEditar)"
+							onClick="@command('adicionaInteresses', window=adicionaInteresses)" />
+
+					</hlayout>
 					<label value="@load(vm.aluno.interesses)" />
 				</vlayout>
 			</div>
@@ -82,27 +72,10 @@
 								onClick="@command('adicionaAtuacao', window=adicionaAtuacao, tipo=3)" />
 						</div>
 						<html>
-
-
-
-
-
-
-
-
 							
 							<![CDATA[ <hr style="border-top: dashed 1px;
 							border-color: #c0504d; margin-top:10px;
 							border-bottom: none" />]]>
-							
-							
-							
-							
-							
-							
-							
-											
-							
 							
 						</html>
 						<vlayout children="@load(vm.filtraEmpregos)"
@@ -129,15 +102,16 @@
 												visible="@load(atuacao.dataTermino ne null)"
 												value="@load(''.concat(atuacao.dataTermino)) @converter('br.ufjf.egresso.utils.DateFormatConverter')" />
 										</div>
-										<div>
+										<div
+											visible="@load(atuacao.descricao ne null and atuacao.descricao ne '')">
+											<label sclass="data_atuacao"
+												value="Descricao:" />
 											<image
-											visible ="@load(atuacao.descricao ne '')"
 												src="/img/expandIcon.png" width="15px"
-												onClick="@command('escondeTextBox', textbox=self.parent.nextSibling)" />
+												onClick="@command('mostraDescricao', label=self.parent.nextSibling)" />
 										</div>
 
-										<textbox visible="false"
-											readonly="true" cols="20" rows="5"
+										<label visible="false"
 											value="@load(atuacao.descricao)" />
 
 									</vlayout>
@@ -216,10 +190,16 @@
 
 
 
+
+
+
 							
 							<![CDATA[ <hr style="border-top: dashed 1px;
 							border-color: #c0504d; margin-top:10px;
 							border-bottom: none" />]]>
+							
+							
+							
 							
 							
 							
@@ -254,15 +234,16 @@
 												visible="@load(atuacao.dataTermino ne null)"
 												value="@load(''.concat(atuacao.dataTermino)) @converter('br.ufjf.egresso.utils.DateFormatConverter')" />
 										</div>
-										<div>
+										<div
+											visible="@load(atuacao.descricao ne null and atuacao.descricao ne '')">
+											<label sclass="data_atuacao"
+												value="Descricao:" />
 											<image
-												visible="@load(atuacao.descricao ne '')"
-												src="/img/expandIcon.png" width="15px" 
-												onClick="@command('escondeTextBox', textbox=self.parent.nextSibling)" />
+												src="/img/expandIcon.png" width="15px"
+												onClick="@command('mostraDescricao', label=self.parent.nextSibling)" />
 										</div>
 
-										<textbox readonly="true"
-											visible="false" rows="5"
+										<label visible="false"
 											value="@load(atuacao.descricao)" />
 
 									</vlayout>
@@ -338,10 +319,16 @@
 
 
 
+
+
+
 							
 							<![CDATA[ <hr style="border-top: dashed 1px;
 							border-color: #c0504d; margin-top:10px;
 							border-bottom: none" />]]>
+							
+							
+							
 							
 							
 							
@@ -375,14 +362,16 @@
 												visible="@load(atuacao.dataTermino ne null)"
 												value="@load(''.concat(atuacao.dataTermino)) @converter('br.ufjf.egresso.utils.DateFormatConverter')" />
 										</div>
-										<div>
+										<div
+											visible="@load(atuacao.descricao ne null and atuacao.descricao ne '')">
+											<label sclass="data_atuacao"
+												value="Descricao:" />
 											<image
 												src="/img/expandIcon.png" width="15px"
-												onClick="@command('escondeTextBox', textbox=self.parent.nextSibling)" />
+												onClick="@command('mostraDescricao', label=self.parent.nextSibling)" />
 										</div>
 
-										<textbox visible="false"
-											readonly="true" cols="20" rows="5"
+										<label visible="false"
 											value="@load(atuacao.descricao)" />
 									</vlayout>
 									<vlayout visible="false">
@@ -448,21 +437,21 @@
 			onClose="self.setVisible(false); event.stopPropagation();">
 			<grid>
 				<columns>
-					<column hflex = "1"/>
-					<column hflex = "2"/>
-				
+					<column hflex="1" />
+					<column hflex="2" />
+
 				</columns>
 				<rows>
 					<row>
-						<label value = "Interesses" />
-						 <textbox
+						<label value="Interesses" />
+						<textbox
 							value="@load(vm.aluno.interesses)@save(vm.aluno.interesses, before='submitInteresses')"
-							tabindex="1" id="interesse" width="100%" rows = "5"/>
-						 
+							tabindex="1" id="interesse" width="100%" rows="5" />
+
 					</row>
-				
+
 				</rows>
-				
+
 			</grid>
 			<div align="center">
 				<button label="Cadastrar"
@@ -517,7 +506,6 @@
 					<row>
 						<label value="Descrição:" />
 						<textbox
-							
 							value="@load(vm.novaAtuacao.descricao)@save(vm.novaAtuacao.descricao, before='submitAtuacao')"
 							tabindex="5" id="descricao" width="100%" rows="4"
 							maxlength="300" />
@@ -531,10 +519,10 @@
 			</div>
 		</window>
 
-		<div>
+		<!-- <div>
 			<a href="turma.zul" image="/img/voltar.png"
-				tooltip="ajuda" style="cursor: pointer" />
-		</div>
+			tooltip="ajuda" style="cursor: pointer" />
+			</div>-->
 
 		<div>
 			<a href="@load(vm.aluno.linkFacebook)" target="_blank"
@@ -551,9 +539,15 @@
 
 	<popup id="ajuda">
 		<html>
+
+
+			
 			<![CDATA[ Voltar para turmas.]]>
+			
+			
+			
 		</html>
 	</popup>
-	
+
 
 </zk>
