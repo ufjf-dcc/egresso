@@ -519,12 +519,11 @@
 			</div>
 		</window>
 
-		<!-- <div>
-			<a href="turma.zul" image="/img/voltar.png"
-			tooltip="ajuda" style="cursor: pointer" />
-			</div>-->
+		 
 
-		<div>
+		<div style = "position:relative; top:-60px;">
+		<a href="turma.zul" image="/img/voltar.png"
+			tooltip="ajuda" style="cursor: pointer" />
 			<a href="@load(vm.aluno.linkFacebook)" target="_blank"
 				image="/img/facebook.png" />
 			<a
@@ -533,7 +532,7 @@
 			<a image="/img/twitter.png" target="_blank" />
 			<a image="/img/youtube.png" target="_blank" />
 			<a image="/img/google_plus.png" target="_blank" />
-
+			
 		</div>
 	</div>
 

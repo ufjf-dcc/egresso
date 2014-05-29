@@ -49,6 +49,17 @@ public class FbPerfilController {
 			aluno = new AlunoBusiness().getAluno(facebookId);
 			podeEditar = aluno.getId() == ((Aluno) Sessions.getCurrent()
 					.getAttribute("aluno")).getId();
+			
+			if (aluno != null && aluno.getAtivo() == Aluno.ATIVO) {
+				Sessions.getCurrent().setAttribute("aluno", aluno);
+				Executions.sendRedirect("/fb/perfil.zul");
+			} else {
+				if (aluno != null)
+					Sessions.getCurrent().setAttribute("aluno", aluno);
+
+				Executions.sendRedirect("/fb/cadastro.zul");
+			}
+		
 		} else {
 			aluno = (Aluno) Sessions.getCurrent().getAttribute("aluno");
 			podeEditar = true;

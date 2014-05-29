@@ -223,7 +223,7 @@ public class FbTurmaController {
 					new Timestamp(new Date().getTime()));
 			imgPostagem = null;
 			if (new PostagemBusiness().salvar(postagem)) {
-				postagensTurma.add(0, postagem);
+				postagensTurma.add(0,postagem);
 				BindUtils.postNotifyChange(null, null, this, "postagensTurma");
 				return;
 			}

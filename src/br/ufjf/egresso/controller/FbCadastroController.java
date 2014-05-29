@@ -99,6 +99,7 @@ public class FbCadastroController {
 	private boolean verificarAlunoNoIntegra(String cpf, String senha) {
 		boolean alunoValido = false;
 		BufferedReader reader = null;
+	
 		try {
 			// Recebe o JSON do integra
 			URL url = new URL(ConfHandler.getConf("INTEGRA.URL") + cpf);
