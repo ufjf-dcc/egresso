@@ -254,9 +254,10 @@ public class FbTurmaController {
 	@Command
 	public void verImagem(@BindingParam("window") Window window,
 			@BindingParam("imgSrc") String imgSrc) {
-
-		((Image) window.getChildren().get(0)).setSrc(ConfHandler
-				.getConf("FILE.PATH") + imgSrc);
+		String url =  ConfHandler.getConf("FILE.PATH");
+		url.replace("egresso","/");
+		System.out.print(url);
+		((Image) window.getChildren().get(0)).setSrc(url + imgSrc);
 		window.doModal();
 	}
 

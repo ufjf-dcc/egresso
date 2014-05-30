@@ -25,10 +25,11 @@ public class FileManager {
 						.getChecksumInstance("md5");
 				checksum.update(("" + System.currentTimeMillis()).getBytes());
 				fileName = checksum.getFormattedValue() + "." + fileExt;
-
-				outputStream = new FileOutputStream(new File(
-						ConfHandler.getConf("FILE.PATH") + fileName));
-
+				String url = ConfHandler.getConf("FILE.PATH");
+				url.replace("egresso", "/");
+				
+				outputStream = new FileOutputStream(new File(url + fileName));
+				System.out.println(url);
 				int read = 0;
 				byte[] bytes = new byte[1024];
 
