@@ -16,16 +16,16 @@ public class Administrador {
 	@Column(name = "id", unique = true, nullable = false)
 	@GeneratedValue(generator = "increment")
 	@GenericGenerator(name = "increment", strategy = "increment")
-	int id;
+	private int id;
 
-	@Column(name = "identificador", unique = true, length = 15, nullable = true)
-	String identificador;
+	@Column(name = "identificador", unique = true, length = 15, nullable = false)
+	private String identificador;
 
 	@Column(name = "nome", unique = true, length = 15, nullable = true)
-	String nome;
+	private String nome;
 
 	@Column(name = "senha", length = 65, nullable = false)
-	String senha;
+	private String senha;
 
 	public int getId() {
 		return id;

@@ -8,16 +8,14 @@
 		<grid
 			model="@load(vm.filterTurmas) @template(each.editingStatus ? 'editable' : 'noneditable')"
 			mold="paging" autopaging="true" vflex="true">
-			<auxhead sclass="text-center">
-				<auxheader label="Turmas cadastradas no sistema"
-					colspan="2" />
-			</auxhead>
 			<auxhead>
-				<auxheader colspan="2">
+				<auxheader label="Turmas cadastradas no sistema"
+					colspan="3">
+
 					<div>
 						<div style="float:left">
 							<textbox id="filtro"
-								value="@bind(vm.filterString)" />
+								onOK="@command('filtra')" value="@bind(vm.filterInt)" />
 							<button label="Pesquisar"
 								onClick="@command('filtra')" />
 						</div>
@@ -26,14 +24,19 @@
 								onClick="@command('addTurma', window=addTurma)" />
 						</div>
 					</div>
+
 				</auxheader>
+
 			</auxhead>
 			<columns>
-				<column label="Semestre" sort="auto(turma.semestre)" />
-				<column label="Opções" width="180px"/>
+				<column label="Ano" sort="auto(ano)" />
+				<column label="Semestre" sort="auto(semestre)" />
+				<column label="Opções" width="180px" />
 			</columns>
 			<template name="editable">
 				<row>
+					<textbox
+						value="@load(each.ano) @save(each.ano, before='confirm')" />
 					<textbox
 						value="@load(each.semestre) @save(each.semestre, before='confirm')" />
 					<div>
@@ -46,8 +49,8 @@
 			</template>
 			<template name="noneditable">
 				<row>
+					<label value="@load(each.ano)" />
 					<label value="@load(each.semestre)" />
-
 					<div align="center">
 						<button label="Editar"
 							onClick="@command('changeEditableStatus', turma=each)" />
@@ -70,11 +73,15 @@
 					<row>
 						<label value="Semestre:" />
 						<textbox
-							value="@load(vm.novaTurma.semestre)@save(vm.novaTurma.semestre, before='submitTurma')"
+							value="@load(vm.novaTurma.ano)@save(vm.novaTurma.ano, before='submitTurma')"
+							tabindex="1" id="ano" width="100%" />
+					</row>
+					<row>
+						<label value="Semestre:" />
+						<textbox
+							value="@load(vm.novaTurma.semestre)@save(vm.novaTurma.ano, before='submitTurma')"
 							tabindex="1" id="semestre" width="100%" />
 					</row>
-
-
 				</rows>
 			</grid>
 			<div align="center">
@@ -84,4 +91,9 @@
 			</div>
 		</window>
 	</div>
+	<script type="text/javascript" src="/jquery.maskedinput.js" />
+	<script type="text/javascript">
+		zk.afterMount(function() { $.mask.definitions['s']='[12]';
+		jq("$ano").mask("9999"); jq("$semestre").mask("s"); });
+	</script>
 </zk>

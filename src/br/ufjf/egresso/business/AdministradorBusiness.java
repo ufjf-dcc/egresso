@@ -5,19 +5,35 @@ import java.security.NoSuchAlgorithmException;
 import jonelo.jacksum.JacksumAPI;
 import jonelo.jacksum.algorithm.AbstractChecksum;
 import br.ufjf.egresso.model.Administrador;
-import br.ufjf.egresso.persistent.impl.AdministradorDAO;
+import br.ufjf.egresso.persistent.AdministradorDAO;
 
+/**Classe para intermediar o acesso às informações da classe {@link Administrador}.
+ * 
+ * @author Jorge Augusto da Silva Moreira
+ *
+ */
 public class AdministradorBusiness {
-	private AdministradorDAO adminisytradorDao;
+	private AdministradorDAO administradorDao;
 	
 	public AdministradorBusiness(){
-		adminisytradorDao = new AdministradorDAO();
+		administradorDao = new AdministradorDAO();
 	}
 	
-	public Administrador entrar(String identificador, String senha){
-		return adminisytradorDao.entrar(identificador, encripta(senha));
+	/**Verifica se existe um {@link Administrador} com os dados informados.
+	 * 
+	 * @param identificador
+	 * @param senha
+	 * @return O respectivo {@link Administrador} ou {@link null} caso ele não exista.
+	 */
+	public Administrador autenticar(String identificador, String senha){
+		return administradorDao.autenticar(identificador, encripta(senha));
 	}
 	
+	/**Encripta uma {@link String} utilizando whirlpool-1.
+	 * 
+	 * @param expressao A {@link String} a ser encriptada.
+	 * @return Uma {@link String} encriptada a partir da expressão.
+	 */
 	public String encripta(String expressao) {
 		try {
 			AbstractChecksum checksum = null;

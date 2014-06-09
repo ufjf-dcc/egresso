@@ -15,6 +15,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name = "aluno")
 public class Aluno {
+	public static final int ATIVO = 1, INATIVO_ALUNO = 0, INATIVO_ADMIN = -1;
 
 	@Id
 	@Column(name = "id", unique = true, nullable = false)
@@ -22,27 +23,33 @@ public class Aluno {
 	@GenericGenerator(name = "increment", strategy = "increment")
 	int id;
 
-	@Column(name = "matricula", unique = true, length = 15, nullable = true)
+	@Column(name = "matricula", unique = true, length = 15, nullable = false)
 	String matricula;
 
 	@Column(name = "nome", length = 65, nullable = false)
 	String nome;
 
-	@Column(name = "facebook_id", unique = true, nullable = true, length = 20)
+	@Column(name = "facebook_id", unique = true, nullable = false, length = 20)
 	String facebookId;
 
 	@Column(name = "url_foto", nullable = true, length = 255)
 	String urlFoto;
 
+	@Column(name = "interesses", nullable = true, length = 100)
+	String interesses;
+	
+	@Column(name = "ativo", nullable = true)
+	private int ativo;
+
+	@Column(name = "linkedin_access_token", nullable = true, length = 255)
+	String lkAccessToken;
+
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "turma_id")
+	@JoinColumn(name = "turma_id", nullable = false)
 	private Turma turma;
 
 	@Transient
-	private String linkFacebook;
-
-	@Transient
-	private boolean editingStatus;
+	private boolean editingStatus;	
 
 	public int getId() {
 		return id;
@@ -60,16 +67,36 @@ public class Aluno {
 		this.facebookId = facebookId;
 	}
 
-	public void setLinkFacebook(String linkFacebook) {
-		this.linkFacebook = linkFacebook;
-	}
-
 	public String getUrlFoto() {
 		return urlFoto;
 	}
 
 	public void setUrlFoto(String urlFoto) {
 		this.urlFoto = urlFoto;
+	}
+
+	public String getInteresses() {
+		return interesses;
+	}
+
+	public void setInteresses(String interesses) {
+		this.interesses = interesses;
+	}
+
+	public int getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(int ativo) {
+		this.ativo = ativo;
+	}
+
+	public String getLkAccessToken() {
+		return lkAccessToken;
+	}
+
+	public void setLkAccessToken(String lkAccessToken) {
+		this.lkAccessToken = lkAccessToken;
 	}
 
 	public String getMatricula() {
@@ -115,7 +142,6 @@ public class Aluno {
 		this.facebookId = outro.facebookId;
 		this.turma = outro.turma;
 		this.urlFoto = outro.urlFoto;
-		this.linkFacebook = outro.linkFacebook;
 	}
 
 }

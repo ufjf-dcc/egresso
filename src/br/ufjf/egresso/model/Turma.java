@@ -21,31 +21,42 @@ public class Turma {
 	@Column(name = "id", unique = true, nullable = false)
 	@GeneratedValue(generator = "increment")
 	@GenericGenerator(name = "increment", strategy = "increment")
-	int id;
+	private int id;
 
-	@Column(name = "semestre", unique = true, length = 6, nullable = false)
-	String semestre;
+	@Column(name = "semestre", unique = true, length = 1, nullable = false)
+	private int semestre;
+
+	@Column(name = "ano", unique = true, length = 4, nullable = false)
+	private int ano;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "turma")
 	private List<Aluno> alunos = new ArrayList<Aluno>();
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "turma")
-	private List<Solicitacao> solicitacoes = new ArrayList<Solicitacao>();
 	@Transient
 	private boolean editingStatus;
 
-	public String getSemestre() {
+	public int getSemestre() {
 		return semestre;
 	}
 
 	public boolean getEditingStatus() {
 		return editingStatus;
 	}
+
 	public void setEditingStatus(boolean editingStatus) {
 		this.editingStatus = editingStatus;
 	}
-	public void setSemestre(String semestre) {
+
+	public void setSemestre(int semestre) {
 		this.semestre = semestre;
+	}
+
+	public int getAno() {
+		return ano;
+	}
+
+	public void setAno(int ano) {
+		this.ano = ano;
 	}
 
 	public int getId() {
@@ -64,19 +75,11 @@ public class Turma {
 		this.alunos = alunos;
 	}
 
-	public List<Solicitacao> getSolicitacoes() {
-		return solicitacoes;
-	}
-
-	public void setSolicitacoes(List<Solicitacao> solicitacoes) {
-		this.solicitacoes = solicitacoes;
-	}
-	
 	public void copy(Turma outra) {
 		this.id = outra.id;
 		this.semestre = outra.semestre;
 		this.alunos = outra.alunos;
-		this.solicitacoes = outra.solicitacoes;
-		
+		this.ano = outra.ano;
+
 	}
 }

@@ -4,14 +4,13 @@ import java.util.List;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import br.ufjf.egresso.persistent.HibernateUtil;
 
 
-public class GenericoDAO implements IGenericoDAO {
+public class GenericoDAO {
 
 	private Session session;
 
-	@Override
+	
 	public boolean salvar(Object objeto) throws HibernateException {
 		boolean retorno = false;
 		if (objeto != null) {
@@ -22,7 +21,7 @@ public class GenericoDAO implements IGenericoDAO {
 		return retorno;
 	}
 
-	@Override
+	
 	public boolean salvarLista(List<?> objetos) throws HibernateException {
 		boolean retorno = false;
 		if (objetos != null && !objetos.isEmpty()) {
@@ -33,7 +32,7 @@ public class GenericoDAO implements IGenericoDAO {
 		return retorno;
 	}
 
-	@Override
+	
 	public boolean editar(Object objeto) throws HibernateException {
 		boolean retorno = false;
 		if (objeto != null) {
@@ -44,7 +43,7 @@ public class GenericoDAO implements IGenericoDAO {
 		return retorno;
 	}
 
-	@Override
+	
 	public boolean salvaOuEdita(Object objeto) throws HibernateException {
 		boolean retorno = false;
 		if (objeto != null) {
@@ -56,7 +55,7 @@ public class GenericoDAO implements IGenericoDAO {
 	}
 
 	@SuppressWarnings("rawtypes")
-	@Override
+	
 	public Object procuraId(int id, Class classe) throws HibernateException {
 		Object objeto = null;
 		if (id >= 0 && classe != null) {
@@ -68,7 +67,7 @@ public class GenericoDAO implements IGenericoDAO {
 	}
 
 	@SuppressWarnings("rawtypes")
-	@Override
+	
 	public List<?> procuraTodos(Class classe, int inicio, int fim)
 			throws HibernateException {
 		List<?> objetos = null;
@@ -80,7 +79,7 @@ public class GenericoDAO implements IGenericoDAO {
 		return objetos;
 	}
 
-	@Override
+	
 	public boolean exclui(Object objeto) throws HibernateException {
 		boolean retorno = false;
 		if (objeto != null) {
@@ -91,7 +90,7 @@ public class GenericoDAO implements IGenericoDAO {
 		return retorno;
 	}
 
-	@Override
+	
 	public boolean excluiLista(List<?> objetos) throws HibernateException {
 		boolean retorno = false;
 		if (objetos != null && !objetos.isEmpty()) {

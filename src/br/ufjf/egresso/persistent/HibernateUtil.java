@@ -1,29 +1,41 @@
 package br.ufjf.egresso.persistent;
 
 import java.util.List;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
+
+import br.ufjf.egresso.utils.ConfHandler;
 
 public class HibernateUtil {
 	private static SessionFactory sessionFactory;
-	private static ServiceRegistry serviceRegistry;
+	private static ServiceRegistryBuilder serviceRegistry;
 	private static Transaction transaction;
 	private static Session session;
 
 	private static void start() {
 		try {
-			Configuration configuration = new Configuration();
-			configuration.configure();
+			Configuration configuration = new Configuration().configure();
 			serviceRegistry = new ServiceRegistryBuilder()
 					.applySettings(configuration.getProperties())
-					.buildServiceRegistry();
-			sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+					.applySettings(configuration.getProperties())
+					.applySetting("hibernate.connection.driver_class",
+							ConfHandler.getConf("HIBERNATE.DRIVE"))
+					.applySetting("hibernate.connection.url",
+							ConfHandler.getConf("HIBERNATE.DB"))
+					.applySetting("hibernate.connection.username",
+							ConfHandler.getConf("HIBERNATE.USER"))
+					.applySetting("hibernate.connection.password",
+							ConfHandler.getConf("HIBERNATE.PASS"))
+					.applySetting("dialect",
+							ConfHandler.getConf("HIBERNATE.DIALECT"));
+			sessionFactory = configuration.buildSessionFactory(serviceRegistry
+					.buildServiceRegistry());
 		} catch (Throwable e) {
 			throw new ExceptionInInitializerError(e);
 		}

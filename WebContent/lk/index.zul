@@ -1,0 +1,11 @@
+<?page title="LinkedIn API Test" contentType="text/html;charset=UTF-8"?>
+<!-- Página para apenas para testar a conexão com o LinkedIn -->
+<zk>
+	<div
+		style="position:absolute; top:50%; margin-top:-100px; left:50%; margin-left:-150px;">
+		<div apply="org.zkoss.bind.BindComposer"
+			viewModel="@id('vm')@init('br.ufjf.egresso.controller.LkIndexController')">
+			<label onCreate="@command('autentica', lbl = self)" />
+		</div>
+	</div>
+</zk>

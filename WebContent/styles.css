@@ -1,0 +1,171 @@
+@CHARSET "UTF-8";
+
+body {
+	background: url('img/bg.png') repeat repeat;
+	font-family: times;
+	margin-left: 50px;
+	margin-right: 50px
+}
+
+tbody.z-grid-emptybody td {
+	font-size: 15px;
+	padding: 10px;
+}
+
+.menu-aluno.z-div {
+	height: 30px;
+	background: #EEEEEE;
+}
+
+/**Estilos da página de cadastro **/
+.intro.z-div {
+	width: 350px;
+	margin-top: 20px;
+	text-align: center;
+}
+
+.intro-form.z-vlayout {
+	background: #c0504d;
+	margin-top: 20px;
+	padding: 15px;
+}
+
+.intro-mensagem.z-div {
+	background: #c0504d;
+	margin-top: 20px;
+	padding: 10px;
+	width: 350px;
+	font-size: 15px;
+	color: white;
+}
+
+.intro-coord.z-div {
+	background: #f0f0f0;
+	padding: 10px;
+	width: 350px;
+	font-size: 15px;
+	color: grey;
+}
+
+.intro-form.z-label {
+	color: white;
+	margin-bottom: 10px;
+}
+
+.intro-form.z-textbox {
+	width: 100%;
+}
+
+.intro-titulo.z-label {
+	font-size: 30px;
+}
+
+.intro-subtitulo.z-label {
+	font-size: 16px;
+}
+
+.intro-semestre.z-radio {
+	color: white;
+	margin: 5px;
+}
+
+.water-mark {
+	color: gray;
+}
+
+/** Página de turma **/
+.mural.z-div {
+	background: #c0504d;
+	height: 100%;
+	padding: 5px;
+}
+
+.caixa-mural.z-vlayout {
+	width: 400px;
+	background: #f0f0f0;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.titulo-mural.z-label {
+	font-size: 20px;
+	color: black;
+}
+
+.gradeAlunos.z-vlayout{
+	margin-left:50px;
+	max-height:500px;
+	overflow:scroll;
+}
+
+.aluno.z-label {
+	font-size: 18px;
+	color: white;
+}
+
+.aluno.z-vlayout {
+	background: #c0504d;
+	margin-right: 30px;
+	padding: 5px;
+	width: 150px;
+	height: 200px;
+	margin-bottom: 30px;
+	cursor: pointer;
+}
+
+.aluno.z-div {
+	width: 100%;
+	height: 125px;
+	overflow: hidden;
+	position: relative;
+}
+
+.aluno.z-image {
+	position: absolute;
+	left: -100%;
+	right: -100%;
+	top: -100%;
+	bottom: -100%;
+	margin: auto;
+	min-height: 100%;
+	min-width: 100%;
+}
+
+.cabecalho.z-label {
+	font-size: 30px;
+}
+
+.cabecalho.z-div {
+	font-size: 30px;
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+
+.pesquisa-turma.z-div {
+	background: #c0504d;
+	padding: 20px;
+}
+
+.pesquisa-turma.z-label {
+	font-size: 14px;
+	color: white;
+}
+
+.conteudo.z-hlayout {
+	font-size: 30px;
+}
+
+.pesquisa.z-textbox {
+	float: right;
+}
+
+/** Relação de turmas **/
+.turma-ano {
+	color: white;
+	size: 36px;
+}
+
+.turma-semestre {
+	color: white;
+	size: 18px;
+}

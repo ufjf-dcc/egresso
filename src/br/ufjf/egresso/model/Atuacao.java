@@ -1,6 +1,7 @@
 package br.ufjf.egresso.model;
 
 import java.sql.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -19,19 +22,29 @@ public class Atuacao {
 	@Column(name = "id", unique = true, nullable = false)
 	@GeneratedValue(generator = "increment")
 	@GenericGenerator(name = "increment", strategy = "increment")
-	int id;
+	private int id;
 
-	@Column(name = "data_inicio", nullable = true)
-	Date dataInicio;
+	@Column(name = "data_inicio", nullable = false)
+	private Date dataInicio;
 
-	@Column(name = "data_termino", nullable = true)
-	Date dataTermino;
+	@Column(name = "data_final", nullable = true)
+	private Date dataTermino;
 
-	@Column(name = "local", length = 45, nullable = true)
-	String local;
+	@Column(name = "local", length = 45, nullable = false)
+	private String local;
 
-	@Column(name = "cargo", length = 45, nullable = true)
-	String cargo;
+	@Column(name = "cargo", length = 45, nullable = false)
+	private String cargo;
+	@Column(name = "descricao", length = 300, nullable = true)
+	private String descricao;
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "aluno_id", nullable = false)
@@ -40,6 +53,9 @@ public class Atuacao {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "tipo_atuacao_id", nullable = false)
 	private TipoAtuacao tipoAtuacao;
+	
+	@Transient
+	private boolean editingStatus;
 
 	public int getId() {
 		return id;
@@ -97,12 +113,22 @@ public class Atuacao {
 		this.aluno = aluno;
 	}
 
-	public TipoAtuacao getTipo_atuacao() {
-		return tipoAtuacao;
+	public boolean getEditingStatus() {
+		return editingStatus;
 	}
 
-	public void setTipo_atuacao(TipoAtuacao tipo_atuacao) {
-		this.tipoAtuacao = tipo_atuacao;
+	public void setEditingStatus(boolean editingStatus) {
+		this.editingStatus = editingStatus;
 	}
 
+	public void copy(Atuacao outra) {
+		this.id = outra.id;
+		this.cargo = outra.cargo;
+		this.tipoAtuacao = outra.tipoAtuacao;
+		this.dataInicio = outra.dataInicio;
+		this.dataTermino = outra.dataTermino;
+		this.local = outra.local;
+		this.aluno = outra.aluno;
+		this.descricao = outra.descricao;
+	}
 }
