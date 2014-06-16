@@ -211,9 +211,20 @@
 
 		</hlayout>
 	</div>
-
+<zscript><![CDATA[
+	void updateMap() {
+		try{
+		org.zkoss.image.AImage img = new org.zkoss.image.AImage("/home/users/esoares/post-imgs/7e736fa85071f529fa9412d25dd51200.png");
+		java.lang.System.out.println("dsf");
+		image.setContent(img);
+		}catch(java.io.IOException e){
+			e.printStackTrace();
+		}
+	}
+]]>
+    </zscript>
 	<window id="imagem" title="Visualizar Imagem" visible="false" width="500px" height="500px"
-		border="normal" position="center,center" closable="true"
+		border="normal" position="center,center" closable="true" 
 		onClose="self.setVisible(false); event.stopPropagation();">
 		<image width="100%" height="100%" />
 	</window>

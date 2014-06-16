@@ -254,11 +254,14 @@ public class FbTurmaController {
 	@Command
 	public void verImagem(@BindingParam("window") Window window,
 			@BindingParam("imgSrc") String imgSrc) {
-		String url =  ConfHandler.getConf("FILE.PATH");
-		url.replace("egresso","/");
-		System.out.print(url);
-		((Image) window.getChildren().get(0)).setSrc(url + imgSrc);
+		try{
+			org.zkoss.image.AImage img = new org.zkoss.image.AImage("/home/users/esoares/post-imgs/" + imgSrc);
+			((Image) window.getChildren().get(0)).setContent(img);
+			}catch(java.io.IOException e){
+				e.printStackTrace();
+			}
 		window.doModal();
+		
 	}
 
 }
