@@ -1,0 +1,31 @@
+<?page title="Álbum de fotos" contentType="text/html;charset=UTF-8"?>
+<zk>
+<div apply="org.zkoss.bind.BindComposer" width="100%"
+		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbTurmaController')"
+		height="100%">
+	
+		<hlayout class="conteudo">
+
+			<!-- Mural -->
+			<div class="mural">
+					<vlayout children="@load(vm.postagensTurma)"
+						style="margin-bottom:10px">
+						<template name="children" var="postagem">
+							<vlayout>
+								<hlayout width="100%">
+									<imagem class = "galeria"
+									style="font-size:16px;" hflex="1" />
+							
+								</hlayout>
+							</vlayout>
+							
+							
+						</template>
+					</vlayout>
+				
+			</div>
+		</hlayout>
+			
+	</div>
+
+</zk>

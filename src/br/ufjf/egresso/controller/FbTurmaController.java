@@ -1,5 +1,6 @@
 package br.ufjf.egresso.controller;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -21,6 +22,7 @@ import org.zkoss.zul.Image;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
+import org.zkoss.image.AImage;
 
 import br.ufjf.egresso.business.AlunoBusiness;
 import br.ufjf.egresso.business.PostagemBusiness;
@@ -49,6 +51,7 @@ public class FbTurmaController {
 	private List<Postagem> postagensTurma;
 	private int largura, altura;
 	private InputStream imgPostagem;
+	private ArrayList<AImage> album = new ArrayList<AImage>();
 
 	@Init
 	public void init() {
@@ -67,6 +70,15 @@ public class FbTurmaController {
 		alunos = new AlunoBusiness().getAlunos(turma);
 		filtraAlunos = alunos;
 		postagensTurma = new PostagemBusiness().getPostagens(turma);
+		
+		for (int j = 0; j < postagensTurma.size(); j++) {
+			try {
+				album.add(new org.zkoss.image.AImage("/home/users/esoares/post-imgs/" + postagensTurma.get(j).getImagem()));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public int getAltura(){
