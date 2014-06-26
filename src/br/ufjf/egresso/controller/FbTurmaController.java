@@ -1,5 +1,6 @@
 package br.ufjf.egresso.controller;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Timestamp;
@@ -71,14 +72,7 @@ public class FbTurmaController {
 		filtraAlunos = alunos;
 		postagensTurma = new PostagemBusiness().getPostagens(turma);
 		
-		for (int j = 0; j < postagensTurma.size(); j++) {
-			try {
-				album.add(new org.zkoss.image.AImage("/home/users/esoares/post-imgs/" + postagensTurma.get(j).getImagem()));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		
 	}
 	
 	public int getAltura(){
@@ -267,7 +261,7 @@ public class FbTurmaController {
 	public void verImagem(@BindingParam("window") Window window,
 			@BindingParam("imgSrc") String imgSrc) {
 		try{
-			org.zkoss.image.AImage img = new org.zkoss.image.AImage("/home/users/esoares/post-imgs/" + imgSrc);
+			org.zkoss.image.AImage img = new org.zkoss.image.AImage(ConfHandler.getConf("FILE.PATH") + imgSrc);
 			((Image) window.getChildren().get(0)).setContent(img);
 			}catch(java.io.IOException e){
 				e.printStackTrace();

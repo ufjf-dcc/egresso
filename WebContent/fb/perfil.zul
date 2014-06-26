@@ -522,7 +522,7 @@
 		 
 
 		<div style = "position:relative; top:-60px;">
-		<a href="album_turma.zul" image="/img/voltar.png"
+		<a href="turma.zul" image="/img/voltar.png"
 			tooltip="ajuda" style="cursor: pointer" />
 			<a href="@load(vm.aluno.linkFacebook)" target="_blank"
 				image="/img/facebook.png" />

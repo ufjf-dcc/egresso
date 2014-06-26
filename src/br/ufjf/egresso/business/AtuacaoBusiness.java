@@ -47,8 +47,8 @@ public class AtuacaoBusiness {
 
 		validaCargo(atuacao.getCargo());
 		validaLocal(atuacao.getLocal());
-		validaData(atuacao.getDataTermino());
-		validaData(atuacao.getDataInicio());
+		//validaDataInicio(atuacao.getDataTermino());
+		//validaDataTermino(atuacao.getDataInicio());
 		return errors.size() == 0;
 	}
 
@@ -61,7 +61,13 @@ public class AtuacaoBusiness {
 		if (local == null || local.trim().length() == 0)
 			errors.add("É necessário informar o local;\n");
 	}
-	private void validaData(Date dt){
+	
+	private void validaDataTermino(Date dt){
+		if(dt != null)
+			validaDataInicio(dt);	
+	}
+	
+	private void validaDataInicio(Date dt){		
 		SimpleDateFormat sdf1= new SimpleDateFormat("dd/MM/yyyy");
 		String strDtUser = sdf1.format(dt);
 		String dtArray[] = new String[3];
