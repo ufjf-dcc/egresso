@@ -1,21 +1,62 @@
 <?page title="Álbum de fotos" contentType="text/html;charset=UTF-8"?>
-<zk>
+
+<zk xmlns:c='client'>
+	<style src="/styles.css" />
+	<script type="text/javascript" src="/watermarkinput.js" />
+	
+	
+	<script type="text/javascript">
+		
+		<![CDATA[
+		         
+		//Obtém o appId contido no arquivo .txt
+		var appId;
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange=function(){
+			if (xmlhttp.readyState==4 && xmlhttp.status==200){
+				appId=xmlhttp.responseText;
+		  	}
+		}
+		xmlhttp.open("GET","appId.txt",true);
+		xmlhttp.send();
+		
+		// Inicializa o Facebook SDK
+		window.fbAsyncInit = function() {
+		  FB.init({
+		    appId      : appId,
+		    status     : true,
+		    xfbml      : true
+		  });
+		};
+		
+		(function(d, s, id){
+		   var js, fjs = d.getElementsByTagName(s)[0];
+		   if (d.getElementById(id)) {return;}
+		   js = d.createElement(s); js.id = id;
+		   js.src = "//connect.facebook.net/en_US/all.js";
+		   fjs.parentNode.insertBefore(js, fjs);
+		 }(document, 'script', 'facebook-jssdk'));
+		 
+		
+		]]>
+		
+	</script>
+
 <div apply="org.zkoss.bind.BindComposer" width="100%"
 		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbTurmaController')"
-		height="100%">
+		height="100%"  onClientInfo="@command('gerarAlbum')">
 	
 		<hlayout class="conteudo">
 
 			<!-- Mural -->
 			<div class="mural">
-					<vlayout children="@load(vm.postagensTurma)"
+					<vlayout children="@load(vm.imgs)"
 						style="margin-bottom:10px">
-						<template name="children" var="postagem">
+						<template name="children" var="imgs">
 							<vlayout>
 								<hlayout width="100%">
-									<imagem class = "galeria"
-									style="font-size:16px;" hflex="1" />
-							
+									<window id="win" border="normal" width="350px" minheight="350" content ="imgs">
+							        </window>
 								</hlayout>
 							</vlayout>
 							

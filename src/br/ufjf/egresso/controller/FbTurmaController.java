@@ -1,6 +1,6 @@
 package br.ufjf.egresso.controller;
 
-import java.io.FileNotFoundException;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Timestamp;
@@ -37,7 +37,7 @@ import br.ufjf.egresso.utils.FileManager;
 /**
  * Classe para controlar a página /fb/turma.zul
  * 
- * @author Jorge Augusto da Silva Moreira
+ * @author Jorge Augusto da Silva Moreira e Eduardo Rocha Soares
  * 
  */
 public class FbTurmaController {
@@ -52,7 +52,16 @@ public class FbTurmaController {
 	private List<Postagem> postagensTurma;
 	private int largura, altura;
 	private InputStream imgPostagem;
-	private ArrayList<AImage> album = new ArrayList<AImage>();
+
+
+	private List<AImage> imgs = new ArrayList<AImage>();
+	
+	public List<AImage> getImgs() {
+		return imgs;
+	}
+
+
+	
 
 	@Init
 	public void init() {
@@ -101,7 +110,8 @@ public class FbTurmaController {
 			}
 			linha.add(a);
 			inseridos++;
-		}
+			
+	}
 
 		if (linha.size() > 0)
 			linhas.add(linha);
@@ -133,7 +143,8 @@ public class FbTurmaController {
 
 	public List<Postagem> getPostagensTurma() {
 		return postagensTurma;
-	}
+	}			
+
 
 	public Turma getTurma() {
 		return turma;
@@ -261,6 +272,7 @@ public class FbTurmaController {
 	public void verImagem(@BindingParam("window") Window window,
 			@BindingParam("imgSrc") String imgSrc) {
 		try{
+			
 			org.zkoss.image.AImage img = new org.zkoss.image.AImage(ConfHandler.getConf("FILE.PATH") + imgSrc);
 			((Image) window.getChildren().get(0)).setContent(img);
 			}catch(java.io.IOException e){
@@ -269,5 +281,20 @@ public class FbTurmaController {
 		window.doModal();
 		
 	}
+	@Command
+	public void gerarAlbum(){
+		
+		for(int i = 0; i < postagensTurma.size(); i++){
+			if(postagensTurma.get(i).getImagem() !=null){
+				
+				try {
+					imgs.add(new AImage(ConfHandler.getConf("FILE.PATH") + postagensTurma.get(i).getImagem()));
+				}catch (IOException | IndexOutOfBoundsException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
 
 }

@@ -175,9 +175,14 @@
 							</hlayout>
 						</template>
 					</vlayout>
+					<div>
+						<a  href="album_turma.zul" 
+						image="/img/photos.png" />
+			
+					</div>
 				</vlayout>
 			</div>
-
+			
 			<label id="nenhumAluno"
 				value="Nenhum aluno deste semestre se cadastrou ainda. Deseja convidar ex-alunos?"
 				c:onClick="convidar()"
@@ -188,8 +193,9 @@
 			<vlayout class="gradeAlunos" style="@load('max-height:'.concat(vm.altura).concat('px'))"
 				children="@load(vm.linhas)">
 				<template name="children" var="linha">
-
+					
 					<hlayout children="@load(linha)">
+					
 						<template name="children" var="aluno">
 							<vlayout class="aluno">
 								<div class="aluno">
@@ -208,7 +214,7 @@
 
 				</template>
 			</vlayout>
-
+			
 		</hlayout>
 	</div>
 <zscript><![CDATA[
