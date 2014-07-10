@@ -52,16 +52,8 @@ public class FbTurmaController {
 	private List<Postagem> postagensTurma;
 	private int largura, altura;
 	private InputStream imgPostagem;
-
-
-	private List<AImage> imgs = new ArrayList<AImage>();
-	
-	public List<AImage> getImgs() {
-		return imgs;
-	}
-
-
-	
+	private ArrayList<String> urlPostagens;
+	private int indiceImagem;
 
 	@Init
 	public void init() {
@@ -80,7 +72,13 @@ public class FbTurmaController {
 		alunos = new AlunoBusiness().getAlunos(turma);
 		filtraAlunos = alunos;
 		postagensTurma = new PostagemBusiness().getPostagens(turma);
-		
+		urlPostagens = new ArrayList<String>();
+		for(int i = 0; i < postagensTurma.size(); i++){
+			if(postagensTurma.get(i).getImagem() != null)
+				urlPostagens.add(postagensTurma.get(i).getImagem());
+				
+		}
+	
 		
 	}
 	
@@ -192,7 +190,7 @@ public class FbTurmaController {
 		filtraAlunos = alunos;
 		postagensTurma = new PostagemBusiness().getPostagens(turma);
 		montaTabela(null);
-	}
+	}	
 
 	/**
 	 * Retorna para a página zul a descrição da data da {@link Postagem}.
@@ -282,19 +280,46 @@ public class FbTurmaController {
 		
 	}
 	@Command
-	public void gerarAlbum(){
+	public void next(@BindingParam("window") Window window){
+		if(indiceImagem == urlPostagens.size() - 1)
+			this.indiceImagem = 0;
+		else
+			this.indiceImagem++ ;
 		
-		for(int i = 0; i < postagensTurma.size(); i++){
-			if(postagensTurma.get(i).getImagem() !=null){
-				
-				try {
-					imgs.add(new AImage(ConfHandler.getConf("FILE.PATH") + postagensTurma.get(i).getImagem()));
-				}catch (IOException | IndexOutOfBoundsException e) {
-					e.printStackTrace();
-				}
-			}
+		try{
+			org.zkoss.image.AImage img = new org.zkoss.image.AImage(ConfHandler.getConf("FILE.PATH") + urlPostagens.get(indiceImagem));
+			((Image) window.getChildren().get(0)).setContent(img);
+		}catch(java.io.IOException  | java.lang.IndexOutOfBoundsException e){
+			e.printStackTrace();
+		}
+		
+	}
+	@Command
+	public void back(@BindingParam("window") Window window){
+		if(indiceImagem == 0)
+			this.indiceImagem = urlPostagens.size()-1;
+		else
+			this.indiceImagem -- ;
+		
+		try{
+			org.zkoss.image.AImage img = new org.zkoss.image.AImage(ConfHandler.getConf("FILE.PATH") + urlPostagens.get(indiceImagem));
+			((Image) window.getChildren().get(0)).setContent(img);
+		}catch(java.io.IOException  | java.lang.IndexOutOfBoundsException e){
+			e.printStackTrace();
+		}
+		
+	}
+	@Command
+	public void inicializa_album(@BindingParam("window") Window window){
+		this.indiceImagem = 0;
+		try{
+			org.zkoss.image.AImage img = new org.zkoss.image.AImage(ConfHandler.getConf("FILE.PATH") + urlPostagens.get(0));
+			((Image) window.getChildren().get(0)).setContent(img);
+		}catch(java.io.IOException  | java.lang.IndexOutOfBoundsException e){
+			e.printStackTrace();
 		}
 	}
+	
 	
 
 }

@@ -2,6 +2,7 @@
 
 <zk xmlns:c='client'>
 	<style src="/styles.css" />
+	<style src="/bootstrap/css/bootstrap.css" />
 	<script type="text/javascript" src="/watermarkinput.js" />
 	
 	
@@ -41,32 +42,23 @@
 		]]>
 		
 	</script>
-
+	
 <div apply="org.zkoss.bind.BindComposer" width="100%"
 		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbTurmaController')"
-		height="100%"  onClientInfo="@command('gerarAlbum')">
-	
-		<hlayout class="conteudo">
-
-			<!-- Mural -->
-			<div class="mural">
-					<vlayout children="@load(vm.imgs)"
-						style="margin-bottom:10px">
-						<template name="children" var="imgs">
-							<vlayout>
-								<hlayout width="100%">
-									<window id="win" border="normal" width="350px" minheight="350" content ="imgs">
-							        </window>
-								</hlayout>
-							</vlayout>
-							
-							
-						</template>
-					</vlayout>
-				
-			</div>
-		</hlayout>
-			
+		height="100%" onClientInfo = "@command('inicializa_album', window = album)"  >
+	<div class="cabecalho-album">
+		<label class = "cabecalho-album" value="Álbum de fotos da turma" />
 	</div>
-
+	<div align="center" class = "album">
+		<window  border="none" onLoad="album.setTitle(null);"  id="album" visible="true" width="500px" height="500px"
+			 position="center,center"
+			onClose="self.setVisible(false); event.stopPropagation();" >
+			<image width="100%" height="100%"  />
+		</window>
+	</div>
+	<div class="icons">
+		<image src ="/img/back.png" onClick ="@command('back', window = album)"/>
+		<image src ="/img/next.png" onClick ="@command('next', window = album)"/>
+	</div>
+</div>
 </zk>
