@@ -61,6 +61,7 @@ public class FbPerfilController {
 			}
 		
 		} else {
+	
 			aluno = (Aluno) Sessions.getCurrent().getAttribute("aluno");
 			podeEditar = true;
 		}
