@@ -13,7 +13,7 @@ public class TurmaDAO extends GenericoDAO {
 	public List<Turma> getTodas() {
 		try {
 			Query query = getSession().createQuery(
-					"SELECT t FROM Turma AS t ORDER BY t.ano DESC");
+					"SELECT t FROM Turma AS t ORDER BY t.ano, t.semestre ASC");
 			List<Turma> turmas = query.list();
 
 			getSession().close();

@@ -46,6 +46,10 @@
 <div apply="org.zkoss.bind.BindComposer" width="100%"
 		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbTurmaController')"
 		height="100%" onClientInfo = "@command('inicializa_album', window = album)"  >
+		<div id="voltaTurma">
+				
+				<a href="turma.zul" image="/img/voltar1.png" />
+			<label value ="Voltar para turmas."/>
 	<div class="cabecalho-album">
 		<label class = "cabecalho-album" value="Álbum de fotos da turma" />
 	</div>
@@ -60,5 +64,7 @@
 		<image src ="/img/back.png" onClick ="@command('back', window = album)"/>
 		<image src ="/img/next.png" onClick ="@command('next', window = album)"/>
 	</div>
+	
+		</div>
 </div>
 </zk>
