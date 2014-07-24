@@ -186,10 +186,15 @@ public class FbTurmaController {
 		turma = turmaBusiness.getTurma(Integer.parseInt(turmaDesc.substring(0,
 				turmaDesc.indexOf(" "))), Integer.parseInt(turmaDesc.substring(
 				turmaDesc.indexOf("º") - 1, turmaDesc.indexOf("º"))));
+
+		descricao = "Turma do " + turma.getSemestre() + "º semestre de "
+				+ turma.getAno();
+		
 		alunos = new AlunoBusiness().getAlunos(turma);
 		filtraAlunos = alunos;
 		postagensTurma = new PostagemBusiness().getPostagens(turma);
 		montaTabela(null);
+		BindUtils.postNotifyChange(null, null, this, "descricao");
 	}	
 
 	/**
