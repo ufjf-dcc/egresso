@@ -18,6 +18,9 @@ import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Vlayout;
 import org.zkoss.zul.Window;
 
+import facebook4j.Facebook;
+import facebook4j.FacebookException;
+import facebook4j.PictureSize;
 import br.ufjf.egresso.business.AlunoBusiness;
 import br.ufjf.egresso.business.AtuacaoBusiness;
 import br.ufjf.egresso.model.Aluno;
@@ -41,10 +44,12 @@ public class FbPerfilController {
 			.getTodas();
 	private boolean podeEditar = false;
 	private boolean emEdicao = false;
+	private Facebook fb;
 
 	@Init
 	public void init() {
 		String facebookId = (String) Executions.getCurrent().getParameter("id");
+		fb = (Facebook) Sessions.getCurrent().getAttribute("facebook");
 		if (facebookId != null) {
 			aluno = new AlunoBusiness().getAluno(facebookId);
 			podeEditar = aluno.getId() == ((Aluno) Sessions.getCurrent()
@@ -54,7 +59,15 @@ public class FbPerfilController {
 			aluno = (Aluno) Sessions.getCurrent().getAttribute("aluno");
 			podeEditar = true;
 		}
-
+		try {
+			aluno.setUrlFoto(fb.getPictureURL(
+					fb.getMe().getId(),
+					PictureSize.valueOf("large")).toExternalForm());
+		} catch (FacebookException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		new AlunoBusiness().editar(aluno);
 		List<Atuacao> todasAtuacoes = new AtuacaoBusiness().getPorAluno(aluno);
 		if (todasAtuacoes != null)
 			for (Atuacao a : todasAtuacoes) {
@@ -294,8 +307,7 @@ public class FbPerfilController {
 				default:
 					System.out.println("ID inválido de Atuação!.");
 				}
-				Messagebox.show("Atuacão Adicionada!", "Sucesso",
-						Messagebox.OK, Messagebox.INFORMATION);
+				
 				limpa();
 			} else {
 				Messagebox.show("A atuação não foi adicionada!", "Erro",
@@ -394,10 +406,7 @@ public class FbPerfilController {
 
 	@Command
 	public void submitInteresses(@BindingParam("window") Window window) {
-		if (alunoBusiness.editar(aluno))
-			Messagebox.show("Interesse Adicionado!", "Sucesso", Messagebox.OK,
-					Messagebox.INFORMATION);
-
+		alunoBusiness.editar(aluno);
 		window.setVisible(false);
 	}
 

@@ -18,6 +18,7 @@ import br.ufjf.egresso.model.Aluno;
 import br.ufjf.egresso.utils.ConfHandler;
 import facebook4j.Facebook;
 import facebook4j.FacebookFactory;
+import facebook4j.PictureSize;
 import facebook4j.auth.AccessToken;
 
 public class FbIndexController {
@@ -85,8 +86,15 @@ public class FbIndexController {
 				// Verifica se o aluno já foi autorizado ou se já solicitou
 				// cadastro.
 				Aluno aluno = new AlunoBusiness().getAluno(facebook.getId());
+				
+				
 				if (aluno != null && aluno.getAtivo() == Aluno.ATIVO) {
 					Sessions.getCurrent().setAttribute("aluno", aluno);
+					/*Facebook fb = (Facebook) Sessions.getCurrent().getAttribute("facebook");
+					aluno.setUrlFoto(fb.getPictureURL(
+							fb.getMe().getId(),
+							PictureSize.valueOf("large")).toExternalForm());
+						new AlunoBusiness().salvar(aluno);*/
 					Executions.sendRedirect("/fb/turma.zul");
 				} else {
 					if (aluno != null)

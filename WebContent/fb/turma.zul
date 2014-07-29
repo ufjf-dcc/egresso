@@ -131,7 +131,7 @@
 							onClick="@command('postar', texto=txtpost.value, imagem='dfs', privado=chkPrivado.checked)"
 							style="float:right; margin-top:10px" />
 							<image id="img" />
-						<fileupload label="Upload" onUpload="@command('upload', evt = event)" />
+						<fileupload label="Enviar Fotos" onUpload="@command('upload', evt = event)" />
 						
 					</div>
 

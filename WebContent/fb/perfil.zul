@@ -3,21 +3,47 @@
 <zk>
 
 	<style src="/bootstrap/css/bootstrap.css" />
-	<style src="/styles.css" />
+	
 
 	<div apply="org.zkoss.bind.BindComposer" width="100%"
 		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbPerfilController')"
 		height="100%">
+		<div class="menu">
+				<hlayout >		
+					<div  id="voltaTurma">
+							<vlayout>
+							<a href="turma.zul" image="/img/voltar1.png"
+								tooltip="ajuda" style="cursor: pointer" />
+							<label style ="font-size : 10px" value ="Voltar"/>
+						</vlayout>
+					</div>	
+					<div>
+			
+						<a href="@load(vm.aluno.linkFacebook)" target="_blank"
+						image="/img/facebook.png" />
+						<a
+							href="@load(vm.aluno.lkAccessToken eq null ? '/lk/index.zul?id='.concat(vm.aluno.id) : '')"
+							image="/img/linkedin.png" target="_blank" />
+						<a image="/img/twitter.png" target="_blank" />
+						<a image="/img/youtube.png" target="_blank" />
+						<a image="/img/google_plus.png" target="_blank" />
+					</div>
+				
+					
+					
+				</hlayout>
+	</div>
+		
 		<hlayout>
-			<div class="info-aluno">
+			<div height = "550px" width="220px" class="info-aluno">
 				<div
-					style="width: 100%; height: 260px; overflow: hidden; position: relative;">
+					style="width: 180px; height: 180px; overflow: hidden; position: relative;">
 					<image src="@load(vm.aluno.urlFoto)" class="aluno" />
 				</div>
 				<vlayout style="margin-top: 40px; color:white">
-					<label style="font-size:20px"
+					<label style="font-size:15px"
 						value="@load(vm.aluno.nome)" />
-					<label style="font-size:18px"
+					<label style="font-size:15px"
 						value="@load('Turma do '.concat(vm.aluno.turma.semestre).concat('° ').concat('semestre do ano de ').concat(vm.aluno.turma.ano).concat('.'))" />
 					<html>
 						
@@ -29,13 +55,13 @@
 
 					<label value="Atuação atual" style="font-size:16px" />
 
-					<label sclass="cargo"
+					<label style="font-size:15px"  sclass="cargo"
 						value="@load(vm.atuacaoAtual.cargo)" />
-					<label sclass="local"
+					<label style="font-size:15px" sclass="local"
 						value="@load(vm.atuacaoAtual.local)" />
 					<div>
-						<label sclass="data_atuacao" value="Desde " />
-						<label sclass="data_atuacao"
+						<label style="font-size:15px"  sclass="data_atuacao" value="Desde " />
+						<label style="font-size:15px" sclass="data_atuacao"
 							value="@load(''.concat(vm.atuacaoAtual.dataInicio)) @converter('br.ufjf.egresso.utils.DateFormatConverter')" />
 					</div>
 					
@@ -521,24 +547,7 @@
 
 		 
 
-		<div style = "position:relative; top:-60px;">
 	
-			<a href="@load(vm.aluno.linkFacebook)" target="_blank"
-				image="/img/facebook.png" />
-			<a
-				href="@load(vm.aluno.lkAccessToken eq null ? '/lk/index.zul?id='.concat(vm.aluno.id) : '')"
-				image="/img/linkedin.png" target="_blank" />
-			<a image="/img/twitter.png" target="_blank" />
-			<a image="/img/youtube.png" target="_blank" />
-			<a image="/img/google_plus.png" target="_blank" />
-			
-		</div>
-		<div id="voltaTurma">
-				
-				<a href="turma.zul" image="/img/voltar1.png"
-			tooltip="ajuda" style="cursor: pointer" />
-			<label value ="Voltar para turmas."/>
-		</div>
 	</div>
 
 	<popup id="ajuda">
