@@ -155,7 +155,7 @@
 					<vlayout children="@load(vm.postagensTurma)"
 						style="margin-bottom:10px">
 						<template name="children" var="postagem">
-							<vlayout
+							<vlayout  style="max-height : 100px;"
 								visible="@load(not postagem.privado or (postagem.privado and postagem.turma eq turma))" />
 							<hlayout width="100%">
 								<label value="@load(postagem.texto)"

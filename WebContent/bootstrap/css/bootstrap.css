@@ -6215,7 +6215,6 @@ button.close {
 		display: table-cell !important;
 	}
 }
-/** pagina do perfil
 
 @media print {
 	.hidden-print {
@@ -6226,9 +6225,9 @@ button.close {
 .info-aluno {
 	background-color: #c0504d;
 	margin: 20px;
-	width: 300px;
+	width: 220px;
 	padding: 20px;
-	height: 650px;
+	height:480px;
 }
 
 .atuacoes-aluno.z-vlayout {
@@ -6249,12 +6248,11 @@ button.close {
 }
 
 .nome_perfil.z-label {
-	font-size: 30px;
+	font-size: 16px;
 }
 
 .turma_perfil.z-label {
-	margin-top: 20px;
-	font-size: 20px;
+	font-size: 15px;
 	float: right;
 }
 
@@ -6268,15 +6266,15 @@ button.close {
 }
 
 .cargo.z-label {
-	font-size: 20px;
+	font-size: 13px;
 }
 
 .local.z-label {
-	font-size: 15px;
+	font-size: 13px;
 }
 
 .data_atuacao.z-label {
-	font-size: 15px;
+	font-size: 13px;
 }
 
 .top {

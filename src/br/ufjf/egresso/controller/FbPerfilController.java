@@ -44,12 +44,12 @@ public class FbPerfilController {
 			.getTodas();
 	private boolean podeEditar = false;
 	private boolean emEdicao = false;
-	private Facebook fb;
+
 
 	@Init
 	public void init() {
 		String facebookId = (String) Executions.getCurrent().getParameter("id");
-		fb = (Facebook) Sessions.getCurrent().getAttribute("facebook");
+
 		if (facebookId != null) {
 			aluno = new AlunoBusiness().getAluno(facebookId);
 			podeEditar = aluno.getId() == ((Aluno) Sessions.getCurrent()
@@ -59,15 +59,7 @@ public class FbPerfilController {
 			aluno = (Aluno) Sessions.getCurrent().getAttribute("aluno");
 			podeEditar = true;
 		}
-		try {
-			aluno.setUrlFoto(fb.getPictureURL(
-					fb.getMe().getId(),
-					PictureSize.valueOf("large")).toExternalForm());
-		} catch (FacebookException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		new AlunoBusiness().editar(aluno);
+		
 		List<Atuacao> todasAtuacoes = new AtuacaoBusiness().getPorAluno(aluno);
 		if (todasAtuacoes != null)
 			for (Atuacao a : todasAtuacoes) {
