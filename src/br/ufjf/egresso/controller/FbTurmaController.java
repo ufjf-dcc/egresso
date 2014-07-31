@@ -19,6 +19,8 @@ import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.ClientInfoEvent;
 import org.zkoss.zk.ui.event.UploadEvent;
 import org.zkoss.zk.ui.util.Clients;
+import org.zkoss.zul.Checkbox;
+import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Image;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Messagebox;
@@ -54,7 +56,7 @@ public class FbTurmaController {
 	private InputStream imgPostagem;
 	private ArrayList<String> urlPostagens;
 	private int indiceImagem;
-
+	private boolean buscaGlobal = false;
 	@Init
 	public void init() {
 
@@ -69,8 +71,8 @@ public class FbTurmaController {
 
 		descricao = "Turma do " + turma.getSemestre() + "º semestre de "
 				+ turma.getAno();
-		alunos = new AlunoBusiness().getAlunos(turma);
-		filtraAlunos = alunos;
+		filtraAlunos = new AlunoBusiness().getAlunos(turma);
+		 alunos = new AlunoBusiness().getAlunos();
 		postagensTurma = new PostagemBusiness().getPostagens(turma);
 		urlPostagens = new ArrayList<String>();
 		for(int i = 0; i < postagensTurma.size(); i++){
@@ -156,17 +158,38 @@ public class FbTurmaController {
 	@NotifyChange({ "filtraAlunos", "emptyMessage" })
 	public void pesquisar() {
 		List<Aluno> resultados = new ArrayList<Aluno>();
-		for (Aluno aluno : alunos)
-			if (aluno.getNome().trim().toLowerCase()
-					.contains(pesquisa.trim().toLowerCase()))
-				resultados.add(aluno);
+		if(buscaGlobal){
+			if(pesquisa != null){
+				if(pesquisa.trim().equals("") ){
+					resultados = new AlunoBusiness().getAlunos();
+				}else{
+					for (Aluno aluno : alunos)
+						if (aluno.getNome().trim().toLowerCase()
+								.contains(pesquisa.trim().toLowerCase()))
+							resultados.add(aluno);
+				}
+			}
+			
+		}else{
+			if(pesquisa != null){
+				if(pesquisa.trim().equals("") ){
+					resultados = new AlunoBusiness().getAlunos(turma);
+				}else{
+					for (Aluno aluno : filtraAlunos)
+						if (aluno.getNome().trim().toLowerCase()
+								.contains(pesquisa.trim().toLowerCase()))
+							resultados.add(aluno);
+				}
+			}
+		}
 		filtraAlunos = resultados;
 		montaTabela(null);
+		
 	}
 
 	@Command("limparPesquisa")
 	public void limparPesquisa() {
-		filtraAlunos = alunos;
+		filtraAlunos = new AlunoBusiness().getAlunos(turma);
 		montaTabela(null);
 	}
 
@@ -181,17 +204,34 @@ public class FbTurmaController {
 	}
 
 	@Command
-	public void trocaTurma(@BindingParam("turma") String turmaDesc) {
+	public void pesquisaGlobal(@BindingParam("global") Checkbox cbx , @BindingParam("selectTurma") Combobox comboTurma){
+			
+			comboTurma.setDisabled(cbx.isChecked());
+			comboTurma.setSelectedItem(null);
+			if(cbx.isChecked()){
+				filtraAlunos = new AlunoBusiness().getAlunos();
+				buscaGlobal = true;
+			}else{
+				buscaGlobal = false;
+				filtraAlunos = new AlunoBusiness().getAlunos(turma);
+			}
+			montaTabela(null);
+			
+	}
+	
+	@Command
+	public void trocaTurma(@BindingParam("turma") String turmaDesc ){
 		Clients.evalJavaScript("fadeOut()");
-		turma = turmaBusiness.getTurma(Integer.parseInt(turmaDesc.substring(0,
-				turmaDesc.indexOf(" "))), Integer.parseInt(turmaDesc.substring(
-				turmaDesc.indexOf("º") - 1, turmaDesc.indexOf("º"))));
-
-		descricao = "Turma do " + turma.getSemestre() + "º semestre de "
-				+ turma.getAno();
 		
-		alunos = new AlunoBusiness().getAlunos(turma);
-		filtraAlunos = alunos;
+		turma = turmaBusiness.getTurma(Integer.parseInt(turmaDesc.substring(0,
+					turmaDesc.indexOf(" "))), Integer.parseInt(turmaDesc.substring(
+					turmaDesc.indexOf("º") - 1, turmaDesc.indexOf("º"))));
+	
+		descricao = "Turma do " + turma.getSemestre() + "º semestre de "
+					+ turma.getAno();
+		
+		filtraAlunos = new AlunoBusiness().getAlunos(turma);
+		
 		postagensTurma = new PostagemBusiness().getPostagens(turma);
 		montaTabela(null);
 		BindUtils.postNotifyChange(null, null, this, "descricao");
@@ -284,6 +324,7 @@ public class FbTurmaController {
 		window.doModal();
 		
 	}
+	
 	@Command
 	public void next(@BindingParam("window") Window window){
 		if(indiceImagem == urlPostagens.size() - 1)

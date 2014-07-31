@@ -138,13 +138,14 @@ tbody.z-grid-emptybody td {
 
 .cabecalho.z-div {
 	font-size: 15px;
-	margin-top: 30px;
-	margin-bottom: 30px;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 .pesquisa-turma.z-div {
 	background: #c0504d;
 	padding: 20px;
+
 }
 
 .pesquisa-turma.z-label {

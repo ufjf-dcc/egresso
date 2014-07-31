@@ -70,7 +70,8 @@
 				width="@load(''.concat(vm.largura - 450).concat('px'))">
 				<label class="cabecalho" value="@load(vm.descricao)" />
 			</div>
-			<div class="pesquisa-turma" width="350px">
+			<div style="position:relative; right:300px;margin-top:20px;" class="pesquisa-turma" width="480px"
+			>
 				<hlayout>
 					<vlayout>
 						<label class="pesquisa-turma"
@@ -81,15 +82,22 @@
 					<vlayout>
 						<label class="pesquisa-turma"
 							value="Ver outra turma:" />
-						<div>
+						<div style="color:white;">
+							<hlayout>
+						
 							<combobox readonly="true"
 								model="@load(vm.semestres)" width="130px"
-								onSelect="@command('trocaTurma', turma=self.value)">
+								onSelect="@command('trocaTurma', turma=self.value, global = self.nextSibling, selectTurma = self)">
+									
 								<template name="model">
 									<comboitem label="@load(each)" />
 								</template>
 							</combobox>
+							 <checkbox  label="Pesquisa Global?" checked = "false" onCheck="@command('pesquisaGlobal',global = self, selectTurma = self.previousSibling )" />
+							 </hlayout>
 						</div>
+						
+						
 					</vlayout>
 				</hlayout>
 			</div>

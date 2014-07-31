@@ -161,6 +161,9 @@ public class AlunoBusiness {
 	public List<Aluno> getAlunos(Turma turma) {
 		return alunoDao.getAlunos(turma);
 	}
+	public List<Aluno> getAlunos() {
+		return alunoDao.getAlunos();
+	}
 
 	public boolean salvaOuEdita(Aluno aluno) {
 		return alunoDao.salvaOuEdita(aluno);

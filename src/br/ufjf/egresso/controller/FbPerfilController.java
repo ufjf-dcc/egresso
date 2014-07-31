@@ -88,19 +88,19 @@ public class FbPerfilController {
 
 	@Command
 	public void editarAtuacao(
-			@BindingParam("editarSalvar") Image imgSalvarEditar,
+			@BindingParam("editarSalvar") Label lbSalvarEditar,
 			@BindingParam("sumir") Vlayout v1,
 			@BindingParam("aparecer") Vlayout v2,
-			@BindingParam("cancelar") Image imgCancelar,
+			@BindingParam("cancelar") Label lbCancelar,
 			@BindingParam("atuacao") Atuacao atuacao) {
 
-		if (!imgCancelar.isVisible()) {
+		if (!lbCancelar.isVisible()) {
 			atuacaoEmEdicao = new Atuacao();
 			atuacaoEmEdicao.copy(atuacao);
-			imgSalvarEditar.setSrc("/img/confirmar.png");
+			lbSalvarEditar.setValue("Confirmar");
 			BindUtils.postNotifyChange(null, null, this, "atuacaoEmEdicao");
 		} else {
-			imgSalvarEditar.setSrc("/img/editar.png");
+			lbSalvarEditar.setValue("Editar");
 			atuacao.copy(atuacaoEmEdicao);
 			atuacaoBusiness.salvaOuEdita(atuacao);
 			BindUtils.postNotifyChange(null, null, this, "filtraProjetos");
@@ -109,18 +109,18 @@ public class FbPerfilController {
 		}
 		v1.setVisible(!v1.isVisible());
 		v2.setVisible(!v2.isVisible());
-		imgCancelar.setVisible(!imgCancelar.isVisible());
-		emEdicao = imgCancelar.isVisible();
+		lbCancelar.setVisible(!lbCancelar.isVisible());
+		emEdicao = lbCancelar.isVisible();
 		BindUtils.postNotifyChange(null, null, this, "emEdicao");
 	}
 
 	@Command
 	public void cancelarEdicao(
 			@BindingParam("editarSalvar") Image imgSalvarEditar,
-			@BindingParam("cancelar") Image imgCancelar,
+			@BindingParam("cancelar") Label lbCancelar,
 			@BindingParam("sumir") Vlayout v1,
 			@BindingParam("aparecer") Vlayout v2) {
-		imgCancelar.setVisible(false);
+		lbCancelar.setVisible(false);
 		imgSalvarEditar.setSrc("/img/editar.png");
 		imgSalvarEditar.setVisible(true);
 		v1.setVisible(!v1.isVisible());
