@@ -11,7 +11,10 @@
 	<script type="text/javascript">
 		
 		<![CDATA[
-		         
+		 function album(){
+			 location.href="album_turma.zul";
+			 
+		 }
 		//Obtém o appId contido no arquivo .txt
 		var appId;
 		var xmlhttp = new XMLHttpRequest();
@@ -66,21 +69,30 @@
 		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbTurmaController')"
 		height="100%" onClientInfo="@command('montaTabela', event=event)">
 		<hlayout>
-			<div class="cabecalho"
-				width="@load(''.concat(vm.largura - 450).concat('px'))">
-				<label class="cabecalho" value="@load(vm.descricao)" />
-			</div>
-			<div style="position:relative; right:300px;margin-top:20px;" class="pesquisa-turma" width="480px"
+			
+			<div style="position:relative; margin-top:20px;" class="pesquisa-turma" width="1500px"
 			>
-				<hlayout>
+			<hlayout>
+			<div style="color:white;" class="cabecalho"
+				width="@load(''.concat(vm.largura - 450).concat('px'))">
+				<label style="font-size:15px;"   class="cabecalho" value="@load(vm.descricao)" />
+			</div>
+			<div style="color:white; position:relative; right:650px;  cursor:pointer; text-decoration:underline;" >
+			<hlayout >
+				<label style="font-size:15px; margin-right:10px; cursor:pointer;  text-decoration:underline; "  value="Ver Perfil" onClick="@command('goProfile')"/>
+				<label style="font-size:15px; cursor:pointer;  text-decoration:underline; " value="Fotos da Turma" onClick="@command('verAlbum')" />
+			</hlayout>
+			</div>
+			<div style="position:relative; right:400px; ">
+			<hlayout>
 					<vlayout>
-						<label class="pesquisa-turma"
+						<label style="font-size:13px;" class="pesquisa-turma"
 							value="Pesquisar aluno:" />
 						<textbox id="txtpesquisa" class="pesquisa"
 							onOK="@command('pesquisar')" value="@bind(vm.pesquisa)" />
 					</vlayout>
 					<vlayout>
-						<label class="pesquisa-turma"
+						<label style="font-size:13px;" class="pesquisa-turma"
 							value="Ver outra turma:" />
 						<div style="color:white;">
 							<hlayout>
@@ -99,6 +111,8 @@
 						
 						
 					</vlayout>
+				</hlayout>
+			</div>
 				</hlayout>
 			</div>
 		</hlayout>
@@ -125,7 +139,7 @@
 					<div width="100%">
 						<button label="Convidar ex-alunos" class="btn"
 							c:onClick="convidar()" style="float:right; margin-top:10px" />
-						<label value="Mural da turma"
+						<label value="Mural da turma" style="font-size:16px;"
 							class="titulo-mural" hflex="1" />
 					</div>
 					<textbox id="txtpost" rows="4" width="100%"
@@ -167,7 +181,7 @@
 								visible="@load(not postagem.privado or (postagem.privado and postagem.turma eq turma))" />
 							<hlayout width="100%">
 								<label value="@load(postagem.texto)"
-									style="font-size:16px;" hflex="1" />
+									style="font-size:15px;" hflex="1" />
 								<button label="Ver imagem"
 									visible="@load(postagem.imagem ne null)"
 									onClick="@command('verImagem', window=imagem, imgSrc=postagem.imagem)" />
@@ -176,18 +190,14 @@
 								<label
 									value="@load('Por '.concat(postagem.aluno.nome))"
 									onClick='@command("verPerfil", facebookId=postagem.aluno.facebookId)'
-									style="font-size:12px; text-decoration:underline; cursor: pointer;" hflex="1" />
+									style="font-size:10px; text-decoration:underline; cursor: pointer;" hflex="1" />
 								<label
 									onCreate="@command('descricaoDataPostagem', dataHora=postagem.dataHora, label=self)"
-									style="font-size:12px;" />
+									style="font-size:10px;" />
 							</hlayout>
 						</template>
 					</vlayout>
-					<div>
-						<a  href="album_turma.zul" 
-						image="/img/photos.png" />
-			
-					</div>
+					
 				</vlayout>
 			</div>
 			

@@ -218,7 +218,23 @@ public class FbTurmaController {
 			montaTabela(null);
 			
 	}
+	@Command
+	public void verAlbum(){
+		Clients.evalJavaScript("album()");
+		
+	}
+	@Command
+	public void goProfile(){
+	Executions.sendRedirect("perfil.zul?id=" + ((Aluno) Sessions.getCurrent().getAttribute("aluno"))
+			.getFacebookId());
 	
+	}
+	@Command
+	public void voltaTurma(){
+		Clients.evalJavaScript("voltaTurma()");
+
+		
+	}
 	@Command
 	public void trocaTurma(@BindingParam("turma") String turmaDesc ){
 		Clients.evalJavaScript("fadeOut()");

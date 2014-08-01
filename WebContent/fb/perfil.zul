@@ -7,30 +7,30 @@
 		<style src="/styles.css" />
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"/>
     	<script type="text/javascript" src="/jquery.tokeninput.js"/>
-
+	<script type="text/javascript">
+		<![CDATA[ 
+			function volta(){
+				location.href="turma.zul";
+			}
+			]]>
+	</script>
 	<div apply="org.zkoss.bind.BindComposer" width="100%"
 		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbPerfilController')"
 		height="100%">
 		
 		<div style="background-color: #c0504d; width:1500px; margin-left : 10px;margin-top:10px;">
 		<hlayout>
-			<div style = "color: white;" id="voltaTurma">
+		<div  style = " position:relative; left:10px;color: white; padding:15px;cursor:pointer; text-decoration:underline;" id="voltaTurma">
 					
+				<label style ="font-size : 16px;" value="Voltar para turma" onClick="@command('voltaTurma')"/>
 				
-				
-			</div>
-			<div style = "position:relative; top:0px;margin-left:600px; padding:10px; ">
-		
-				<a style = "margin-left:20px;" href="@load(vm.aluno.linkFacebook)" target="_blank"
-					image="/img/facebook2.png" />
-				<a style = "margin-left:20px;"
-					href="@load(vm.aluno.lkAccessToken eq null ? '/lk/index.zul?id='.concat(vm.aluno.id) : '')"
-					image="/img/linkedin2.png" target="_blank" />
-				<a  style = "margin-left:20px;" image="/img/twitter2.png" target="_blank" />
-				<a style = "margin-left:20px;" image="/img/youtube2.png" target="_blank" />
-				<a style = "margin-left:20px;" image="/img/google_plus2.png" target="_blank" />
+		</div>
+			<div  style = " position:relative; left:400px;color: white; padding:15px;" id="cabecalho2">
+					
+				<label style ="font-size : 16px;" value="Perfil do aluno -  Controle de Egressos DCC UFJF"/>
 				
 			</div>
+			
 			</hlayout>
 		</div>	
 			
@@ -88,12 +88,12 @@
 			<vlayout hflex="1" class="atuacoes-aluno">
 
 				<hlayout hflex="true" spacing="5px">
-					<div width="100%" style="margin-bottom:25px"
+					<div width="300px" style="margin-bottom:25px"
 						hflex="1">
 						<div>
 							<label value="Empregos" class="cabecalho" />
 							<label
-								style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:20px"
+								style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:5px"
 								value="Adicionar..." visible="@load(vm.podeEditar)"
 								onClick="@command('adicionaAtuacao', window=adicionaAtuacao, tipo=3)" />
 						</div>
@@ -203,12 +203,12 @@
 						</vlayout>
 					</div>
 
-					<div width="100%" style="margin-bottom:25px"
+					<div  width="300px" style=" margin-bottom:25px"
 						hflex="1">
 						<div>
 							<label value="Formação" class="cabecalho" />
 							<label
-								style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:20px"
+								style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:5px"
 								value="Adicionar..." visible="@load(vm.podeEditar)"
 								onClick="@command('adicionaAtuacao', window=adicionaAtuacao, tipo=1)" />
 						</div>
@@ -281,13 +281,13 @@
 									<vlayout visible="false">
 										<hlayout>
 											<label sclass="cargo"
-												value="Cargo: " />
+												value="Formação: " />
 											<textbox
 												value="@bind(vm.atuacaoEmEdicao.cargo)" />
 										</hlayout>
 										<hlayout>
 											<label sclass="local"
-												value="Local: " />
+												value="Instituição: " />
 											<textbox
 												value="@bind(vm.atuacaoEmEdicao.local)" />
 										</hlayout>
@@ -336,12 +336,12 @@
 						</vlayout>
 					</div>
 
-					<div width="100%" style="margin-bottom:25px"
+					<div width="300px" style="margin-bottom:25px"
 						hflex="1">
 						<div>
 							<label value="Projetos" class="cabecalho" />
 							<label
-								style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:20px"
+								style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:5px"
 								value="Adicionar..." visible="@load(vm.podeEditar)"
 								onClick="@command('adicionaAtuacao', window=adicionaAtuacao, tipo=2)" />
 						</div>
@@ -412,12 +412,12 @@
 									<vlayout visible="false">
 										<hlayout>
 											<label sclass="cargo"
-												value="Cargo: " />
+												value="Projeto: " />
 											<textbox hflex="1"
 												value="@bind(vm.atuacaoEmEdicao.cargo)" />
 										</hlayout>
 										<hlayout>
-											<label sclass="local"
+											<label sclass="Local de desenvolvimento"
 												value="Local: " />
 											<textbox hflex="1"
 												value="@bind(vm.atuacaoEmEdicao.local)" />
@@ -511,7 +511,7 @@
 				</columns>
 				<rows>
 					<row>
-						<label value="Cargo:" />
+						<label value="@load(vm.novaAtuacao.tipoAtuacao.id eq 1 ? 'Formação' : vm.novaAtuacao.tipoAtuacao.id eq 2 ? 'Projeto' : 'Cargo')" />
 						<textbox
 							value="@load(vm.novaAtuacao.cargo)@save(vm.novaAtuacao.cargo, before='submitAtuacao')"
 							tabindex="1" id="cargo" width="100%" />
@@ -519,7 +519,7 @@
 					</row>
 
 					<row>
-						<label value="Local:" />
+						<label value="@load(vm.novaAtuacao.tipoAtuacao.id eq 1 ? 'Instituição' : vm.novaAtuacao.tipoAtuacao.id eq 2 ? 'Local de Desenvolvimento' : 'Empresa')" />
 						<textbox
 							value="@load(vm.novaAtuacao.local)@save(vm.novaAtuacao.local, before='submitAtuacao')"
 							tabindex="2" id="local" width="100%" />
@@ -558,7 +558,18 @@
 			</div>
 		</window>
 
-		 
+		 <div style = "position:relative; top:-220px;margin-left:25px; ">
+		
+				<a style = "margin-left:5px;" href="@load(vm.aluno.linkFacebook)" target="_blank"
+					image="/img/facebook2.png" />
+				<a style = "margin-left:5px;"
+					href="@load(vm.aluno.lkAccessToken eq null ? '/lk/index.zul?id='.concat(vm.aluno.id) : '')"
+					image="/img/linkedin2.png" target="_blank" />
+				<a  style = "margin-left:5px;" image="/img/twitter2.png" target="_blank" />
+				<a style = "margin-left:5px;" image="/img/youtube2.png" target="_blank" />
+				<a style = "margin-left:5px;" image="/img/google_plus2.png" target="_blank" />
+				
+			</div>
 
 		
 	</div>

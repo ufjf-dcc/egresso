@@ -10,6 +10,7 @@ import org.zkoss.bind.annotation.Init;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Image;
@@ -116,13 +117,13 @@ public class FbPerfilController {
 
 	@Command
 	public void cancelarEdicao(
-			@BindingParam("editarSalvar") Image imgSalvarEditar,
+			@BindingParam("editarSalvar") Label lbSalvarEditar,
 			@BindingParam("cancelar") Label lbCancelar,
 			@BindingParam("sumir") Vlayout v1,
 			@BindingParam("aparecer") Vlayout v2) {
 		lbCancelar.setVisible(false);
-		imgSalvarEditar.setSrc("/img/editar.png");
-		imgSalvarEditar.setVisible(true);
+		lbSalvarEditar.setValue("Editar");
+		lbSalvarEditar.setVisible(true);
 		v1.setVisible(!v1.isVisible());
 		v2.setVisible(!v2.isVisible());
 		atuacaoEmEdicao = null;
@@ -273,10 +274,16 @@ public class FbPerfilController {
 			}
 		window.doModal();
 	}
-
+	@Command
+	public void voltaTurma(){
+		
+		Clients.evalJavaScript("volta()");
+	}
 	@Command
 	public void submitAtuacao(@BindingParam("window") final Window window) {
 		novaAtuacao.setAluno(aluno);
+		System.out.println(novaAtuacao.getCargo());
+		System.out.println(novaAtuacao.getLocal());
 
 		if (atuacaoBusiness.validar(novaAtuacao)) {
 			if (atuacaoBusiness.salvar(novaAtuacao)) {

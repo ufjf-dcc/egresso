@@ -9,7 +9,10 @@
 	<script type="text/javascript">
 		
 		<![CDATA[
-		         
+		  function voltaTurma(){
+			  location.href = "turma.zul";
+			  
+		  }
 		//Obtém o appId contido no arquivo .txt
 		var appId;
 		var xmlhttp = new XMLHttpRequest();
@@ -46,25 +49,30 @@
 <div apply="org.zkoss.bind.BindComposer" width="100%"
 		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbTurmaController')"
 		height="100%" onClientInfo = "@command('inicializa_album', window = album)"  >
+		<div style="color:white; padding :15px;background-color: #c0504d; width:100%;" >
+		<hlayout>
 		<div id="voltaTurma">
 				
-				<a href="turma.zul" image="/img/voltar1.png" />
-			<label value ="Voltar para turmas."/>
-	<div class="cabecalho-album">
-		<label class = "cabecalho-album" value="Álbum de fotos da turma" />
+				
+			<label style="font-size:15px; cursor:pointer; text-decoration:underline; " value ="Voltar para turma" onClick="@command('voltaTurma')"/>
+		</div>
+		<div style="position:relative;left:110px;">
+			<label  style="font-size:16px;" value="Álbum de fotos da turma -  Controle de Egressos DCC UFJF" />
+		</div>
+	</hlayout>
 	</div>
-	<div align="center" class = "album">
+	<div style= "position:relative; right:300px;" class = "album">
 		<window  border="none" onLoad="album.setTitle(null);"  id="album" visible="true" width="500px" height="500px"
 			 position="center,center"
 			onClose="self.setVisible(false); event.stopPropagation();" >
 			<image width="100%" height="100%"  />
 		</window>
 	</div>
-	<div class="icons">
-		<image src ="/img/back.png" onClick ="@command('back', window = album)"/>
-		<image src ="/img/next.png" onClick ="@command('next', window = album)"/>
+	<div style="position:relative; margin-top:10px; right:350px;" class="icons">
+			<label  style="font-size:15px; cursor:pointer; text-decoration:underline;  margin-right:10px;" value="Imagem Anterior" onClick="@command('back', window = album)" />
+				<label  style="font-size:15px; cursor:pointer; text-decoration:underline; margin-right:10px;" value="Próxima imagem" onClick="@command('next',window = album)" />
 	</div>
 	
-		</div>
+		
 </div>
 </zk>
