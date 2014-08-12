@@ -175,7 +175,8 @@ public class FbTurmaController {
 				if(pesquisa.trim().equals("") ){
 					resultados = new AlunoBusiness().getAlunos(turma);
 				}else{
-					for (Aluno aluno : filtraAlunos)
+					filtraAlunos = new AlunoBusiness().getAlunos(turma);
+					for (Aluno aluno :filtraAlunos )
 						if (aluno.getNome().trim().toLowerCase()
 								.contains(pesquisa.trim().toLowerCase()))
 							resultados.add(aluno);

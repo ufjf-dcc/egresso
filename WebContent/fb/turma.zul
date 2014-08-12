@@ -70,20 +70,20 @@
 		height="100%" onClientInfo="@command('montaTabela', event=event)">
 		<hlayout>
 			
-			<div style="position:relative; margin-top:20px;" class="pesquisa-turma" width="1500px"
+			<div style=" margin-top:20px;" class="pesquisa-turma" width="1500px"
 			>
 			<hlayout>
 			<div style="color:white;" class="cabecalho"
-				width="@load(''.concat(vm.largura - 450).concat('px'))">
+				width="150px;">
 				<label style="font-size:15px;"   class="cabecalho" value="@load(vm.descricao)" />
 			</div>
-			<div style="color:white; position:relative; right:650px;  cursor:pointer; text-decoration:underline;" >
+			<div style="color:white; margin-left:25px; cursor:pointer; text-decoration:underline;" >
 			<hlayout >
 				<label style="font-size:15px; margin-right:10px; cursor:pointer;  text-decoration:underline; "  value="Ver Perfil" onClick="@command('goProfile')"/>
 				<label style="font-size:15px; cursor:pointer;  text-decoration:underline; " value="Fotos da Turma" onClick="@command('verAlbum')" />
 			</hlayout>
 			</div>
-			<div style="position:relative; right:400px; ">
+			<div style="margin-left:25px; ">
 			<hlayout>
 					<vlayout>
 						<label style="font-size:13px;" class="pesquisa-turma"

@@ -88,7 +88,7 @@
 			<vlayout hflex="1" class="atuacoes-aluno">
 
 				<hlayout hflex="true" spacing="5px">
-					<div width="300px" style="margin-bottom:25px"
+					<div width="200px" style="margin-bottom:25px"
 						hflex="1">
 						<div>
 							<label value="Empregos" class="cabecalho" />
@@ -105,10 +105,10 @@
 							
 						</html>
 						<vlayout children="@load(vm.filtraEmpregos)"
-							width="100%">
+							width="200px;">
 
 							<template name="children" var="atuacao">
-								<hlayout width="100%"
+								<vlayout width="200px;"
 									style="margin-top: 20px">
 									<vlayout>
 										<label sclass="cargo"
@@ -198,12 +198,12 @@
 										value="	Excluir" visible="@load(vm.podeEditar)"
 										onClick="@command('excluirAtuacao', atuacao=atuacao)" />
 									</div>
-								</hlayout>
+								</vlayout>
 							</template>
 						</vlayout>
 					</div>
 
-					<div  width="300px" style=" margin-bottom:25px"
+					<div  width="200px" style=" margin-bottom:25px"
 						hflex="1">
 						<div>
 							<label value="Formação" class="cabecalho" />
@@ -242,10 +242,10 @@
 							
 						</html>
 						<vlayout children="@load(vm.filtraFormacoes)"
-							width="100%">
+							width="200px;%">
 
 							<template name="children" var="atuacao">
-								<hlayout width="100%"
+								<vlayout width="200px;"
 									style="margin-top: 20px">
 									<vlayout>
 										<label sclass="cargo"
@@ -331,12 +331,12 @@
 										value="	Excluir" visible="@load(vm.podeEditar)"
 										onClick="@command('excluirAtuacao', atuacao=atuacao)" />
 									</div>
-								</hlayout>
+								</vlayout>
 							</template>
 						</vlayout>
 					</div>
 
-					<div width="300px" style="margin-bottom:25px"
+					<div width="200px" style="margin-bottom:25px"
 						hflex="1">
 						<div>
 							<label value="Projetos" class="cabecalho" />
@@ -375,9 +375,9 @@
 							
 						</html>
 						<vlayout children="@load(vm.filtraProjetos)"
-							width="100%">
+							width="200px;">
 							<template name="children" var="atuacao">
-								<hlayout width="100%"
+								<vlayout width="200px;"
 									style="margin-top: 20px">
 									<vlayout>
 										<label sclass="cargo"
@@ -463,7 +463,7 @@
 										value="	Excluir" visible="@load(vm.podeEditar)"
 										onClick="@command('excluirAtuacao', atuacao=atuacao)" />
 									</div>
-								</hlayout>
+								</vlayout>
 							</template>
 						</vlayout>
 					</div>
