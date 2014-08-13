@@ -132,12 +132,10 @@
 											visible="@load(atuacao.descricao ne null and atuacao.descricao ne '')">
 											<label sclass="data_atuacao"
 												value="Descricao:" />
-											<image
-												src="/img/expandIcon.png" width="15px"
-												onClick="@command('mostraDescricao', label=self.parent.nextSibling)" />
+											
 										</div>
 
-										<label visible="false"
+										<label visible="true"
 											value="@load(atuacao.descricao)" />
 
 									</vlayout>
@@ -269,12 +267,10 @@
 											visible="@load(atuacao.descricao ne null and atuacao.descricao ne '')">
 											<label sclass="data_atuacao"
 												value="Descricao:" />
-											<image
-												src="/img/expandIcon.png" width="15px"
-												onClick="@command('mostraDescricao', label=self.parent.nextSibling)" />
+											
 										</div>
 
-										<label visible="false"
+										<label visible="true"
 											value="@load(atuacao.descricao)" />
 
 									</vlayout>
@@ -401,12 +397,10 @@
 											visible="@load(atuacao.descricao ne null and atuacao.descricao ne '')">
 											<label sclass="data_atuacao"
 												value="Descricao:" />
-											<image
-												src="/img/expandIcon.png" width="15px"
-												onClick="@command('mostraDescricao', label=self.parent.nextSibling)" />
+											
 										</div>
 
-										<label visible="false"
+										<label visible="true"
 											value="@load(atuacao.descricao)" />
 									</vlayout>
 									<vlayout visible="false">

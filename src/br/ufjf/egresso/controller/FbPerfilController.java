@@ -259,8 +259,17 @@ public class FbPerfilController {
 	}
 
 	@Command
-	public void mostraDescricao(@BindingParam("label") Label label) {
-		label.setVisible(!label.isVisible());
+	public void mostraDescricao(@BindingParam("label") Label label, @BindingParam("img") Image img) {
+		if(!label.isVisible()){
+			label.setVisible(true);
+			img.setSrc("/img/minimize.jpg");
+		}else{
+			label.setVisible(false);
+			img.setSrc("/img/expandIcon.png");
+		}
+		
+		BindUtils.postNotifyChange(null, null, this, "img");
+
 	}
 
 	@Command
