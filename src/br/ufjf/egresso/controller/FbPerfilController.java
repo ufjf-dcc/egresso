@@ -19,13 +19,13 @@ import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Vlayout;
 import org.zkoss.zul.Window;
 
-import facebook4j.Facebook;
-import facebook4j.FacebookException;
-import facebook4j.PictureSize;
+
 import br.ufjf.egresso.business.AlunoBusiness;
 import br.ufjf.egresso.business.AtuacaoBusiness;
+import br.ufjf.egresso.business.InteresseBusiness;
 import br.ufjf.egresso.model.Aluno;
 import br.ufjf.egresso.model.Atuacao;
+import br.ufjf.egresso.model.Interesse;
 import br.ufjf.egresso.model.TipoAtuacao;
 import br.ufjf.egresso.persistent.TipoAtuacaoDAO;
 
@@ -34,6 +34,7 @@ public class FbPerfilController {
 	private Aluno aluno;
 	private AlunoBusiness alunoBusiness = new AlunoBusiness();
 	private AtuacaoBusiness atuacaoBusiness = new AtuacaoBusiness();
+	private InteresseBusiness interesseBusiness = new InteresseBusiness();
 	private List<Atuacao> empregos = new ArrayList<Atuacao>(),
 			projetos = new ArrayList<Atuacao>(),
 			formacoes = new ArrayList<Atuacao>();
@@ -45,7 +46,8 @@ public class FbPerfilController {
 			.getTodas();
 	private boolean podeEditar = false;
 	private boolean emEdicao = false;
-
+	private Interesse novoInteresse = new Interesse();
+	private List<Interesse> interesses = new ArrayList<Interesse>();
 
 	@Init
 	public void init() {
@@ -60,7 +62,9 @@ public class FbPerfilController {
 			aluno = (Aluno) Sessions.getCurrent().getAttribute("aluno");
 			podeEditar = true;
 		}
+		interesses = interesseBusiness.getInteresses(aluno);
 		
+		if(interesses == null) interesses = new ArrayList<Interesse>();
 		List<Atuacao> todasAtuacoes = new AtuacaoBusiness().getPorAluno(aluno);
 		if (todasAtuacoes != null)
 			for (Atuacao a : todasAtuacoes) {
@@ -208,6 +212,22 @@ public class FbPerfilController {
 		return novaAtuacao;
 	}
 
+	public Interesse getNovoInteresse() {
+		return novoInteresse;
+	}
+
+	public void setNovoInteresse(Interesse novoInteresse) {
+		this.novoInteresse = novoInteresse;
+	}
+
+	public List<Interesse> getInteresses() {
+		return interesses;
+	}
+
+	public void setInteresses(List<Interesse> interesses) {
+		this.interesses = interesses;
+	}
+
 	public void setNovaAtuacao(Atuacao novaAtuacao) {
 		this.novaAtuacao = novaAtuacao;
 	}
@@ -339,6 +359,9 @@ public class FbPerfilController {
 	public void notificaEmpregos() {
 		BindUtils.postNotifyChange(null, null, this, "filtraEmpregos");
 	}
+	public void notificaInteresses() {
+		BindUtils.postNotifyChange(null, null, this, "interesses");
+	}
 
 	public void notificaFormacoes() {
 		BindUtils.postNotifyChange(null, null, this, "filtraFormacoes");
@@ -414,8 +437,10 @@ public class FbPerfilController {
 
 	@Command
 	public void submitInteresses(@BindingParam("window") Window window) {
-		alunoBusiness.editar(aluno);
-		window.setVisible(false);
+		novoInteresse.setAluno(aluno);
+		interesseBusiness.salvar(novoInteresse);
+		interesses.add(novoInteresse);
+		notificaInteresses();
 	}
 
 }

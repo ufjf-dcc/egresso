@@ -1,5 +1,7 @@
 package br.ufjf.egresso.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -35,8 +37,7 @@ public class Aluno {
 	@Column(name = "url_foto", nullable = true, length = 255)
 	String urlFoto;
 
-	@Column(name = "interesses", nullable = true, length = 100)
-	String interesses;
+
 	
 	@Column(name = "ativo", nullable = true)
 	private int ativo;
@@ -75,13 +76,6 @@ public class Aluno {
 		this.urlFoto = urlFoto;
 	}
 
-	public String getInteresses() {
-		return interesses;
-	}
-
-	public void setInteresses(String interesses) {
-		this.interesses = interesses;
-	}
 
 	public int getAtivo() {
 		return ativo;

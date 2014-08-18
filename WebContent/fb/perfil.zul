@@ -478,11 +478,9 @@
 					<row>
 						<label value="Interesses" />
 						<textbox
-							value="@load(vm.aluno.interesses)@save(vm.aluno.interesses, before='submitInteresses')"
-							tabindex="1" id="interesse" width="100%" rows="5" />
-
+							value="@load(vm.novoInteresse.interesse)@save(vm.novoInteresse.interesse, before='submitInteresses')"
+							tabindex="1" id="interesse" width="100%"  />
 					</row>
-
 				</rows>
 
 			</grid>
@@ -553,16 +551,18 @@
 		</window>
 
 		 <div style = "position:relative; top:-220px;margin-left:25px; ">
-		
-				<a style = "margin-left:5px;" href="@load(vm.aluno.linkFacebook)" target="_blank"
-					image="/img/facebook2.png" />
-				<a style = "margin-left:5px;"
-					href="@load(vm.aluno.lkAccessToken eq null ? '/lk/index.zul?id='.concat(vm.aluno.id) : '')"
-					image="/img/linkedin2.png" target="_blank" />
-				<a  style = "margin-left:5px;" image="/img/twitter2.png" target="_blank" />
-				<a style = "margin-left:5px;" image="/img/youtube2.png" target="_blank" />
-				<a style = "margin-left:5px;" image="/img/google_plus2.png" target="_blank" />
-				
+				<hlayout>
+				<label value ="Interesses "/>
+				<label
+								style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:5px"
+								value="Adicionar..." visible="@load(vm.podeEditar)"
+								onClick="@command('adicionaInteresses', window= adicionaInteresses)" />
+				</hlayout>
+			<vlayout children="@load(vm.interesses)">
+				<template name="children" var="i">
+					<label  value="@load(i.interesse)" />
+				</template>
+			</vlayout>
 			</div>
 
 		
