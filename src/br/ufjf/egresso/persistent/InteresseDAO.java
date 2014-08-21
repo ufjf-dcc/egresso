@@ -9,22 +9,20 @@ import br.ufjf.egresso.model.Aluno;
 import br.ufjf.egresso.model.Interesse;
 
 public class InteresseDAO  extends GenericoDAO{
-	
+	@SuppressWarnings("unchecked")
 	public List<Interesse> getInteresses(Aluno aluno){
-		Query query;
 		try {
-			query = getSession().createQuery(
-					"SELECT i FROM interesses AS i WHERE i.aluno = :aluno");
+			Query query = getSession().createQuery(
+					"SELECT i FROM Interesse AS i WHERE i.aluno = :aluno");
 			query.setParameter("aluno", aluno);
-	
-			@SuppressWarnings("unchecked")
 			List<Interesse> interesses = query.list();
 			getSession().close();
 			return interesses;
+			
 		} catch (Exception e) {
-			return null;
+			System.err.println("erro na query");
 		}
-	
+		return null;
 		
 	}
 

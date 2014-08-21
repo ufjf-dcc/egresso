@@ -476,7 +476,7 @@
 				</columns>
 				<rows>
 					<row>
-						<label value="Interesses" />
+						<label value="Interesse" />
 						<textbox
 							value="@load(vm.novoInteresse.interesse)@save(vm.novoInteresse.interesse, before='submitInteresses')"
 							tabindex="1" id="interesse" width="100%"  />
@@ -552,15 +552,47 @@
 
 		 <div style = "position:relative; top:-220px;margin-left:25px; ">
 				<hlayout>
-				<label value ="Interesses "/>
+				<label value ="Interesses " style ="font-size:16px;"/>
 				<label
 								style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:5px"
 								value="Adicionar..." visible="@load(vm.podeEditar)"
 								onClick="@command('adicionaInteresses', window= adicionaInteresses)" />
 				</hlayout>
 			<vlayout children="@load(vm.interesses)">
-				<template name="children" var="i">
-					<label  value="@load(i.interesse)" />
+				<template name="children" var="interesse">
+				<vlayout width="200px;"
+									style="margin-top: 20px">
+									<vlayout>
+										<label sclass="interesse"
+											value="@load(interesse.interesse)" />
+									</vlayout>
+									
+									<vlayout visible="false">
+										<hlayout>
+											<label sclass="interesse"
+												value="Interesse " />
+											<textbox hflex="1"
+												value="@bind(vm.interesseEmEdicao.interesse)" />
+										</hlayout>
+										
+									</vlayout>
+									<div class="editar_exp" hflex="1"
+										visible="@load(vm.podeEditar and (not vm.emEdicao or (vm.emEdicao and interesse.id eq vm.interesseEmEdicao.id)))">
+										<label
+								style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:5px"
+								value="Editar" visible="@load(vm.podeEditar)"
+								onClick="@command('editarInteresse',editarSalvar=self,sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling, cancelar=self.nextSibling, interesse = interesse)" />
+									<label visible="false"
+										style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:5px"
+										value="Cancelar" 
+										onClick="@command('cancelarEdicaoInteresse', editarSalvar=self.previousSibling, cancelar=self, sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling)" />
+									
+									<label
+										style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:5px"
+										value="	Excluir" visible="@load(vm.podeEditar)"
+										onClick="@command('excluirInteresses', interesse = interesse)" />
+									</div>
+								</vlayout>
 				</template>
 			</vlayout>
 			</div>

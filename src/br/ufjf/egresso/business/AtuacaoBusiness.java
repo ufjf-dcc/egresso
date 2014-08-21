@@ -7,6 +7,7 @@ import java.util.List;
 
 import br.ufjf.egresso.model.Aluno;
 import br.ufjf.egresso.model.Atuacao;
+import br.ufjf.egresso.model.Interesse;
 import br.ufjf.egresso.persistent.AtuacaoDAO;
 
 /**
@@ -160,5 +161,8 @@ public class AtuacaoBusiness {
 	public Atuacao getAtuacao(int id) {
 		return (Atuacao) new AtuacaoDAO().procuraId(id, Atuacao.class);
 	}
+
+	
+	
 
 }

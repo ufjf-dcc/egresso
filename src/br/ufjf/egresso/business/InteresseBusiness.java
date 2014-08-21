@@ -23,4 +23,12 @@ public class InteresseBusiness {
 		
 	}
 
+	public boolean exclui(Interesse interesse) {
+		return interesseDao.exclui(interesse);
+	}
+
+	public boolean salvaOuEdita(Interesse interesse) {
+		return interesseDao.salvaOuEdita(interesse);
+	}
+
 }

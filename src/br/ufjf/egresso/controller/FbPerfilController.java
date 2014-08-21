@@ -32,7 +32,6 @@ import br.ufjf.egresso.persistent.TipoAtuacaoDAO;
 public class FbPerfilController {
 
 	private Aluno aluno;
-	private AlunoBusiness alunoBusiness = new AlunoBusiness();
 	private AtuacaoBusiness atuacaoBusiness = new AtuacaoBusiness();
 	private InteresseBusiness interesseBusiness = new InteresseBusiness();
 	private List<Atuacao> empregos = new ArrayList<Atuacao>(),
@@ -47,6 +46,7 @@ public class FbPerfilController {
 	private boolean podeEditar = false;
 	private boolean emEdicao = false;
 	private Interesse novoInteresse = new Interesse();
+	private Interesse interesseEmEdicao;
 	private List<Interesse> interesses = new ArrayList<Interesse>();
 
 	@Init
@@ -220,6 +220,14 @@ public class FbPerfilController {
 		this.novoInteresse = novoInteresse;
 	}
 
+	public Interesse getInteresseEmEdicao() {
+		return interesseEmEdicao;
+	}
+
+	public void setInteresseEmEdicao(Interesse interesseEmEdicao) {
+		this.interesseEmEdicao = interesseEmEdicao;
+	}
+
 	public List<Interesse> getInteresses() {
 		return interesses;
 	}
@@ -295,7 +303,7 @@ public class FbPerfilController {
 	@Command
 	public void adicionaAtuacao(@BindingParam("window") Window window,
 			@BindingParam("tipo") int tipo) {
-		this.limpa();
+		this.limpaAtuacao();
 		for (TipoAtuacao t : tipoAtuacao)
 			if (t.getId() == tipo) {
 				novaAtuacao.setTipoAtuacao(t);
@@ -336,7 +344,7 @@ public class FbPerfilController {
 					System.out.println("ID inválido de Atuação!.");
 				}
 				
-				limpa();
+				limpaAtuacao();
 			} else {
 				Messagebox.show("A atuação não foi adicionada!", "Erro",
 						Messagebox.OK, Messagebox.ERROR);
@@ -351,9 +359,14 @@ public class FbPerfilController {
 		window.setVisible(false);
 	}
 
-	public void limpa() {
+	public void limpaAtuacao() {
 		novaAtuacao = new Atuacao();
 		BindUtils.postNotifyChange(null, null, this, "novaAtuacao");
+	}
+	public void limpaInteresse(){
+		novoInteresse = new Interesse();
+		BindUtils.postNotifyChange(null, null, this, "novoInteresse");
+
 	}
 
 	public void notificaEmpregos() {
@@ -405,10 +418,7 @@ public class FbPerfilController {
 
 							if (atuacaoBusiness.exclui(atuacao)) {
 								removeFromList(atuacao);
-								Messagebox.show(
-										"A atuação foi excluída com sucesso.",
-										"Sucesso", Messagebox.OK,
-										Messagebox.INFORMATION);
+								
 							} else {
 								String errorMessage = "A atuação não pôde ser excluída.\n";
 								for (String error : atuacaoBusiness.getErrors())
@@ -432,6 +442,7 @@ public class FbPerfilController {
 
 	@Command
 	public void adicionaInteresses(@BindingParam("window") Window window) {
+		this.limpaInteresse();
 		window.doModal();
 	}
 
@@ -441,6 +452,76 @@ public class FbPerfilController {
 		interesseBusiness.salvar(novoInteresse);
 		interesses.add(novoInteresse);
 		notificaInteresses();
+		window.setVisible(false);
+		this.limpaInteresse();
+
+	}
+	@Command 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public void excluirInteresses(@BindingParam("interesse") final Interesse interesse) {
+		Messagebox.show("Você tem certeza que deseja excluir a atuação "
+				+ interesse.getInteresse() + "?", "Confirmação", Messagebox.OK
+				| Messagebox.CANCEL, Messagebox.QUESTION,
+				new org.zkoss.zk.ui.event.EventListener() {
+					public void onEvent(Event e) {
+						if (Messagebox.ON_OK.equals(e.getName())) {
+
+							if (interesseBusiness.exclui(interesse)) {
+								interesses.remove(interesse);
+								notificaInteresses();
+								
+							} else {
+								String errorMessage = "O interesse não pôde ser excluído.\n";
+								Messagebox.show(errorMessage, "Erro",
+										Messagebox.OK, Messagebox.ERROR);
+							}
+
+						}
+					}
+				});
+	
+	}
+	@Command
+	public void editarInteresse(
+			@BindingParam("editarSalvar") Label lbSalvarEditar,
+			@BindingParam("sumir") Vlayout v1,
+			@BindingParam("aparecer") Vlayout v2,
+			@BindingParam("cancelar") Label lbCancelar,
+			@BindingParam("interesse") Interesse interesse) {
+
+		if (!lbCancelar.isVisible()) {
+			interesseEmEdicao = new Interesse();
+			interesseEmEdicao.copy(interesse);
+			lbSalvarEditar.setValue("Confirmar");
+			BindUtils.postNotifyChange(null, null, this, "atuacaoEmEdicao");
+		} else {
+			lbSalvarEditar.setValue("Editar");
+			interesse.copy(interesseEmEdicao);
+			interesseBusiness.salvaOuEdita(interesse);
+			notificaInteresses();
+		}
+		v1.setVisible(!v1.isVisible());
+		v2.setVisible(!v2.isVisible());
+		lbCancelar.setVisible(!lbCancelar.isVisible());
+		emEdicao = lbCancelar.isVisible();
+		BindUtils.postNotifyChange(null, null, this, "emEdicao");
+	}
+
+	@Command
+	public void cancelarEdicaoInteresse(
+			@BindingParam("editarSalvar") Label lbSalvarEditar,
+			@BindingParam("cancelar") Label lbCancelar,
+			@BindingParam("sumir") Vlayout v1,
+			@BindingParam("aparecer") Vlayout v2) {
+		lbCancelar.setVisible(false);
+		lbSalvarEditar.setValue("Editar");
+		lbSalvarEditar.setVisible(true);
+		v1.setVisible(!v1.isVisible());
+		v2.setVisible(!v2.isVisible());
+		interesseEmEdicao = null;
+		
+		emEdicao = false;
+		BindUtils.postNotifyChange(null, null, this, "emEdicao");
 	}
 
 }

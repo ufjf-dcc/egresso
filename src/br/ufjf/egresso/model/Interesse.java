@@ -25,7 +25,7 @@ public class Interesse {
 	@Column(name = "interesse", nullable = true)
 	private String interesse;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "aluno_id", nullable = false)
 	private Aluno aluno;
 
@@ -53,5 +53,9 @@ public class Interesse {
 		this.aluno = aluno;
 	}
 
-
+	public void copy(Interesse outro) {
+		this.id = outro.id;
+		this.interesse = outro.interesse;
+		this.aluno = outro.aluno;
+	}
 }
