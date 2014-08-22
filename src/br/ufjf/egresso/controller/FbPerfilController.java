@@ -493,7 +493,7 @@ public class FbPerfilController {
 			interesseEmEdicao = new Interesse();
 			interesseEmEdicao.copy(interesse);
 			lbSalvarEditar.setValue("Confirmar");
-			BindUtils.postNotifyChange(null, null, this, "atuacaoEmEdicao");
+			BindUtils.postNotifyChange(null, null, this, "interesseEmEdicao");
 		} else {
 			lbSalvarEditar.setValue("Editar");
 			interesse.copy(interesseEmEdicao);
