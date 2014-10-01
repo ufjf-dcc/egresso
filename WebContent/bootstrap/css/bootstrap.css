@@ -6225,15 +6225,9 @@ button.close {
 .info-aluno {
 	background-color: #c0504d;
 	margin: 20px;
-	width: 220px;
+	width: 1000px;
 	padding: 20px;
 	height:480px;
-}
-
-.atuacoes-aluno.z-vlayout {
-	margin: 20px;
-	padding: 2px;
-	min-height: 700px;
 }
 
 .foto {
