@@ -6260,11 +6260,12 @@ button.close {
 }
 
 .cargo.z-label {
-	font-size: 13px;
+	font-size: 20px;
+	font-weight:  bold;
 }
 
 .local.z-label {
-	font-size: 13px;
+	font-size: 15px;
 }
 
 .data_atuacao.z-label {

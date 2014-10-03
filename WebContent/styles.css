@@ -1,7 +1,7 @@
 @CHARSET "UTF-8";
 
 body {
-	background: url('img/bg.jpg') repeat repeat;
+	background-color: #DCDCDC;
 	font-family: times;
 	margin-left: 50px;
 	margin-right: 50px

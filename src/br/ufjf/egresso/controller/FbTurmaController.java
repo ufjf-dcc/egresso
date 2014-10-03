@@ -314,7 +314,7 @@ public class FbTurmaController {
 
 	@Command
 	public void upload(@BindingParam("evt") UploadEvent evt) {
-		String[] extensoes = new String[] { "jpg", "png", "gif" };
+		String[] extensoes = new String[] { "jpg", "png", "gif", "jpeg" };
 
 		for (String s : extensoes)
 			if (evt.getMedia().getName().contains(s)) {
