@@ -75,14 +75,14 @@ tbody.z-grid-emptybody td {
 
 /** Página de turma **/
 .mural.z-div {
-	background: #c0504d;
+	background: #ffffff;
 	height: 100%;
 	padding: 5px;
 }
 
 .caixa-mural.z-vlayout {
 	width: 400px;
-	background: #f0f0f0;
+	background: #ffffff;
 	padding-left: 10px;
 	padding-right: 10px;
 }

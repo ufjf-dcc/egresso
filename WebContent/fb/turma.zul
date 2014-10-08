@@ -133,9 +133,9 @@
 		<hlayout class="conteudo">
 
 			<!-- Mural -->
-			<div class="mural">
+			<div style ="background-color:white; margin-left:300px;" class="mural">
 				<vlayout class="caixa-mural"
-					style="@load('min-height:'.concat(vm.altura).concat('px'))">
+					style="background-color:white; @load('min-height:'.concat(vm.altura).concat('px'))">
 					<div width="100%">
 						<button label="Convidar ex-alunos" class="btn"
 							c:onClick="convidar()" style="float:right; margin-top:10px" />
@@ -208,16 +208,16 @@
 				visible="@load(empty vm.linhas)" />
 
 			<!-- Alunos -->
-			<vlayout class="gradeAlunos" style="@load('max-height:'.concat(vm.altura).concat('px'))"
+			<vlayout class="gradeAlunos" style="@load('max-height:'.concat(vm.altura).concat('px')); margin-left:200px;"
 				children="@load(vm.linhas)">
 				<template name="children" var="linha">
 					
 					<hlayout children="@load(linha)">
 					
 						<template name="children" var="aluno">
-							<vlayout class="aluno">
-								<div class="aluno">
-									<image class="aluno"
+							<vlayout style="width:50px; height:50px; " class="aluno">
+								<div  style="width:50px; height:50px;" class="aluno">
+									<image tooltip = "ajuda" style="width: 50px; height: 50px;" class="aluno"
 										src="@load(aluno.urlFoto)"
 										onClick='@command("verPerfil", facebookId=aluno.facebookId)' />
 								</div>
@@ -244,4 +244,15 @@
 		onClose="self.setVisible(false); event.stopPropagation();">
 		<image width="100%" height="100%" />
 	</window>
+	<popup id="ajuda">
+		<html>
+
+
+			
+			<![CDATA[ Voltar para turmas.]]>
+			
+			
+			
+		</html>
+	</popup>
 </zk>
