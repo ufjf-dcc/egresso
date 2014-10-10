@@ -383,6 +383,24 @@ public class FbTurmaController {
 		}
 	}
 	
+	@Command
+	public void mostrarPopup(@BindingParam("lbl") Label lbl, @BindingParam("nome") String nome ){
+		lbl.setVisible(true);
+		lbl.setValue("auhsuhsa");
+		
+	}
+	@Command
+	public void carregarImagem(@BindingParam("imagem") Image img, @BindingParam("imgSrc") String imgPath){
+		try{
+			org.zkoss.image.AImage image = new org.zkoss.image.AImage(ConfHandler.getConf("FILE.PATH") + imgPath);
+			img.setContent(image);
+		}catch(java.io.IOException  | java.lang.IndexOutOfBoundsException e){
+			e.printStackTrace();
+		}
+		BindUtils.postNotifyChange(null, null, this, "imagem");
+
+	}
+	
 	
 
 }

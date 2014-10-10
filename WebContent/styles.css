@@ -82,7 +82,6 @@ tbody.z-grid-emptybody td {
 
 .caixa-mural.z-vlayout {
 	width: 400px;
-	background: #ffffff;
 	padding-left: 10px;
 	padding-right: 10px;
 }
@@ -104,7 +103,7 @@ tbody.z-grid-emptybody td {
 }
 
 .aluno.z-vlayout {
-	background: #c0504d;
+	
 	margin-right: 30px;
 	padding: 5px;
 	width: 150px;
