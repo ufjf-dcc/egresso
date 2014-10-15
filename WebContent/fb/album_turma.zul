@@ -48,31 +48,32 @@
 	
 <div apply="org.zkoss.bind.BindComposer" width="100%"
 		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbTurmaController')"
-		height="100%" onClientInfo = "@command('inicializa_album', window = album)"  >
+		height="100%"   >
 		<div style="color:white; padding :15px;background-color: #c0504d; width:100%;" >
 		<hlayout>
 		<div id="voltaTurma">
 				
 				
-			<label style="font-size:15px; cursor:pointer; text-decoration:underline; " value ="Voltar para turma" onClick="@command('voltaTurma')"/>
+			<label style="font-size:15px; cursor:pointer; font-weight:bold; " value ="Voltar para turma" onClick="@command('voltaTurma')"/>
 		</div>
 		<div style="position:relative;left:110px;">
 			<label  style="font-size:16px;" value="Álbum de fotos da turma -  Controle de Egressos DCC UFJF" />
 		</div>
 	</hlayout>
 	</div>
-	<div style= "position:relative; right:300px;" class = "album">
-		<window  border="none" onLoad="album.setTitle(null);"  id="album" visible="true" width="500px" height="500px"
-			 position="center,center"
-			onClose="self.setVisible(false); event.stopPropagation();" >
-			<image width="100%" height="100%"  />
-		</window>
-	</div>
-	<div style="position:relative; margin-top:10px; right:350px;" class="icons">
-			<label  style="font-size:15px; cursor:pointer; text-decoration:underline;  margin-right:10px;" value="Imagem Anterior" onClick="@command('back', window = album)" />
-				<label  style="font-size:15px; cursor:pointer; text-decoration:underline; margin-right:10px;" value="Próxima imagem" onClick="@command('next',window = album)" />
-	</div>
-	
+<hlayout children="@load(vm.postagensTurma)" style=" padding:20px;margin-bottom:10px " >
+		<template name="children" var="postagem">
+			<div style="width:200px; height:200px; " visible="@load(postagem.imagem ne null)">
+					<image style="cursor:pointer;max-width:100%; max-height:100%;" onClick="@command('verImagem',window = imagem, imgSrc = postagem.imagem )" visible="@load(postagem.imagem ne null)" onCreate="@command('carregarImagem', imagem=self, imgSrc = postagem.imagem)"/>
+			</div>
+		</template>
+						
+	</hlayout>
 		
 </div>
+	<window id="imagem" title="Visualizar Imagem" visible="false" width="500px" height="500px"
+		border="normal" position="center,center" closable="true" 
+		onClose="self.setVisible(false); event.stopPropagation();">
+		<image width="100%" height="100%" />
+	</window>
 </zk>

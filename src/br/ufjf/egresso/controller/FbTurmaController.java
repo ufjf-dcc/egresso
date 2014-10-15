@@ -45,7 +45,8 @@ import br.ufjf.egresso.utils.FileManager;
 public class FbTurmaController {
 
 	private List<Aluno> alunos, filtraAlunos;
-	private List<List<Aluno>> linhas;
+	private List<List<Aluno>> linhasAluno;
+	private List<List<Postagem>> linhasPostagem;
 	private List<String> semestres;
 	private List<Turma> turmas;
 	private TurmaBusiness turmaBusiness = new TurmaBusiness();
@@ -98,23 +99,55 @@ public class FbTurmaController {
 			BindUtils.postNotifyChange(null, null, this, "altura");
 		}		
 		int inseridos = 0;
-		linhas = new ArrayList<List<Aluno>>();
+		linhasAluno = new ArrayList<List<Aluno>>();
 
-		List<Aluno> linha = new ArrayList<Aluno>();
+		List<Aluno> linhaAluno = new ArrayList<Aluno>();
 
 		for (Aluno a : filtraAlunos) {
 			if ((largura - 565) / 180 < (inseridos + 1)) {
-				linhas.add(linha);
+				linhasAluno.add(linhaAluno);
 				inseridos = 0;
-				linha = new ArrayList<Aluno>();
+				linhaAluno = new ArrayList<Aluno>();
 			}
-			linha.add(a);
+			linhaAluno.add(a);
 			inseridos++;
 			
 	}
 
-		if (linha.size() > 0)
-			linhas.add(linha);
+		if (linhaAluno.size() > 0)
+			linhasAluno.add(linhaAluno);
+
+		BindUtils.postNotifyChange(null, null, this, "postagensTurma");
+		BindUtils.postNotifyChange(null, null, this, "linhas");
+		Clients.evalJavaScript("fadeIn()");
+	}
+	@Command
+	public void montaTabelaImagens(@BindingParam("event") ClientInfoEvent evt) {
+		if (evt != null){
+			largura = evt.getDesktopWidth();
+			altura = evt.getDesktopHeight() - 180;
+			
+			BindUtils.postNotifyChange(null, null, this, "largura");
+			BindUtils.postNotifyChange(null, null, this, "altura");
+		}		
+		int inseridos = 0;
+		linhasPostagem = new ArrayList<List<Postagem>>();
+
+		List<Postagem> linhaPostagem = new ArrayList<Postagem>();
+
+		for (Postagem p : postagensTurma) {
+			if ((largura - 565) / 180 < (inseridos + 1)) {
+				linhasPostagem.add(linhaPostagem);
+				inseridos = 0;
+				linhaPostagem = new ArrayList<Postagem>();
+			}
+			linhaPostagem.add(p);
+			inseridos++;
+			
+	}
+
+		if (linhaPostagem.size() > 0)
+			linhasPostagem.add(linhaPostagem);
 
 		BindUtils.postNotifyChange(null, null, this, "postagensTurma");
 		BindUtils.postNotifyChange(null, null, this, "linhas");
@@ -122,7 +155,23 @@ public class FbTurmaController {
 	}
 
 	public List<List<Aluno>> getLinhas() {
-		return linhas;
+		return linhasAluno;
+	}
+
+	public List<List<Aluno>> getLinhasAluno() {
+		return linhasAluno;
+	}
+
+	public void setLinhasAluno(List<List<Aluno>> linhasAluno) {
+		this.linhasAluno = linhasAluno;
+	}
+
+	public List<List<Postagem>> getLinhasPostagem() {
+		return linhasPostagem;
+	}
+
+	public void setLinhasPostagem(List<List<Postagem>> linhasPostagem) {
+		this.linhasPostagem = linhasPostagem;
 	}
 
 	public String getDescricao() {
@@ -331,14 +380,16 @@ public class FbTurmaController {
 	@Command
 	public void verImagem(@BindingParam("window") Window window,
 			@BindingParam("imgSrc") String imgSrc) {
-		try{
+		System.out.println("uhuhsahuas");
+			try{
 			
-			org.zkoss.image.AImage img = new org.zkoss.image.AImage(ConfHandler.getConf("FILE.PATH") + imgSrc);
-			((Image) window.getChildren().get(0)).setContent(img);
-			}catch(java.io.IOException e){
-				e.printStackTrace();
-			}
-		window.doModal();
+				org.zkoss.image.AImage img = new org.zkoss.image.AImage(ConfHandler.getConf("FILE.PATH") + imgSrc);
+				((Image) window.getChildren().get(0)).setContent(img);
+				}catch(java.io.IOException e){
+					e.printStackTrace();
+				}
+			
+			window.doModal();
 		
 	}
 	
@@ -391,13 +442,15 @@ public class FbTurmaController {
 	}
 	@Command
 	public void carregarImagem(@BindingParam("imagem") Image img, @BindingParam("imgSrc") String imgPath){
-		try{
-			org.zkoss.image.AImage image = new org.zkoss.image.AImage(ConfHandler.getConf("FILE.PATH") + imgPath);
-			img.setContent(image);
-		}catch(java.io.IOException  | java.lang.IndexOutOfBoundsException e){
-			e.printStackTrace();
+		if(imgPath!=null){
+			try{
+				org.zkoss.image.AImage image = new org.zkoss.image.AImage(ConfHandler.getConf("FILE.PATH") + imgPath);
+				img.setContent(image);
+			}catch(java.io.IOException  | java.lang.IndexOutOfBoundsException e){
+				System.err.println("Arquivo inexistente!");
+			}
+			BindUtils.postNotifyChange(null, null, this, "imagem");
 		}
-		BindUtils.postNotifyChange(null, null, this, "imagem");
 
 	}
 	

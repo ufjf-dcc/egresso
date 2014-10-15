@@ -80,7 +80,7 @@
 			<div style="color:white; margin-left:25px; cursor:pointer; " >
 			<hlayout >
 				<label style="font-size:15px; margin-right:10px; cursor:pointer; font-weight:bold; "  value="Ver Perfil" onClick="@command('goProfile')"/>
-				<label style="font-size:15px; cursor:pointer; font-weight:bold; " value="Fotos da Turma" onClick="@command('verAlbum')" />
+				<label style="font-size:15px; cursor:pointer; font-weight:bold; " value="Imagens da turma" onClick="@command('verAlbum')" />
 			</hlayout>
 			</div>
 			<div style="margin-left:25px; ">
@@ -133,8 +133,8 @@
 		<hlayout class="conteudo">
 
 			<!-- Mural -->
-			<vlayout class="caixa-mural" style="background-color:#DCDCDC;margin-left:210px;margin-right:20px;">
-				<div style ="border-radius: 10px/20px;padding:20px;background-color:white; width:380px;" class="mural">
+			<vlayout class="caixa-mural" style="width:500px; background-color:#DCDCDC;margin-left:180px;margin-right:20px;">
+				<div style ="padding:20px;background-color:white; width:500px;" class="mural">
 				
 					
 					<div width="100%">
@@ -173,20 +173,21 @@
 				
 					<!-- Postagens -->
 					<vlayout children="@load(vm.postagensTurma)"
-						style="padding:20px;margin-bottom:10px;width:380px;" >
+						style=" padding:20px;margin-bottom:10px, " >
 						
 						<template name="children" var="postagem">
-						<vlayout style="background-color:white;border-radius: 10px;padding:20px; ">
-							<vlayout  style="max-height : 100px;"
+						<vlayout style="background-color:white;padding:20px;  ">
+							<vlayout  style="max-height : 100%;"
 								visible="@load(not postagem.privado or (postagem.privado and postagem.turma eq turma))" />
 							<hlayout width="100%">
-								<div style="margin-bottom:10px;">
-								<label value="@load(postagem.texto)"
+								<vlayout>
+									<label value="@load(postagem.texto)"
 									style="font-size:15px;" hflex="1" />
-									</div>
-									<div style="margin-top:10px; margin-right:10px;">
-										<image visible="@load(postagem.imagem ne null)" onCreate="@command('carregarImagem', imagem=self, imgSrc = postagem.imagem)"/>
-									</div>
+									
+										<div style="width:200px; height:200px; " visible="@load(postagem.imagem ne null)">
+											<image style="cursor:pointer;max-width:100%; max-height:100%;" onClick="@command('verImagem',window = imagem, imgSrc = postagem.imagem )" visible="@load(postagem.imagem ne null)" onCreate="@command('carregarImagem', imagem=self, imgSrc = postagem.imagem)"/>
+										</div>
+									</vlayout>
 							</hlayout>
 							<hlayout width="100%">
 								<label
