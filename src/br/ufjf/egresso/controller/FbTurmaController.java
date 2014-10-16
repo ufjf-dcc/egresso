@@ -1,6 +1,5 @@
 package br.ufjf.egresso.controller;
 
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Timestamp;
@@ -58,6 +57,7 @@ public class FbTurmaController {
 	private ArrayList<String> urlPostagens;
 	private int indiceImagem;
 	private boolean buscaGlobal = false;
+
 	@Init
 	public void init() {
 
@@ -73,89 +73,85 @@ public class FbTurmaController {
 		descricao = "Turma do " + turma.getSemestre() + "º semestre de "
 				+ turma.getAno();
 		filtraAlunos = new AlunoBusiness().getAlunos(turma);
-		 alunos = new AlunoBusiness().getAlunos();
+		alunos = new AlunoBusiness().getAlunos();
 		postagensTurma = new PostagemBusiness().getPostagens(turma);
 		urlPostagens = new ArrayList<String>();
-		for(int i = 0; i < postagensTurma.size(); i++){
-			if(postagensTurma.get(i).getImagem() != null)
+		for (int i = 0; i < postagensTurma.size(); i++) {
+			if (postagensTurma.get(i).getImagem() != null)
 				urlPostagens.add(postagensTurma.get(i).getImagem());
-				
+
 		}
-	
-		
+
 	}
-	
-	public int getAltura(){
+
+	public int getAltura() {
 		return altura;
 	}
 
 	@Command
 	public void montaTabela(@BindingParam("event") ClientInfoEvent evt) {
-		if (evt != null){
+		if (evt != null) {
 			largura = evt.getDesktopWidth();
 			altura = evt.getDesktopHeight() - 180;
-			
+
 			BindUtils.postNotifyChange(null, null, this, "largura");
 			BindUtils.postNotifyChange(null, null, this, "altura");
-		}		
+		}
 		int inseridos = 0;
 		linhasAluno = new ArrayList<List<Aluno>>();
 
 		List<Aluno> linhaAluno = new ArrayList<Aluno>();
 
 		for (Aluno a : filtraAlunos) {
-			if ((largura - 565) / 180 < (inseridos + 1)) {
+			if ((largura - 665) / 180 < (inseridos + 1)) {
 				linhasAluno.add(linhaAluno);
 				inseridos = 0;
 				linhaAluno = new ArrayList<Aluno>();
 			}
 			linhaAluno.add(a);
 			inseridos++;
-			
-	}
+
+		}
 
 		if (linhaAluno.size() > 0)
 			linhasAluno.add(linhaAluno);
 
 		BindUtils.postNotifyChange(null, null, this, "postagensTurma");
-		BindUtils.postNotifyChange(null, null, this, "linhas");
+		BindUtils.postNotifyChange(null, null, this, "linhasAluno");
 		Clients.evalJavaScript("fadeIn()");
 	}
+
 	@Command
 	public void montaTabelaImagens(@BindingParam("event") ClientInfoEvent evt) {
-		if (evt != null){
+		if (evt != null) {
 			largura = evt.getDesktopWidth();
-			altura = evt.getDesktopHeight() - 180;
-			
+			altura = evt.getDesktopHeight() - 200;
+			System.out.println(largura);
+
 			BindUtils.postNotifyChange(null, null, this, "largura");
 			BindUtils.postNotifyChange(null, null, this, "altura");
-		}		
+		}
 		int inseridos = 0;
 		linhasPostagem = new ArrayList<List<Postagem>>();
 
 		List<Postagem> linhaPostagem = new ArrayList<Postagem>();
 
 		for (Postagem p : postagensTurma) {
-			if ((largura - 565) / 180 < (inseridos + 1)) {
+			if ((largura) / 200 < (inseridos + 1)) {
 				linhasPostagem.add(linhaPostagem);
 				inseridos = 0;
 				linhaPostagem = new ArrayList<Postagem>();
 			}
 			linhaPostagem.add(p);
 			inseridos++;
-			
-	}
+
+		}
 
 		if (linhaPostagem.size() > 0)
 			linhasPostagem.add(linhaPostagem);
 
 		BindUtils.postNotifyChange(null, null, this, "postagensTurma");
-		BindUtils.postNotifyChange(null, null, this, "linhas");
-		Clients.evalJavaScript("fadeIn()");
-	}
-
-	public List<List<Aluno>> getLinhas() {
-		return linhasAluno;
+		BindUtils.postNotifyChange(null, null, this, "linhasPostagem");
 	}
 
 	public List<List<Aluno>> getLinhasAluno() {
@@ -192,8 +188,7 @@ public class FbTurmaController {
 
 	public List<Postagem> getPostagensTurma() {
 		return postagensTurma;
-	}			
-
+	}
 
 	public Turma getTurma() {
 		return turma;
@@ -207,25 +202,25 @@ public class FbTurmaController {
 	@NotifyChange({ "filtraAlunos", "emptyMessage" })
 	public void pesquisar() {
 		List<Aluno> resultados = new ArrayList<Aluno>();
-		if(buscaGlobal){
-			if(pesquisa != null){
-				if(pesquisa.trim().equals("") ){
+		if (buscaGlobal) {
+			if (pesquisa != null) {
+				if (pesquisa.trim().equals("")) {
 					resultados = new AlunoBusiness().getAlunos();
-				}else{
+				} else {
 					for (Aluno aluno : alunos)
 						if (aluno.getNome().trim().toLowerCase()
 								.contains(pesquisa.trim().toLowerCase()))
 							resultados.add(aluno);
 				}
 			}
-			
-		}else{
-			if(pesquisa != null){
-				if(pesquisa.trim().equals("") ){
+
+		} else {
+			if (pesquisa != null) {
+				if (pesquisa.trim().equals("")) {
 					resultados = new AlunoBusiness().getAlunos(turma);
-				}else{
+				} else {
 					filtraAlunos = new AlunoBusiness().getAlunos(turma);
-					for (Aluno aluno :filtraAlunos )
+					for (Aluno aluno : filtraAlunos)
 						if (aluno.getNome().trim().toLowerCase()
 								.contains(pesquisa.trim().toLowerCase()))
 							resultados.add(aluno);
@@ -234,7 +229,7 @@ public class FbTurmaController {
 		}
 		filtraAlunos = resultados;
 		montaTabela(null);
-		
+
 	}
 
 	@Command("limparPesquisa")
@@ -254,54 +249,59 @@ public class FbTurmaController {
 	}
 
 	@Command
-	public void pesquisaGlobal(@BindingParam("global") Checkbox cbx , @BindingParam("selectTurma") Combobox comboTurma){
-			
-			comboTurma.setDisabled(cbx.isChecked());
-			comboTurma.setSelectedItem(null);
-			if(cbx.isChecked()){
-				filtraAlunos = new AlunoBusiness().getAlunos();
-				buscaGlobal = true;
-			}else{
-				buscaGlobal = false;
-				filtraAlunos = new AlunoBusiness().getAlunos(turma);
-			}
-			montaTabela(null);
-			
+	public void pesquisaGlobal(@BindingParam("global") Checkbox cbx,
+			@BindingParam("selectTurma") Combobox comboTurma) {
+
+		comboTurma.setDisabled(cbx.isChecked());
+		comboTurma.setSelectedItem(null);
+		if (cbx.isChecked()) {
+			filtraAlunos = new AlunoBusiness().getAlunos();
+			buscaGlobal = true;
+		} else {
+			buscaGlobal = false;
+			filtraAlunos = new AlunoBusiness().getAlunos(turma);
+		}
+		montaTabela(null);
+
 	}
+
 	@Command
-	public void verAlbum(){
+	public void verAlbum() {
 		Clients.evalJavaScript("album()");
-		
+
 	}
+
 	@Command
-	public void goProfile(){
-	Executions.sendRedirect("perfil.zul?id=" + ((Aluno) Sessions.getCurrent().getAttribute("aluno"))
-			.getFacebookId());
-	
+	public void goProfile() {
+		Executions.sendRedirect("perfil.zul?id="
+				+ ((Aluno) Sessions.getCurrent().getAttribute("aluno"))
+						.getFacebookId());
+
 	}
+
 	@Command
-	public void voltaTurma(){
+	public void voltaTurma() {
 		Clients.evalJavaScript("voltaTurma()");
 
-		
 	}
+
 	@Command
-	public void trocaTurma(@BindingParam("turma") String turmaDesc ){
+	public void trocaTurma(@BindingParam("turma") String turmaDesc) {
 		Clients.evalJavaScript("fadeOut()");
-		
+
 		turma = turmaBusiness.getTurma(Integer.parseInt(turmaDesc.substring(0,
-					turmaDesc.indexOf(" "))), Integer.parseInt(turmaDesc.substring(
-					turmaDesc.indexOf("º") - 1, turmaDesc.indexOf("º"))));
-	
+				turmaDesc.indexOf(" "))), Integer.parseInt(turmaDesc.substring(
+				turmaDesc.indexOf("º") - 1, turmaDesc.indexOf("º"))));
+
 		descricao = "Turma do " + turma.getSemestre() + "º semestre de "
-					+ turma.getAno();
-		
+				+ turma.getAno();
+
 		filtraAlunos = new AlunoBusiness().getAlunos(turma);
-		
+
 		postagensTurma = new PostagemBusiness().getPostagens(turma);
 		montaTabela(null);
 		BindUtils.postNotifyChange(null, null, this, "descricao");
-	}	
+	}
 
 	/**
 	 * Retorna para a página zul a descrição da data da {@link Postagem}.
@@ -349,7 +349,7 @@ public class FbTurmaController {
 					new Timestamp(new Date().getTime()));
 			imgPostagem = null;
 			if (new PostagemBusiness().salvar(postagem)) {
-				postagensTurma.add(0,postagem);
+				postagensTurma.add(0, postagem);
 				BindUtils.postNotifyChange(null, null, this, "postagensTurma");
 				return;
 			}
@@ -381,79 +381,89 @@ public class FbTurmaController {
 	public void verImagem(@BindingParam("window") Window window,
 			@BindingParam("imgSrc") String imgSrc) {
 		System.out.println("uhuhsahuas");
-			try{
-			
-				org.zkoss.image.AImage img = new org.zkoss.image.AImage(ConfHandler.getConf("FILE.PATH") + imgSrc);
-				((Image) window.getChildren().get(0)).setContent(img);
-				}catch(java.io.IOException e){
-					e.printStackTrace();
-				}
-			
-			window.doModal();
-		
+		try {
+
+			org.zkoss.image.AImage img = new org.zkoss.image.AImage(
+					ConfHandler.getConf("FILE.PATH") + imgSrc);
+			((Image) window.getChildren().get(0)).setContent(img);
+		} catch (java.io.IOException e) {
+			e.printStackTrace();
+		}
+
+		window.doModal();
+
 	}
-	
+
 	@Command
-	public void next(@BindingParam("window") Window window){
-		if(indiceImagem == urlPostagens.size() - 1)
+	public void next(@BindingParam("window") Window window) {
+		if (indiceImagem == urlPostagens.size() - 1)
 			this.indiceImagem = 0;
 		else
-			this.indiceImagem++ ;
-		
-		try{
-			org.zkoss.image.AImage img = new org.zkoss.image.AImage(ConfHandler.getConf("FILE.PATH") + urlPostagens.get(indiceImagem));
+			this.indiceImagem++;
+
+		try {
+			org.zkoss.image.AImage img = new org.zkoss.image.AImage(
+					ConfHandler.getConf("FILE.PATH")
+							+ urlPostagens.get(indiceImagem));
 			((Image) window.getChildren().get(0)).setContent(img);
-		}catch(java.io.IOException  | java.lang.IndexOutOfBoundsException e){
+		} catch (java.io.IOException | java.lang.IndexOutOfBoundsException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
+
 	@Command
-	public void back(@BindingParam("window") Window window){
-		if(indiceImagem == 0)
-			this.indiceImagem = urlPostagens.size()-1;
+	public void back(@BindingParam("window") Window window) {
+		if (indiceImagem == 0)
+			this.indiceImagem = urlPostagens.size() - 1;
 		else
-			this.indiceImagem -- ;
-		
-		try{
-			org.zkoss.image.AImage img = new org.zkoss.image.AImage(ConfHandler.getConf("FILE.PATH") + urlPostagens.get(indiceImagem));
+			this.indiceImagem--;
+
+		try {
+			org.zkoss.image.AImage img = new org.zkoss.image.AImage(
+					ConfHandler.getConf("FILE.PATH")
+							+ urlPostagens.get(indiceImagem));
 			((Image) window.getChildren().get(0)).setContent(img);
-		}catch(java.io.IOException  | java.lang.IndexOutOfBoundsException e){
+		} catch (java.io.IOException | java.lang.IndexOutOfBoundsException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
+
 	@Command
-	public void inicializa_album(@BindingParam("window") Window window){
+	public void inicializa_album(@BindingParam("window") Window window) {
 		this.indiceImagem = 0;
-		try{
-			org.zkoss.image.AImage img = new org.zkoss.image.AImage(ConfHandler.getConf("FILE.PATH") + urlPostagens.get(0));
+		try {
+			org.zkoss.image.AImage img = new org.zkoss.image.AImage(
+					ConfHandler.getConf("FILE.PATH") + urlPostagens.get(0));
 			((Image) window.getChildren().get(0)).setContent(img);
-		}catch(java.io.IOException  | java.lang.IndexOutOfBoundsException e){
+		} catch (java.io.IOException | java.lang.IndexOutOfBoundsException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Command
-	public void mostrarPopup(@BindingParam("lbl") Label lbl, @BindingParam("nome") String nome ){
+	public void mostrarPopup(@BindingParam("lbl") Label lbl,
+			@BindingParam("nome") String nome) {
 		lbl.setVisible(true);
 		lbl.setValue("auhsuhsa");
-		
+
 	}
+
 	@Command
-	public void carregarImagem(@BindingParam("imagem") Image img, @BindingParam("imgSrc") String imgPath){
-		if(imgPath!=null){
-			try{
-				org.zkoss.image.AImage image = new org.zkoss.image.AImage(ConfHandler.getConf("FILE.PATH") + imgPath);
+	public void carregarImagem(@BindingParam("imagem") Image img,
+			@BindingParam("imgSrc") String imgPath) {
+		if (imgPath != null) {
+			try {
+				org.zkoss.image.AImage image = new org.zkoss.image.AImage(
+						ConfHandler.getConf("FILE.PATH") + imgPath);
 				img.setContent(image);
-			}catch(java.io.IOException  | java.lang.IndexOutOfBoundsException e){
+			} catch (java.io.IOException | java.lang.IndexOutOfBoundsException e) {
 				System.err.println("Arquivo inexistente!");
 			}
 			BindUtils.postNotifyChange(null, null, this, "imagem");
 		}
 
 	}
-	
-	
 
 }

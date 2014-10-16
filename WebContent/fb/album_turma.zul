@@ -4,76 +4,71 @@
 	<style src="/styles.css" />
 	<style src="/bootstrap/css/bootstrap.css" />
 	<script type="text/javascript" src="/watermarkinput.js" />
-	
-	
+
+
 	<script type="text/javascript">
+
+
+
 		
-		<![CDATA[
-		  function voltaTurma(){
-			  location.href = "turma.zul";
-			  
-		  }
-		//Obtém o appId contido no arquivo .txt
-		var appId;
-		var xmlhttp = new XMLHttpRequest();
-		xmlhttp.onreadystatechange=function(){
-			if (xmlhttp.readyState==4 && xmlhttp.status==200){
-				appId=xmlhttp.responseText;
-		  	}
+		<![CDATA[ function voltaTurma(){ location.href = "turma.zul";
+
 		}
-		xmlhttp.open("GET","appId.txt",true);
-		xmlhttp.send();
-		
-		// Inicializa o Facebook SDK
-		window.fbAsyncInit = function() {
-		  FB.init({
-		    appId      : appId,
-		    status     : true,
-		    xfbml      : true
-		  });
-		};
-		
-		(function(d, s, id){
-		   var js, fjs = d.getElementsByTagName(s)[0];
-		   if (d.getElementById(id)) {return;}
-		   js = d.createElement(s); js.id = id;
-		   js.src = "//connect.facebook.net/en_US/all.js";
-		   fjs.parentNode.insertBefore(js, fjs);
-		 }(document, 'script', 'facebook-jssdk'));
-		 
-		
+
+
 		]]>
 		
-	</script>
-	
-<div apply="org.zkoss.bind.BindComposer" width="100%"
-		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbTurmaController')"
-		height="100%"   >
-		<div style="color:white; padding :15px;background-color: #c0504d; width:100%;" >
-		<hlayout>
-		<div id="voltaTurma">
-				
-				
-			<label style="font-size:15px; cursor:pointer; font-weight:bold; " value ="Voltar para turma" onClick="@command('voltaTurma')"/>
-		</div>
-		<div style="position:relative;left:110px;">
-			<label  style="font-size:16px;" value="Álbum de fotos da turma -  Controle de Egressos DCC UFJF" />
-		</div>
-	</hlayout>
-	</div>
-<hlayout children="@load(vm.postagensTurma)" style=" padding:20px;margin-bottom:10px " >
-		<template name="children" var="postagem">
-			<div style="width:200px; height:200px; " visible="@load(postagem.imagem ne null)">
-					<image style="cursor:pointer;max-width:100%; max-height:100%;" onClick="@command('verImagem',window = imagem, imgSrc = postagem.imagem )" visible="@load(postagem.imagem ne null)" onCreate="@command('carregarImagem', imagem=self, imgSrc = postagem.imagem)"/>
-			</div>
-		</template>
-						
-	</hlayout>
 		
-</div>
-	<window id="imagem" title="Visualizar Imagem" visible="false" width="500px" height="500px"
-		border="normal" position="center,center" closable="true" 
+		
+		
+	</script>
+
+	<div apply="org.zkoss.bind.BindComposer" width="100%"
+		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbTurmaController')"
+		height="100%"
+		onClientInfo="@command('montaTabelaImagens', event=event)">
+		<div
+			style="color:white; padding :15px;background-color: #c0504d; width:100%;">
+			<hlayout>
+				<div id="voltaTurma">
+
+
+					<label
+						style="font-size:15px; cursor:pointer; font-weight:bold; "
+						value="Voltar para turma" onClick="@command('voltaTurma')" />
+				</div>
+				<div style="position:relative;left:110px;">
+					<label style="font-size:16px;"
+						value="Álbum de fotos da turma -  Controle de Egressos DCC UFJF" />
+				</div>
+			</hlayout>
+		</div>
+		<vlayout children="@load(vm.linhasPostagem)"
+			style=" padding:20px; margin-left:200px; margin-bottom:10px ">
+			<template name="children" var="linhaPostagem">
+				<hlayout style="padding:10px;" children="@load(linhaPostagem)">
+
+					<template name="children" var="postagem">
+
+						<div style="border: 1px solid;;width:141px; height: 110px "
+							visible="@load(postagem.imagem ne null)">
+							<image
+								style="cursor:pointer;max-width:100%; max-height:100%;"
+								onClick="@command('verImagem',window = imagem, imgSrc = postagem.imagem )"
+								visible="@load(postagem.imagem ne null)"
+								onCreate="@command('carregarImagem', imagem=self, imgSrc = postagem.imagem)" />
+						</div>
+					</template>
+				</hlayout>
+			</template>
+
+		</vlayout>
+
+	</div>
+	<window id="imagem" title="Visualizar Imagem" visible="false"
+		style="width:auto;height:auto;" border="normal" position="center,center"
+		closable="true"
 		onClose="self.setVisible(false); event.stopPropagation();">
-		<image width="100%" height="100%" />
+		<image style="max-width:100%; max-height:100%" />
 	</window>
 </zk>
