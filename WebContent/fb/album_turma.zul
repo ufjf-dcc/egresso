@@ -23,7 +23,7 @@
 		
 	</script>
 
-	<div apply="org.zkoss.bind.BindComposer" width="100%"
+	<div apply="org.zkoss.bind.BindComposer" width="100%" style="background-color:#DCDCDC;"
 		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbTurmaController')"
 		height="100%"
 		onClientInfo="@command('montaTabelaImagens', event=event)">
@@ -39,7 +39,7 @@
 				</div>
 				<div style="position:relative;left:110px;">
 					<label style="font-size:16px;"
-						value="Álbum de fotos da turma -  Controle de Egressos DCC UFJF" />
+						value="@load('Álbum de fotos da '.concat(vm.descricao))"/>
 				</div>
 			</hlayout>
 		</div>
@@ -50,7 +50,7 @@
 
 					<template name="children" var="postagem">
 
-						<div style="border: 1px solid;;width:141px; height: 110px "
+						<div style="background-color:white;border: 1px solid;;width:141px; height: 110px; text-align:center; vertical-align:middle; "
 							visible="@load(postagem.imagem ne null)">
 							<image
 								style="cursor:pointer;max-width:100%; max-height:100%;"
@@ -66,7 +66,7 @@
 
 	</div>
 	<window id="imagem" title="Visualizar Imagem" visible="false"
-		style="width:auto;height:auto;" border="normal" position="center,center"
+		style="max-width:700px;height:auto; align:center;" border="normal" 
 		closable="true"
 		onClose="self.setVisible(false); event.stopPropagation();">
 		<image style="max-width:100%; max-height:100%" />

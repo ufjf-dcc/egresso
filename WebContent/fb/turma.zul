@@ -7,61 +7,36 @@
 		jq("$txtpesquisa").Watermark("Nome","gray");
 		jq("$txtpost").Watermark("Escreva algo aqui","gray"); });
 	</script>
-	
+
 	<script type="text/javascript">
+
+
+
+
+
+
+
+
+
 		
-		<![CDATA[
-		 function album(){
-			 location.href="album_turma.zul";
-			 
-		 }
-		//Obtém o appId contido no arquivo .txt
-		var appId;
-		var xmlhttp = new XMLHttpRequest();
-		xmlhttp.onreadystatechange=function(){
-			if (xmlhttp.readyState==4 && xmlhttp.status==200){
-				appId=xmlhttp.responseText;
-		  	}
+		<![CDATA[ function album(){ location.href="album_turma.zul";
+
 		}
-		xmlhttp.open("GET","appId.txt",true);
-		xmlhttp.send();
+
+		function fadeOut(){ jq("$gradeAlunos").fadeOut('fast');
+		jq("$nenhumAluno").fadeOut('fast'); }
+
+		function fadeIn(){ jq("$gradeAlunos").fadeIn('fast');
+		jq("$nenhumAluno").fadeIn('fast'); } ]]>
 		
-		// Inicializa o Facebook SDK
-		window.fbAsyncInit = function() {
-		  FB.init({
-		    appId      : appId,
-		    status     : true,
-		    xfbml      : true
-		  });
-		};
 		
-		(function(d, s, id){
-		   var js, fjs = d.getElementsByTagName(s)[0];
-		   if (d.getElementById(id)) {return;}
-		   js = d.createElement(s); js.id = id;
-		   js.src = "//connect.facebook.net/en_US/all.js";
-		   fjs.parentNode.insertBefore(js, fjs);
-		 }(document, 'script', 'facebook-jssdk'));
-		 
-		//Abre a janela de convite
-		function convidar(){
-			FB.ui({method: 'apprequests', 
-				filters: ['app_non_users'],
-				message: 'Faça parte do aplicativo que reúne os ex-launos do curso de Ciência da Computação da UFJF!'
-				
-			}, null);
-		}
 		
-		function fadeOut(){
-			jq("$gradeAlunos").fadeOut('fast');
-			jq("$nenhumAluno").fadeOut('fast');
-		}
 		
-		function fadeIn(){
-			jq("$gradeAlunos").fadeIn('fast');
-			jq("$nenhumAluno").fadeIn('fast');
-		}
-		]]>
+		
+		
+		
+		
+		
 		
 	</script>
 
@@ -69,54 +44,73 @@
 		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbTurmaController')"
 		height="100%" onClientInfo="@command('montaTabela', event=event)">
 		<hlayout>
-			
-			<div style=" margin-top:20px;" class="pesquisa-turma" width="1500px"
-			>
-			<hlayout>
-			<div style="color:white;" class="cabecalho"
-				width="150px;">
-				<label style="font-size:15px;"   class="cabecalho" value="@load(vm.descricao)" />
-			</div>
-			<div style="color:white; margin-left:25px; cursor:pointer; " >
-			<hlayout >
-				<label style="font-size:15px; margin-right:10px; cursor:pointer; font-weight:bold; "  value="Ver Perfil" onClick="@command('goProfile')"/>
-				<label style="font-size:15px; cursor:pointer; font-weight:bold; " value="Imagens da turma" onClick="@command('verAlbum')" />
-			</hlayout>
-			</div>
-			<div style="margin-left:25px; ">
-			<hlayout>
-					<vlayout>
-						<label style="font-size:13px;" class="pesquisa-turma"
-							value="Pesquisar aluno:" />
-						<textbox id="txtpesquisa" class="pesquisa"
-							onOK="@command('pesquisar')" value="@bind(vm.pesquisa)" />
-					</vlayout>
-					<vlayout>
-						<label style="font-size:13px;" class="pesquisa-turma"
-							value="Ver outra turma:" />
-						<div style="color:white;">
-							<hlayout>
-						
-							<combobox readonly="true"
-								model="@load(vm.semestres)" width="130px"
-								onSelect="@command('trocaTurma', turma=self.value, global = self.nextSibling, selectTurma = self)">
-									
-								<template name="model">
-									<comboitem label="@load(each)" />
-								</template>
-							</combobox>
-							 <checkbox  label="Pesquisa Global?" checked = "false" onCheck="@command('pesquisaGlobal',global = self, selectTurma = self.previousSibling )" />
-							 </hlayout>
-						</div>
-						
-						
-					</vlayout>
-				</hlayout>
-			</div>
+
+			<div style=" margin-top:20px;" class="pesquisa-turma"
+				width="1500px">
+				<hlayout>
+					<div style="color:white;" class="cabecalho"
+						width="150px;">
+						<label style="font-size:15px;" class="cabecalho"
+							value="@load(vm.descricao)" />
+					</div>
+					<div
+						style="color:white; margin-left:25px; cursor:pointer; ">
+						<hlayout>
+							<label
+								style="font-size:15px; margin-right:10px; cursor:pointer; font-weight:bold; "
+								value="Ver Perfil" onClick="@command('goProfile')" />
+							<label
+								style="font-size:15px; cursor:pointer; font-weight:bold; "
+								value="Imagens da turma" onClick="@command('verAlbum')" />
+						</hlayout>
+					</div>
+					<div style="margin-left:25px; ">
+						<hlayout>
+							<vlayout>
+								<label style="font-size:13px;"
+									class="pesquisa-turma" value="Pesquisar aluno:" />
+								<textbox id="txtpesquisa"
+									class="pesquisa" onOK="@command('pesquisar')"
+									value="@bind(vm.pesquisa)" />
+							</vlayout>
+							<vlayout>
+								<label style="font-size:13px;"
+									class="pesquisa-turma" value="Ver outra turma:" />
+								<div style="color:white;">
+									<hlayout>
+
+										<combobox readonly="true"
+											model="@load(vm.semestres)" width="130px"
+											onSelect="@command('trocaTurma', turma=self.value, global = self.nextSibling, selectTurma = self)">
+
+											<template name="model">
+												<comboitem
+													label="@load(each)" />
+											</template>
+										</combobox>
+										<checkbox
+											label="Todos alunos cadastrados" checked="false"
+											onCheck="@command('pesquisaGlobal',global = self, selectTurma = self.previousSibling )" />
+									</hlayout>
+								</div>
+
+
+							</vlayout>
+						</hlayout>
+					</div>
 				</hlayout>
 			</div>
 		</hlayout>
 		<html>
+
+
+
+
+
+
+
+
+
 
 
 
@@ -129,19 +123,31 @@
 			
 			
 			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 		</html>
 		<hlayout class="conteudo">
 
 			<!-- Mural -->
-			<vlayout class="caixa-mural" style="width:500px; background-color:#DCDCDC;margin-left:140px;margin-right:20px;">
-				<div style ="padding:20px;background-color:white; width:500px;" class="mural">
-				
-					
+			<vlayout class="caixa-mural"
+				style="width:500px; background-color:#DCDCDC;margin-left:140px;margin-right:20px;">
+				<div
+					style="padding:20px;background-color:white; width:500px;"
+					class="mural">
+
+
 					<div width="100%">
 						<button label="Convidar ex-alunos" class="btn"
 							c:onClick="convidar()" style="float:right; margin-top:10px" />
-						<label value="Mural da turma" style="font-size:16px;"
-							class="titulo-mural" hflex="1" />
+						<label value="Mural da turma"
+							style="font-size:16px;" class="titulo-mural" hflex="1" />
 					</div>
 					<textbox id="txtpost" rows="4" width="100%"
 						maxlength="500" onOK="self.nextSibling.onClick()"
@@ -153,107 +159,119 @@
 							disabled="true"
 							onClick="@command('postar', texto=txtpost.value, imagem='dfs', privado=chkPrivado.checked)"
 							style="float:right; margin-top:10px" />
-							<image id="img" />
-						<fileupload label="Carregar Imagem" onUpload="@command('upload', evt = event)" />
-						
+						<image id="img" />
+						<fileupload label="Carregar Imagem"
+							onUpload="@command('upload', evt = event)" />
+
 					</div>
 				</div>
-					<html>
+				<html>
 
 
 
 
-						
-						
-						
-						
-						
-						
-					</html>
-				
-					<!-- Postagens -->
-					<vlayout children="@load(vm.postagensTurma)"
-						style="width:500px;margin-bottom:10px; " >
-						
-						<template name="children" var="postagem">
-						<vlayout style="6width:500px;background-color:white;padding:20px;  ">
-							<vlayout  style="max-height : 100%;"
+
+
+
+
+
+
+				</html>
+
+				<!-- Postagens -->
+				<vlayout children="@load(vm.postagensTurma)"
+					style="width:500px;margin-bottom:10px; ">
+
+					<template name="children" var="postagem">
+						<vlayout
+							style="6width:500px;background-color:white;padding:20px;  ">
+							<vlayout style="max-height : 100%;"
 								visible="@load(not postagem.privado or (postagem.privado and postagem.turma eq turma))" />
 							<hlayout width="100%">
 								<vlayout>
 									<label value="@load(postagem.texto)"
-									style="font-size:15px;" hflex="1" />
-									
-										<div style="width:200px; height:200px; " visible="@load(postagem.imagem ne null)">
-											<image style="cursor:pointer;max-width:100%; max-height:100%;" onClick="@command('verImagem',window = imagem, imgSrc = postagem.imagem )" visible="@load(postagem.imagem ne null)" onCreate="@command('carregarImagem', imagem=self, imgSrc = postagem.imagem)"/>
-										</div>
-									</vlayout>
+										style="font-size:15px;" hflex="1" />
+
+									<div
+										style="width:200px; height:200px; "
+										visible="@load(postagem.imagem ne null)">
+										<image
+											style="cursor:pointer;max-width:100%; max-height:100%;"
+											onClick="@command('verImagem',window = imagem, imgSrc = postagem.imagem )"
+											visible="@load(postagem.imagem ne null)"
+											onCreate="@command('carregarImagem', imagem=self, imgSrc = postagem.imagem)" />
+									</div>
+								</vlayout>
 							</hlayout>
 							<hlayout width="100%">
 								<label
 									value="@load('Por '.concat(postagem.aluno.nome))"
 									onClick='@command("verPerfil", facebookId=postagem.aluno.facebookId)'
-									style="font-size:10px; text-decoration:underline; cursor: pointer;" hflex="1" />
+									style="font-size:10px; text-decoration:underline; cursor: pointer;"
+									hflex="1" />
 								<label
 									onCreate="@command('descricaoDataPostagem', dataHora=postagem.dataHora, label=self)"
 									style="font-size:10px;" />
 							</hlayout>
 						</vlayout>
-						</template>
-						
-					</vlayout>
-					
+					</template>
+
 				</vlayout>
-			
+
+			</vlayout>
+
 			<label id="nenhumAluno"
 				value="Nenhum aluno deste semestre se cadastrou ainda. Deseja convidar ex-alunos?"
 				c:onClick="convidar()"
 				style="cursor:pointer; text-decoration:underline; margin-left:50px"
 				visible="@load(empty vm.linhasAluno)" />
+			<vlayout>
+				<!-- Alunos -->
+				<div style="margin-left:300px; margin-bottom:20px; ">
+					<label style="font-weight: bold; font-size:12px;"
+						value="@load(vm.buscaGlobal eq true ? 'Todos alunos Cadastrados' : 'Alunos turma')" />
+				</div>
+				<vlayout class="gradeAlunos"
+					style="overflow: visible; margin-left:300px;  @load('max-height:'.concat(vm.altura).concat('px'));"
+					children="@load(vm.linhasAluno)">
 
-			<!-- Alunos -->
-			<vlayout class="gradeAlunos" style="overflow: visible; margin-left:100px;  @load('max-height:'.concat(vm.altura).concat('px'));"
-				children="@load(vm.linhasAluno)">
-				<template name="children" var="linha">
-					
-					<hlayout children="@load(linha)">
-					
-						<template name="children" var="aluno">
-							<vlayout  style="border-radius: 10px;background-color: #DCDCDC; width:100px; height:100px;" class="aluno">
-								<div   class="aluno">
-									<image  style="opacity: 0.6;
-    filter: alpha(opacity=40);cursor:pointer;  max-width:100%; max-height:100%;" class="aluno"
-										src="@load(aluno.urlFoto)"
-										onClick='@command("verPerfil", facebookId=aluno.facebookId)' onMouveOver ='@command("mostrarPopup", lbl = self.nextSibling, nome = aluno.nome)'  />
-										 <label visible = "false" />
-									
-								</div>
-							
-								<div style="line-height: 1em;">
-									<label class="aluno"
-										value="@load(aluno.nome)"
-										onClick="@command(verPerfil, facebookId=aluno.facebookId)" />
-								</div>
-							</vlayout>
-						</template>
-					</hlayout>
+					<template name="children" var="linha">
 
-				</template>
+						<hlayout children="@load(linha)">
+
+							<template name="children" var="aluno">
+								<vlayout
+									style="background-color: #DCDCDC;">
+									<div
+										style="margin-bottom:10px;width:50px; height:50px;">
+										<image
+											style="filter: alpha(opacity=40);cursor:pointer;  max-width:100%; max-height:100%;"
+											class="aluno" src="@load(aluno.urlFoto)"
+											onClick="@command('verPerfil', facebookId=aluno.facebookId)" />
+									</div>
+
+
+								</vlayout>
+							</template>
+						</hlayout>
+
+					</template>
+				</vlayout>
 			</vlayout>
-			
 		</hlayout>
 	</div>
-<zscript><![CDATA[
+	<zscript><![CDATA[
 	
 ]]>
     </zscript>
-    
-	<window id="imagem" title="Visualizar Imagem" visible="false" 
-		border="normal" position="center,center" closable="true" 
-		onClose="self.setVisible(false); event.stopPropagation();" style="width:auto; height:auto;">
-		
-			<image style=" max-width:100%; max-height:100%" />
-		
+
+	<window id="imagem" title="Visualizar Imagem" visible="false"
+		border="normal" position="center,center" closable="true"
+		onClose="self.setVisible(false); event.stopPropagation();"
+		style="max-width:700px; height:auto;">
+
+		<image style=" max-width:100%; max-height:100%" />
+
 	</window>
-	
+
 </zk>

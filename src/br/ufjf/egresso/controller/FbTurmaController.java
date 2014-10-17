@@ -121,6 +121,14 @@ public class FbTurmaController {
 		Clients.evalJavaScript("fadeIn()");
 	}
 
+	public boolean isBuscaGlobal() {
+		return buscaGlobal;
+	}
+
+	public void setBuscaGlobal(boolean buscaGlobal) {
+		this.buscaGlobal = buscaGlobal;
+	}
+
 	@Command
 	public void montaTabelaImagens(@BindingParam("event") ClientInfoEvent evt) {
 		if (evt != null) {
@@ -262,6 +270,8 @@ public class FbTurmaController {
 			filtraAlunos = new AlunoBusiness().getAlunos(turma);
 		}
 		montaTabela(null);
+		BindUtils.postNotifyChange(null, null, this, "buscaGlobal");
+
 
 	}
 
