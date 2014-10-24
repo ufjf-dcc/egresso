@@ -90,11 +90,11 @@ public class FbIndexController {
 				
 				if (aluno != null && aluno.getAtivo() == Aluno.ATIVO) {
 					Sessions.getCurrent().setAttribute("aluno", aluno);
-					/*Facebook fb = (Facebook) Sessions.getCurrent().getAttribute("facebook");
-					aluno.setUrlFoto(fb.getPictureURL(
-							fb.getMe().getId(),
+					
+					/*aluno.setUrlFoto(facebook.getPictureURL(
+							facebook.getMe().getId(),
 							PictureSize.valueOf("large")).toExternalForm());
-						new AlunoBusiness().salvar(aluno);*/
+						new AlunoBusiness().editar(aluno);*/
 					Executions.sendRedirect("/fb/turma.zul");
 				} else {
 					if (aluno != null)

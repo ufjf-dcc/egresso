@@ -1,5 +1,6 @@
 package br.ufjf.egresso.controller;
 
+import java.awt.TextArea;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Timestamp;
@@ -23,6 +24,7 @@ import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Image;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 import org.zkoss.image.AImage;
 
@@ -57,6 +59,7 @@ public class FbTurmaController {
 	private ArrayList<String> urlPostagens;
 	private int indiceImagem;
 	private boolean buscaGlobal = false;
+	private String nomeImg;
 
 	@Init
 	public void init() {
@@ -84,6 +87,94 @@ public class FbTurmaController {
 
 	}
 
+	public List<Aluno> getAlunos() {
+		return alunos;
+	}
+
+	public void setAlunos(List<Aluno> alunos) {
+		this.alunos = alunos;
+	}
+
+	public List<Aluno> getFiltraAlunos() {
+		return filtraAlunos;
+	}
+
+	public void setFiltraAlunos(List<Aluno> filtraAlunos) {
+		this.filtraAlunos = filtraAlunos;
+	}
+
+	public List<Turma> getTurmas() {
+		return turmas;
+	}
+
+	public void setTurmas(List<Turma> turmas) {
+		this.turmas = turmas;
+	}
+
+	public TurmaBusiness getTurmaBusiness() {
+		return turmaBusiness;
+	}
+
+	public void setTurmaBusiness(TurmaBusiness turmaBusiness) {
+		this.turmaBusiness = turmaBusiness;
+	}
+
+	public String getImgExtensao() {
+		return imgExtensao;
+	}
+
+	public void setImgExtensao(String imgExtensao) {
+		this.imgExtensao = imgExtensao;
+	}
+
+	public InputStream getImgPostagem() {
+		return imgPostagem;
+	}
+
+	public void setImgPostagem(InputStream imgPostagem) {
+		this.imgPostagem = imgPostagem;
+	}
+
+	public ArrayList<String> getUrlPostagens() {
+		return urlPostagens;
+	}
+
+	public void setUrlPostagens(ArrayList<String> urlPostagens) {
+		this.urlPostagens = urlPostagens;
+	}
+
+	public int getIndiceImagem() {
+		return indiceImagem;
+	}
+
+	public void setIndiceImagem(int indiceImagem) {
+		this.indiceImagem = indiceImagem;
+	}
+
+	public void setSemestres(List<String> semestres) {
+		this.semestres = semestres;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public void setTurma(Turma turma) {
+		this.turma = turma;
+	}
+
+	public void setPostagensTurma(List<Postagem> postagensTurma) {
+		this.postagensTurma = postagensTurma;
+	}
+
+	public void setLargura(int largura) {
+		this.largura = largura;
+	}
+
+	public void setAltura(int altura) {
+		this.altura = altura;
+	}
+
 	public int getAltura() {
 		return altura;
 	}
@@ -103,7 +194,7 @@ public class FbTurmaController {
 		List<Aluno> linhaAluno = new ArrayList<Aluno>();
 
 		for (Aluno a : filtraAlunos) {
-			if ((largura - 665) / 180 < (inseridos + 1)) {
+			if ((largura - 300) / 180 < (inseridos + 1)) {
 				linhasAluno.add(linhaAluno);
 				inseridos = 0;
 				linhaAluno = new ArrayList<Aluno>();
@@ -272,7 +363,6 @@ public class FbTurmaController {
 		montaTabela(null);
 		BindUtils.postNotifyChange(null, null, this, "buscaGlobal");
 
-
 	}
 
 	@Command
@@ -348,7 +438,8 @@ public class FbTurmaController {
 	 *            Se será ou não exibida para todos os ex-alunos.
 	 */
 	@Command
-	public void postar(@BindingParam("texto") String texto,
+	public void postar(@BindingParam("txtArea") Textbox txtArea,
+			@BindingParam("texto") String texto,
 			@BindingParam("privado") boolean privado) {
 		String imagem = null;
 		if (imgPostagem != null)
@@ -361,6 +452,10 @@ public class FbTurmaController {
 			if (new PostagemBusiness().salvar(postagem)) {
 				postagensTurma.add(0, postagem);
 				BindUtils.postNotifyChange(null, null, this, "postagensTurma");
+				txtArea.setText(null);
+				imgPostagem = null;
+				BindUtils.postNotifyChange(null, null, this, "imgPostagem");
+
 				return;
 			}
 		}
@@ -368,6 +463,9 @@ public class FbTurmaController {
 		Messagebox.show(
 				"Não foi possível publicar, tente novamente mais tarde.",
 				"Erro", Messagebox.OK, Messagebox.ERROR);
+		imgPostagem = null;
+		txtArea.setText(null);
+		BindUtils.postNotifyChange(null, null, this, "imgPostagem");
 
 	}
 
@@ -379,6 +477,11 @@ public class FbTurmaController {
 			if (evt.getMedia().getName().contains(s)) {
 				imgPostagem = evt.getMedia().getStreamData();
 				imgExtensao = s;
+				nomeImg = evt.getMedia().getName();
+				System.out.println(evt.getMedia().getName());
+				BindUtils.postNotifyChange(null, null, this, "imgPostagem");
+
+				BindUtils.postNotifyChange(null, null, this, "nomeImg");
 				return;
 			}
 
@@ -387,10 +490,17 @@ public class FbTurmaController {
 		imgPostagem = null;
 	}
 
+	public String getNomeImg() {
+		return nomeImg;
+	}
+
+	public void setNomeImg(String nomeImg) {
+		this.nomeImg = nomeImg;
+	}
+
 	@Command
 	public void verImagem(@BindingParam("window") Window window,
 			@BindingParam("imgSrc") String imgSrc) {
-		System.out.println("uhuhsahuas");
 		try {
 
 			org.zkoss.image.AImage img = new org.zkoss.image.AImage(
@@ -456,7 +566,7 @@ public class FbTurmaController {
 	public void mostrarPopup(@BindingParam("lbl") Label lbl,
 			@BindingParam("nome") String nome) {
 		lbl.setVisible(true);
-		lbl.setValue("auhsuhsa");
+		lbl.setValue("teste");
 
 	}
 

@@ -10,6 +10,7 @@
 
 
 
+
 		
 		<![CDATA[ function voltaTurma(){ location.href = "turma.zul";
 
@@ -21,9 +22,11 @@
 		
 		
 		
+		
 	</script>
 
-	<div apply="org.zkoss.bind.BindComposer" width="100%" style="background-color:#DCDCDC;"
+	<div apply="org.zkoss.bind.BindComposer" width="100%"
+		style="background-color:#DCDCDC;"
 		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbTurmaController')"
 		height="100%"
 		onClientInfo="@command('montaTabelaImagens', event=event)">
@@ -37,23 +40,33 @@
 						style="font-size:15px; cursor:pointer; font-weight:bold; "
 						value="Voltar para turma" onClick="@command('voltaTurma')" />
 				</div>
-				<div style="position:relative;left:110px;">
+				<div style="margin-left:50%;">
 					<label style="font-size:16px;"
-						value="@load('Álbum de fotos da '.concat(vm.descricao))"/>
+						value="@load('Álbum de fotos da '.concat(vm.descricao))" />
 				</div>
 			</hlayout>
 		</div>
 		<vlayout children="@load(vm.linhasPostagem)"
-			style=" padding:20px; margin-left:200px; margin-bottom:10px ">
+			style=" padding:20px; margin-left:25%; margin-bottom:10px ">
 			<template name="children" var="linhaPostagem">
-				<hlayout style="padding:10px;" children="@load(linhaPostagem)">
+				<hlayout style="padding:10px;"
+					children="@load(linhaPostagem)">
 
 					<template name="children" var="postagem">
 
-						<div style="background-color:white;border: 1px solid;;width:141px; height: 110px; text-align:center; vertical-align:middle; "
+						<div
+							style="overflow: hidden;
+	position: relative;background-color:white;border: 1px solid;;width:141px; height: 110px; "
 							visible="@load(postagem.imagem ne null)">
 							<image
-								style="cursor:pointer;max-width:100%; max-height:100%;"
+								style="cursor:pointer;position: absolute;
+left: -100%;
+	right: -100%;
+	top: -100%;
+	bottom: -100%;
+	margin: auto;
+	min-height: 50%;
+	min-width: 50%;"
 								onClick="@command('verImagem',window = imagem, imgSrc = postagem.imagem )"
 								visible="@load(postagem.imagem ne null)"
 								onCreate="@command('carregarImagem', imagem=self, imgSrc = postagem.imagem)" />
@@ -66,7 +79,7 @@
 
 	</div>
 	<window id="imagem" title="Visualizar Imagem" visible="false"
-		style="max-width:700px;height:auto; align:center;" border="normal" 
+		style="max-width:700px;height:auto; margin-left:25%" border="normal"
 		closable="true"
 		onClose="self.setVisible(false); event.stopPropagation();">
 		<image style="max-width:100%; max-height:100%" />

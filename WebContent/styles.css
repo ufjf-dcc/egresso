@@ -3,8 +3,7 @@
 body {
 	background-color: #DCDCDC;
 	font-family: times;
-	margin-left: 50px;
-	margin-right: 50px
+	
 }
 
 tbody.z-grid-emptybody td {
@@ -81,7 +80,7 @@ tbody.z-grid-emptybody td {
 }
 
 .caixa-mural.z-vlayout {
-	width: 400px;
+	
 	padding-left: 10px;
 	padding-right: 10px;
 }
@@ -92,8 +91,7 @@ tbody.z-grid-emptybody td {
 }
 
 .gradeAlunos.z-vlayout{
-	margin-left:50px;
-	max-height:500px;
+	max-height:100%;
 	overflow:scroll;
 }
 
@@ -138,7 +136,7 @@ tbody.z-grid-emptybody td {
 	font-size: 15px;
 	margin-top: 10px;
 	margin-bottom: 10px;
-	width:300px;
+	width:100%;
 }
 
 .pesquisa-turma.z-div {
