@@ -25,23 +25,23 @@
 		
 	</script>
 
-	<div apply="org.zkoss.bind.BindComposer" width="100%"
-		style="background-color:#DCDCDC;"
+	<div apply="org.zkoss.bind.BindComposer" width="100%" 
+		style="background-color:#E8E8E8;"
 		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbTurmaController')"
 		height="100%"
 		onClientInfo="@command('montaTabelaImagens', event=event)">
 		<div
-			style="color:white; padding :15px;background-color: #c0504d; width:100%;">
+			style="color:white; padding :12px;background-color: #c0504d; width:100%;">
 			<hlayout>
-				<div id="voltaTurma">
+				<div style="width:100%;">
 
 
 					<label
-						style="font-size:15px; cursor:pointer; font-weight:bold; "
+						style="font-size:12px; cursor:pointer; font-weight:bold; "
 						value="Voltar para turma" onClick="@command('voltaTurma')" />
 				</div>
-				<div style="margin-left:50%;">
-					<label style="font-size:16px;"
+				<div  style="width:100%;margin-left:150%;">
+					<label style="font-size:12px;font-weight:bold;"
 						value="@load('Álbum de fotos da '.concat(vm.descricao))" />
 				</div>
 			</hlayout>

@@ -1,0 +1,117 @@
+<?page title="Todos Alunos" contentType="text/html;charset=UTF-8"?>
+
+<zk xmlns:c='client'>
+	<style src="/styles.css" />
+	<style src="/bootstrap/css/bootstrap.css" />
+	<script type="text/javascript" src="/watermarkinput.js" />
+
+
+	<script type="text/javascript">
+
+
+
+
+
+
+
+
+
+
+		
+		<![CDATA[ function voltaTurma(){ location.href = "turma.zul";
+
+		}
+
+
+		function fadeOut(){ jq("$gradeAlunos").fadeOut('fast');
+		jq("$nenhumAluno").fadeOut('fast'); }
+
+		function fadeIn(){ jq("$gradeAlunos").fadeIn('fast');
+		jq("$nenhumAluno").fadeIn('fast'); }
+
+
+		]]>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</script>
+
+	<div apply="org.zkoss.bind.BindComposer" width="100%"
+		style="background-color:#E8E8E8;"
+		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbTurmaController')"
+		height="100%"
+		onClientInfo="@command('montaTabelaTodos', event=event)">
+		<div
+			style="color:white; padding :12px;background-color: #c0504d; width:100%;">
+			<hlayout>
+				<div style="width:100%;">
+
+
+					<label
+						style="font-size:12px; cursor:pointer; font-weight:bold; "
+						value="Voltar para turma" onClick="@command('voltaTurma')" />
+				</div>
+				<div style="width:100%;margin-left:20%;">
+					<label style="font-size:15px;"
+						value="@load('Todos os Alunos cadastrados')" />
+				</div>
+				<hlayout
+					style="margin-left:30%;color:white; width:100%;">
+					<label style="font-size:12px;"
+						class="pesquisa-turma" value="Pesquisar aluno:" />
+					<textbox id="txtpesquisa" class="pesquisa"
+						onOK="@command('pesquisarTodos')" value="@bind(vm.pesquisa)" />
+					
+				</hlayout>
+			</hlayout>
+		</div>
+		<vlayout
+			style="margin-top:5%;margin-left:10%; max-width:100%;  min-width:169px; width:100%;">
+			<!-- Alunos -->
+
+			<vlayout
+				style="overflow: visible;   @load('max-height:'.concat(vm.altura).concat('px'));"
+				children="@load(vm.linhasAluno)">
+
+				<template name="children" var="linha">
+
+					<hlayout children="@load(linha)">
+
+						<template name="children" var="aluno">
+							<vlayout
+								style="background-color: #DCDCDC;">
+								<div>
+									<vlayout >
+										<div
+											style="margin-bottom:10px
+										;width:120px; height:125px;">
+											<image
+												style="filter: alpha(opacity=40);cursor:pointer;  max-width:100%; max-height:100%;"
+												class="aluno" src="@load(aluno.urlFoto)"
+												onClick="@command('verPerfil', facebookId=aluno.facebookId)" />
+										</div>
+										<div style="width:120px; height:20px;">
+											<label
+												value="@load(aluno.nome)" style="font-size:12px;" />
+										</div>
+									</vlayout>
+								</div>
+							</vlayout>
+						</template>
+					</hlayout>
+
+				</template>
+			</vlayout>
+		</vlayout>
+
+	</div>
+
+</zk>

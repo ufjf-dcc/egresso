@@ -212,6 +212,38 @@ public class FbTurmaController {
 		Clients.evalJavaScript("fadeIn()");
 	}
 
+	@Command
+	public void montaTabelaTodos(@BindingParam("event") ClientInfoEvent evt) {
+		if (evt != null) {
+			largura = evt.getDesktopWidth();
+			altura = evt.getDesktopHeight() - 180;
+
+			BindUtils.postNotifyChange(null, null, this, "largura");
+			BindUtils.postNotifyChange(null, null, this, "altura");
+		}
+		int inseridos = 0;
+		linhasAluno = new ArrayList<List<Aluno>>();
+		filtraAlunos = new AlunoBusiness().getAlunos();
+		List<Aluno> linhaAluno = new ArrayList<Aluno>();
+
+		for (Aluno a : filtraAlunos) {
+			if ((largura - 300) / 180 < (inseridos + 1)) {
+				linhasAluno.add(linhaAluno);
+				inseridos = 0;
+				linhaAluno = new ArrayList<Aluno>();
+			}
+			linhaAluno.add(a);
+			inseridos++;
+
+		}
+
+		if (linhaAluno.size() > 0)
+			linhasAluno.add(linhaAluno);
+
+		BindUtils.postNotifyChange(null, null, this, "postagensTurma");
+		BindUtils.postNotifyChange(null, null, this, "linhasAluno");
+	}
+
 	public boolean isBuscaGlobal() {
 		return buscaGlobal;
 	}
@@ -331,6 +363,26 @@ public class FbTurmaController {
 
 	}
 
+	@Command
+	@NotifyChange({ "filtraAlunos", "emptyMessage" })
+	public void pesquisarTodos() {
+		List<Aluno> resultados = new ArrayList<Aluno>();
+		if (pesquisa != null) {
+			if (pesquisa.trim().equals("")) {
+				resultados = new AlunoBusiness().getAlunos();
+			} else {
+				for (Aluno aluno : alunos)
+					if (aluno.getNome().trim().toLowerCase()
+							.contains(pesquisa.trim().toLowerCase()))
+						resultados.add(aluno);
+			}
+		}
+
+		filtraAlunos = resultados;
+		montaTabela(null);
+
+	}
+
 	@Command("limparPesquisa")
 	public void limparPesquisa() {
 		filtraAlunos = new AlunoBusiness().getAlunos(turma);
@@ -372,6 +424,12 @@ public class FbTurmaController {
 	}
 
 	@Command
+	public void verTodosAlunos() {
+		Clients.evalJavaScript("verTodos()");
+
+	}
+
+	@Command
 	public void goProfile() {
 		Executions.sendRedirect("perfil.zul?id="
 				+ ((Aluno) Sessions.getCurrent().getAttribute("aluno"))
@@ -382,6 +440,12 @@ public class FbTurmaController {
 	@Command
 	public void voltaTurma() {
 		Clients.evalJavaScript("voltaTurma()");
+
+	}
+
+	@Command
+	public void verTodos() {
+		Clients.evalJavaScript("verTodos()");
 
 	}
 

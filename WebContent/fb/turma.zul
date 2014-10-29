@@ -29,6 +29,23 @@
 
 
 		
+		<![CDATA[ function verTodos(){ location.href = "todosAlunos.zul";
+
+		}
+
+
+		]]>
+		
+		
+		
+		
+		
+	
+
+
+
+
+		
 		<![CDATA[ function album(){ location.href="album_turma.zul";
 
 		} function waterMark(){
@@ -64,7 +81,7 @@
 
 	<div apply="org.zkoss.bind.BindComposer" width="100%"
 		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbTurmaController')"
-		style="max-height:100%;"
+		style="max-height:100%; background-color:#E8E8E8;"
 		onClientInfo="@command('montaTabela', event=event)">
 		<hlayout width="100%"
 			style="padding:1%; height:100%;background-color:#c0504d; margin-bottom:20px;">
@@ -82,11 +99,17 @@
 							style="font-size:12px; margin-right:5px; cursor:pointer; font-weight:bold; "
 							value="Ver Perfil" onClick="@command('goProfile')" />
 					</div>
-					<div>
+					<div style="margin-right:5px;">
 						<label
-							style=" margin-right:70px;width:100%;font-size:12px; cursor:pointer; font-weight:bold; "
+							style="width:100%;font-size:12px; cursor:pointer; font-weight:bold; "
 							value="Imagens da turma" onClick="@command('verAlbum')" />
 					</div>
+					<div >
+						<label
+							style="margin-right:100px;width:100%;font-size:12px; cursor:pointer; font-weight:bold; "
+							value="Todos Alunos" onClick="@command('verTodos')" />
+					</div>
+					
 				</hlayout>
 			</div>
 
@@ -99,9 +122,7 @@
 					<textbox id="txtpesquisa" class="pesquisa"
 						onOK="@command('pesquisar')" value="@bind(vm.pesquisa)" />
 					<div style="margin-top:10%;">
-						<checkbox label="Todos alunos cadastrados"
-							checked="false"
-							onCheck="@command('pesquisaGlobal',global = self, selectTurma = cbxid )" />
+						
 					</div>
 				</vlayout>
 				<vlayout width="100%">
@@ -134,7 +155,7 @@
 
 			<!-- Mural -->
 			<vlayout
-				style="max-width:800px;min-width:700px; width:100%; background-color:#DCDCDC;">
+				style="max-width:800px;min-width:700px; width:100%; background-color:#E8E8E8;">
 				<div
 					style="font-size:12px;margin-right:50px;padding:3%;background-color:white; width:100%;">
 
@@ -247,7 +268,7 @@
 
 							<template name="children" var="aluno">
 								<vlayout
-									style="background-color: #DCDCDC;">
+									>
 									<div
 										style="margin-bottom:10px;min-width:50px; min-height:50px;">
 										<image
