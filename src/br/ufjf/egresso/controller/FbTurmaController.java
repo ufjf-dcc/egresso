@@ -32,6 +32,7 @@ import br.ufjf.egresso.business.AlunoBusiness;
 import br.ufjf.egresso.business.PostagemBusiness;
 import br.ufjf.egresso.business.TurmaBusiness;
 import br.ufjf.egresso.model.Aluno;
+import br.ufjf.egresso.model.Atuacao;
 import br.ufjf.egresso.model.Postagem;
 import br.ufjf.egresso.model.Turma;
 import br.ufjf.egresso.utils.ConfHandler;
@@ -60,6 +61,15 @@ public class FbTurmaController {
 	private int indiceImagem;
 	private boolean buscaGlobal = false;
 	private String nomeImg;
+	private Aluno alunoSelect;
+
+	public Aluno getAlunoSelect() {
+		return alunoSelect;
+	}
+
+	public void setAlunoSelect(Aluno alunoSelect) {
+		this.alunoSelect = alunoSelect;
+	}
 
 	@Init
 	public void init() {
@@ -274,7 +284,8 @@ public class FbTurmaController {
 				linhaPostagem = new ArrayList<Postagem>();
 			}
 			linhaPostagem.add(p);
-			inseridos++;
+			if (p.getImagem() != null)
+				inseridos++;
 
 		}
 
@@ -419,6 +430,7 @@ public class FbTurmaController {
 
 	@Command
 	public void verAlbum() {
+
 		Clients.evalJavaScript("album()");
 
 	}
@@ -574,7 +586,7 @@ public class FbTurmaController {
 			e.printStackTrace();
 		}
 
-		window.doModal();
+		window.doPopup();
 
 	}
 
@@ -633,7 +645,19 @@ public class FbTurmaController {
 		lbl.setValue("teste");
 
 	}
-
+	@Command
+	public void showPopup(@BindingParam("popup") Window popup,
+			@BindingParam("alunoSelect") Aluno aluno){
+		alunoSelect = aluno;
+		System.out.println(alunoSelect.getNome());
+		BindUtils.postNotifyChange(null, null, null, "alunoSelect");
+		popup.doModal();
+		
+	}
+	@Command
+	public void hidePopup(@BindingParam("popup") Window popup){
+		popup.setVisible(false);
+	}
 	@Command
 	public void carregarImagem(@BindingParam("imagem") Image img,
 			@BindingParam("imgSrc") String imgPath) {

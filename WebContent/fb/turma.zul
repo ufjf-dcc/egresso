@@ -28,13 +28,42 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		
-		<![CDATA[ function verTodos(){ location.href = "todosAlunos.zul";
+		<![CDATA[ function verTodos(){ location.href =
+		"todosAlunos.zul";
 
 		}
 
 
 		]]>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		
 		
@@ -104,12 +133,12 @@
 							style="width:100%;font-size:12px; cursor:pointer; font-weight:bold; "
 							value="Imagens da turma" onClick="@command('verAlbum')" />
 					</div>
-					<div >
+					<div>
 						<label
 							style="margin-right:100px;width:100%;font-size:12px; cursor:pointer; font-weight:bold; "
 							value="Todos Alunos" onClick="@command('verTodos')" />
 					</div>
-					
+
 				</hlayout>
 			</div>
 
@@ -122,7 +151,7 @@
 					<textbox id="txtpesquisa" class="pesquisa"
 						onOK="@command('pesquisar')" value="@bind(vm.pesquisa)" />
 					<div style="margin-top:10%;">
-						
+
 					</div>
 				</vlayout>
 				<vlayout width="100%">
@@ -179,15 +208,15 @@
 							onClick="@command('postar', txtArea=txtpost, texto=txtpost.value, imagem='dfs', privado=chkPrivado.checked)"
 							style="font-size:12px;float:right;margin-left:10px; margin-top:2px;" />
 						<image id="img" />
-						
-							<fileupload
-								style="margin-top:2px;font-size:12px;float:right; margin-left:5px; "
-								label="Carregar Imagem"
-								onUpload="@command('upload', evt = event)" />
-							<label style="text-weight:bold;"
-								visible="@load(vm.imgPostagem ne null)"
-								value="@load(vm.nomeImg)" />
-					
+
+						<fileupload
+							style="margin-top:2px;font-size:12px;float:right; margin-left:5px; "
+							label="Carregar Imagem"
+							onUpload="@command('upload', evt = event)" />
+						<label style="text-weight:bold;"
+							visible="@load(vm.imgPostagem ne null)"
+							value="@load(vm.nomeImg)" />
+
 					</div>
 
 				</div>
@@ -255,7 +284,8 @@
 				style="max-width:100%; min-width:169px; width:100%;  margin-left:50px;">
 				<!-- Alunos -->
 				<div style=" margin-bottom:20px;">
-					<label style="font-weight: bold; font-size:70%;" visible="@load(not empty vm.linhasAluno)"
+					<label style="font-weight: bold; font-size:70%;"
+						visible="@load(not empty vm.linhasAluno)"
 						value="@load(vm.buscaGlobal eq true ? 'Todos alunos Cadastrados' : 'Alunos turma')" />
 				</div>
 				<vlayout
@@ -267,14 +297,45 @@
 						<hlayout children="@load(linha)">
 
 							<template name="children" var="aluno">
-								<vlayout
-									>
+								<vlayout>
 									<div
 										style="margin-bottom:10px;min-width:50px; min-height:50px;">
 										<image
 											style="filter: alpha(opacity=40);cursor:pointer;  max-width:100%; max-height:100%;"
 											class="aluno" src="@load(aluno.urlFoto)"
-											onClick="@command('verPerfil', facebookId=aluno.facebookId)" />
+											onClick="@command('verPerfil', facebookId=aluno.facebookId)"
+											onMouseOver="@command('showPopup', popup = self.nextSibling, alunoSelect = aluno)"
+											onMouseOut="@command('hidePopup',popup=self.nextSibling)" />
+										<window
+											onMouseOver="@command('showPopup', popup = self, alunoSelect = aluno)"
+											onMouseOut="@command('hidePopup',popup=self)" width="500px;"
+											visible="false">
+											<hlayout>
+
+												<image
+													onClick="@command('verPerfil', facebookId=aluno.facebookId)"
+													style=" margin-right:20px;cursor:pointer;"
+													src="@load(aluno.urlFoto)" />
+												<vlayout>
+
+													<label
+														style="font-weight:bold;" value="@load(aluno.nome)" />
+													<label
+														 value="@load('Cargo: ')" />
+													<label style="font-weight:bold;"
+														value="@load(aluno.atuacao.cargo)" />
+													<label 
+														value="@load('Local: ')" />
+													<label style="font-weight:bold;"
+														value="@load(aluno.atuacao.local)" />
+													<label
+														value="@load('Desde: ')" />
+													<label style="font-weight:bold;"
+														value="@load(aluno.atuacao.dataInicio)" />
+
+												</vlayout>
+											</hlayout>
+										</window>
 									</div>
 
 
@@ -287,6 +348,7 @@
 			</vlayout>
 
 		</hlayout>
+
 	</div>
 	<zscript><![CDATA[
 	
@@ -301,5 +363,6 @@
 		<image style=" max-width:100%; max-height:100%" />
 
 	</window>
+
 
 </zk>

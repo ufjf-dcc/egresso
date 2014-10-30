@@ -36,9 +36,23 @@ public class Aluno {
 
 	@Column(name = "url_foto", nullable = true, length = 255)
 	String urlFoto;
-
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "atuacao_id", nullable = true)
+	Atuacao atuacao;
 
 	
+
+
+
+	public Atuacao getAtuacao() {
+		return atuacao;
+	}
+
+	public void setAtuacao(Atuacao atuacao) {
+		this.atuacao = atuacao;
+	}
+
 	@Column(name = "ativo", nullable = true)
 	private int ativo;
 
@@ -136,6 +150,7 @@ public class Aluno {
 		this.facebookId = outro.facebookId;
 		this.turma = outro.turma;
 		this.urlFoto = outro.urlFoto;
+		this.atuacao = outro.atuacao;
 	}
 
 }

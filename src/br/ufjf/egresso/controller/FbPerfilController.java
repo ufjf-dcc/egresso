@@ -19,7 +19,6 @@ import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Vlayout;
 import org.zkoss.zul.Window;
 
-
 import br.ufjf.egresso.business.AlunoBusiness;
 import br.ufjf.egresso.business.AtuacaoBusiness;
 import br.ufjf.egresso.business.InteresseBusiness;
@@ -58,18 +57,21 @@ public class FbPerfilController {
 			podeEditar = aluno.getId() == ((Aluno) Sessions.getCurrent()
 					.getAttribute("aluno")).getId();
 		} else {
-	
+
 			aluno = (Aluno) Sessions.getCurrent().getAttribute("aluno");
 			podeEditar = true;
 		}
 		interesses = interesseBusiness.getInteresses(aluno);
-		
-		if(interesses == null) interesses = new ArrayList<Interesse>();
+
+		if (interesses == null)
+			interesses = new ArrayList<Interesse>();
 		List<Atuacao> todasAtuacoes = new AtuacaoBusiness().getPorAluno(aluno);
 		if (todasAtuacoes != null)
 			for (Atuacao a : todasAtuacoes) {
 				if (a.getDataTermino() == null)
 					atuacaoAtual = a;
+				aluno.setAtuacao(a);
+				new AlunoBusiness().editar(aluno);
 
 				switch (a.getTipoAtuacao().getId()) {
 				case TipoAtuacao.EMPREGO:
@@ -131,7 +133,7 @@ public class FbPerfilController {
 		v1.setVisible(!v1.isVisible());
 		v2.setVisible(!v2.isVisible());
 		atuacaoEmEdicao = null;
-		
+
 		emEdicao = false;
 		BindUtils.postNotifyChange(null, null, this, "emEdicao");
 	}
@@ -287,15 +289,16 @@ public class FbPerfilController {
 	}
 
 	@Command
-	public void mostraDescricao(@BindingParam("label") Label label, @BindingParam("img") Image img) {
-		if(!label.isVisible()){
+	public void mostraDescricao(@BindingParam("label") Label label,
+			@BindingParam("img") Image img) {
+		if (!label.isVisible()) {
 			label.setVisible(true);
 			img.setSrc("/img/minimize.jpg");
-		}else{
+		} else {
 			label.setVisible(false);
 			img.setSrc("/img/expandIcon.png");
 		}
-		
+
 		BindUtils.postNotifyChange(null, null, this, "img");
 
 	}
@@ -311,11 +314,13 @@ public class FbPerfilController {
 			}
 		window.doModal();
 	}
+
 	@Command
-	public void voltaTurma(){
-		
+	public void voltaTurma() {
+
 		Clients.evalJavaScript("volta()");
 	}
+
 	@Command
 	public void submitAtuacao(@BindingParam("window") final Window window) {
 		novaAtuacao.setAluno(aluno);
@@ -343,7 +348,7 @@ public class FbPerfilController {
 				default:
 					System.out.println("ID inválido de Atuação!.");
 				}
-				
+
 				limpaAtuacao();
 			} else {
 				Messagebox.show("A atuação não foi adicionada!", "Erro",
@@ -363,7 +368,8 @@ public class FbPerfilController {
 		novaAtuacao = new Atuacao();
 		BindUtils.postNotifyChange(null, null, this, "novaAtuacao");
 	}
-	public void limpaInteresse(){
+
+	public void limpaInteresse() {
 		novoInteresse = new Interesse();
 		BindUtils.postNotifyChange(null, null, this, "novoInteresse");
 
@@ -372,6 +378,7 @@ public class FbPerfilController {
 	public void notificaEmpregos() {
 		BindUtils.postNotifyChange(null, null, this, "filtraEmpregos");
 	}
+
 	public void notificaInteresses() {
 		BindUtils.postNotifyChange(null, null, this, "interesses");
 	}
@@ -415,10 +422,26 @@ public class FbPerfilController {
 				new org.zkoss.zk.ui.event.EventListener() {
 					public void onEvent(Event e) {
 						if (Messagebox.ON_OK.equals(e.getName())) {
-
+							if (atuacao.getCargo().equals(
+									aluno.getAtuacao().getCargo())
+									&& atuacao.getTipoAtuacao()
+											.equals(aluno.getAtuacao()
+													.getTipoAtuacao())
+									&& atuacao.getDataInicio().equals(
+											aluno.getAtuacao().getDataInicio())
+								
+									&& atuacao.getLocal().equals(
+											aluno.getAtuacao().getLocal())
+									&& atuacao.getAluno().equals(
+											aluno.getAtuacao().getAluno())
+									&& atuacao.getDescricao().equals(
+											aluno.getAtuacao().getDescricao())) {
+								aluno.setAtuacao(null);
+								new AlunoBusiness().editar(aluno);
+							}
 							if (atuacaoBusiness.exclui(atuacao)) {
 								removeFromList(atuacao);
-								
+
 							} else {
 								String errorMessage = "A atuação não pôde ser excluída.\n";
 								for (String error : atuacaoBusiness.getErrors())
@@ -456,9 +479,11 @@ public class FbPerfilController {
 		this.limpaInteresse();
 
 	}
-	@Command 
+
+	@Command
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public void excluirInteresses(@BindingParam("interesse") final Interesse interesse) {
+	public void excluirInteresses(
+			@BindingParam("interesse") final Interesse interesse) {
 		Messagebox.show("Você tem certeza que deseja excluir a atuação "
 				+ interesse.getInteresse() + "?", "Confirmação", Messagebox.OK
 				| Messagebox.CANCEL, Messagebox.QUESTION,
@@ -469,7 +494,7 @@ public class FbPerfilController {
 							if (interesseBusiness.exclui(interesse)) {
 								interesses.remove(interesse);
 								notificaInteresses();
-								
+
 							} else {
 								String errorMessage = "O interesse não pôde ser excluído.\n";
 								Messagebox.show(errorMessage, "Erro",
@@ -479,8 +504,9 @@ public class FbPerfilController {
 						}
 					}
 				});
-	
+
 	}
+
 	@Command
 	public void editarInteresse(
 			@BindingParam("editarSalvar") Label lbSalvarEditar,
@@ -519,7 +545,7 @@ public class FbPerfilController {
 		v1.setVisible(!v1.isVisible());
 		v2.setVisible(!v2.isVisible());
 		interesseEmEdicao = null;
-		
+
 		emEdicao = false;
 		BindUtils.postNotifyChange(null, null, this, "emEdicao");
 	}

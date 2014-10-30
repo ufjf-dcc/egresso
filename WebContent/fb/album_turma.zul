@@ -46,7 +46,7 @@
 				</div>
 			</hlayout>
 		</div>
-		<vlayout children="@load(vm.linhasPostagem)"
+		<vlayout  children="@load(vm.linhasPostagem)"
 			style=" padding:20px; margin-left:25%; margin-bottom:10px ">
 			<template name="children" var="linhaPostagem">
 				<hlayout style="padding:10px;"
@@ -54,7 +54,7 @@
 
 					<template name="children" var="postagem">
 
-						<div
+						<div 
 							style="overflow: hidden;
 	position: relative;background-color:white;border: 1px solid;;width:141px; height: 110px; "
 							visible="@load(postagem.imagem ne null)">

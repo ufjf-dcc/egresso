@@ -44,9 +44,9 @@
 				style="background-color: white;margin-left: 200px; margin-top:20px; margin-bottom:25px;width: 700px;padding: 20px;height:250px;">
 				<hlayout>
 					<div
-						style="background-color:gray; width: 80%; height: 170px; overflow: hidden; position: relative; margin-right:200px;">
+						style="max-width:100%; max-height:100%;background-color:gray; width: 80%; height: 170px; overflow: hidden; position: relative; margin-right:200px;">
 						<image src="@load(vm.aluno.urlFoto)"
-							class="aluno" />
+							class="aluno"   />
 					</div>
 					<vlayout style="color:black; margin:10px;">
 						<label style="font-size:20px;"
