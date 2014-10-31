@@ -73,6 +73,7 @@ public class FbTurmaController {
 
 	@Init
 	public void init() {
+		BindUtils.postNotifyChange(null, null, this, "alunoSelect");
 
 		turma = ((Aluno) Sessions.getCurrent().getAttribute("aluno"))
 				.getTurma();
@@ -237,7 +238,7 @@ public class FbTurmaController {
 		List<Aluno> linhaAluno = new ArrayList<Aluno>();
 
 		for (Aluno a : filtraAlunos) {
-			if ((largura - 300) / 180 < (inseridos + 1)) {
+			if ((largura - 800) / 50 < (inseridos + 1)) {
 				linhasAluno.add(linhaAluno);
 				inseridos = 0;
 				linhaAluno = new ArrayList<Aluno>();
@@ -267,7 +268,6 @@ public class FbTurmaController {
 		if (evt != null) {
 			largura = evt.getDesktopWidth();
 			altura = evt.getDesktopHeight() - 200;
-			System.out.println(largura);
 
 			BindUtils.postNotifyChange(null, null, this, "largura");
 			BindUtils.postNotifyChange(null, null, this, "altura");
@@ -554,7 +554,6 @@ public class FbTurmaController {
 				imgPostagem = evt.getMedia().getStreamData();
 				imgExtensao = s;
 				nomeImg = evt.getMedia().getName();
-				System.out.println(evt.getMedia().getName());
 				BindUtils.postNotifyChange(null, null, this, "imgPostagem");
 
 				BindUtils.postNotifyChange(null, null, this, "nomeImg");
@@ -645,19 +644,21 @@ public class FbTurmaController {
 		lbl.setValue("teste");
 
 	}
+
 	@Command
 	public void showPopup(@BindingParam("popup") Window popup,
-			@BindingParam("alunoSelect") Aluno aluno){
+			@BindingParam("alunoSelect") Aluno aluno) {
 		alunoSelect = aluno;
-		System.out.println(alunoSelect.getNome());
 		BindUtils.postNotifyChange(null, null, null, "alunoSelect");
 		popup.doModal();
-		
+
 	}
+
 	@Command
-	public void hidePopup(@BindingParam("popup") Window popup){
+	public void hidePopup(@BindingParam("popup") Window popup) {
 		popup.setVisible(false);
 	}
+
 	@Command
 	public void carregarImagem(@BindingParam("imagem") Image img,
 			@BindingParam("imgSrc") String imgPath) {

@@ -42,14 +42,39 @@
 
 
 
+
+
 		
 		<![CDATA[ function verTodos(){ location.href =
 		"todosAlunos.zul";
 
-		}
+		} //Obtém o appId contido no arquivo .txt 
+		var sappId;
 
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange=function(){ if (xmlhttp.readyState==4
+		&& xmlhttp.status==200){ appId=xmlhttp.responseText; } }
+		xmlhttp.open("GET","appId.txt",true); xmlhttp.send();
+
+		// Inicializa o Facebook SDK 
+			window.fbAsyncInit = function() {
+		FB.init({ appId : appId, status : true, xfbml : true }); };
+
+		(function(d, s, id){ var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) {return;} js = d.createElement(s);
+		js.id = id; js.src = "//connect.facebook.net/en_US/all.js";
+		fjs.parentNode.insertBefore(js, fjs); }(document, 'script',
+		'facebook-jssdk'));
+
+		//Abre a janela de convite
+		function convidar(){ FB.ui({method:
+		'apprequests', filters: ['app_non_users'], message: 'Faça parte do aplicativo que reúne os ex-launos do curso de Ciência da Computação da UFJF!'
+
+		}, null); }
 
 		]]>
+		
+		
 		
 		
 		
@@ -184,14 +209,14 @@
 
 			<!-- Mural -->
 			<vlayout
-				style="max-width:800px;min-width:700px; width:100%; background-color:#E8E8E8;">
+				style="max-width:700px;min-width:600px; width:100%; background-color:#E8E8E8;">
 				<div
 					style="font-size:12px;margin-right:50px;padding:3%;background-color:white; width:100%;">
 
 
-					<div width="100%">
-						<!--<button label="Convidar ex-alunos" class="btn"
-							c:onClick="convidar()" style="float:right; margin-top:10px" />-->
+					<div width="100%" style="margin-bottom:2%;">
+						<button label="Convidar ex-alunos" class="btn"
+							c:onClick="convidar()" style="float:right; " />
 						<label value="Mural da turma"
 							style="font-size:12px;" class="titulo-mural" hflex="1" />
 					</div>
@@ -235,7 +260,7 @@
 
 				<!-- Postagens -->
 				<vlayout children="@load(vm.postagensTurma)"
-					style="max-width:800px; min-width:700px;margin-bottom:10px; ">
+					style="max-width:700px; min-width:600px;margin-bottom:10px; ">
 
 					<template name="children" var="postagem">
 						<vlayout
@@ -278,7 +303,7 @@
 			<label id="nenhumAluno"
 				value="Nenhum aluno deste semestre se cadastrou ainda. Deseja convidar ex-alunos?"
 				c:onClick="convidar()"
-				style="font-size:10px;cursor:pointer; text-decoration:underline; margin-left:50px"
+				style="width:100%;font-size:10px;cursor:pointer; text-decoration:underline; margin-left:10%;"
 				visible="@load(empty vm.linhasAluno)" />
 			<vlayout
 				style="max-width:100%; min-width:169px; width:100%;  margin-left:50px;">
@@ -321,16 +346,19 @@
 													<label
 														style="font-weight:bold;" value="@load(aluno.nome)" />
 													<label
-														 value="@load('Cargo: ')" />
-													<label style="font-weight:bold;"
+														value="@load('Cargo: ')" />
+													<label
+														style="font-weight:bold;"
 														value="@load(aluno.atuacao.cargo)" />
-													<label 
+													<label
 														value="@load('Local: ')" />
-													<label style="font-weight:bold;"
+													<label
+														style="font-weight:bold;"
 														value="@load(aluno.atuacao.local)" />
 													<label
 														value="@load('Desde: ')" />
-													<label style="font-weight:bold;"
+													<label
+														style="font-weight:bold;"
 														value="@load(aluno.atuacao.dataInicio)" />
 
 												</vlayout>
@@ -350,10 +378,7 @@
 		</hlayout>
 
 	</div>
-	<zscript><![CDATA[
-	
-]]>
-    </zscript>
+
 
 	<window id="imagem" title="Visualizar Imagem" visible="false"
 		border="normal" position="center,center" closable="true"

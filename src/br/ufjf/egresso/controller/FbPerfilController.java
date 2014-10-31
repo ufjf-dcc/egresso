@@ -324,9 +324,6 @@ public class FbPerfilController {
 	@Command
 	public void submitAtuacao(@BindingParam("window") final Window window) {
 		novaAtuacao.setAluno(aluno);
-		System.out.println(novaAtuacao.getCargo());
-		System.out.println(novaAtuacao.getLocal());
-
 		if (atuacaoBusiness.validar(novaAtuacao)) {
 			if (atuacaoBusiness.salvar(novaAtuacao)) {
 				switch (novaAtuacao.getTipoAtuacao().getId()) {
@@ -429,7 +426,7 @@ public class FbPerfilController {
 													.getTipoAtuacao())
 									&& atuacao.getDataInicio().equals(
 											aluno.getAtuacao().getDataInicio())
-								
+
 									&& atuacao.getLocal().equals(
 											aluno.getAtuacao().getLocal())
 									&& atuacao.getAluno().equals(

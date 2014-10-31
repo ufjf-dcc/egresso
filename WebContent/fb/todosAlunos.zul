@@ -60,7 +60,7 @@
 						value="Voltar para turma" onClick="@command('voltaTurma')" />
 				</div>
 				<div style="width:100%;margin-left:300px;">
-					<label style="font-size:15px;"
+					<label style="font-size:12px; font-weight:bold;"
 						value="@load('Todos os Alunos cadastrados')" />
 				</div>
 				<hlayout
@@ -74,7 +74,7 @@
 			</hlayout>
 		</div>
 		<vlayout
-			style="margin-top:5%;margin-left:32%; max-width:100%;  min-width:169px;">
+			style="margin-top:5%; margin-left:10%;margin-right:5%;max-width:1200px;  min-width:500px;">
 			<!-- Alunos -->
 
 			<vlayout
