@@ -159,7 +159,7 @@
 							value="Todos Alunos" onClick="@command('verTodos')" />
 					</div>
 			<div style="color:white;width:100%;margin-left:100px;margin-right:70px;">
-				<label style="font-size:80%;" class="cabecalho"
+				<label style="font-size:80%;font-weight:bold;" class="cabecalho"
 					value="@load(vm.descricao)" />
 			</div>
 
