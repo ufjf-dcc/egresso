@@ -48,10 +48,11 @@ public class FbCadastroController {
 	public void init() {
 		intervalo = 4;
 		aluno = (Aluno) Sessions.getCurrent().getAttribute("aluno");
-		if (aluno == null) {
-			aluno = new Aluno();
-			aluno.setAtivo(Aluno.ATIVO);
-		}
+		/*
+		 * if (aluno == null) {
+		 * 
+		 * aluno = new Aluno(); aluno.setAtivo(Aluno.ATIVO); }
+		 */
 		facebook = (Facebook) Sessions.getCurrent().getAttribute("facebook");
 		anos = new HashSet<Integer>();
 		for (Turma turma : new TurmaBusiness().getTodas()) {
@@ -99,7 +100,7 @@ public class FbCadastroController {
 	private boolean verificarAlunoNoIntegra(String cpf, String senha) {
 		boolean alunoValido = false;
 		BufferedReader reader = null;
-	
+
 		try {
 			// Recebe o JSON do integra
 			URL url = new URL(ConfHandler.getConf("INTEGRA.URL") + cpf);
@@ -130,16 +131,39 @@ public class FbCadastroController {
 					// Se a senha está correta...
 					if (((String) dadosAluno.get("passmd5")).equals(passmd5
 							.toString())) {
-
-						// ...guarda as informaçẽos do aluno
-						aluno.setNome(facebook.getMe().getName());
-						aluno.setFacebookId(facebook.getMe().getId());
-						aluno.setUrlFoto(facebook.getPictureURL(
-								facebook.getMe().getId(),
-								PictureSize.valueOf("large")).toExternalForm());
-						aluno.setMatricula((String) dadosAluno.get("profile"));
-						BindUtils.postNotifyChange(null, null, this, "ano");
-						alunoValido = true;
+						aluno = new AlunoBusiness()
+								.buscaPorMatricula(((String) dadosAluno
+										.get("profile")));
+						if (aluno != null && aluno.getAtivo() == 0) {
+							// ...guarda as informaçẽos do aluno
+							aluno.setNome(facebook.getMe().getName());
+							aluno.setFacebookId(facebook.getMe().getId());
+							aluno.setUrlFoto(facebook.getPictureURL(
+									facebook.getMe().getId(),
+									PictureSize.valueOf("large"))
+									.toExternalForm());
+							aluno.setMatricula((String) dadosAluno
+									.get("profile"));
+							aluno.setAtivo(Aluno.ATIVO);
+							BindUtils.postNotifyChange(null, null, this, "ano");
+							alunoValido = true;
+						}
+						if (aluno == null ) {
+							aluno = new Aluno();
+							aluno.setAtivo(Aluno.ATIVO);
+							// ...guarda as informaçẽos do aluno
+							aluno.setNome(facebook.getMe().getName());
+							aluno.setFacebookId(facebook.getMe().getId());
+							aluno.setUrlFoto(facebook.getPictureURL(
+									facebook.getMe().getId(),
+									PictureSize.valueOf("large"))
+									.toExternalForm());
+							aluno.setMatricula((String) dadosAluno
+									.get("profile"));
+							aluno.setAtivo(Aluno.ATIVO);
+							BindUtils.postNotifyChange(null, null, this, "ano");
+							alunoValido = true;
+						}
 					} else {
 						Messagebox.show("A senha digitada está incorreta.",
 								"Erro de autenticação", Messagebox.OK,
@@ -234,7 +258,7 @@ public class FbCadastroController {
 
 	@Command
 	public void cadastrar() {
-		if (!new AlunoBusiness().salvar(aluno))
+		if (!new AlunoBusiness().editar(aluno))
 			Messagebox
 					.show("Não foi realizar o cadastro. Por favor, tente novamente mais tarde.",
 							"Erro", Messagebox.OK, Messagebox.ERROR);
