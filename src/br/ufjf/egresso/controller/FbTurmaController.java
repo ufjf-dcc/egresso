@@ -238,7 +238,7 @@ public class FbTurmaController {
 		List<Aluno> linhaAluno = new ArrayList<Aluno>();
 
 		for (Aluno a : filtraAlunos) {
-			if ((largura - 120) / 170 < (inseridos + 1)) {
+			if ((largura - 120) / 140 < (inseridos + 1)) {
 				linhasAluno.add(linhaAluno);
 				inseridos = 0;
 				linhaAluno = new ArrayList<Aluno>();
