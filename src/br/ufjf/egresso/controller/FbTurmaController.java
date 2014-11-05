@@ -226,7 +226,7 @@ public class FbTurmaController {
 	@Command
 	public void montaTabelaTodos(@BindingParam("event") ClientInfoEvent evt) {
 		if (evt != null) {
-			largura = evt.getDesktopWidth();
+			largura = 1200;
 			altura = evt.getDesktopHeight() - 180;
 
 			BindUtils.postNotifyChange(null, null, this, "largura");
