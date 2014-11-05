@@ -226,7 +226,7 @@ public class FbTurmaController {
 	@Command
 	public void montaTabelaTodos(@BindingParam("event") ClientInfoEvent evt) {
 		if (evt != null) {
-			largura = 1200;
+			largura = evt.getDesktopWidth();
 			altura = evt.getDesktopHeight() - 180;
 
 			BindUtils.postNotifyChange(null, null, this, "largura");
@@ -238,7 +238,7 @@ public class FbTurmaController {
 		List<Aluno> linhaAluno = new ArrayList<Aluno>();
 
 		for (Aluno a : filtraAlunos) {
-			if ((largura - 800) / 50 < (inseridos + 1)) {
+			if ((largura - 50) / 50 < (inseridos + 1)) {
 				linhasAluno.add(linhaAluno);
 				inseridos = 0;
 				linhaAluno = new ArrayList<Aluno>();
