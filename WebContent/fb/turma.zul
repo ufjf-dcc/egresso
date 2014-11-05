@@ -342,29 +342,30 @@
 													style=" margin-right:20px;cursor:pointer;"
 													src="@load(aluno.urlFoto)" />
 												<vlayout>
-
+																
 													<label
 														style="font-weight:bold;" value="@load(aluno.nome)" />
-													<label
-														value="@load('Cargo: ')" />
-													<label
+														<label visible="@load(aluno.atuacao eq null)"  value="Nenhuma informação cadastrada."/>
+													<label visible="@load(aluno.atuacao ne null)"
+														value="@load(aluno.atuacao.tipoAtuacao.id eq 1 ? 'Formação :' : aluno.atuacao.tipoAtuacao.id eq 2 ? 'Projeto :' : 'Cargo :')" />
+													<label 	 visible="@load(aluno.atuacao ne null)"
 														style="font-weight:bold;"
 														value="@load(aluno.atuacao.cargo)" />
-													<label
-														value="@load('Local: ')" />
-													<label
+													<label 	 visible="@load(aluno.atuacao ne null)"
+														value="@load(aluno.atuacao.tipoAtuacao.id eq 1 ? 'Instituição :' : aluno.atuacao.tipoAtuacao.id eq 2 ? 'Local de Desenvolvimento :' : 'Empresa :')" />
+													<label  visible="@load(aluno.atuacao ne null)"
 														style="font-weight:bold;"
 														value="@load(aluno.atuacao.local)" />
-													<label
-														value="@load('Desde: ')" />
-													<label
+													<label 	visible="@load(aluno.atuacao ne null)"
+														value="@load('Desde : ')" />
+													<label  visible="@load(aluno.atuacao ne null)"
 														style="font-weight:bold;"
 														value="@load(aluno.atuacao.dataInicio)" />
 
 												</vlayout>
 											</hlayout>
 										</window>
-									</div>
+										</div>
 
 
 								</vlayout>
