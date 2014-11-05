@@ -64,7 +64,7 @@
 						value="@load('Todos os Alunos cadastrados')" />
 				</div>
 				<hlayout
-					style="margin-left:66%;color:white; width:100%;">
+					style="margin-left:20%;color:white; width:100%;">
 					<label style="font-size:12px;"
 						class="pesquisa-turma" value="Pesquisar aluno:" />
 					<textbox id="txtpesquisa" class="pesquisa"
