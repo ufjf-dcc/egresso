@@ -59,12 +59,12 @@
 						style="font-size:12px; cursor:pointer; font-weight:bold; "
 						value="Voltar para turma" onClick="@command('voltaTurma')" />
 				</div>
-				<div style="width:100%;margin-left:300px;">
+				<div style="width:100%;margin-left:150px;">
 					<label style="font-size:12px; font-weight:bold;"
 						value="@load('Todos os Alunos cadastrados')" />
 				</div>
 				<hlayout
-					style="margin-left:50%;color:white; width:100%;">
+					style="margin-left:66%;color:white; width:100%;">
 					<label style="font-size:12px;"
 						class="pesquisa-turma" value="Pesquisar aluno:" />
 					<textbox id="txtpesquisa" class="pesquisa"
@@ -74,7 +74,7 @@
 			</hlayout>
 		</div>
 		<vlayout
-			style="margin-top:5%; margin-left:10%;margin-right:5%;max-width:1200px;  min-width:500px;">
+			style="margin-top:5%; margin-right:5%;max-width:1200px;  min-width:500px;">
 			<!-- Alunos -->
 
 			<vlayout
