@@ -69,7 +69,6 @@ public class AlunoBusiness {
 		else
 			jaExiste(matricula, matriculaAntiga);
 	}
-
 	private boolean jaExiste(String matricula, String matriculaAntiga) {
 		errors.clear();
 		if (alunoDao.jaExiste(matricula, matriculaAntiga)) {
