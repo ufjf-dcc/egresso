@@ -141,13 +141,8 @@
 			style="padding:1%; height:100%;background-color:#c0504d; margin-bottom:20px;">
 
 
-			<div style="color:white;">
-				<label style="font-size:80%;" class="cabecalho"
-					value="@load(vm.descricao)" />
-			</div>
-			<div
-				style="color:white; margin-left:5%; cursor:pointer; ">
-				<hlayout style="margin-right:20%;">
+			<div style="color:white; margin-left:0%; cursor:pointer; ">
+				<hlayout style="margin-right:10%;">
 					<div style=" width:100%;">
 						<label
 							style="font-size:12px; margin-right:5px; cursor:pointer; font-weight:bold; "
@@ -160,9 +155,13 @@
 					</div>
 					<div>
 						<label
-							style="margin-right:100px;width:100%;font-size:12px; cursor:pointer; font-weight:bold; "
+							style="margin-right:10px;width:100%;font-size:12px; cursor:pointer; font-weight:bold; "
 							value="Todos Alunos" onClick="@command('verTodos')" />
 					</div>
+			<div style="color:white;width:100%;margin-left:55px;margin-right:55px;">
+				<label style="font-size:80%;" class="cabecalho"
+					value="@load(vm.descricao)" />
+			</div>
 
 				</hlayout>
 			</div>
@@ -172,12 +171,10 @@
 			<hlayout>
 				<vlayout style="color:white; width:100%;">
 					<label style="font-size:12px;"
-						class="pesquisa-turma" value="Pesquisar aluno:" />
+	                              value="Pesquisar aluno:" />
 					<textbox id="txtpesquisa" class="pesquisa"
 						onOK="@command('pesquisar')" value="@bind(vm.pesquisa)" />
-					<div style="margin-top:10%;">
-
-					</div>
+					
 				</vlayout>
 				<vlayout width="100%">
 					<label style="font-size:12px;"
