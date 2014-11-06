@@ -577,7 +577,7 @@
 		</window>
 
 		<div width="700px;"
-			style="margin-left:200px; margin-bottom:50px; background-color: white;padding:20px;">
+			style="margin-left:120px; margin-bottom:50px; background-color: white;padding:20px;">
 			<hlayout>
 				<label value="Interesses " style="font-size:16px;" />
 				<label
@@ -594,9 +594,9 @@
 				
 							
 						</html>
-			<vlayout width="700px" children="@load(vm.interesses)">
+			<vlayout style="width:700px;"  children="@load(vm.interesses)">
 				<template name="children" var="interesse">
-					<vlayout width="640px" style="margin-top: 20px">
+					<vlayout width="640px" style="margin-top: 20px;">
 						<vlayout>
 							<label sclass="interesse"
 								value="@load(interesse.interesse)" />
