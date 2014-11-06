@@ -146,7 +146,7 @@
 					<div style=" width:100%;">
 						<label
 							style="font-size:12px; margin-right:5px; cursor:pointer; font-weight:bold; "
-							value="Meu Perfil" onClick="@command('goProfile')" />
+							value="Ver Perfil" onClick="@command('goProfile')" />
 					</div>
 					<div style="margin-right:5px;">
 						<label
@@ -158,7 +158,7 @@
 							style="margin-right:10px;width:100%;font-size:12px; cursor:pointer; font-weight:bold; "
 							value="Todos Alunos" onClick="@command('verTodos')" />
 					</div>
-					<div style="color:white;width:100%;margin-left:100px;margin-right:60px;">
+					<div style="color:white;width:100%;margin-left:100px;margin-right:70px;">
 						<label style="font-size:80%;font-weight:bold;" class="cabecalho"
 								value="@load(vm.descricao)" />
 					</div>
@@ -208,7 +208,7 @@
 
 			<!-- Mural -->
 			<vlayout
-				style="max-width:700px;min-width:600px; width:100%; background-color:#E8E8E8;">
+				style="width:600px;  background-color:#E8E8E8;">
 				<div
 					style="font-size:12px;margin-right:50px;padding:3%;background-color:white; width:100%;">
 
@@ -344,7 +344,8 @@
 																
 													<label
 														style="font-weight:bold;" value="@load(aluno.nome)" />
-														<label visible="@load(aluno.atuacao eq null)"  value="Nenhuma informação cadastrada."/>
+														<label visible="@load(aluno.atuacao eq null and aluno.facebookId ne null)"  value="O aluno não tem atuação atual."/>
+														<label visible="@load(aluno.facebookId eq null)"  value="O aluno ainda não se cadastrou no aplicativo."/>
 													<label visible="@load(aluno.atuacao ne null)"
 														value="@load(aluno.atuacao.tipoAtuacao.id eq 1 ? 'Formação :' : aluno.atuacao.tipoAtuacao.id eq 2 ? 'Projeto :' : 'Cargo :')" />
 													<label 	 visible="@load(aluno.atuacao ne null)"

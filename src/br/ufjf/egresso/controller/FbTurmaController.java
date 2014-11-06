@@ -652,6 +652,7 @@ public class FbTurmaController {
 			@BindingParam("alunoSelect") Aluno aluno) {
 		alunoSelect = aluno;
 		BindUtils.postNotifyChange(null, null, null, "alunoSelect");
+	
 		popup.doModal();
 
 	}

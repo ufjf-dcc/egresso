@@ -47,7 +47,7 @@
 			</hlayout>
 		</div>
 		<vlayout  children="@load(vm.linhasPostagem)"
-			style=" padding:20px; margin-left:25%; margin-bottom:10px ">
+			style=" padding:20px; margin-left:100px; margin-bottom:10px ">
 			<template name="children" var="linhaPostagem">
 				<hlayout style="padding:10px;"
 					children="@load(linhaPostagem)">

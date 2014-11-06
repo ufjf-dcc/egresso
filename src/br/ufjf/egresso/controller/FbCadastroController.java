@@ -259,7 +259,7 @@ public class FbCadastroController {
 
 	@Command
 	public void cadastrar() {
-		if (!new AlunoBusiness().editar(aluno))
+		if (!new AlunoBusiness().salvaOuEdita(aluno))
 			Messagebox
 					.show("Não foi realizar o cadastro. Por favor, tente novamente mais tarde.",
 							"Erro", Messagebox.OK, Messagebox.ERROR);
