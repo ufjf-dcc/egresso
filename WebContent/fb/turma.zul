@@ -326,7 +326,7 @@
 										style="margin-bottom:10px;min-width:50px; min-height:50px;">
 										<image
 											style="filter: alpha(opacity=40);cursor:pointer;  max-width:100%; max-height:100%;"
-											class="aluno" src="@load(aluno.urlFoto)"
+											class="aluno" src="@load(aluno.facebookId ne null ? aluno.urlFoto : '/img/anonimo.jpg' )"
 											onClick="@command('verPerfil', facebookId=aluno.facebookId)"
 											onMouseOver="@command('showPopup', popup = self.nextSibling, alunoSelect = aluno)"
 											onMouseOut="@command('hidePopup',popup=self.nextSibling)" />
@@ -338,8 +338,8 @@
 
 												<image
 													onClick="@command('verPerfil', facebookId=aluno.facebookId)"
-													style=" margin-right:20px;cursor:pointer;"
-													src="@load(aluno.urlFoto)" />
+													style="width:200px; height:200px; margin-right:20px;cursor:pointer;"
+													src="@load(aluno.facebookId ne null ? aluno.urlFoto : '/img/anonimo.jpg' )" />
 												<vlayout>
 																
 													<label

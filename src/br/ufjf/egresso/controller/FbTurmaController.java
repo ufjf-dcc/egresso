@@ -1,7 +1,7 @@
 package br.ufjf.egresso.controller;
 
-import java.awt.TextArea;
-import java.io.IOException;
+
+
 import java.io.InputStream;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -26,13 +26,13 @@ import org.zkoss.zul.Label;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
-import org.zkoss.image.AImage;
+
 
 import br.ufjf.egresso.business.AlunoBusiness;
 import br.ufjf.egresso.business.PostagemBusiness;
 import br.ufjf.egresso.business.TurmaBusiness;
 import br.ufjf.egresso.model.Aluno;
-import br.ufjf.egresso.model.Atuacao;
+
 import br.ufjf.egresso.model.Postagem;
 import br.ufjf.egresso.model.Turma;
 import br.ufjf.egresso.utils.ConfHandler;
@@ -238,7 +238,7 @@ public class FbTurmaController {
 		List<Aluno> linhaAluno = new ArrayList<Aluno>();
 
 		for (Aluno a : filtraAlunos) {
-			if ((largura - 120) / 140 < (inseridos + 1)) {
+			if ((largura - 120) / 160 < (inseridos + 1)) {
 				linhasAluno.add(linhaAluno);
 				inseridos = 0;
 				linhaAluno = new ArrayList<Aluno>();
@@ -339,7 +339,7 @@ public class FbTurmaController {
 	public int getLargura() {
 		return largura;
 	}
-
+	
 	@Command
 	@NotifyChange({ "filtraAlunos", "emptyMessage" })
 	public void pesquisar() {
@@ -402,8 +402,10 @@ public class FbTurmaController {
 
 	@Command
 	public void verPerfil(@BindingParam("facebookId") String facebookId) {
-		Executions.sendRedirect("perfil.zul?id=" + facebookId);
+		if (facebookId != null)
+			Executions.sendRedirect("perfil.zul?id=" + facebookId);
 	}
+
 
 	@Command
 	public void convidar() {

@@ -1,13 +1,12 @@
 package br.ufjf.egresso.business;
 
-import java.util.Date;
-import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import br.ufjf.egresso.model.Aluno;
 import br.ufjf.egresso.model.Atuacao;
-import br.ufjf.egresso.model.Interesse;
+
 import br.ufjf.egresso.persistent.AtuacaoDAO;
 
 /**
@@ -63,39 +62,7 @@ public class AtuacaoBusiness {
 			errors.add("É necessário informar o local;\n");
 	}
 	
-	private void validaDataTermino(Date dt){
-		if(dt != null)
-			validaDataInicio(dt);	
-	}
-	
-	private void validaDataInicio(Date dt){		
-		SimpleDateFormat sdf1= new SimpleDateFormat("dd/MM/yyyy");
-		String strDtUser = sdf1.format(dt);
-		String dtArray[] = new String[3];
-		dtArray = strDtUser.split("/");
-		int diaUser = Integer.parseInt(dtArray[0]);
-		int mesUser = Integer.parseInt(dtArray[1]);
-		int anoUser = Integer.parseInt(dtArray[2]);
-		Date dtAtual = new Date(); 
-		SimpleDateFormat formatadorDtAtual = new SimpleDateFormat("dd/MM/yyyy");
-		String strDtAtual = formatadorDtAtual.format(dtAtual);
-	    String dtAtualArray[] = new String[3];
-	    dtAtualArray = strDtAtual.split("/");
-		int diaAtual = Integer.parseInt(dtAtualArray[0]);
-		int mesAtual = Integer.parseInt(dtAtualArray[1]);
-		int anoAtual = Integer.parseInt(dtAtualArray[2]);
-		
-		if(anoUser > anoAtual)
-			errors.add("Impossível informar um ano futuro");
-		else
-			if(anoUser == anoAtual)
-				if(mesUser > mesAtual)
-					errors.add("Impossível informar um mês futuro");
-				else
-					if(mesUser == mesAtual)
-						if(diaUser > diaAtual)
-							errors.add("Impossível informar um dia futuro");
-	}
+
 
 	public List<Atuacao> getPorAluno(Aluno aluno) {
 		return atuacaoDao.getAtuacoes(aluno);

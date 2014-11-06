@@ -48,11 +48,13 @@ public class FbCadastroController {
 	public void init() {
 		intervalo = 4;
 		aluno = (Aluno) Sessions.getCurrent().getAttribute("aluno");
-		/*
-		 * if (aluno == null) {
-		 * 
-		 * aluno = new Aluno(); aluno.setAtivo(Aluno.ATIVO); }
-		 */
+
+		if (aluno == null) {
+
+			aluno = new Aluno();
+			aluno.setAtivo(Aluno.ATIVO);
+		}
+
 		facebook = (Facebook) Sessions.getCurrent().getAttribute("facebook");
 		anos = new HashSet<Integer>();
 		for (Turma turma : new TurmaBusiness().getTodas()) {
@@ -134,7 +136,7 @@ public class FbCadastroController {
 						aluno = new AlunoBusiness()
 								.buscaPorMatricula(((String) dadosAluno
 										.get("profile")));
-						if (aluno != null && aluno.getAtivo() == 0) {
+						if (aluno != null) {
 							// ...guarda as informaçẽos do aluno
 							aluno.setNome(facebook.getMe().getName());
 							aluno.setFacebookId(facebook.getMe().getId());
@@ -147,8 +149,7 @@ public class FbCadastroController {
 							aluno.setAtivo(Aluno.ATIVO);
 							BindUtils.postNotifyChange(null, null, this, "ano");
 							alunoValido = true;
-						}
-						if (aluno == null ) {
+						} else {
 							aluno = new Aluno();
 							aluno.setAtivo(Aluno.ATIVO);
 							// ...guarda as informaçẽos do aluno
