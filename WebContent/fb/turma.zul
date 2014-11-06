@@ -141,7 +141,7 @@
 			style="padding:1%; height:100%;background-color:#c0504d; margin-bottom:20px;">
 
 
-			<div style="color:white; margin-left:0%; cursor:pointer; ">
+			<div style="color:white; margin-left:0%; cursor:pointer; margin-top:15px; ">
 				<hlayout style="margin-right:0%;">
 					<div style=" width:100%;">
 						<label
@@ -158,10 +158,10 @@
 							style="margin-right:10px;width:100%;font-size:12px; cursor:pointer; font-weight:bold; "
 							value="Todos Alunos" onClick="@command('verTodos')" />
 					</div>
-			<div style="color:white;width:100%;margin-left:100px;margin-right:70px;">
-				<label style="font-size:80%;font-weight:bold;" class="cabecalho"
-					value="@load(vm.descricao)" />
-			</div>
+					<div style="color:white;width:100%;margin-left:100px;margin-right:70px;">
+						<label style="font-size:80%;font-weight:bold;" class="cabecalho"
+								value="@load(vm.descricao)" />
+					</div>
 
 				</hlayout>
 			</div>

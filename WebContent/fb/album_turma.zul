@@ -40,7 +40,7 @@
 						style="font-size:12px; cursor:pointer; font-weight:bold; "
 						value="Voltar para turma" onClick="@command('voltaTurma')" />
 				</div>
-				<div  style="width:100%;margin-left:150%;">
+				<div  style="width:100%;margin-left:250px;">
 					<label style="font-size:12px;font-weight:bold;"
 						value="@load('Álbum de fotos da '.concat(vm.descricao))" />
 				</div>
