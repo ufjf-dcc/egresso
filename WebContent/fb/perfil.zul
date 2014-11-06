@@ -18,17 +18,19 @@
 		height="100%" style="background-color:#E8E8E8;">
 
 		<div
-			style="background-color: #c0504d; width:100% margin-left : 10px;margin-top:10px;">
+			style="color:white; padding :13px;background-color: #c0504d; width:100%;">
 			<hlayout>
 				<div
-					style="margin-right : 100px; position:relative; left:10px;color: white; padding:15px;cursor:pointer; "
+					style="margin-right : 100px; margin-left:0px;color: white; 
+					cursor:pointer;margin-top:10px;margin-bottom:10px; "
 					id="voltaTurma">
 
 					<label style=" font-weight: bold;font-size : 12px;"
 						value="Voltar para turma" onClick="@command('voltaTurma')" />
 
 				</div>
-				<div style="margin-left:20%; width:100%;margin-right:20%;color: white; padding:15px;"
+				<div style="margin-left:100px; width:100%;margin-right:20%;color: white; 
+				     margin-top:10px;margin-bottom:10px;"
 					id="cabecalho2">
 
 					<label style="font-size : 12px; font-weight:bold;"
@@ -39,14 +41,14 @@
 			</hlayout>
 		</div>
 
-		<vlayout>
+		<vlayout style="margin-left:-80px;">
 			<div
 				style="background-color: white;margin-left: 200px; margin-top:20px; margin-bottom:25px;width: 700px;padding: 20px;height:250px;">
 				<hlayout>
 					<div
-						style="max-width:100%; max-height:100%;background-color:gray; width: 80%; height: 170px; overflow: hidden; position: relative; margin-right:200px;">
+						style=" width: 160px; height: 200px;margin-right:10px; overflow:hidden;">
 						<image src="@load(vm.aluno.urlFoto)"
-							class="aluno"   />
+							 />
 					</div>
 					<vlayout style="color:black; margin:10px;">
 						<label style="font-size:20px;"
