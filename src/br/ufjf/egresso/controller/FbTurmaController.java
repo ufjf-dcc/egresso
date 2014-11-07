@@ -97,7 +97,10 @@ public class FbTurmaController {
 		}
 
 	}
-
+	@Command
+	public void trocarCor(@BindingParam("cbx") Combobox cbx){
+		cbx.setPlaceholder("Outras turmas");
+	}
 	public List<Aluno> getAlunos() {
 		return alunos;
 	}
@@ -531,9 +534,10 @@ public class FbTurmaController {
 				postagensTurma.add(0, postagem);
 				BindUtils.postNotifyChange(null, null, this, "postagensTurma");
 				txtArea.setText(null);
+				txtArea.setPlaceholder("Escreva algo aqui.");
 				imgPostagem = null;
 				BindUtils.postNotifyChange(null, null, this, "imgPostagem");
-
+				
 				return;
 			}
 		}

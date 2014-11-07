@@ -4,8 +4,8 @@
 	<script type="text/javascript" src="/watermarkinput.js" />
 	<script type="text/javascript">
 		zk.afterMount(function() {
-		jq("$txtpesquisa").Watermark("Nome","gray");
-		jq("$txtpost").Watermark("Escreva algo aqui","gray"); });
+		jq("$txtpost").Watermark("Escreva algo aqui","gray"); 
+		});
 
 
 	</script>
@@ -133,16 +133,17 @@
 		
 	</script>
 
-	<div apply="org.zkoss.bind.BindComposer" width="100%"
+ 
+	<div apply="org.zkoss.bind.BindComposer" width="100%" align="center"
 		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbTurmaController')"
 		style="max-height:100%; background-color:#E8E8E8;"
 		onClientInfo="@command('montaTabela', event=event)">
-		<hlayout width="100%"
-			style="padding:1%; height:100%;background-color:#c0504d; margin-bottom:20px;">
+		<hlayout 
+			style="padding:1%;width:100%;height:100%;background-color:#c0504d; margin-bottom:1%;">
 
 
-			<div style="color:white; margin-left:0%; cursor:pointer; margin-top:15px; ">
-				<hlayout style="margin-right:0%;">
+			<div  style="color:white; cursor:pointer; margin-top:2%;margin-left:-100%;">
+				<hlayout>
 					<div style=" width:100%;">
 						<label
 							style="font-size:12px; margin-right:5px; cursor:pointer; font-weight:bold; "
@@ -158,33 +159,30 @@
 							style="margin-right:10px;width:100%;font-size:12px; cursor:pointer; font-weight:bold; "
 							value="Todos Alunos" onClick="@command('verTodos')" />
 					</div>
-					<div style="color:white;width:100%;margin-left:100px;margin-right:70px;">
-						<label style="font-size:80%;font-weight:bold;" class="cabecalho"
-								value="@load(vm.descricao)" />
-					</div>
+					
 
 				</hlayout>
 			</div>
 
 
 
-			<hlayout>
+			<hlayout style="width:100%;margin-left:50%;">
 				<vlayout style="color:white; width:100%;">
 			    
-					<label style="font-size:12px;"
-	                              value="Pesquisar aluno:" />
-					<textbox id="txtpesquisa" class="pesquisa"
+					<label style="font-size:12px;"/>
+					<textbox id="txtpesquisa" placeholder="Pesquisar aluno" class="pesquisa"
 						onOK="@command('pesquisar')" value="@bind(vm.pesquisa)" />
 			    
 				</vlayout>
 				<vlayout width="100%">
 					<label style="font-size:12px;"
-						class="pesquisa-turma" value="Ver outra turma:" />
-					<div style="color:white; min-width:100%;">
+						class="pesquisa-turma" />
+					<div style="min-width:100%;"  >
 						<hlayout>
-
-							<combobox id="cbxid" readonly="true"
+							
+							<combobox id="cbxid" readonly="true" 
 								model="@load(vm.semestres)"
+								placeholder="Selecionar turmas" 
 								onSelect="@command('trocaTurma', turma=self.value, global = self.nextSibling, selectTurma = self)">
 
 								<template name="model">
@@ -204,12 +202,12 @@
 
 		</hlayout>
 
-		<hlayout style="width:100%; margin-left:10px; ">
+		<hlayout style="width:100%;  ">
 
 			<!-- Mural -->
 			<vlayout
-				style="width:600px;  background-color:#E8E8E8;">
-				<div
+				style="max-width:700px;min-width:600px; width:100%; background-color:#E8E8E8;">
+				<div align="left"
 					style="font-size:12px;margin-right:50px;padding:3%;background-color:white; width:100%;">
 
 
@@ -217,7 +215,7 @@
 						<button label="Convidar ex-alunos" class="btn"
 							c:onClick="convidar()" style="float:right; " />
 						<label value="Mural da turma"
-							style="font-size:12px;" class="titulo-mural" hflex="1" />
+							style="font-size:12px;float:center; " class="titulo-mural" hflex="1" />
 					</div>
 					<textbox style="resize: none;" id="txtpost" rows="4"
 						width="100%" maxlength="500" onOK="self.nextSibling.onClick()"
@@ -259,20 +257,20 @@
 
 				<!-- Postagens -->
 				<vlayout children="@load(vm.postagensTurma)"
-					style="width:600px; margin-bottom:10px; ">
+					style="max-width:700px; min-width:600px;margin-bottom:10px; ">
 
 					<template name="children" var="postagem">
 						<vlayout
-							style="background-color:white;padding:20px;  ">
-							<vlayout style="max-height : 100%;"
+							style="background-color:white;padding:20px;">
+							<vlayout
 								visible="@load(not postagem.privado or (postagem.privado and postagem.turma eq turma))" />
 							<hlayout width="100%">
 								<vlayout>
 									<label value="@load(postagem.texto)"
-										style="font-size:12px;" hflex="1" />
+										style="font-size:12px; " hflex="1" />
 
 									<div
-										style="width:400px; height:400px; "
+										style="width:400px; height:400px;  float:left;"
 										visible="@load(postagem.imagem ne null)">
 										<image
 											style="cursor:pointer;max-width:100%; max-height:100%;"
@@ -310,10 +308,10 @@
 				<div style=" margin-bottom:20px;">
 					<label style="font-weight: bold; font-size:70%;"
 						visible="@load(not empty vm.linhasAluno)"
-						value="@load(vm.buscaGlobal eq true ? 'Todos alunos Cadastrados' : 'Alunos turma')" />
+						value="@load(vm.descricao)" />
 				</div>
 				<vlayout
-					style="overflow: visible;   @load('max-height:'.concat(vm.altura).concat('px'));"
+					style="overflow: visible;  @load('max-height:'.concat(vm.altura).concat('px'));"
 					children="@load(vm.linhasAluno)">
 
 					<template name="children" var="linha">
@@ -322,7 +320,7 @@
 
 							<template name="children" var="aluno">
 								<vlayout>
-									<div
+									<div 
 										style="margin-bottom:10px;min-width:50px; min-height:50px;">
 										<image
 											style="filter: alpha(opacity=40);cursor:pointer;  max-width:100%; max-height:100%;"
@@ -344,8 +342,7 @@
 																
 													<label
 														style="font-weight:bold;" value="@load(aluno.nome)" />
-														<label visible="@load(aluno.atuacao eq null and aluno.facebookId ne null)"  value="O aluno não tem atuação atual."/>
-														<label visible="@load(aluno.facebookId eq null)"  value="O aluno ainda não se cadastrou no aplicativo."/>
+														<label visible="@load(aluno.atuacao eq null)"  value="Nenhuma informação cadastrada."/>
 													<label visible="@load(aluno.atuacao ne null)"
 														value="@load(aluno.atuacao.tipoAtuacao.id eq 1 ? 'Formação :' : aluno.atuacao.tipoAtuacao.id eq 2 ? 'Projeto :' : 'Cargo :')" />
 													<label 	 visible="@load(aluno.atuacao ne null)"
