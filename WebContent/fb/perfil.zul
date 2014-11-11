@@ -13,30 +13,23 @@
 		<![CDATA[ function volta(){ location.href="turma.zul"; } ]]>
 		
 	</script>
-	<div apply="org.zkoss.bind.BindComposer" width="100%"
+	<div apply="org.zkoss.bind.BindComposer" width="100%" align="center"
 		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbPerfilController')"
 		height="100%" style="background-color:#E8E8E8;">
 
 		<div
-			style="color:white; padding :13px;background-color: #c0504d; width:100%;">
+			style="color:white; padding :5px;background-color: #c0504d; width:100%;">
 			<hlayout>
 				<div
-					style="margin-right : 100px; margin-left:0px;color: white; 
-					cursor:pointer;margin-top:10px;margin-bottom:10px; "
+					style="margin-left:-800%;color: white; 
+					cursor:pointer;margin-top:5px;margin-bottom:5px; width:100%;"
 					id="voltaTurma">
 
 					<label style=" font-weight: bold;font-size : 12px;"
 						value="Voltar para turma" onClick="@command('voltaTurma')" />
 
 				</div>
-				<div style="margin-left:100px; width:100%;margin-right:20%;color: white; 
-				     margin-top:10px;margin-bottom:10px;"
-					id="cabecalho2">
-
-					<label style="font-size : 12px; font-weight:bold;"
-						value="Perfil do aluno -  Controle de Egressos DCC UFJF" />
-
-				</div>
+				
 
 			</hlayout>
 		</div>
@@ -45,14 +38,14 @@
 			<div
 				style="background-color: white;margin-left: 200px; margin-top:20px; margin-bottom:25px;width: 700px;padding: 20px;height:250px;">
 				<hlayout>
-					<div
-						style=" width: 160px; height: 200px;margin-right:10px; overflow:hidden;">
+					<div 
+						style="width: 160px; height: 200px;margin-right:10px; overflow:hidden;">
 						<image src="@load(vm.aluno.urlFoto)"
 							 />
 					</div>
 					<vlayout style="color:black; margin:10px;">
 						<label style="font-size:20px;"
-							value="@load(vm.aluno.nome)" />
+						    	value="@load(vm.aluno.nome)" />
 						<label
 							value="@load('Turma do '.concat(vm.aluno.turma.semestre).concat('° ').concat('semestre do ano de ').concat(vm.aluno.turma.ano).concat('.'))" />
 						<html>
@@ -97,6 +90,7 @@
 
 
 					</vlayout>
+				
 				</hlayout>
 
 			</div>
