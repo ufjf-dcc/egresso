@@ -49,6 +49,7 @@
 				
 			</hlayout>
 		</div>
+		<div align="left">
 		<vlayout children="@load(vm.linhasPostagem)"
 			style=" padding:20px; margin-left:100px; margin-bottom:10px ">
 			<template name="children" var="linhaPostagem">
@@ -79,7 +80,7 @@ left: -100%;
 			</template>
 
 		</vlayout>
-
+		</div>
 	</div>
 	<window id="imagem" title="Visualizar Imagem" visible="false"
 		style="max-width:700px;height:auto;" border="normal"

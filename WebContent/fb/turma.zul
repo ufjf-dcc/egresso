@@ -201,8 +201,9 @@
 
 
 		</hlayout>
-
-		<hlayout style="width:100%;  ">
+		
+		
+		<hlayout style="width:100%;">
 
 			<!-- Mural -->
 			<vlayout
@@ -256,6 +257,7 @@
 				</html>
 
 				<!-- Postagens -->
+				<div align="left">
 				<vlayout children="@load(vm.postagensTurma)"
 					style="max-width:700px; min-width:600px;margin-bottom:10px; ">
 
@@ -294,7 +296,7 @@
 					</template>
 
 				</vlayout>
-
+			</div>
 			</vlayout>
 
 			<label id="nenhumAluno"
@@ -310,6 +312,7 @@
 						visible="@load(not empty vm.linhasAluno)"
 						value="@load(vm.descricao)" />
 				</div>
+				<div align="left"> 
 				<vlayout
 					style="overflow: visible;  @load('max-height:'.concat(vm.altura).concat('px'));"
 					children="@load(vm.linhasAluno)">
@@ -371,9 +374,11 @@
 
 					</template>
 				</vlayout>
+				</div>
 			</vlayout>
 
 		</hlayout>
+		
 
 	</div>
 

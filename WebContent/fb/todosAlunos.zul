@@ -63,8 +63,8 @@
 				</div>
 			</hlayout>
 		</div>
-		<vlayout
-			style="margin-top:5%;margin-left:12%; margin-right:10%;max-width:1200px;  min-width:500px;">
+		<div align="left" style="margin-top:5%;margin-left:12%; margin-right:10%;max-width:1200px;  min-width:500px;">
+		<vlayout>
 			<!-- Alunos -->
 
 			<vlayout
@@ -101,6 +101,7 @@
 				</template>
 			</vlayout>
 		</vlayout>
+		</div>
 
 	</div>
 

@@ -34,7 +34,8 @@
 			</hlayout>
 		</div>
 
-		<vlayout style="margin-left:-80px;">
+		<div align="left" style="margin-left:-80px;">
+			<vlayout>
 			<div
 				style="background-color: white;margin-left: 200px; margin-top:20px; margin-bottom:25px;width: 700px;padding: 20px;height:250px;">
 				<hlayout>
@@ -482,6 +483,7 @@
 				</vlayout>
 			</vlayout>
 		</vlayout>
+		</div>
 		<window id="adicionaInteresses" title="Cadastrar Interesses"
 			visible="false" width="350px" border="normal"
 			position="center,center" closable="true"
