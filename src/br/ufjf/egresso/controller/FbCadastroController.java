@@ -1,8 +1,10 @@
 package br.ufjf.egresso.controller;
 
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigInteger;
 import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -24,6 +26,12 @@ import br.ufjf.egresso.business.TurmaBusiness;
 import br.ufjf.egresso.model.Aluno;
 import br.ufjf.egresso.model.Turma;
 import br.ufjf.egresso.utils.ConfHandler;
+import br.ufjf.ice.integra3.ws.login.interfaces.IWsLogin;
+import br.ufjf.ice.integra3.ws.login.interfaces.Profile;
+import br.ufjf.ice.integra3.ws.login.interfaces.WsException_Exception;
+import br.ufjf.ice.integra3.ws.login.interfaces.WsLoginResponse;
+import br.ufjf.ice.integra3.ws.login.interfaces.WsUserInfoResponse;
+import br.ufjf.ice.integra3.ws.login.service.WSLogin;
 import facebook4j.Facebook;
 import facebook4j.FacebookException;
 import facebook4j.PictureSize;
@@ -100,113 +108,76 @@ public class FbCadastroController {
 	 * @return Se os dados são válidos ou não.
 	 */
 	private boolean verificarAlunoNoIntegra(String cpf, String senha) {
+		
 		boolean alunoValido = false;
-		BufferedReader reader = null;
+	    senha = md5(senha);
+	    try {
+	    	FileReader file = new FileReader("/home/esoares/git/egresso/application.token");
+			BufferedReader bf = new BufferedReader(file);
+			String token = bf.readLine();
+			System.out.println("Logando...");
+			IWsLogin integra = new WSLogin().getWsLoginServicePort();
+			WsLoginResponse user = integra.login(cpf, senha, token);
+			WsUserInfoResponse infos = integra.getUserInformation(user.getToken());
+			List<Profile> profiles = (infos.getProfileList()).getProfile();
+			
+			aluno = new AlunoBusiness()
+						.buscaPorMatricula((profiles.get(0).getMatricula()));
+				if (aluno != null) {
+					// ...guarda as informaçẽos do aluno
+					aluno.setNome(facebook.getMe().getName());
+					aluno.setFacebookId(facebook.getMe().getId());
+					aluno.setUrlFoto(facebook.getPictureURL(
+							facebook.getMe().getId(),
+							PictureSize.valueOf("large"))
+							.toExternalForm());
+					aluno.setMatricula((profiles.get(0).getMatricula()));
+					aluno.setAtivo(Aluno.ATIVO);
+					BindUtils.postNotifyChange(null, null, this, "ano");
+					alunoValido = true;
+				} else {
+					aluno = new Aluno();
+					aluno.setAtivo(Aluno.ATIVO);
+					// ...guarda as informaçẽos do aluno
+					aluno.setNome(facebook.getMe().getName());
+					aluno.setFacebookId(facebook.getMe().getId());
+					aluno.setUrlFoto(facebook.getPictureURL(
+							facebook.getMe().getId(),
+							PictureSize.valueOf("large"))
+							.toExternalForm());
+					aluno.setMatricula(((profiles.get(0).getMatricula())));
+					aluno.setAtivo(Aluno.ATIVO);
+					BindUtils.postNotifyChange(null, null, this, "ano");
+					alunoValido = true;
+				}
+			
 
-		try {
-			// Recebe o JSON do integra
-			URL url = new URL(ConfHandler.getConf("INTEGRA.URL") + cpf);
-			reader = new BufferedReader(new InputStreamReader(url.openStream()));
-			StringBuffer buffer = new StringBuffer();
-			int read;
-			char[] chars = new char[1024];
-			while ((read = reader.read(chars)) != -1)
-				buffer.append(chars, 0, read);
 
-			try {
-				JSONObject json = new JSONObject(buffer.toString());
-
-				// Verifica se o CPF existe no integra
-				switch ((String) json.get("codeResult")) {
-				case "OK":
-					JSONObject dadosAluno = (JSONObject) json.get("result");
-
-					// Verifica se a senha confere
-					MessageDigest md = MessageDigest.getInstance("MD5");
-					md.update(senha.getBytes());
-					byte[] digest = md.digest();
-					StringBuffer passmd5 = new StringBuffer();
-					for (byte b : digest) {
-						passmd5.append(String.format("%02x", b & 0xff));
-					}
-
-					// Se a senha está correta...
-					if (((String) dadosAluno.get("passmd5")).equals(passmd5
-							.toString())) {
-						aluno = new AlunoBusiness()
-								.buscaPorMatricula(((String) dadosAluno
-										.get("profile")));
-						if (aluno != null) {
-							// ...guarda as informaçẽos do aluno
-							aluno.setNome(facebook.getMe().getName());
-							aluno.setFacebookId(facebook.getMe().getId());
-							aluno.setUrlFoto(facebook.getPictureURL(
-									facebook.getMe().getId(),
-									PictureSize.valueOf("large"))
-									.toExternalForm());
-							aluno.setMatricula((String) dadosAluno
-									.get("profile"));
-							aluno.setAtivo(Aluno.ATIVO);
-							BindUtils.postNotifyChange(null, null, this, "ano");
-							alunoValido = true;
-						} else {
-							aluno = new Aluno();
-							aluno.setAtivo(Aluno.ATIVO);
-							// ...guarda as informaçẽos do aluno
-							aluno.setNome(facebook.getMe().getName());
-							aluno.setFacebookId(facebook.getMe().getId());
-							aluno.setUrlFoto(facebook.getPictureURL(
-									facebook.getMe().getId(),
-									PictureSize.valueOf("large"))
-									.toExternalForm());
-							aluno.setMatricula((String) dadosAluno
-									.get("profile"));
-							aluno.setAtivo(Aluno.ATIVO);
-							BindUtils.postNotifyChange(null, null, this, "ano");
-							alunoValido = true;
-						}
-					} else {
-						Messagebox.show("A senha digitada está incorreta.",
-								"Erro de autenticação", Messagebox.OK,
-								Messagebox.ERROR);
-					}
-					break;
-				case "E_CPF_NAO_CADASTRADO":
-					Messagebox
-							.show("O CPF "
-									+ cpf
-									+ "não foi encontrado no SIGA. Por favor, verifique se o número foi digitado corretamente.",
-									"CPF não encontrado", Messagebox.OK,
-									Messagebox.ERROR);
-					break;
-				case "E_CPF_TAM_INV":
-					Messagebox.show(
-							"O formato do CPF digitado está incorreto.",
-							"CPF inválido", Messagebox.OK, Messagebox.ERROR);
-					break;
-				default:
-					Messagebox
-							.show("Não foi possível autenticar. Por favor, verifique se o número foi digitado corretamente.",
+	    }catch(WsException_Exception e){
+	    	switch(e.getFaultInfo().getErrorUserMessage()){
+	    	case "Usuário não encontrado":
+	    		Messagebox
+				.show("O CPF "
+						+ cpf
+						+ "não foi encontrado no SIGA. Por favor, verifique se o número foi digitado corretamente.",
+						"CPF não encontrado", Messagebox.OK,
+						Messagebox.ERROR);
+	    		break;
+	    	default:
+	    		Messagebox.show("Não foi possível autenticar. Por favor, verifique se o número foi digitado corretamente.",
 									"Erro", Messagebox.OK, Messagebox.ERROR);
-				}
-
-			} catch (JSONException | FacebookException
-					| NoSuchAlgorithmException e) {
-				e.printStackTrace();
 			}
-		} catch (IOException e1) {
+	    
+	    } catch (IOException e) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} finally {
-			if (reader != null)
-				try {
-					reader.close();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+			e.printStackTrace();
+		} catch (FacebookException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return alunoValido;
+	    return alunoValido;
+			
+
 	}
 
 	/**
@@ -279,6 +250,30 @@ public class FbCadastroController {
 			Executions.sendRedirect("perfil.zul");
 		}
 
+	}
+
+	public static String md5(String input) {
+
+		String md5 = null;
+
+		if (null == input)
+			return null;
+
+		try {
+			// Create MessageDigest object for MD5
+			MessageDigest digest = MessageDigest.getInstance("MD5");
+
+			// Update input string in message digest
+			digest.update(input.getBytes(), 0, input.length());
+
+			// Converts message digest value in base 16 (hex)
+			md5 = new BigInteger(1, digest.digest()).toString(16);
+
+		} catch (NoSuchAlgorithmException e) {
+
+			e.printStackTrace();
+		}
+		return md5;
 	}
 
 }

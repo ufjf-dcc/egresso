@@ -1,7 +1,9 @@
 package br.ufjf.egresso.controller;
 
-
-
+import java.awt.MouseInfo;
+import java.awt.Point;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.InputStream;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -9,6 +11,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+
+import org.imgscalr.Scalr;
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
@@ -27,12 +32,10 @@ import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
-
 import br.ufjf.egresso.business.AlunoBusiness;
 import br.ufjf.egresso.business.PostagemBusiness;
 import br.ufjf.egresso.business.TurmaBusiness;
 import br.ufjf.egresso.model.Aluno;
-
 import br.ufjf.egresso.model.Postagem;
 import br.ufjf.egresso.model.Turma;
 import br.ufjf.egresso.utils.ConfHandler;
@@ -97,10 +100,12 @@ public class FbTurmaController {
 		}
 
 	}
+
 	@Command
-	public void trocarCor(@BindingParam("cbx") Combobox cbx){
+	public void trocarCor(@BindingParam("cbx") Combobox cbx) {
 		cbx.setPlaceholder("Outras turmas");
 	}
+
 	public List<Aluno> getAlunos() {
 		return alunos;
 	}
@@ -342,7 +347,7 @@ public class FbTurmaController {
 	public int getLargura() {
 		return largura;
 	}
-	
+
 	@Command
 	@NotifyChange({ "filtraAlunos", "emptyMessage" })
 	public void pesquisar() {
@@ -408,7 +413,6 @@ public class FbTurmaController {
 		if (facebookId != null)
 			Executions.sendRedirect("perfil.zul?id=" + facebookId);
 	}
-
 
 	@Command
 	public void convidar() {
@@ -523,12 +527,27 @@ public class FbTurmaController {
 			@BindingParam("texto") String texto,
 			@BindingParam("privado") boolean privado) {
 		String imagem = null;
-		if (imgPostagem != null)
+		if (imgPostagem != null){
 			imagem = FileManager.saveFileInputSream(imgPostagem, imgExtensao);
+			String url = ConfHandler.getConf("FILE.PATH");
+			
+			File img = new File(url+imagem);
+			File img_s = new File(url+"s-"+imagem);
+			System.out.println(img.getAbsolutePath());
+	        System.out.println(img_s.getAbsolutePath());
+			 try {
+		            BufferedImage bufimage = ImageIO.read(img);
+
+		            BufferedImage bISmallImage = Scalr.resize(bufimage, 141, 110); // after this line my dimensions in bISmallImage are correct!
+		            ImageIO.write(bISmallImage, imgExtensao, img_s); // but my smallImage has the same dimension as the original foto
+		        } catch (Exception e) {
+		            System.out.println(e.getMessage()); // FORNOW: added just to be sure
+		        }
+		}
 		if (imgPostagem == null || (imgPostagem != null && imagem != null)) {
 			Postagem postagem = new Postagem((Aluno) Sessions.getCurrent()
 					.getAttribute("aluno"), turma, privado, texto, imagem,
-					new Timestamp(new Date().getTime()));
+					new Timestamp(new Date().getTime()),"s-"+imagem );
 			imgPostagem = null;
 			if (new PostagemBusiness().salvar(postagem)) {
 				postagensTurma.add(0, postagem);
@@ -656,7 +675,8 @@ public class FbTurmaController {
 			@BindingParam("alunoSelect") Aluno aluno) {
 		alunoSelect = aluno;
 		BindUtils.postNotifyChange(null, null, null, "alunoSelect");
-	
+		Point p = MouseInfo.getPointerInfo().getLocation();
+		
 		popup.doModal();
 
 	}

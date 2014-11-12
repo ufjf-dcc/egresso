@@ -72,7 +72,7 @@ left: -100%;
 	min-width: 50%;"
 								onClick="@command('verImagem',window = imagem, imgSrc = postagem.imagem )"
 								visible="@load(postagem.imagem ne null)"
-								onCreate="@command('carregarImagem', imagem=self, imgSrc = postagem.imagem)" />
+								onCreate="@command('carregarImagem', imagem=self, imgSrc = postagem.tbnail)" />
 						</div>
 					</template>
 				</hlayout>
@@ -82,7 +82,7 @@ left: -100%;
 
 	</div>
 	<window id="imagem" title="Visualizar Imagem" visible="false"
-		style="max-width:700px;height:auto; margin-left:25%" border="normal"
+		style="max-width:700px;height:auto;" border="normal"
 		closable="true"
 		onClose="self.setVisible(false); event.stopPropagation();">
 		<image style="max-width:100%; max-height:100%" />
