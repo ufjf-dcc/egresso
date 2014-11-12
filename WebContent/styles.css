@@ -1,10 +1,9 @@
 @CHARSET "UTF-8";
 
 body {
-	background: url('img/bg.png') repeat repeat;
+	background-color: #E8E8E8;
 	font-family: times;
-	margin-left: 50px;
-	margin-right: 50px
+	
 }
 
 tbody.z-grid-emptybody td {
@@ -75,14 +74,13 @@ tbody.z-grid-emptybody td {
 
 /** Página de turma **/
 .mural.z-div {
-	background: #c0504d;
+	background: #ffffff;
 	height: 100%;
 	padding: 5px;
 }
 
 .caixa-mural.z-vlayout {
-	width: 400px;
-	background: #f0f0f0;
+	
 	padding-left: 10px;
 	padding-right: 10px;
 }
@@ -93,29 +91,27 @@ tbody.z-grid-emptybody td {
 }
 
 .gradeAlunos.z-vlayout{
-	margin-left:50px;
-	max-height:500px;
+	max-height:100%;
 	overflow:scroll;
 }
 
 .aluno.z-label {
-	font-size: 18px;
+	font-size: 15px;
 	color: white;
 }
 
 .aluno.z-vlayout {
-	background: #c0504d;
+	
 	margin-right: 30px;
 	padding: 5px;
-	width: 150px;
-	height: 200px;
+	
 	margin-bottom: 30px;
 	cursor: pointer;
 }
 
 .aluno.z-div {
-	width: 100%;
-	height: 125px;
+	width: 50px;
+	height: 50px;
 	overflow: hidden;
 	position: relative;
 }
@@ -132,18 +128,21 @@ tbody.z-grid-emptybody td {
 }
 
 .cabecalho.z-label {
-	font-size: 30px;
+	font-size: 16px;
 }
 
+
 .cabecalho.z-div {
-	font-size: 30px;
-	margin-top: 30px;
-	margin-bottom: 30px;
+	font-size: 15px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	width:100%;
 }
 
 .pesquisa-turma.z-div {
 	background: #c0504d;
 	padding: 20px;
+
 }
 
 .pesquisa-turma.z-label {

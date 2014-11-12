@@ -41,6 +41,8 @@ public class Postagem {
 
 	@Column(name = "imagem", nullable = true)
 	private String imagem;
+	@Column(name = "thumbnail", nullable = true)
+	private String tbnail;
 
 	@Column(name = "data_hora", nullable = false)
 	private Timestamp dataHora;
@@ -50,7 +52,7 @@ public class Postagem {
 	}
 
 	public Postagem(Aluno aluno, Turma turma, boolean privado, String texto,
-			String imagem, Timestamp dataHora) {
+			String imagem, Timestamp dataHora, String tbnail) {
 		super();
 		this.aluno = aluno;
 		this.turma = turma;
@@ -58,6 +60,15 @@ public class Postagem {
 		this.texto = texto;
 		this.imagem = imagem;
 		this.dataHora = dataHora;
+		this.tbnail = tbnail;
+	}
+
+	public String getTbnail() {
+		return tbnail;
+	}
+
+	public void setTbnail(String tbnail) {
+		this.tbnail = tbnail;
 	}
 
 	public int getId() {

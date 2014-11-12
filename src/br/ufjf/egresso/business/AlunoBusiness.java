@@ -69,7 +69,6 @@ public class AlunoBusiness {
 		else
 			jaExiste(matricula, matriculaAntiga);
 	}
-
 	private boolean jaExiste(String matricula, String matriculaAntiga) {
 		errors.clear();
 		if (alunoDao.jaExiste(matricula, matriculaAntiga)) {
@@ -160,6 +159,9 @@ public class AlunoBusiness {
 	 */
 	public List<Aluno> getAlunos(Turma turma) {
 		return alunoDao.getAlunos(turma);
+	}
+	public List<Aluno> getAlunos() {
+		return alunoDao.getAlunos();
 	}
 
 	public boolean salvaOuEdita(Aluno aluno) {

@@ -10,6 +10,8 @@
 		<mapping class="br.ufjf.egresso.model.Postagem" />
 		<mapping class="br.ufjf.egresso.model.TipoAtuacao" />
 		<mapping class="br.ufjf.egresso.model.Turma" />
+		<mapping class="br.ufjf.egresso.model.Interesse" />
+		<mapping class="br.ufjf.egresso.model.Curso" />
 
 	</session-factory>
 </hibernate-configuration>

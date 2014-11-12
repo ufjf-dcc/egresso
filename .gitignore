@@ -217,3 +217,5 @@ pip-log.txt
 #Arquivo de Configuracao
 src/br/ufjf/egresso/utils/config.txt
 
+/nbproject/private/
+/nbbuild/

@@ -97,8 +97,8 @@ public class AdminAlunosController {
 							if (alunoBusiness.salvaOuEdita(aluno)) {
 								notifyAlunos();
 								Messagebox.show(
-										(aluno.getAtivo() == Aluno.ATIVO ? "Desativação"
-												: "Re-ativação")
+										(aluno.getAtivo() == Aluno.ATIVO ? "Re-Ativação"
+												: "Desativação")
 												+ " realizada com sucesso.",
 										"Sucesso", Messagebox.OK,
 										Messagebox.INFORMATION);

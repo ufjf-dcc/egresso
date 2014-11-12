@@ -50,7 +50,7 @@ public class Atuacao {
 	@JoinColumn(name = "aluno_id", nullable = false)
 	private Aluno aluno;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "tipo_atuacao_id", nullable = false)
 	private TipoAtuacao tipoAtuacao;
 	

@@ -127,5 +127,25 @@ public class AlunoDAO extends GenericoDAO {
 		}
 		return null;
 	}
+	public List<Aluno> getAlunos() {
+		try {
+			Query query = getSession()
+					.createQuery(
+							"SELECT a FROM Aluno AS a");
+		
+
+			@SuppressWarnings("unchecked")
+			List<Aluno> aluno = query.list();
+
+			getSession().close();
+
+			return aluno;
+		} catch (Exception e) {
+			System.out.println(e);
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 
 }

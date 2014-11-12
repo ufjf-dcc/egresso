@@ -30,7 +30,7 @@ public class PostagemDAO extends GenericoDAO {
 	public List<Postagem> getPostagens(Turma turma) {
 		try {
 			Query query = getSession().createQuery(
-					"SELECT p FROM Postagem AS p WHERE p.turma = :turma");
+					"SELECT p FROM Postagem AS p WHERE p.turma = :turma ORDER BY data_hora DESC ");
 			query.setParameter("turma", turma);
 
 			List<Postagem> postagens = query.list();

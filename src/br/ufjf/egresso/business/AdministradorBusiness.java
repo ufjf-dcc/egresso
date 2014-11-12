@@ -39,6 +39,7 @@ public class AdministradorBusiness {
 			AbstractChecksum checksum = null;
 			checksum = JacksumAPI.getChecksumInstance("whirlpool-1");
 			checksum.update(expressao.getBytes());
+			System.out.println(checksum.getFormattedValue());
 			return checksum.getFormattedValue();
 		} catch (NoSuchAlgorithmException ns) {
 			ns.printStackTrace();
