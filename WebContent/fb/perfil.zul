@@ -571,7 +571,8 @@
 					width="75px" style="margin-top:5px" />
 			</div>
 		</window>
-
+		
+		<div align="left">
 		<div width="700px;"
 			style="margin-left:120px; margin-bottom:50px; background-color: white;padding:20px;">
 			<hlayout>
@@ -626,6 +627,7 @@
 					</vlayout>
 				</template>
 			</vlayout>
+		</div>
 		</div>
 
 

@@ -1,7 +1,6 @@
 package br.ufjf.egresso.controller;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -109,69 +108,71 @@ public class FbCadastroController {
 	 * @return Se os dados são válidos ou não.
 	 */
 	private boolean verificarAlunoNoIntegra(String cpf, String senha) {
-
+		
 		boolean alunoValido = false;
-		senha = md5(senha);
-
-		try {
-
+	    senha = md5(senha);
+	    try {
+	    	
 			String token = ConfHandler.getConf("FILE.TOKEN");
 			System.out.println("Logando...");
 			IWsLogin integra = new WSLogin().getWsLoginServicePort();
 			WsLoginResponse user = integra.login(cpf, senha, token);
-			WsUserInfoResponse infos = integra.getUserInformation(user
-					.getToken());
+			WsUserInfoResponse infos = integra.getUserInformation(user.getToken());
 			List<Profile> profiles = (infos.getProfileList()).getProfile();
+			
+			aluno = new AlunoBusiness()
+						.buscaPorMatricula((profiles.get(0).getMatricula()));
+				if (aluno != null) {
+					// ...guarda as informaçẽos do aluno
+					aluno.setNome(facebook.getMe().getName());
+					aluno.setFacebookId(facebook.getMe().getId());
+					aluno.setUrlFoto(facebook.getPictureURL(
+							facebook.getMe().getId(),
+							PictureSize.valueOf("large"))
+							.toExternalForm());
+					aluno.setMatricula((profiles.get(0).getMatricula()));
+					aluno.setAtivo(Aluno.ATIVO);
+					BindUtils.postNotifyChange(null, null, this, "ano");
+					alunoValido = true;
+				} else {
+					aluno = new Aluno();
+					aluno.setAtivo(Aluno.ATIVO);
+					// ...guarda as informaçẽos do aluno
+					aluno.setNome(facebook.getMe().getName());
+					aluno.setFacebookId(facebook.getMe().getId());
+					aluno.setUrlFoto(facebook.getPictureURL(
+							facebook.getMe().getId(),
+							PictureSize.valueOf("large"))
+							.toExternalForm());
+					aluno.setMatricula(((profiles.get(0).getMatricula())));
+					aluno.setAtivo(Aluno.ATIVO);
+					BindUtils.postNotifyChange(null, null, this, "ano");
+					alunoValido = true;
+				}
+			
 
-			aluno = new AlunoBusiness().buscaPorMatricula((profiles.get(0)
-					.getMatricula()));
-			if (aluno != null) {
-				// ...guarda as informaçẽos do aluno
-				aluno.setNome(facebook.getMe().getName());
-				aluno.setFacebookId(facebook.getMe().getId());
-				aluno.setUrlFoto(facebook.getPictureURL(
-						facebook.getMe().getId(), PictureSize.valueOf("large"))
-						.toExternalForm());
-				aluno.setMatricula((profiles.get(0).getMatricula()));
-				aluno.setAtivo(Aluno.ATIVO);
-				BindUtils.postNotifyChange(null, null, this, "ano");
-				alunoValido = true;
-			} else {
-				aluno = new Aluno();
-				aluno.setAtivo(Aluno.ATIVO);
-				// ...guarda as informaçẽos do aluno
-				aluno.setNome(facebook.getMe().getName());
-				aluno.setFacebookId(facebook.getMe().getId());
-				aluno.setUrlFoto(facebook.getPictureURL(
-						facebook.getMe().getId(), PictureSize.valueOf("large"))
-						.toExternalForm());
-				aluno.setMatricula(((profiles.get(0).getMatricula())));
-				aluno.setAtivo(Aluno.ATIVO);
-				BindUtils.postNotifyChange(null, null, this, "ano");
-				alunoValido = true;
+
+	    }catch(WsException_Exception e){
+	    	switch(e.getFaultInfo().getErrorUserMessage()){
+	    	case "Usuário não encontrado":
+	    		Messagebox
+				.show("O CPF "
+						+ cpf
+						+ "não foi encontrado no SIGA. Por favor, verifique se o número foi digitado corretamente.",
+						"CPF não encontrado", Messagebox.OK,
+						Messagebox.ERROR);
+	    		break;
+	    	default:
+	    		Messagebox.show("Não foi possível autenticar. Por favor, verifique se o número foi digitado corretamente.",
+									"Erro", Messagebox.OK, Messagebox.ERROR);
 			}
-
-		} catch (WsException_Exception e) {
-			switch (e.getFaultInfo().getErrorUserMessage()) {
-			case "Usuário não encontrado":
-				Messagebox
-						.show("O CPF "
-								+ cpf
-								+ "não foi encontrado no SIGA. Por favor, verifique se o número foi digitado corretamente.",
-								"CPF não encontrado", Messagebox.OK,
-								Messagebox.ERROR);
-				break;
-			default:
-				Messagebox
-						.show("Não foi possível autenticar. Por favor, verifique se o número foi digitado corretamente.",
-								"Erro", Messagebox.OK, Messagebox.ERROR);
-			}
-
-		} catch (FacebookException e) {
+	    
+	    } catch (FacebookException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return alunoValido;
+	    return alunoValido;
+			
 
 	}
 
