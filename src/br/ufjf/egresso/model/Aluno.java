@@ -31,7 +31,7 @@ public class Aluno {
 	@Column(name = "nome", length = 65, nullable = false)
 	String nome;
 
-	@Column(name = "facebook_id", unique = true, nullable = false, length = 20)
+	@Column(name = "facebook_id", unique = true, nullable = true, length = 20)
 	String facebookId;
 
 	@Column(name = "url_foto", nullable = true, length = 255)
@@ -62,6 +62,18 @@ public class Aluno {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "turma_id", nullable = false)
 	private Turma turma;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "curso_id", nullable = false)
+	private Curso curso;
+	
+	public Curso getCurso() {
+		return curso;
+	}
+
+	public void setCurso(Curso curso) {
+		this.curso = curso;
+	}
 
 	@Transient
 	private boolean editingStatus;	

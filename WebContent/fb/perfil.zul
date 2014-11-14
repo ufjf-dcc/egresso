@@ -49,6 +49,9 @@
 						    	value="@load(vm.aluno.nome)" />
 						<label
 							value="@load('Turma do '.concat(vm.aluno.turma.semestre).concat('° ').concat('semestre do ano de ').concat(vm.aluno.turma.ano).concat('.'))" />
+							<label
+							value="@load(vm.aluno.curso.curso)" />
+							
 						<html>
 
 							

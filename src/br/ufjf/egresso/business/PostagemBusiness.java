@@ -2,6 +2,7 @@ package br.ufjf.egresso.business;
 
 import java.util.List;
 
+import br.ufjf.egresso.model.Curso;
 import br.ufjf.egresso.model.Postagem;
 import br.ufjf.egresso.model.Turma;
 import br.ufjf.egresso.persistent.PostagemDAO;
@@ -70,8 +71,8 @@ public class PostagemBusiness {
 	 *            Turma das {@link Postagem}s a serem obtidas.
 	 * @return Uma {@link List} de {@link Postagem}.
 	 */
-	public List<Postagem> getPostagens(Turma turma) {
-		return postagemDao.getPostagens(turma);
+	public List<Postagem> getPostagens(Turma turma, Curso curso) {
+		return postagemDao.getPostagens(turma, curso);
 	}
 
 }

@@ -18,6 +18,12 @@
 							<button label="Pesquisar"
 								onClick="@command('filtra')" />
 						</div>
+						<div style="float:left">
+
+							<button label="Adicionar Alunos"
+								onClick="@command('addAluno', window = addAluno )" />
+						</div>
+
 					</div>
 				</auxheader>
 			</auxhead>
@@ -63,6 +69,10 @@
 					<label
 						value="@load(''.concat(each.turma.ano).concat(' - ').concat(each.turma.semestre).concat('º semestre'))" />
 					<vlayout width="100%">
+						<button label="Editar"
+							onClick="@command('changeEditableStatus', aluno = each)" />
+
+
 						<button label="Perfil no Facebook" width="100%"
 							href="@load(each.linkFacebook)" />
 						<button hflex="1"
@@ -73,9 +83,76 @@
 				</row>
 			</template>
 		</grid>
+		<window id="addAluno" title="Cadastrar Aluno" visible="false"
+		width="350px" border="normal" position="center,center" closable="true"
+		onClose="self.setVisible(false); event.stopPropagation();">
+		<grid>
+			<columns>
+				<column hflex="1" />
+				<column hflex="2" />
+
+			</columns>
+			<rows>
+				<row>
+					<label value="Nome:" />
+					<textbox
+						value="@load(vm.novoAluno.nome)@save(vm.novoAluno.nome, before='submitAluno')"
+						tabindex="1" id="nome" width="100%" />
+
+				</row>
+
+				<row>
+					<label value="Matrícula" />
+					<textbox
+						value="@load(vm.novoAluno.matricula)@save(vm.novoAluno.matricula, before='submitAluno')"
+						tabindex="2" id="matricula" width="100%" />
+				</row>
+				<row>
+					<label value="Ano" />
+					<combobox id="comboAno" autodrop="true"
+					model="@load(vm.anos)"
+					>
+					<template name="model">
+						<comboitem label="@load(each)" />
+					</template>
+				</combobox>
+				</row>
+				<row>
+					<label value="Semestre :" />
+					<radiogroup id="semestres">
+						<radio label="1º semestre"
+							radiogroup="semestres" class="intro-semestre" />
+						<radio label="2º semestre"
+							radiogroup="semestres" class="intro-semestre" />
+					</radiogroup>
+				</row>
+			</rows>
+		</grid>
+		<div align="center">
+			<button label="Cadastrar"
+				onClick="@command('submitAluno', window = addAluno, semestre = semestres.selectedIndex, ano = comboAno.value  )"
+				width="75px" style="margin-top:5px" />
+		</div>
+	</window>
 	</div>
+	
+
+
 	<popup id="ajudaDesativacao">
 		<html>
+
+
+
+
+
+
+
+
+
+
+
+
+
 			
 			<![CDATA[ Desativar um aluno significa não mais </br>
 			deixá-lo interagir com o sistema e não </br> mais deixar seu
@@ -84,6 +161,18 @@
 			de experiência</br> profissional, coletadas até o
 			momento</br> de desativação, continuam armazenadas.</br> ]]>
 			
-		</html>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+	</html>
 	</popup>
 </zk>

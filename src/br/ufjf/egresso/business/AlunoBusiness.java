@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.HibernateException;
 
 import br.ufjf.egresso.model.Aluno;
+import br.ufjf.egresso.model.Curso;
 import br.ufjf.egresso.model.Turma;
 import br.ufjf.egresso.persistent.AlunoDAO;
 
@@ -133,6 +134,9 @@ public class AlunoBusiness {
 	public List<Aluno> getTodos() {
 		return alunoDao.getTodos();
 	}
+	public List<Aluno> getTodosCurso(Curso curso) {
+		return alunoDao.getTodosCurso(curso);
+	}
 
 	/**Exclui um {@link Aluno} do banco.
 	 * 
@@ -166,6 +170,10 @@ public class AlunoBusiness {
 
 	public boolean salvaOuEdita(Aluno aluno) {
 		return alunoDao.salvaOuEdita(aluno);
+	}
+
+	public List<Aluno> getAlunosCurso(Turma turma, Curso curso) {
+		return alunoDao.getAlunosCurso(turma, curso);
 	}
 
 }

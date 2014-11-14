@@ -142,7 +142,7 @@
 			style="padding:5px;width:100%;height:100%;background-color:#c0504d; margin-bottom:1%;">
 
 
-			<div  style="color:white; cursor:pointer; margin-top:2%;margin-left:-100%;">
+			<div  style="color:white; cursor:pointer; margin-top:2%;">
 				<hlayout>
 					<div style=" width:100%;">
 						<label
@@ -166,7 +166,7 @@
 
 
 
-			<hlayout style="width:100%;margin-right:-80%;">
+			<hlayout style="width:100%;margin-right:-75%;">
 				<vlayout style="color:white; width:100%;">
 			    
 					<label style="font-size:12px;"/>
@@ -180,13 +180,22 @@
 					<div style="min-width:100%;"  >
 						<hlayout>
 							
-							<combobox id="cbxid" readonly="true" 
+							<combobox  readonly="true" 
 								model="@load(vm.semestres)"
 								placeholder="Selecionar turmas" 
-								onSelect="@command('trocaTurma', turma=self.value, global = self.nextSibling, selectTurma = self)">
+								onSelect="@command('trocaTurma')" selectedItem="@bind(vm.turmaSelecionada)">
 
 								<template name="model">
 									<comboitem label="@load(each)" />
+								</template>
+							</combobox>
+							<combobox  readonly="true" 
+								model="@load(vm.cursos)" selectedItem ="@bind(vm.cursoSelecionado)"
+								placeholder="Selecionar cursos" 
+								onSelect="@command('trocaTurma')">
+
+								<template name="model">
+									<comboitem label="@load(''.concat(each.codCurso).concat('-').concat(each.curso))" />
 								</template>
 							</combobox>
 
@@ -299,12 +308,12 @@
 			</div>
 			</vlayout>
 
-			<label id="nenhumAluno"
+			<!-- <label id="nenhumAluno"
 				value="Nenhum aluno deste semestre se cadastrou ainda. Deseja convidar ex-alunos?"
 				c:onClick="convidar()"
 				style="width:100%;font-size:10px;cursor:pointer; text-decoration:underline; margin-left:10%;"
-				visible="@load(empty vm.linhasAluno)" />
-			<vlayout
+				visible="@load(empty vm.linhasAluno)" /> -->
+			<vlayout 
 				style="max-width:100%; min-width:169px; width:100%;  margin-left:50px;">
 				<!-- Alunos -->
 				<div style=" margin-bottom:20px;">
@@ -333,7 +342,7 @@
 											onMouseOut="@command('hidePopup',popup=self.nextSibling)" />
 										<window
 											onMouseOver="@command('showPopup', popup = self, alunoSelect = aluno)"
-											onMouseOut="@command('hidePopup',popup=self)" width="500px;"
+											onMouseOut="@command('hidePopup',popup=self)" width="900px;"
 											visible="false">
 											<hlayout>
 
