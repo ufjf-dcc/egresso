@@ -26,7 +26,6 @@ public class PostagemDAO extends GenericoDAO {
 		}
 		return null;
 	}
-
 	@SuppressWarnings("unchecked")
 	public List<Postagem> getPostagens(Turma turma, Curso curso) {
 		try {

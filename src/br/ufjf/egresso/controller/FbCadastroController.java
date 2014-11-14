@@ -100,6 +100,10 @@ public class FbCadastroController {
 		semestres = turmas.size() == 2 ? 3 : turmas.get(0).getSemestre();
 		BindUtils.postNotifyChange(null, null, this, "semestres");
 	}
+	@Command
+	public void selecionaCurso(@BindingParam("curso") int curso){
+		selectCurso = cursos.get(curso);
+	}
 
 	/**
 	 * Valida os dados com o integra.
@@ -135,7 +139,6 @@ public class FbCadastroController {
 							.toExternalForm());
 					aluno.setMatricula((profiles.get(0).getMatricula()));
 					aluno.setAtivo(Aluno.ATIVO);
-					aluno.setCurso(selectCurso);
 					BindUtils.postNotifyChange(null, null, this, "ano");
 					alunoValido = true;
 				} else {
@@ -150,8 +153,7 @@ public class FbCadastroController {
 							.toExternalForm());
 					aluno.setMatricula(((profiles.get(0).getMatricula())));
 					aluno.setAtivo(Aluno.ATIVO);
-					if(selectCurso  == null) selectCurso = new CursoBusiness().getPorCod(35);
-					aluno.setCurso(selectCurso);
+					//if(selectCurso  == null) selectCurso = new CursoBusiness().getPorCod(35);
 					BindUtils.postNotifyChange(null, null, this, "ano");
 					alunoValido = true;
 				}
@@ -262,6 +264,8 @@ public class FbCadastroController {
 			else {
 				aluno.setTurma(new TurmaBusiness().getTurma(
 						Integer.parseInt(ano), semestre + 1));
+				aluno.setCurso(selectCurso);
+
 			}
 		}
 	}

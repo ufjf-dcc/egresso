@@ -83,7 +83,7 @@
 
 			<vlayout visible="false" id="turma" class="intro-form">
 				<label class="intro-form" value="Selecione seu curso" />
-				<combobox id="combocurso" autodrop="true"
+				<combobox id="combocurso" autodrop="true" onSelect="@command('selecionaCurso', curso=self.selectedIndex)"
 					model="@load(vm.cursos)" selectedItem="@bind(vm.selectCurso)">
 					<template name="model">
 						<comboitem label="@load(each.curso)" />
