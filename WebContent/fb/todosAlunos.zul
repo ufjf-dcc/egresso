@@ -61,6 +61,7 @@
 					<textbox id="txtpesquisa" class="pesquisa" placeholder="Pesquisar aluno"
 						onOK="@command('pesquisarTodos')" value="@bind(vm.pesquisa)" />
 				</div>
+				
 			</hlayout>
 		</div>
 		<div align="left" style="margin-top:5%;margin-left:12%; margin-right:10%;max-width:1200px;  min-width:500px;">
