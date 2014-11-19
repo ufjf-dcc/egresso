@@ -2,14 +2,16 @@ package br.ufjf.egresso.persistent;
 
 import java.util.List;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 
 import br.ufjf.egresso.model.Aluno;
+import br.ufjf.egresso.model.Curso;
 import br.ufjf.egresso.model.Turma;
 
 public class AlunoDAO extends GenericoDAO {
 
-	public Aluno getAluno(String facebookId) {
+	public Aluno getAluno(String facebookId) throws HibernateException {
 		try {
 			Query query = getSession()
 					.createQuery(
@@ -22,9 +24,9 @@ public class AlunoDAO extends GenericoDAO {
 
 			return aluno;
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new HibernateException("erro");
 		}
-		return null;
+
 	}
 
 	public Aluno getAluno(int id) {
@@ -51,6 +53,25 @@ public class AlunoDAO extends GenericoDAO {
 			Query query = getSession()
 					.createQuery(
 							"SELECT a FROM Aluno AS a LEFT JOIN FETCH a.turma ORDER BY a.nome");
+
+			List<Aluno> aluno = query.list();
+			getSession().close();
+
+			if (aluno != null)
+				return aluno;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Aluno> getTodosCurso(Curso curso) {
+		try {
+			Query query = getSession()
+					.createQuery(
+							"SELECT a FROM Aluno AS a LEFT JOIN FETCH a.turma WHERE a.curso = :curso");
+			query.setParameter("curso", curso);
 
 			List<Aluno> aluno = query.list();
 			getSession().close();
@@ -127,12 +148,10 @@ public class AlunoDAO extends GenericoDAO {
 		}
 		return null;
 	}
+
 	public List<Aluno> getAlunos() {
 		try {
-			Query query = getSession()
-					.createQuery(
-							"SELECT a FROM Aluno AS a");
-		
+			Query query = getSession().createQuery("SELECT a FROM Aluno AS a");
 
 			@SuppressWarnings("unchecked")
 			List<Aluno> aluno = query.list();
@@ -146,6 +165,26 @@ public class AlunoDAO extends GenericoDAO {
 		}
 		return null;
 	}
-	
+
+	public List<Aluno> getAlunosCurso(Turma turma, Curso curso) {
+		try {
+			Query query = getSession()
+					.createQuery(
+							"SELECT a FROM Aluno AS a  WHERE a.turma = :turma AND  a.curso = :curso");
+			query.setParameter("turma", turma);
+			query.setParameter("curso", curso);
+
+			@SuppressWarnings("unchecked")
+			List<Aluno> aluno = query.list();
+
+			getSession().close();
+
+			return aluno;
+		} catch (Exception e) {
+			System.out.println(e);
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 }

@@ -12,6 +12,7 @@ import org.json.simple.parser.JSONParser;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
+import org.zkoss.zul.Messagebox;
 
 import br.ufjf.egresso.business.AlunoBusiness;
 import br.ufjf.egresso.model.Aluno;
@@ -85,20 +86,28 @@ public class FbIndexController {
 
 				// Verifica se o aluno já foi autorizado ou se já solicitou
 				// cadastro.
-				Aluno aluno = new AlunoBusiness().getAluno(facebook.getId());
-				
-				
+				Aluno aluno;
+				try {
+					aluno = new AlunoBusiness().getAluno(facebook.getId());
+				} catch (HibernateException e) {
+					Messagebox.show("Erro ao consultar o banco de dados. Atualize a página e tente novamente", "Erro",
+							Messagebox.OK, Messagebox.ERROR);
+					return;
+				}
+
 				if (aluno != null && aluno.getAtivo() == Aluno.ATIVO) {
 					Sessions.getCurrent().setAttribute("aluno", aluno);
 					aluno.setUrlFoto(facebook.getPictureURL(
 							facebook.getMe().getId(),
 							PictureSize.valueOf("large")).toExternalForm());
-							new AlunoBusiness().editar(aluno);
+					new AlunoBusiness().editar(aluno);
 
-					/*aluno.setUrlFoto(facebook.getPictureURL(
-							facebook.getMe().getId(),
-							PictureSize.valueOf("large")).toExternalForm());
-						new AlunoBusiness().editar(aluno);*/
+					/*
+					 * aluno.setUrlFoto(facebook.getPictureURL(
+					 * facebook.getMe().getId(),
+					 * PictureSize.valueOf("large")).toExternalForm()); new
+					 * AlunoBusiness().editar(aluno);
+					 */
 					Executions.sendRedirect("/fb/turma.zul");
 				} else {
 					if (aluno != null)
@@ -111,6 +120,7 @@ public class FbIndexController {
 		} else {
 			Executions.sendRedirect(fbCanvasPage);
 		}
+
 	}
 
 	private String hmacSHA256(String data, String key) throws Exception {

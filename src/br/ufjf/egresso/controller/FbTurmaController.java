@@ -33,9 +33,11 @@ import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
 import br.ufjf.egresso.business.AlunoBusiness;
+import br.ufjf.egresso.business.CursoBusiness;
 import br.ufjf.egresso.business.PostagemBusiness;
 import br.ufjf.egresso.business.TurmaBusiness;
 import br.ufjf.egresso.model.Aluno;
+import br.ufjf.egresso.model.Curso;
 import br.ufjf.egresso.model.Postagem;
 import br.ufjf.egresso.model.Turma;
 import br.ufjf.egresso.utils.ConfHandler;
@@ -57,6 +59,7 @@ public class FbTurmaController {
 	private TurmaBusiness turmaBusiness = new TurmaBusiness();
 	private String pesquisa, descricao, imgExtensao;
 	private Turma turma;
+	private Aluno aluno;
 	private List<Postagem> postagensTurma;
 	private int largura, altura;
 	private InputStream imgPostagem;
@@ -64,7 +67,62 @@ public class FbTurmaController {
 	private int indiceImagem;
 	private boolean buscaGlobal = false;
 	private String nomeImg;
+	private Curso curso;
+	private CursoBusiness cursoBusiness;
+	private String turmaSelecionada;
+	private Curso cursoSelecionado;
+	private List<Aluno> todosAlunos;
+
+	public CursoBusiness getCursoBusiness() {
+		return cursoBusiness;
+	}
+
+	public void setCursoBusiness(CursoBusiness cursoBusiness) {
+		this.cursoBusiness = cursoBusiness;
+	}
+
+	public String getTurmaSelecionada() {
+		return turmaSelecionada;
+	}
+
+	public void setTurmaSelecionada(String turmaSelecionada) {
+		this.turmaSelecionada = turmaSelecionada;
+	}
+
+	public Curso getCursoSelecionado() {
+		return cursoSelecionado;
+	}
+
+	public void setCursoSelecionado(Curso cursoSelecionado) {
+		this.cursoSelecionado = cursoSelecionado;
+	}
+
+	public Curso getCurso() {
+		return curso;
+	}
+
+	public void setCurso(Curso curso) {
+		this.curso = curso;
+	}
+
+	public Aluno getAluno() {
+		return aluno;
+	}
+
+	public void setAluno(Aluno aluno) {
+		this.aluno = aluno;
+	}
+
+	public List<Curso> getCursos() {
+		return cursos;
+	}
+
+	public void setCursos(List<Curso> cursos) {
+		this.cursos = cursos;
+	}
+
 	private Aluno alunoSelect;
+	private List<Curso> cursos = new CursoBusiness().getTodos();
 
 	public Aluno getAlunoSelect() {
 		return alunoSelect;
@@ -80,6 +138,7 @@ public class FbTurmaController {
 
 		turma = ((Aluno) Sessions.getCurrent().getAttribute("aluno"))
 				.getTurma();
+		aluno = ((Aluno) Sessions.getCurrent().getAttribute("aluno"));
 		turmas = turmaBusiness.getTodas();
 
 		semestres = new ArrayList<String>();
@@ -90,8 +149,11 @@ public class FbTurmaController {
 		descricao = "Turma do " + turma.getSemestre() + "º semestre de "
 				+ turma.getAno();
 		filtraAlunos = new AlunoBusiness().getAlunos(turma);
-		alunos = new AlunoBusiness().getAlunos();
-		postagensTurma = new PostagemBusiness().getPostagens(turma);
+		alunos = new AlunoBusiness().getTodosCurso(aluno.getCurso());
+		cursoSelecionado = aluno.getCurso();
+		todosAlunos = new AlunoBusiness().getTodos();
+		postagensTurma = new PostagemBusiness().getPostagens(turma,
+				aluno.getCurso());
 		urlPostagens = new ArrayList<String>();
 		for (int i = 0; i < postagensTurma.size(); i++) {
 			if (postagensTurma.get(i).getImagem() != null)
@@ -240,9 +302,10 @@ public class FbTurmaController {
 			BindUtils.postNotifyChange(null, null, this, "largura");
 			BindUtils.postNotifyChange(null, null, this, "altura");
 		}
+		filtraAlunos = new AlunoBusiness().getTodosCurso(cursoSelecionado);
+
 		int inseridos = 0;
 		linhasAluno = new ArrayList<List<Aluno>>();
-		filtraAlunos = new AlunoBusiness().getAlunos();
 		List<Aluno> linhaAluno = new ArrayList<Aluno>();
 
 		for (Aluno a : filtraAlunos) {
@@ -375,10 +438,21 @@ public class FbTurmaController {
 								.contains(pesquisa.trim().toLowerCase()))
 							resultados.add(aluno);
 				}
+			} else {
+				resultados = new AlunoBusiness().getAlunos(turma);
+
 			}
 		}
 		filtraAlunos = resultados;
 		montaTabela(null);
+
+	}
+
+	@Command
+	public void selecionaCurso(@BindingParam("curso") int curso) {
+		cursoSelecionado = cursos.get(curso);
+		filtraAlunos = new AlunoBusiness().getTodosCurso(cursoSelecionado);
+		montaTabelaTodos(null);
 
 	}
 
@@ -388,13 +462,17 @@ public class FbTurmaController {
 		List<Aluno> resultados = new ArrayList<Aluno>();
 		if (pesquisa != null) {
 			if (pesquisa.trim().equals("")) {
-				resultados = new AlunoBusiness().getAlunos();
+				resultados = new AlunoBusiness()
+						.getTodosCurso(cursoSelecionado);
 			} else {
-				for (Aluno aluno : alunos)
+				for (Aluno aluno : filtraAlunos)
 					if (aluno.getNome().trim().toLowerCase()
 							.contains(pesquisa.trim().toLowerCase()))
 						resultados.add(aluno);
 			}
+		} else {
+			resultados = new AlunoBusiness().getTodosCurso(cursoSelecionado);
+
 		}
 
 		filtraAlunos = resultados;
@@ -471,21 +549,26 @@ public class FbTurmaController {
 	}
 
 	@Command
-	public void trocaTurma(@BindingParam("turma") String turmaDesc) {
+	public void trocaTurma() {
 		Clients.evalJavaScript("fadeOut()");
+		if (turmaSelecionada != null && cursoSelecionado != null) {
 
-		turma = turmaBusiness.getTurma(Integer.parseInt(turmaDesc.substring(0,
-				turmaDesc.indexOf(" "))), Integer.parseInt(turmaDesc.substring(
-				turmaDesc.indexOf("º") - 1, turmaDesc.indexOf("º"))));
+			turma = turmaBusiness.getTurma(Integer.parseInt(turmaSelecionada
+					.substring(0, turmaSelecionada.indexOf(" "))), Integer
+					.parseInt(turmaSelecionada.substring(
+							turmaSelecionada.indexOf("º") - 1,
+							turmaSelecionada.indexOf("º"))));
 
-		descricao = "Turma do " + turma.getSemestre() + "º semestre de "
-				+ turma.getAno();
-
-		filtraAlunos = new AlunoBusiness().getAlunos(turma);
-
-		postagensTurma = new PostagemBusiness().getPostagens(turma);
-		montaTabela(null);
-		BindUtils.postNotifyChange(null, null, this, "descricao");
+			descricao = "Turma do " + turma.getSemestre() + "º semestre de "
+					+ turma.getAno();
+			System.out.println(cursoSelecionado.getCurso());
+			filtraAlunos = new AlunoBusiness().getAlunosCurso(turma,
+					cursoSelecionado);
+			postagensTurma = new PostagemBusiness().getPostagens(turma,
+					cursoSelecionado);
+			montaTabela(null);
+			BindUtils.postNotifyChange(null, null, this, "descricao");
+		}
 	}
 
 	/**
@@ -527,27 +610,43 @@ public class FbTurmaController {
 			@BindingParam("texto") String texto,
 			@BindingParam("privado") boolean privado) {
 		String imagem = null;
-		if (imgPostagem != null){
+		if (imgPostagem != null) {
 			imagem = FileManager.saveFileInputSream(imgPostagem, imgExtensao);
 			String url = ConfHandler.getConf("FILE.PATH");
-			
-			File img = new File(url+imagem);
-			File img_s = new File(url+"s-"+imagem);
-			System.out.println(img.getAbsolutePath());
-	        System.out.println(img_s.getAbsolutePath());
-			 try {
-		            BufferedImage bufimage = ImageIO.read(img);
 
-		            BufferedImage bISmallImage = Scalr.resize(bufimage, 141, 110); // after this line my dimensions in bISmallImage are correct!
-		            ImageIO.write(bISmallImage, imgExtensao, img_s); // but my smallImage has the same dimension as the original foto
-		        } catch (Exception e) {
-		            System.out.println(e.getMessage()); // FORNOW: added just to be sure
-		        }
+			File img = new File(url + imagem);
+			File img_s = new File(url + "s-" + imagem);
+			System.out.println(img.getAbsolutePath());
+			System.out.println(img_s.getAbsolutePath());
+			try {
+				BufferedImage bufimage = ImageIO.read(img);
+
+				BufferedImage bISmallImage = Scalr.resize(bufimage, 141, 110); // after
+																				// this
+																				// line
+																				// my
+																				// dimensions
+																				// in
+																				// bISmallImage
+																				// are
+																				// correct!
+				ImageIO.write(bISmallImage, imgExtensao, img_s); // but my
+																	// smallImage
+																	// has the
+																	// same
+																	// dimension
+																	// as the
+																	// original
+																	// foto
+			} catch (Exception e) {
+				System.out.println(e.getMessage()); // FORNOW: added just to be
+													// sure
+			}
 		}
 		if (imgPostagem == null || (imgPostagem != null && imagem != null)) {
 			Postagem postagem = new Postagem((Aluno) Sessions.getCurrent()
 					.getAttribute("aluno"), turma, privado, texto, imagem,
-					new Timestamp(new Date().getTime()),"s-"+imagem );
+					new Timestamp(new Date().getTime()), "s-" + imagem);
 			imgPostagem = null;
 			if (new PostagemBusiness().salvar(postagem)) {
 				postagensTurma.add(0, postagem);
@@ -556,7 +655,7 @@ public class FbTurmaController {
 				txtArea.setPlaceholder("Escreva algo aqui.");
 				imgPostagem = null;
 				BindUtils.postNotifyChange(null, null, this, "imgPostagem");
-				
+
 				return;
 			}
 		}
@@ -675,14 +774,13 @@ public class FbTurmaController {
 			@BindingParam("alunoSelect") Aluno aluno) {
 		alunoSelect = aluno;
 		BindUtils.postNotifyChange(null, null, null, "alunoSelect");
-		Point p = MouseInfo.getPointerInfo().getLocation();
-		
-		popup.doModal();
+		popup.doPopup();
 
 	}
 
 	@Command
 	public void hidePopup(@BindingParam("popup") Window popup) {
+		
 		popup.setVisible(false);
 	}
 

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Query;
 
+import br.ufjf.egresso.model.Curso;
 import br.ufjf.egresso.model.Postagem;
 import br.ufjf.egresso.model.Turma;
 
@@ -25,14 +26,13 @@ public class PostagemDAO extends GenericoDAO {
 		}
 		return null;
 	}
-
 	@SuppressWarnings("unchecked")
-	public List<Postagem> getPostagens(Turma turma) {
+	public List<Postagem> getPostagens(Turma turma, Curso curso) {
 		try {
 			Query query = getSession().createQuery(
-					"SELECT p FROM Postagem AS p WHERE p.turma = :turma ORDER BY data_hora DESC ");
+					"SELECT p FROM Postagem AS p WHERE p.turma = :turma AND p.aluno.curso = :curso ORDER BY data_hora DESC ");
 			query.setParameter("turma", turma);
-
+			query.setParameter("curso", curso);
 			List<Postagem> postagens = query.list();
 			getSession().close();
 

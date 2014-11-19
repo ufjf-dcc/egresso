@@ -22,8 +22,10 @@ import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Messagebox;
 
 import br.ufjf.egresso.business.AlunoBusiness;
+import br.ufjf.egresso.business.CursoBusiness;
 import br.ufjf.egresso.business.TurmaBusiness;
 import br.ufjf.egresso.model.Aluno;
+import br.ufjf.egresso.model.Curso;
 import br.ufjf.egresso.model.Turma;
 import br.ufjf.egresso.utils.ConfHandler;
 import br.ufjf.ice.integra3.ws.login.interfaces.IWsLogin;
@@ -35,8 +37,7 @@ import br.ufjf.ice.integra3.ws.login.service.WSLogin;
 import facebook4j.Facebook;
 import facebook4j.FacebookException;
 import facebook4j.PictureSize;
-import facebook4j.internal.org.json.JSONException;
-import facebook4j.internal.org.json.JSONObject;
+
 
 /**
  * Classe para controlar a página /fb/cadasro.zul
@@ -49,6 +50,8 @@ public class FbCadastroController {
 	private Aluno aluno;
 	private Set<Integer> anos;
 	private int intervalo;
+	private List<Curso> cursos = new CursoBusiness().getTodos();
+	private Curso selectCurso;
 	/** Variável para indicar a existência dos semestres para determiado ano **/
 	private int semestres = 3;
 
@@ -97,6 +100,10 @@ public class FbCadastroController {
 		semestres = turmas.size() == 2 ? 3 : turmas.get(0).getSemestre();
 		BindUtils.postNotifyChange(null, null, this, "semestres");
 	}
+	@Command
+	public void selecionaCurso(@BindingParam("curso") int curso){
+		selectCurso = cursos.get(curso);
+	}
 
 	/**
 	 * Valida os dados com o integra.
@@ -112,9 +119,8 @@ public class FbCadastroController {
 		boolean alunoValido = false;
 	    senha = md5(senha);
 	    try {
-	    	FileReader file = new FileReader("/home/esoares/git/egresso/application.token");
-			BufferedReader bf = new BufferedReader(file);
-			String token = bf.readLine();
+	    	
+			String token = ConfHandler.getConf("FILE.TOKEN");
 			System.out.println("Logando...");
 			IWsLogin integra = new WSLogin().getWsLoginServicePort();
 			WsLoginResponse user = integra.login(cpf, senha, token);
@@ -147,6 +153,7 @@ public class FbCadastroController {
 							.toExternalForm());
 					aluno.setMatricula(((profiles.get(0).getMatricula())));
 					aluno.setAtivo(Aluno.ATIVO);
+					//if(selectCurso  == null) selectCurso = new CursoBusiness().getPorCod(35);
 					BindUtils.postNotifyChange(null, null, this, "ano");
 					alunoValido = true;
 				}
@@ -168,16 +175,49 @@ public class FbCadastroController {
 									"Erro", Messagebox.OK, Messagebox.ERROR);
 			}
 	    
-	    } catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (FacebookException e) {
+	    } catch (FacebookException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	    return alunoValido;
 			
 
+	}
+
+	public List<Curso> getCursos() {
+		return cursos;
+	}
+
+	public void setCursos(List<Curso> cursos) {
+		this.cursos = cursos;
+	}
+
+	public Curso getSelectCurso() {
+		return selectCurso;
+	}
+
+	public void setSelectCurso(Curso selectCurso) {
+		this.selectCurso = selectCurso;
+	}
+
+	public void setFacebook(Facebook facebook) {
+		this.facebook = facebook;
+	}
+
+	public void setAluno(Aluno aluno) {
+		this.aluno = aluno;
+	}
+
+	public void setAnos(Set<Integer> anos) {
+		this.anos = anos;
+	}
+
+	public void setIntervalo(int intervalo) {
+		this.intervalo = intervalo;
+	}
+
+	public void setSemestres(int semestres) {
+		this.semestres = semestres;
 	}
 
 	/**
@@ -224,6 +264,8 @@ public class FbCadastroController {
 			else {
 				aluno.setTurma(new TurmaBusiness().getTurma(
 						Integer.parseInt(ano), semestre + 1));
+				aluno.setCurso(selectCurso);
+
 			}
 		}
 	}

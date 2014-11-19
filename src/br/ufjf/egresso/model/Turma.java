@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -31,6 +33,7 @@ public class Turma {
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "turma")
 	private List<Aluno> alunos = new ArrayList<Aluno>();
+	
 
 	@Transient
 	private boolean editingStatus;

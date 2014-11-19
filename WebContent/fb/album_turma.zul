@@ -49,8 +49,11 @@
 				
 			</hlayout>
 		</div>
+		<div style="margin-top:5%;">
+		<label value="Nenhuma imagem postada" visible="@load(empty vm.urlPostagens )"/>
+		</div>
 		<div align="left">
-		<vlayout children="@load(vm.linhasPostagem)"
+		<vlayout visible = "@load(vm.urlPostagens ne null)" children="@load(vm.linhasPostagem)"
 			style=" padding:20px; margin-left:100px; margin-bottom:10px ">
 			<template name="children" var="linhaPostagem">
 				<hlayout style="padding:10px;"
