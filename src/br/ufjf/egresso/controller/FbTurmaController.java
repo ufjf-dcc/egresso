@@ -135,7 +135,7 @@ public class FbTurmaController {
 	@Init
 	public void init() {
 		BindUtils.postNotifyChange(null, null, this, "alunoSelect");
-		
+
 		turma = ((Aluno) Sessions.getCurrent().getAttribute("aluno"))
 				.getTurma();
 		aluno = ((Aluno) Sessions.getCurrent().getAttribute("aluno"));
@@ -303,7 +303,7 @@ public class FbTurmaController {
 			BindUtils.postNotifyChange(null, null, this, "altura");
 		}
 		filtraAlunos = new AlunoBusiness().getTodosCurso(cursoSelecionado);
-		
+
 		int inseridos = 0;
 		linhasAluno = new ArrayList<List<Aluno>>();
 		List<Aluno> linhaAluno = new ArrayList<Aluno>();
@@ -774,14 +774,13 @@ public class FbTurmaController {
 			@BindingParam("alunoSelect") Aluno aluno) {
 		alunoSelect = aluno;
 		BindUtils.postNotifyChange(null, null, null, "alunoSelect");
-		Point p = MouseInfo.getPointerInfo().getLocation();
-
-		popup.doModal();
+		popup.doPopup();
 
 	}
 
 	@Command
 	public void hidePopup(@BindingParam("popup") Window popup) {
+		
 		popup.setVisible(false);
 	}
 

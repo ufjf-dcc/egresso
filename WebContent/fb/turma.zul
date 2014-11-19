@@ -284,15 +284,14 @@
 											onClick="@command('verPerfil', facebookId=aluno.facebookId)"
 											onMouseOver="@command('showPopup', popup = self.nextSibling, alunoSelect = aluno)"
 											onMouseOut="@command('hidePopup',popup=self.nextSibling)" />
-										<window
+										<window mode="overlapped" left="25%" top="10%"
 											onMouseOver="@command('showPopup', popup = self, alunoSelect = aluno)"
-											onMouseOut="@command('hidePopup',popup=self)" width="400px;"
+											onMouseOut="@command('hidePopup',popup=self)" width="500px;"
 											visible="false">
 											<hlayout>
 
 												<image
-													onClick="@command('verPerfil', facebookId=aluno.facebookId)"
-													style="width:200px; height:200px; margin-right:20px;cursor:pointer;"
+													style="width:200px; height:200px; margin-right:20px;"
 													src="@load(aluno.facebookId ne null ? aluno.urlFoto : '/img/anonimo.jpg' )" />
 												<vlayout>
 																
@@ -337,7 +336,7 @@
 
 
 	<window id="imagem" title="Visualizar Imagem" visible="false"
-		border="normal" position="center,center" closable="true"
+		border="normal" left="30%" top="10%" closable="true"
 		onClose="self.setVisible(false); event.stopPropagation();"
 		style="max-width:700px; height:auto;">
 
