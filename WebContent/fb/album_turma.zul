@@ -49,7 +49,7 @@
 				
 			</hlayout>
 		</div>
-		<div>
+		<div style="margin-top:5%;">
 		<label value="Nenhuma imagem postada" visible="@load(empty vm.urlPostagens )"/>
 		</div>
 		<div align="left">
