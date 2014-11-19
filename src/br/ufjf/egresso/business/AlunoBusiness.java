@@ -70,6 +70,7 @@ public class AlunoBusiness {
 		else
 			jaExiste(matricula, matriculaAntiga);
 	}
+
 	private boolean jaExiste(String matricula, String matriculaAntiga) {
 		errors.clear();
 		if (alunoDao.jaExiste(matricula, matriculaAntiga)) {
@@ -79,9 +80,11 @@ public class AlunoBusiness {
 		return false;
 	}
 
-	/**Verifica se um {@link Aluno} já está cadastrado.
+	/**
+	 * Verifica se um {@link Aluno} já está cadastrado.
 	 * 
-	 * @param facebookId O Facebook ID do {@link Aluno}.
+	 * @param facebookId
+	 *            O Facebook ID do {@link Aluno}.
 	 * @return {@link true} se existe; {@link false} se não.
 	 * @throws HibernateException
 	 * @throws Exception
@@ -91,79 +94,100 @@ public class AlunoBusiness {
 		return alunoDao.getAluno(facebookId) != null;
 	}
 
-	/**Retorna um {@link Aluno}.
+	/**
+	 * Retorna um {@link Aluno}.
 	 * 
-	 * @param facebookId O Facebook ID do {@link Aluno}.
+	 * @param facebookId
+	 *            O Facebook ID do {@link Aluno}.
 	 * @return {@link Aluno}.
 	 */
-	public Aluno getAluno(String facebookId) {
-		return alunoDao.getAluno(facebookId);
+	public Aluno getAluno(String facebookId) throws HibernateException {
+		try {
+			return alunoDao.getAluno(facebookId);
+		} catch (HibernateException e) {
+			throw new HibernateException("erro");
+		}
 	}
 
-	/**Retorna um {@link Aluno}.
+	/**
+	 * Retorna um {@link Aluno}.
 	 * 
-	 * @param id O ID do {@link Aluno}.
+	 * @param id
+	 *            O ID do {@link Aluno}.
 	 * @return {@link Aluno}.
 	 */
 	public Aluno getAluno(int id) {
 		return alunoDao.getAluno(id);
 	}
 
-	/**Retorna um {@link Aluno}.
+	/**
+	 * Retorna um {@link Aluno}.
 	 * 
-	 * @param matricula A matrícula do {@link Aluno}.
+	 * @param matricula
+	 *            A matrícula do {@link Aluno}.
 	 * @return {@link Aluno}.
 	 */
 	public Aluno buscaPorMatricula(String matricula) {
 		return alunoDao.getAlunoPorMatricula(matricula);
 	}
 
-	/**Edita um {@link Aluno} e salva no banco.
+	/**
+	 * Edita um {@link Aluno} e salva no banco.
 	 * 
-	 * @param aluno {@link Aluno} a ser editado.
+	 * @param aluno
+	 *            {@link Aluno} a ser editado.
 	 * @return {@link true} se houve sucesso; {@link false} se não.
 	 */
 	public boolean editar(Aluno aluno) {
 		return alunoDao.editar(aluno);
 	}
 
-	/**Obtem todos os {@link Aluno}s do banco.
+	/**
+	 * Obtem todos os {@link Aluno}s do banco.
 	 * 
 	 * @return Uma {@link List} de {@link Aluno}.
 	 */
 	public List<Aluno> getTodos() {
 		return alunoDao.getTodos();
 	}
+
 	public List<Aluno> getTodosCurso(Curso curso) {
 		return alunoDao.getTodosCurso(curso);
 	}
 
-	/**Exclui um {@link Aluno} do banco.
+	/**
+	 * Exclui um {@link Aluno} do banco.
 	 * 
-	 * @param aluno {@link Aluno} a ser excluído.
+	 * @param aluno
+	 *            {@link Aluno} a ser excluído.
 	 * @return {@link true} se houve sucesso; {@link false} se não.
 	 */
 	public boolean exclui(Aluno aluno) {
 		return alunoDao.exclui(aluno);
 	}
 
-	/**Salva um novo {@link Aluno} no banco.
+	/**
+	 * Salva um novo {@link Aluno} no banco.
 	 * 
-	 * @param aluno {@link Aluno} a ser salvo.
+	 * @param aluno
+	 *            {@link Aluno} a ser salvo.
 	 * @return {@link true} se houve sucesso; {@link false} se não.
 	 */
 	public boolean salvar(Aluno novoAluno) {
 		return alunoDao.salvar(novoAluno);
 	}
 
-	/**Retorna uma {@link List} de {@link Aluno}s de uma turma.
+	/**
+	 * Retorna uma {@link List} de {@link Aluno}s de uma turma.
 	 * 
-	 * @param turma Turma dos {@link Aluno}s a serem obtidos.
+	 * @param turma
+	 *            Turma dos {@link Aluno}s a serem obtidos.
 	 * @return Uma {@link List} de {@link Aluno}.
 	 */
 	public List<Aluno> getAlunos(Turma turma) {
 		return alunoDao.getAlunos(turma);
 	}
+
 	public List<Aluno> getAlunos() {
 		return alunoDao.getAlunos();
 	}

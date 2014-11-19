@@ -17,6 +17,8 @@
 
 
 
+
+
 		
 		<![CDATA[ function voltaTurma(){ location.href = "turma.zul";
 
@@ -42,6 +44,8 @@
 		
 		
 		
+		
+		
 	</script>
 
 	<div apply="org.zkoss.bind.BindComposer" width="100%" align="center"
@@ -49,59 +53,73 @@
 		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbTurmaController')"
 		height="100%"
 		onClientInfo="@command('montaTabelaTodos', event=event)">
-		<div style="color:white; padding :5px;background-color: #c0504d; width:100%;">
+		<div
+			style="color:white; padding :5px;background-color: #c0504d; width:100%;">
 			<hlayout>
-				<div style="width:100%;margin-top:5px;margin-bottom:5px; margin-left:-650%">
+				<div
+					style="width:100%;margin-top:5px;margin-bottom:5px; margin-left:-650%">
 					<label
 						style="font-size:12px; cursor:pointer; font-weight:bold; "
 						value="Voltar para turma" onClick="@command('voltaTurma')" />
 				</div>
-				
-				<div style="width:100%;margin-top:5px;margin-bottom:5px;margin-right:-400%">
-					<textbox id="txtpesquisa" class="pesquisa" placeholder="Pesquisar aluno"
-						onOK="@command('pesquisarTodos')" value="@bind(vm.pesquisa)" />
+
+				<div
+					style="width:100%;margin-top:5px;margin-bottom:5px;margin-right:-400%">
+					<textbox id="txtpesquisa" class="pesquisa"
+						placeholder="Pesquisar aluno" onOK="@command('pesquisarTodos')"
+						value="@bind(vm.pesquisa)" />
 				</div>
-				
+				<combobox id="combocurso" autodrop="true" placeholder="Todos"
+					onSelect="@command('selecionaCurso', curso=self.selectedIndex)"
+					model="@load(vm.cursos)" >
+					<template name="model">
+						<comboitem label="@load(each.curso)" />
+					</template>
+				</combobox>
+
 			</hlayout>
 		</div>
-		<div align="left" style="margin-top:5%;margin-left:12%; margin-right:10%;max-width:1200px;  min-width:500px;">
-		<vlayout>
-			<!-- Alunos -->
+		<div align="left"
+			style="margin-top:5%;margin-left:12%; margin-right:10%;max-width:1200px;  min-width:500px;">
+			<vlayout>
+				<!-- Alunos -->
 
-			<vlayout
-				style="overflow: visible;   @load('max-height:'.concat(vm.altura).concat('px'));"
-				children="@load(vm.linhasAluno)">
+				<vlayout
+					style="overflow: visible;   @load('max-height:'.concat(vm.altura).concat('px'));"
+					children="@load(vm.linhasAluno)">
 
-				<template name="children" var="linha">
+					<template name="children" var="linha">
 
-					<hlayout children="@load(linha)">
+						<hlayout children="@load(linha)">
 
-						<template name="children" var="aluno">
-							<vlayout
-								style="background-color: #DCDCDC;">
-								<div>
-									<vlayout >
-										<div
-											style="margin-bottom:10px
+							<template name="children" var="aluno">
+								<vlayout
+									style="background-color: #DCDCDC;">
+									<div>
+										<vlayout>
+											<div
+												style="margin-bottom:10px
 										;width:120px; height:125px;">
-											<image
-												style="filter: alpha(opacity=40);cursor:pointer;  max-width:100%; max-height:100%;"
-												class="aluno" src="@load(aluno.facebookId ne null ? aluno.urlFoto : '/img/anonimo.jpg' )"
-												onClick="@command('verPerfil', facebookId=aluno.facebookId)" />
-										</div>
-										<div style="width:120px; height:20px;">
-											<label
-												value="@load(aluno.nome)" style="font-size:12px;" />
-										</div>
-									</vlayout>
-								</div>
-							</vlayout>
-						</template>
-					</hlayout>
+												<image
+													style="filter: alpha(opacity=40);cursor:pointer;  max-width:100%; max-height:100%;"
+													class="aluno"
+													src="@load(aluno.facebookId ne null ? aluno.urlFoto : '/img/anonimo.jpg' )"
+													onClick="@command('verPerfil', facebookId=aluno.facebookId)" />
+											</div>
+											<div
+												style="width:120px; height:20px;">
+												<label
+													value="@load(aluno.nome)" style="font-size:12px;" />
+											</div>
+										</vlayout>
+									</div>
+								</vlayout>
+							</template>
+						</hlayout>
 
-				</template>
+					</template>
+				</vlayout>
 			</vlayout>
-		</vlayout>
 		</div>
 
 	</div>

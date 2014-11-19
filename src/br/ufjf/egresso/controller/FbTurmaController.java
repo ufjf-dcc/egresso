@@ -89,7 +89,6 @@ public class FbTurmaController {
 		this.turmaSelecionada = turmaSelecionada;
 	}
 
-	
 	public Curso getCursoSelecionado() {
 		return cursoSelecionado;
 	}
@@ -141,7 +140,7 @@ public class FbTurmaController {
 				.getTurma();
 		aluno = ((Aluno) Sessions.getCurrent().getAttribute("aluno"));
 		turmas = turmaBusiness.getTodas();
-		
+
 		semestres = new ArrayList<String>();
 		for (Turma t : turmas) {
 			semestres.add(t.getAno() + " " + t.getSemestre() + "º semestre");
@@ -152,7 +151,8 @@ public class FbTurmaController {
 		filtraAlunos = new AlunoBusiness().getAlunos(turma);
 		alunos = new AlunoBusiness().getTodosCurso(aluno.getCurso());
 		todosAlunos = new AlunoBusiness().getTodos();
-		postagensTurma = new PostagemBusiness().getPostagens(turma,aluno.getCurso());
+		postagensTurma = new PostagemBusiness().getPostagens(turma,
+				aluno.getCurso());
 		urlPostagens = new ArrayList<String>();
 		for (int i = 0; i < postagensTurma.size(); i++) {
 			if (postagensTurma.get(i).getImagem() != null)
@@ -303,10 +303,9 @@ public class FbTurmaController {
 		}
 		int inseridos = 0;
 		linhasAluno = new ArrayList<List<Aluno>>();
-		filtraAlunos = new AlunoBusiness().getAlunos();
 		List<Aluno> linhaAluno = new ArrayList<Aluno>();
 
-		for (Aluno a : todosAlunos) {
+		for (Aluno a : filtraAlunos) {
 			if ((largura - 120) / 160 < (inseridos + 1)) {
 				linhasAluno.add(linhaAluno);
 				inseridos = 0;
@@ -444,6 +443,13 @@ public class FbTurmaController {
 	}
 
 	@Command
+	public void selecionaCurso(@BindingParam("curso") int curso) {
+		filtraAlunos = new AlunoBusiness().getTodosCurso(cursos.get(curso));
+		montaTabelaTodos(null);
+
+	}
+
+	@Command
 	@NotifyChange({ "filtraAlunos", "emptyMessage" })
 	public void pesquisarTodos() {
 		List<Aluno> resultados = new ArrayList<Aluno>();
@@ -535,17 +541,20 @@ public class FbTurmaController {
 	public void trocaTurma() {
 		Clients.evalJavaScript("fadeOut()");
 		if (turmaSelecionada != null && cursoSelecionado != null) {
-			
+
 			turma = turmaBusiness.getTurma(Integer.parseInt(turmaSelecionada
 					.substring(0, turmaSelecionada.indexOf(" "))), Integer
-					.parseInt(turmaSelecionada.substring(turmaSelecionada.indexOf("º") - 1,
+					.parseInt(turmaSelecionada.substring(
+							turmaSelecionada.indexOf("º") - 1,
 							turmaSelecionada.indexOf("º"))));
-			
+
 			descricao = "Turma do " + turma.getSemestre() + "º semestre de "
 					+ turma.getAno();
 			System.out.println(cursoSelecionado.getCurso());
-			filtraAlunos = new AlunoBusiness().getAlunosCurso(turma, cursoSelecionado);
-			postagensTurma = new PostagemBusiness().getPostagens(turma,cursoSelecionado);
+			filtraAlunos = new AlunoBusiness().getAlunosCurso(turma,
+					cursoSelecionado);
+			postagensTurma = new PostagemBusiness().getPostagens(turma,
+					cursoSelecionado);
 			montaTabela(null);
 			BindUtils.postNotifyChange(null, null, this, "descricao");
 		}

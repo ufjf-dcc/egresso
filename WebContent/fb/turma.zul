@@ -252,11 +252,11 @@
 			</div>
 			</vlayout>
 </div>
-			<!-- <label id="nenhumAluno"
-				value="Nenhum aluno deste semestre se cadastrou ainda. Deseja convidar ex-alunos?"
+			 <label id="nenhumAluno"
+				value="Nenhum aluno. Deseja convidar ex-alunos?"
 				c:onClick="convidar()"
 				style="width:100%;font-size:10px;cursor:pointer; text-decoration:underline; margin-left:10%;"
-				visible="@load(empty vm.linhasAluno)" /> -->
+				visible="@load(empty vm.linhasAluno)" /> 
 			<vlayout 
 				style="max-width:100%; min-width:169px; width:100%;  margin-left:50px;">
 				<!-- Alunos -->
@@ -286,7 +286,7 @@
 											onMouseOut="@command('hidePopup',popup=self.nextSibling)" />
 										<window
 											onMouseOver="@command('showPopup', popup = self, alunoSelect = aluno)"
-											onMouseOut="@command('hidePopup',popup=self)" width="900px;"
+											onMouseOut="@command('hidePopup',popup=self)" width="400px;"
 											visible="false">
 											<hlayout>
 

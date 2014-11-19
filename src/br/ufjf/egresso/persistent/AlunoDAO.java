@@ -2,6 +2,7 @@ package br.ufjf.egresso.persistent;
 
 import java.util.List;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 
 import br.ufjf.egresso.model.Aluno;
@@ -10,7 +11,7 @@ import br.ufjf.egresso.model.Turma;
 
 public class AlunoDAO extends GenericoDAO {
 
-	public Aluno getAluno(String facebookId) {
+	public Aluno getAluno(String facebookId) throws HibernateException {
 		try {
 			Query query = getSession()
 					.createQuery(
@@ -23,9 +24,9 @@ public class AlunoDAO extends GenericoDAO {
 
 			return aluno;
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new HibernateException("erro");
 		}
-		return null;
+
 	}
 
 	public Aluno getAluno(int id) {
@@ -167,10 +168,11 @@ public class AlunoDAO extends GenericoDAO {
 
 	public List<Aluno> getAlunosCurso(Turma turma, Curso curso) {
 		try {
-			Query query = getSession().createQuery("SELECT a FROM Aluno AS a  WHERE a.turma = :turma AND  a.curso = :curso");
+			Query query = getSession()
+					.createQuery(
+							"SELECT a FROM Aluno AS a  WHERE a.turma = :turma AND  a.curso = :curso");
 			query.setParameter("turma", turma);
 			query.setParameter("curso", curso);
-
 
 			@SuppressWarnings("unchecked")
 			List<Aluno> aluno = query.list();
@@ -184,6 +186,5 @@ public class AlunoDAO extends GenericoDAO {
 		}
 		return null;
 	}
-
 
 }
