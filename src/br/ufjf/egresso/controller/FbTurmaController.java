@@ -135,7 +135,7 @@ public class FbTurmaController {
 	@Init
 	public void init() {
 		BindUtils.postNotifyChange(null, null, this, "alunoSelect");
-
+		
 		turma = ((Aluno) Sessions.getCurrent().getAttribute("aluno"))
 				.getTurma();
 		aluno = ((Aluno) Sessions.getCurrent().getAttribute("aluno"));
@@ -150,6 +150,7 @@ public class FbTurmaController {
 				+ turma.getAno();
 		filtraAlunos = new AlunoBusiness().getAlunos(turma);
 		alunos = new AlunoBusiness().getTodosCurso(aluno.getCurso());
+		cursoSelecionado = aluno.getCurso();
 		todosAlunos = new AlunoBusiness().getTodos();
 		postagensTurma = new PostagemBusiness().getPostagens(turma,
 				aluno.getCurso());
@@ -301,6 +302,8 @@ public class FbTurmaController {
 			BindUtils.postNotifyChange(null, null, this, "largura");
 			BindUtils.postNotifyChange(null, null, this, "altura");
 		}
+		filtraAlunos = new AlunoBusiness().getTodosCurso(cursoSelecionado);
+		
 		int inseridos = 0;
 		linhasAluno = new ArrayList<List<Aluno>>();
 		List<Aluno> linhaAluno = new ArrayList<Aluno>();
@@ -435,6 +438,9 @@ public class FbTurmaController {
 								.contains(pesquisa.trim().toLowerCase()))
 							resultados.add(aluno);
 				}
+			} else {
+				resultados = new AlunoBusiness().getAlunos(turma);
+
 			}
 		}
 		filtraAlunos = resultados;
@@ -444,7 +450,8 @@ public class FbTurmaController {
 
 	@Command
 	public void selecionaCurso(@BindingParam("curso") int curso) {
-		filtraAlunos = new AlunoBusiness().getTodosCurso(cursos.get(curso));
+		cursoSelecionado = cursos.get(curso);
+		filtraAlunos = new AlunoBusiness().getTodosCurso(cursoSelecionado);
 		montaTabelaTodos(null);
 
 	}
@@ -455,13 +462,17 @@ public class FbTurmaController {
 		List<Aluno> resultados = new ArrayList<Aluno>();
 		if (pesquisa != null) {
 			if (pesquisa.trim().equals("")) {
-				resultados = new AlunoBusiness().getAlunos();
+				resultados = new AlunoBusiness()
+						.getTodosCurso(cursoSelecionado);
 			} else {
-				for (Aluno aluno : alunos)
+				for (Aluno aluno : filtraAlunos)
 					if (aluno.getNome().trim().toLowerCase()
 							.contains(pesquisa.trim().toLowerCase()))
 						resultados.add(aluno);
 			}
+		} else {
+			resultados = new AlunoBusiness().getTodosCurso(cursoSelecionado);
+
 		}
 
 		filtraAlunos = resultados;
