@@ -34,9 +34,9 @@
 			</hlayout>
 		</div>
 
-		<div align="left" style="margin-left:-80px;">
+		<div align="center" style="margin-left:-80px;">
 			<vlayout>
-			<div
+			<div align="left"
 				style="background-color: white;margin-left: 200px; margin-top:20px; margin-bottom:25px;width: 700px;padding: 20px;height:250px;">
 				<hlayout>
 					<div 
@@ -102,7 +102,7 @@
 
 				<vlayout style="width:900px;" hflex="false"
 					spacing="5px">
-					<div
+					<div align="left"
 						style="padding:20px; width:800px; background-color:white;margin-bottom:25px; margin-left:200px;"
 						hflex="1">
 						<div>
@@ -217,7 +217,7 @@
 						</vlayout>
 					</div>
 
-					<div width="800px"
+					<div width="800px" align="left"
 						style="padding:20px; background-color:white;margin-bottom:25px; margin-left:200px;"
 						hflex="1">
 						<div>
@@ -351,7 +351,7 @@
 						</vlayout>
 					</div>
 
-					<div width="700px"
+					<div width="700px" align="left"
 						style="padding:20px; background-color:white;margin-bottom:25px; margin-left:200px;"
 						hflex="1">
 						<div>
@@ -575,8 +575,8 @@
 			</div>
 		</window>
 		
-		<div align="left">
-		<div width="700px;"
+		<div align="center">
+		<div width="700px;" align="left"
 			style="margin-left:120px; margin-bottom:50px; background-color: white;padding:20px;">
 			<hlayout>
 				<label value="Interesses " style="font-size:16px;" />
