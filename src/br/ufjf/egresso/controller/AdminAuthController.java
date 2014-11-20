@@ -8,7 +8,9 @@ import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.util.Initiator;
 
 public class AdminAuthController implements Initiator {
-
+/**
+ * Redireciona para a página index.zul
+ */
 	@Override
 	public void doInit(Page page, Map<String, Object> args) throws Exception {
 		if (Sessions.getCurrent()

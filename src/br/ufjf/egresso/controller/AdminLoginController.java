@@ -8,9 +8,22 @@ import org.zkoss.zul.Messagebox;
 
 import br.ufjf.egresso.business.AdministradorBusiness;
 import br.ufjf.egresso.model.Administrador;
-
+/**
+ * Classe para controlar a página de login
+ * @author Eduardo Rocha Soares
+ *
+ */
 public class AdminLoginController {
-
+	/**
+	 * Recebe identificador e senha e faz uma busca no banco de dados
+	 * para verificar se os dados estão corretos, caso estejam
+	 * é redirecionado para página gerencia-alunos.zul
+	 , caso contrário é exibida uma mensagem de erro
+	 * @param identificador
+	 * 	Identificador do {@link Administrador} para fazer login
+	 * @param senha
+	 *    Senha do {@link Administrador} para fazer login
+	 */
 	@Command
 	public void entrar(@BindingParam("identificador") String identificador,
 			@BindingParam("senha") String senha) {
