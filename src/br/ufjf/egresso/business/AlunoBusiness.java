@@ -13,7 +13,7 @@ import br.ufjf.egresso.persistent.AlunoDAO;
 /**
  * Classe para intermediar o acesso às informações da classe {@link Aluno}.
  * 
- * @author Jorge Augusto da Silva Moreira, Thiago Goldoni, Thiago Rizuti
+ * @author Jorge Augusto da Silva Moreira, Thiago Goldoni, Thiago Rizuti, Eduardo Soares
  * 
  */
 public class AlunoBusiness {
@@ -187,15 +187,31 @@ public class AlunoBusiness {
 	public List<Aluno> getAlunos(Turma turma) {
 		return alunoDao.getAlunos(turma);
 	}
-
+	/**
+	 * Retorna os {@link Aluno}s do banco
+	 * @return {@link true} se houver sucesso ; {@link false} se falhar
+	 */
 	public List<Aluno> getAlunos() {
 		return alunoDao.getAlunos();
 	}
-
+	/**
+	 * Salva ou edita um {@link Aluno} no banco, depende se já 
+	 * existe ou não um registro desse {@link Aluno} no banco.
+	 * @param aluno 
+	 * 		Aluno a ser salvo ou editado no banco
+	 * @return {@link true} se houver sucesso ; {@link false} se falhar
+	 */
 	public boolean salvaOuEdita(Aluno aluno) {
 		return alunoDao.salvaOuEdita(aluno);
 	}
-
+/**
+ * 
+ * @param turma
+ * 			Turma dos {@link Aluno}s a serem obtidos
+ * @param curso
+ * 			Curso dos {@link Aluno}s a serem obtidos
+ * @return {@link List} de {@link Aluno}s 
+ */
 	public List<Aluno> getAlunosCurso(Turma turma, Curso curso) {
 		return alunoDao.getAlunosCurso(turma, curso);
 	}

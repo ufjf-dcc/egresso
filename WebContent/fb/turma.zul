@@ -109,7 +109,7 @@
 
 
 
-			<hlayout style="width:100%;margin-right:-30%;">
+			<hlayout style="width:100%;margin-right:-50%;">
 				<vlayout style="color:white; width:100%;">
 			    
 					<label style="font-size:12px;"/>

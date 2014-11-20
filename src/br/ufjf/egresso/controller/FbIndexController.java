@@ -21,9 +21,22 @@ import facebook4j.Facebook;
 import facebook4j.FacebookFactory;
 import facebook4j.PictureSize;
 import facebook4j.auth.AccessToken;
-
+/**
+ * Classe que controla a página index.zul
+ * @author Eduardo Rocha Soares, Jorge Moreira da Silva
+ *
+ */
 public class FbIndexController {
-
+	/**
+	 * Faz a autenticação do aluno que está tentando acessar 
+	 * o aplicativo, se a autenticação for bem sucedida , redireciona
+	 * para a página inicial do aplicativo, se não for encontrado
+	 * registro no banco é direcionado para página de cadastro
+	 * @throws HibernateException
+	 * 	Lança uma exceção se não conseguir realizar
+	 *  a consulta no banco de dados
+	 * @throws Exception
+	 */
 	@Init
 	public void autentica() throws HibernateException, Exception {
 

@@ -10,7 +10,10 @@ import org.zkoss.zk.ui.util.Initiator;
 import br.ufjf.egresso.utils.ConfHandler;
 
 public class FbAuthController implements Initiator {
-
+	/**
+	 * Redireciona para página inicial 
+	 * do aplicativo no Facebook
+	 */
 	@Override
 	public void doInit(Page page, Map<String, Object> args) throws Exception {
 		if (Sessions.getCurrent()

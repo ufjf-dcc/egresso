@@ -11,19 +11,21 @@ import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
-import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
 import br.ufjf.egresso.business.AlunoBusiness;
-import br.ufjf.egresso.business.CursoBusiness;
 import br.ufjf.egresso.business.TurmaBusiness;
 import br.ufjf.egresso.model.Administrador;
 import br.ufjf.egresso.model.Aluno;
 import br.ufjf.egresso.model.Turma;
-
+/**
+ * Classe que controla a página de gerencia-alunos.zul
+ * @author Eduardo Rocha Soares, Jorge Moreira da Silva
+ *
+ */
 public class AdminAlunosController {
 	private AlunoBusiness alunoBusiness = new AlunoBusiness();
 	private Map<Integer, Aluno> editTemp = new HashMap<Integer, Aluno>();
@@ -144,7 +146,16 @@ public class AdminAlunosController {
 	public List<Turma> getTurmas() {
 		return turmas;
 	}
-
+	/**
+	 * Valida os dados do novo {@link Aluno} e 
+	 * envia para ser salvo no banco
+	 * @param window 
+	 *  Janela que contém os campos de informação do {@link Aluno}
+	 * @param sem
+	 * 	Semestre de ingresso do {@link Aluno}
+	 * @param ano
+	 * 	Ano de ingresso do {@link Aluno}
+	 */
 	@Command
 	public void submitAluno(@BindingParam("window") Window window,
 			@BindingParam("semestre") int sem, @BindingParam("ano") String ano) {
@@ -187,20 +198,28 @@ public class AdminAlunosController {
 		}
 
 	}
-
+/**
+ * Invoca a janela de adição de {@link Aluno}s
+ * @param window
+ * Janela na qual são inseridos os dados do {@link Aluno} a ser cadastrado
+ */
 	@Command
 	public void addAluno(@BindingParam("window") Window window) {
 		this.limpa();
 		window.doModal();
-		System.out.println("asa");
-
 	}
-
+		/**
+		 * Limpa os campos de adicionar novo aluno
+		 */
 	public void limpa() {
 		novoAluno = new Aluno();
 		BindUtils.postNotifyChange(null, null, this, "novoAluno");
 	}
-
+	/**
+	 * Habilita a edição de {@link Aluno} deixando o template editável
+	 * @param aluno
+	 *  Aluno que está sendo editado
+	 */
 	@Command
 	public void changeEditableStatus(@BindingParam("aluno") Aluno aluno) {
 		if (!aluno.getEditingStatus()) {
@@ -215,7 +234,12 @@ public class AdminAlunosController {
 		}
 		refreshRowTemplate(aluno);
 	}
-
+	/**
+	 * Valida a edição do {@link Aluno} e realiza a edição chamando
+	 * as funções que lidam com o banco de dados
+	 * @param aluno
+	 * {@link Aluno} que está sendo validado
+	 */
 	@Command
 	public void confirm(@BindingParam("aluno") Aluno aluno) {
 		if (alunoBusiness.validar(aluno, editTemp.get(aluno.getId())
@@ -234,7 +258,11 @@ public class AdminAlunosController {
 					Messagebox.OK, Messagebox.ERROR);
 		}
 	}
-
+	/**
+	 * Muda o estado de um aluno para ativado ou desativado
+	 * @param aluno
+	 * {@link Aluno} o qual está alterando o estado para ativo ou desativado
+	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Command
 	public void alterarEstado(@BindingParam("aluno") final Aluno aluno) {
@@ -276,17 +304,30 @@ public class AdminAlunosController {
 				});
 
 	}
-
+	/**
+	 * Remove um {@link Aluno} da {@link List}
+	 * @param aluno
+	 *  {@link Aluno} a ser removido
+	 */
 	public void removeFromList(Aluno aluno) {
 		filterAlunos.remove(aluno);
 		todosAlunos.remove(aluno);
 		notifyAlunos();
 	}
-
+	/**
+	 * Quando ocorre a edição de informações de algum aluno
+	 * esse método é chamado para notificar o ZK dessa alteração feita.
+	 * @param aluno
+	 * {@link Aluno} cujas informações foram editadas
+	 */
 	public void refreshRowTemplate(Aluno aluno) {
 		BindUtils.postNotifyChange(null, null, aluno, "editingStatus");
 	}
-
+	/**
+	 * Faz um filtro na {@link List} de {@link Aluno}s 
+	 * mediante uma string de busca por nome e notifica o zk
+	 * para atualizar o template de alunos
+	 */
 	@Command
 	public void filtra() {
 		filterAlunos = new ArrayList<Aluno>();
@@ -299,7 +340,9 @@ public class AdminAlunosController {
 		}
 		notifyAlunos();
 	}
-
+	/**
+	 * Notifica mudança na {@link List} de {@link Aluno}s mediante uma string de pesquisa.
+	 */
 	public void notifyAlunos() {
 		BindUtils.postNotifyChange(null, null, this, "filterAlunos");
 	}

@@ -1,3 +1,4 @@
+
 package br.ufjf.egresso.controller;
 
 import java.util.ArrayList;
@@ -27,7 +28,11 @@ import br.ufjf.egresso.model.Atuacao;
 import br.ufjf.egresso.model.Interesse;
 import br.ufjf.egresso.model.TipoAtuacao;
 import br.ufjf.egresso.persistent.TipoAtuacaoDAO;
-
+/**
+ * Classe responsável por controlar a página de perfil
+ * @author Eduardo Rocha Soares
+ *
+ */
 public class FbPerfilController {
 
 	private Aluno aluno;
@@ -92,7 +97,21 @@ public class FbPerfilController {
 		filtraProjetos = projetos;
 		filtraFormacoes = formacoes;
 	}
-
+/**
+ * Permite editar uma atuação do aluno, seja qual tipo for
+ * @param lbSalvarEditar
+ * 	label que habilita a edição de atuação
+ * @param v1
+ * 	vlayout onde estão contidos os dados não editáveis , 
+ * ficará invisível no momento de edição
+ * @param v2
+ * vlayout onde contém os campos editáveis, 
+ * ficará visível quando tiver em edição
+ * @param lbCancelar
+ * 	label que permite o usuário cancelar a edição
+ * @param atuacao
+ * 		{@link Atuacao} que está sendo editada.
+ */
 	@Command
 	public void editarAtuacao(
 			@BindingParam("editarSalvar") Label lbSalvarEditar,
@@ -120,7 +139,20 @@ public class FbPerfilController {
 		emEdicao = lbCancelar.isVisible();
 		BindUtils.postNotifyChange(null, null, this, "emEdicao");
 	}
-
+	/**
+	 * Cancela a edição de uma atuação
+	 * @param lbSalvarEditar
+	 * 	label que permite editar e salvar,
+	 *  ficará visível se a edição for cancelada
+	 * @param lbCancelar
+	 * 	label para cancelar edição, irá ficar invisível após execução do método
+	 * @param v1
+	 * 	vlayout com dados não editáveis, ficará visível 
+	 * se a edição for cancelada
+	 * @param v2
+	 * vlayout com dados editáveis,
+	 *  ficará invisível se a edição for cancelada
+	 */
 	@Command
 	public void cancelarEdicao(
 			@BindingParam("editarSalvar") Label lbSalvarEditar,
@@ -137,7 +169,13 @@ public class FbPerfilController {
 		emEdicao = false;
 		BindUtils.postNotifyChange(null, null, this, "emEdicao");
 	}
-
+/**
+ * Marca a atuação como uma atuação atual
+ * @param atual
+ * campo booleano proveniente do checkbox que determina se a atuação 
+ * é o nãoa tual
+ * @param datebox
+ */
 	@Command
 	public void marcarAtual(@BindingParam("atual") boolean atual,
 			@BindingParam("datebox") Datebox datebox) {
@@ -259,7 +297,10 @@ public class FbPerfilController {
 		}
 		BindUtils.postNotifyChange(null, null, this, "filtraEmpregos");
 	}
-
+/**
+ * Faz uma pesquisa dentre todos os projetos aquele que pertence
+ * a determinado {@link Aluno} cujo perfil está sendo acessado.
+ */
 	@Command
 	public void filtraProjetos() {
 		filtraProjetos = new ArrayList<Atuacao>();
@@ -302,7 +343,12 @@ public class FbPerfilController {
 		BindUtils.postNotifyChange(null, null, this, "img");
 
 	}
-
+/**
+ * Determina de qual tipo é a {@link Atuacao} que está sendo adicionada
+ * @param window
+ * Janela que contém as informações referentes a nova {@link Atuacao}s
+ * @param tipo
+ */
 	@Command
 	public void adicionaAtuacao(@BindingParam("window") Window window,
 			@BindingParam("tipo") int tipo) {
@@ -314,13 +360,21 @@ public class FbPerfilController {
 			}
 		window.doModal();
 	}
-
+/**
+ * Volta para página de turmas
+ */
 	@Command
 	public void voltaTurma() {
 
 		Clients.evalJavaScript("volta()");
 	}
-
+/**
+ * Envia a atuação para ser salva no banco de dados, emite uma mensagem
+ * ao usuário se não for possível salvar a atuação e valida os dados
+ * dessa atuação
+ * @param window
+ * Janela que contém as informações da atuação que está sendo adicionada
+  */
 	@Command
 	public void submitAtuacao(@BindingParam("window") final Window window) {
 		novaAtuacao.setAluno(aluno);
@@ -360,34 +414,50 @@ public class FbPerfilController {
 		}
 		window.setVisible(false);
 	}
-
+	/**
+	 * Limpa os campos da nova {@link Atuacao} que será adicionada
+	 */
 	public void limpaAtuacao() {
 		novaAtuacao = new Atuacao();
 		BindUtils.postNotifyChange(null, null, this, "novaAtuacao");
 	}
-
+	/**
+	 * Limpa os campos do nova {@link Interesse} que será adicionado
+	 */
 	public void limpaInteresse() {
 		novoInteresse = new Interesse();
 		BindUtils.postNotifyChange(null, null, this, "novoInteresse");
 
 	}
-
+	/**
+	 * Notifica alteração no template de empregos
+	 */
 	public void notificaEmpregos() {
 		BindUtils.postNotifyChange(null, null, this, "filtraEmpregos");
 	}
-
+	/**
+	 * Notifica alteração no template de interesses.
+	 */
 	public void notificaInteresses() {
 		BindUtils.postNotifyChange(null, null, this, "interesses");
 	}
-
+	/**
+	 * Notifica alteração no template de formações
+	 */
 	public void notificaFormacoes() {
 		BindUtils.postNotifyChange(null, null, this, "filtraFormacoes");
 	}
-
+	/**
+	 * Notifica alteração no template de projetos
+	 */
 	public void notificaProjetos() {
 		BindUtils.postNotifyChange(null, null, this, "filtraProjetos");
 	}
-
+	/**
+	 * remove uma {@link Atuacao} da {@link Lista} 
+	 * @param atuacao
+	 * {@link Atuacao} que será removida
+	 */
 	public void removeFromList(Atuacao atuacao) {
 		switch (atuacao.getTipoAtuacao().getId()) {
 		case TipoAtuacao.EMPREGO:
@@ -409,7 +479,11 @@ public class FbPerfilController {
 			System.out.println("ID inválido de Atuação!.");
 		}
 	}
-
+/**
+ * Faz a exclusão de uma atuação do banco de dados
+ * @param atuacao
+ * {@link Atuacao} a ser excluída
+ */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Command
 	public void excluirAtuacao(@BindingParam("atuacao") final Atuacao atuacao) {
@@ -451,7 +525,14 @@ public class FbPerfilController {
 					}
 				});
 	}
-
+/**
+ * Se o checkbox de {@link Atuacao} atual estiver desmarcado
+ * habilita o campo de data de término da {@link Atuacao}
+ * @param checkbox
+ * CHeckbox que determina se é {@link Atuacao} atual ou não
+ * @param datebox
+ * Campo de data que será habilitado, caso o checkbox esteja desmarcado
+ */
 	@Command
 	public void dataTermino(@BindingParam("checkbox") Checkbox checkbox,
 			@BindingParam("datebox") Datebox datebox) {
@@ -459,13 +540,22 @@ public class FbPerfilController {
 		if (checkbox.isChecked())
 			datebox.setValue(null);
 	}
-
+	/**
+	 * Invoca a janela com os campos para adicionar novo interesse
+	 * @param window
+	 * Janela que contém os campos de informaçṍes para {@link Interesse}
+	 */
 	@Command
 	public void adicionaInteresses(@BindingParam("window") Window window) {
 		this.limpaInteresse();
 		window.doModal();
 	}
-
+	/**
+	 * Envia um {@link Interesse} para ser salvo no banco de dados
+	 * @param window
+	 * Janela com os campos de  informações do novo {@link Interesse}
+	 * 
+	 */
 	@Command
 	public void submitInteresses(@BindingParam("window") Window window) {
 		novoInteresse.setAluno(aluno);
@@ -476,7 +566,11 @@ public class FbPerfilController {
 		this.limpaInteresse();
 
 	}
-
+	/**
+	 * Exclui um interesse determinado
+	 * @param interesse
+	 * Interesse a ser excluído
+	 */
 	@Command
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void excluirInteresses(
@@ -503,7 +597,20 @@ public class FbPerfilController {
 				});
 
 	}
-
+	/**
+	 * Permite editar um Interesse do aluno, seja qual tipo for
+	 * @param lbSalvarEditar
+	 * 	label que habilita a edição de Interesse
+	 * @param v1
+	 * 	vlayout onde estão contidos os dados não editáveis , 
+	 * ficará invisível no momento de edição
+	 * @param v2
+	 * vlayout onde contém os campos editáveis, 
+	 * ficará visível quando tiver em edição
+	 * @param lbCancelar
+	 * 	label que permite o usuário cancelar a edição
+	
+	 */
 	@Command
 	public void editarInteresse(
 			@BindingParam("editarSalvar") Label lbSalvarEditar,
@@ -529,7 +636,21 @@ public class FbPerfilController {
 		emEdicao = lbCancelar.isVisible();
 		BindUtils.postNotifyChange(null, null, this, "emEdicao");
 	}
-
+	
+	/**
+	 * Cancela a edição de um Interesse
+	 * @param lbSalvarEditar
+	 * 	label que permite editar e salvar,
+	 *  ficará visível se a edição for cancelada
+	 * @param lbCancelar
+	 * 	label para cancelar edição, irá ficar invisível após execução do método
+	 * @param v1
+	 * 	vlayout com dados não editáveis, ficará visível 
+	 * se a edição for cancelada
+	 * @param v2
+	 * vlayout com dados editáveis,
+	 *  ficará invisível se a edição for cancelada
+	 */
 	@Command
 	public void cancelarEdicaoInteresse(
 			@BindingParam("editarSalvar") Label lbSalvarEditar,

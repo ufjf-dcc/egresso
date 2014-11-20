@@ -64,7 +64,7 @@
 				</div>
 
 				<div
-					style="width:100%;margin-top:5px;margin-bottom:5px;margin-right:-100%;">
+					style="width:100%;margin-top:5px;margin-bottom:5px;margin-right:-180%;">
 					<textbox id="txtpesquisa" class="pesquisa"
 						placeholder="Pesquisar aluno" onOK="@command('pesquisarTodos')"
 						value="@bind(vm.pesquisa)" />

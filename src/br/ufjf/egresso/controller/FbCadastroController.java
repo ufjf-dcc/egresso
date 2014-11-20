@@ -1,17 +1,10 @@
 package br.ufjf.egresso.controller;
-
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.math.BigInteger;
-import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
@@ -20,7 +13,6 @@ import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Messagebox;
-
 import br.ufjf.egresso.business.AlunoBusiness;
 import br.ufjf.egresso.business.CursoBusiness;
 import br.ufjf.egresso.business.TurmaBusiness;
@@ -42,7 +34,7 @@ import facebook4j.PictureSize;
 /**
  * Classe para controlar a página /fb/cadasro.zul
  * 
- * @author Jorge Augusto da Silva Moreira
+ * @author Jorge Augusto da Silva Moreira, Eduardo Rocha Soares
  * **/
 public class FbCadastroController {
 
@@ -247,7 +239,14 @@ public class FbCadastroController {
 			Messagebox.show("É necessário informar seu CPF.", "Erro",
 					Messagebox.OK, Messagebox.ERROR);
 	}
-
+	/**
+	 * Valida a turma informada , se não for válida 
+	 * emite um erro
+	 * @param ano
+	 * 	ano da {@link Turma} informada
+	 * @param semestre
+	 * 	semestre da  {@link Turma} informada
+	 */
 	@Command
 	public void checarTurma(@BindingParam("ano") String ano,
 			@BindingParam("semestre") int semestre) {
@@ -269,7 +268,10 @@ public class FbCadastroController {
 			}
 		}
 	}
-
+	/**
+	 * Salva o aluno no banco, se falhar emite 
+	 * uma mensagem de erro
+	 */
 	@Command
 	public void cadastrar() {
 		if (!new AlunoBusiness().salvaOuEdita(aluno))
@@ -293,7 +295,12 @@ public class FbCadastroController {
 		}
 
 	}
-
+	/**
+	 *Método que retorna o código md5 de uma senha passada 
+	 * @param input
+	 * Senha a ser criptografada em md5
+	 * @return senha em md5
+	 */
 	public static String md5(String input) {
 
 		String md5 = null;

@@ -10,7 +10,7 @@ import br.ufjf.egresso.persistent.PostagemDAO;
 /**
  * Classe para intermediar o acesso às informações da classe {@link Postagem}.
  * 
- * @author Jorge Augusto da Silva Moreira
+ * @author Jorge Augusto da Silva Moreira, Eduardo Rocha Soares
  * 
  */
 public class PostagemBusiness {
