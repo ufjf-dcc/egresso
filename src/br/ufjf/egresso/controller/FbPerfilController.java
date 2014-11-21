@@ -379,7 +379,12 @@ public class FbPerfilController {
 	public void submitAtuacao(@BindingParam("window") final Window window) {
 		novaAtuacao.setAluno(aluno);
 		if (atuacaoBusiness.validar(novaAtuacao)) {
+			
 			if (atuacaoBusiness.salvar(novaAtuacao)) {
+				if(novaAtuacao.getDataTermino() == null){
+					aluno.setAtuacao(novaAtuacao);
+					new AlunoBusiness().editar(aluno);
+				}
 				switch (novaAtuacao.getTipoAtuacao().getId()) {
 				case TipoAtuacao.EMPREGO:
 					empregos.add(novaAtuacao);
@@ -412,6 +417,7 @@ public class FbPerfilController {
 			Messagebox.show(errorMessage, "Dados insuficientes / inválidos",
 					Messagebox.OK, Messagebox.ERROR);
 		}
+		BindUtils.postNotifyChange(null,null, null, "aluno");
 		window.setVisible(false);
 	}
 	/**
@@ -493,6 +499,7 @@ public class FbPerfilController {
 				new org.zkoss.zk.ui.event.EventListener() {
 					public void onEvent(Event e) {
 						if (Messagebox.ON_OK.equals(e.getName())) {
+							if(aluno.getAtuacao()!=null){
 							if (atuacao.getCargo().equals(
 									aluno.getAtuacao().getCargo())
 									&& atuacao.getTipoAtuacao()
@@ -510,6 +517,7 @@ public class FbPerfilController {
 								aluno.setAtuacao(null);
 								new AlunoBusiness().editar(aluno);
 							}
+						}
 							if (atuacaoBusiness.exclui(atuacao)) {
 								removeFromList(atuacao);
 

@@ -9,8 +9,10 @@
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js" />
 	<script type="text/javascript" src="/jquery.tokeninput.js" />
 	<script type="text/javascript">
+
 		
 		<![CDATA[ function volta(){ location.href="turma.zul"; } ]]>
+		
 		
 	</script>
 	<div apply="org.zkoss.bind.BindComposer" width="100%" align="center"
@@ -29,61 +31,67 @@
 						value="Voltar para turma" onClick="@command('voltaTurma')" />
 
 				</div>
-				
+
 
 			</hlayout>
 		</div>
 
 		<div align="center" style="margin-left:-80px;">
 			<vlayout>
-			<div align="left"
-				style="background-color: white;margin-left: 200px; margin-top:20px; margin-bottom:25px;width: 700px;padding: 20px;height:250px;">
-				<hlayout>
-					<div 
-						style="width: 160px; height: 200px;margin-right:10px; overflow:hidden;">
-						<image src="@load(vm.aluno.urlFoto)"
-							 />
-					</div>
-					<vlayout style="color:black; margin:10px;">
-						<label style="font-size:20px;"
-						    	value="@load(vm.aluno.nome)" />
-						<label
-							value="@load('Turma do '.concat(vm.aluno.turma.semestre).concat('° ').concat('semestre do ano de ').concat(vm.aluno.turma.ano).concat('.'))" />
+				<div align="left"
+					style="background-color: white;margin-left: 200px; margin-top:20px; margin-bottom:25px;width: 700px;padding: 20px;height:250px;">
+					<hlayout>
+						<div
+							style="width: 160px; height: 200px;margin-right:10px; overflow:hidden;">
+							<image src="@load(vm.aluno.urlFoto)" />
+						</div>
+						<vlayout style="color:black; margin:10px;">
+							<label style="font-size:20px;"
+								value="@load(vm.aluno.nome)" />
 							<label
-							value="@load(vm.aluno.curso.curso)" />
-							
-						<html>
+								value="@load('Turma do '.concat(vm.aluno.turma.semestre).concat('° ').concat('semestre do ano de ').concat(vm.aluno.turma.ano).concat('.'))" />
+							<label value="@load(vm.aluno.curso.curso)" />
 
+							<html>
+
+
+								
+								<![CDATA[ <hr style="border-top: dashed
+								1px; border-color: white;
+								margin-bottom:5px; margin-top:5px;
+								border-bottom: none" />]]>
+								
 							
-							<![CDATA[ <hr style="border-top: dashed 1px;
-							border-color: white; margin-bottom:5px;
-							margin-top:5px; border-bottom: none" />]]>
+						
+					</html>
+							<vlayout visible="@load(vm.aluno.atuacao ne null)">
+								<label value="Atuação atual"
+									style="font-size:13px" />
+
+								<label sclass="cargo"
+									value="@load(vm.aluno.atuacao.cargo)" />
+								<label sclass="local"
+									value="@load(vm.aluno.atuacao.local)" />
+								<div>
+									<label sclass="data_atuacao"
+										value="Desde " />
+									<label sclass="data_atuacao"
+										value="@load(''.concat(vm.aluno.atuacao.dataInicio)) @converter('br.ufjf.egresso.utils.DateFormatConverter')" />
+								</div>
+							</vlayout>
+							<html>
+
+
+								
+								<![CDATA[ <hr style="border-top: dashed
+								1px; border-color: white;
+								margin-bottom:5px; margin-top:5px;
+								border-bottom: none" />]]>
+								
 							
 						
 					</html>
 
-						<label value="Atuação atual"
-							style="font-size:13px" />
-
-						<label sclass="cargo"
-							value="@load(vm.atuacaoAtual.cargo)" />
-						<label sclass="local"
-							value="@load(vm.atuacaoAtual.local)" />
-						<div>
-							<label sclass="data_atuacao" value="Desde " />
-							<label sclass="data_atuacao"
-								value="@load(''.concat(vm.atuacaoAtual.dataInicio)) @converter('br.ufjf.egresso.utils.DateFormatConverter')" />
-						</div>
-
-						<html>
-
-							
-							<![CDATA[ <hr style="border-top: dashed 1px;
-							border-color: white; margin-bottom:5px;
-							margin-top:5px; border-bottom: none" />]]>
-							
-						
-					</html>
 
 
 
@@ -92,400 +100,434 @@
 
 
 
-
-					</vlayout>
-				
-				</hlayout>
-
-			</div>
-			<vlayout hflex="1">
-
-				<vlayout style="width:900px;" hflex="false"
-					spacing="5px">
-					<div align="left"
-						style="padding:20px; width:800px; background-color:white;margin-bottom:25px; margin-left:200px;"
-						hflex="1">
-						<div>
-							<label value="Empregos" class="cabecalho" />
-							<label
-								style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:5px"
-								value="Adicionar..." visible="@load(vm.podeEditar)"
-								onClick="@command('adicionaAtuacao', window=adicionaAtuacao, tipo=3)" />
-						</div>
-						<html>
-
-							
-							<![CDATA[ <hr style="border-top: dashed 1px;
-							border-color: #c0504d; margin-top:10px;
-							border-bottom: none" />]]>
-							
-							
-						</html>
-						<vlayout children="@load(vm.filtraEmpregos)"
-							width="700px">
-
-							<template name="children" var="atuacao">
-								<vlayout width="640px;"
-									style="margin-top: 20px">
-									<vlayout>
-										<label sclass="cargo"
-											value="@load(atuacao.cargo)" />
-										<label sclass="local"
-											value="@load(atuacao.local)" />
-										<div>
-											<label sclass="data_atuacao"
-												value="De: " />
-											<label sclass="data_atuacao"
-												value="@load(''.concat(atuacao.dataInicio)) @converter('br.ufjf.egresso.utils.DateFormatConverter')" />
-										</div>
-										<div>
-											<label sclass="data_atuacao"
-												value="@load(atuacao.dataTermino ne null ? 'Até: ' : 'Atual')" />
-											<label sclass="data_atuacao"
-												visible="@load(atuacao.dataTermino ne null)"
-												value="@load(''.concat(atuacao.dataTermino)) @converter('br.ufjf.egresso.utils.DateFormatConverter')" />
-										</div>
-										<div
-											visible="@load(atuacao.descricao ne null and atuacao.descricao ne '')">
-											<label value="Descricao:" />
-
-										</div>
-
-										<label visible="true"
-											value="@load(atuacao.descricao)" />
-
-									</vlayout>
-									<vlayout visible="false">
-										<hlayout>
-											<label sclass="cargo"
-												value="Cargo: " />
-											<textbox
-												value="@bind(vm.atuacaoEmEdicao.cargo)" />
-										</hlayout>
-										<hlayout>
-											<label sclass="local"
-												value="Local: " />
-											<textbox
-												value="@bind(vm.atuacaoEmEdicao.local)" />
-										</hlayout>
-										<hlayout>
-											<label sclass="data_atuacao"
-												value="De:" />
-											<datebox format="dd/MM/yyyy"
-												value="@bind(vm.atuacaoEmEdicao.dataInicio)" />
-										</hlayout>
-										<hlayout>
-											<label sclass="data_atuacao"
-												value="Até :" />
-											<datebox format="dd/MM/yyyy"
-												value="@bind(vm.atuacaoEmEdicao.dataTermino)"
-												disabled="@load(not self.nextSibling.checked)" />
-											<checkbox label="Atual"
-												checked="@load(vm.atuacaoEmEdicao.dataTermino eq null)"
-												onCheck="@command('marcarAtual', atual = self.checked, datebox = self.previousSibling)" />
-										</hlayout>
-
-										<vlayout>
-											<label sclass="data_atuacao"
-												value="Descricao:" />
-
-											<textbox width="100%"
-												value="@bind(vm.atuacaoEmEdicao.descricao)" rows="4"
-												maxlength="300" />
-										</vlayout>
-
-									</vlayout>
-									<div class="editar_exp" hflex="1"
-										visible="@load(vm.podeEditar and (not vm.emEdicao or (vm.emEdicao and atuacao.id eq vm.atuacaoEmEdicao.id)))">
-
-										<label
-											style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:5px"
-											value="Editar" visible="@load(vm.podeEditar)"
-											onClick="@command('editarAtuacao',editarSalvar=self,sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling, cancelar=self.nextSibling, atuacao=atuacao)" />
-										<label visible="false"
-											style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:5px"
-											value="Cancelar"
-											onClick="@command('cancelarEdicao', editarSalvar=self.previousSibling, cancelar=self, sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling)" />
-
-										<label
-											style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:5px"
-											value="	Excluir" visible="@load(vm.podeEditar)"
-											onClick="@command('excluirAtuacao', atuacao=atuacao)" />
-									</div>
-								</vlayout>
-							</template>
 						</vlayout>
-					</div>
 
-					<div width="800px" align="left"
-						style="padding:20px; background-color:white;margin-bottom:25px; margin-left:200px;"
-						hflex="1">
-						<div>
-							<label value="Formação" class="cabecalho" />
-							<label
-								style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:5px"
-								value="Adicionar..." visible="@load(vm.podeEditar)"
-								onClick="@command('adicionaAtuacao', window=adicionaAtuacao, tipo=1)" />
-						</div>
-						<html>
+					</hlayout>
 
+				</div>
+				<vlayout hflex="1">
 
-
-
-
-
-
-
-
+					<vlayout style="width:900px; overflow:visible;"
+						hflex="false" spacing="5px">
+						<div align="left"
+							style="padding:20px; width:800px; background-color:white;margin-bottom:25px; margin-left:200px;"
+							hflex="1">
+							<div>
+								<label value="Empregos"
+									class="cabecalho" />
+								<label
+									style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:5px"
+									value="Adicionar..." visible="@load(vm.podeEditar)"
+									onClick="@command('adicionaAtuacao', window=adicionaAtuacao, tipo=3)" />
+							</div>
+							<html>
 
 
-
-							
-							<![CDATA[ <hr style="border-top: dashed 1px;
-							border-color: #c0504d; margin-top:10px;
-							border-bottom: none" />]]>
-							
-							
-							
-							
-							
-							
-							
-							
-							
-							
-							
+								
+								<![CDATA[ <hr style="border-top: dashed
+								1px; border-color: #c0504d;
+								margin-top:10px; border-bottom: none"
+								/>]]>
+								
 							
 							
 						</html>
-						<vlayout children="@load(vm.filtraFormacoes)"
-							style="width:700px;">
+							<vlayout children="@load(vm.filtraEmpregos)"
+								width="700px">
 
-							<template name="children" var="atuacao">
-								<vlayout
-									style="margin-top: 20px;width: 640px;">
-									<vlayout>
-										<label sclass="cargo"
-											value="@load(atuacao.cargo)" />
-										<label sclass="local"
-											value="@load(atuacao.local)" />
-										<div>
-											<label sclass="data_atuacao"
-												value="De: " />
-											<label sclass="data_atuacao"
-												value="@load(''.concat(atuacao.dataInicio)) @converter('br.ufjf.egresso.utils.DateFormatConverter')" />
-										</div>
-										<div>
-											<label sclass="data_atuacao"
-												value="@load(atuacao.dataTermino ne null ? 'Até: ' : 'Atual')" />
-											<label sclass="data_atuacao"
-												visible="@load(atuacao.dataTermino ne null)"
-												value="@load(''.concat(atuacao.dataTermino)) @converter('br.ufjf.egresso.utils.DateFormatConverter')" />
-										</div>
-										<div
-											visible="@load(atuacao.descricao ne null and atuacao.descricao ne '')">
-											<label sclass="data_atuacao"
-												value="Descricao:" />
-
-										</div>
-
-										<label visible="true"
-											value="@load(atuacao.descricao)" />
-
-									</vlayout>
-									<vlayout visible="false">
-										<hlayout>
-											<label sclass="cargo"
-												value="Formação: " />
-											<textbox
-												value="@bind(vm.atuacaoEmEdicao.cargo)" />
-										</hlayout>
-										<hlayout>
-											<label sclass="local"
-												value="Instituição: " />
-											<textbox
-												value="@bind(vm.atuacaoEmEdicao.local)" />
-										</hlayout>
-										<hlayout>
-											<label sclass="data_atuacao"
-												value="De:" />
-											<datebox format="dd/MM/yyyy"
-												value="@bind(vm.atuacaoEmEdicao.dataInicio)" />
-										</hlayout>
-										<hlayout>
-											<label sclass="data_atuacao"
-												value="Até :" />
-											<datebox format="dd/MM/yyyy"
-												value="@bind(vm.atuacaoEmEdicao.dataTermino)"
-												disabled="@load(not self.nextSibling.checked)" />
-											<checkbox label="Atual"
-												checked="@load(vm.atuacaoEmEdicao.dataTermino eq null)"
-												onCheck="@command('marcarAtual', atual = self.checked, datebox = self.previousSibling)" />
-										</hlayout>
+								<template name="children"
+									var="atuacao">
+									<vlayout width="640px;"
+										style="margin-top: 20px">
 										<vlayout>
-											<label sclass="data_atuacao"
-												value="Descricao:" />
-											<textbox width="100%"
-												value="@bind(vm.atuacaoEmEdicao.descricao)" rows="4"
-												maxlength="300" />
-										</vlayout>
-									</vlayout>
-									<div class="editar_exp" hflex="1"
-										visible="@load(vm.podeEditar and (not vm.emEdicao or (vm.emEdicao and atuacao.id eq vm.atuacaoEmEdicao.id)))">
-										<label
-											style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:5px"
-											value="Editar" visible="@load(vm.podeEditar)"
-											onClick="@command('editarAtuacao',editarSalvar=self,sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling, cancelar=self.nextSibling, atuacao=atuacao)" />
-										<label visible="false"
-											style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:5px"
-											value="Cancelar"
-											onClick="@command('cancelarEdicao', editarSalvar=self.previousSibling, cancelar=self, sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling)" />
-
-										<label
-											style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:5px"
-											value="	Excluir" visible="@load(vm.podeEditar)"
-											onClick="@command('excluirAtuacao', atuacao=atuacao)" />
-									</div>
-								</vlayout>
-							</template>
-						</vlayout>
-					</div>
-
-					<div width="700px" align="left"
-						style="padding:20px; background-color:white;margin-bottom:25px; margin-left:200px;"
-						hflex="1">
-						<div>
-							<label value="Projetos" class="cabecalho" />
-							<label
-								style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:5px"
-								value="Adicionar..." visible="@load(vm.podeEditar)"
-								onClick="@command('adicionaAtuacao', window=adicionaAtuacao, tipo=2)" />
-						</div>
-						<html>
-
-
-
-
-
-
-
-
-
-
-
-
-							
-							<![CDATA[ <hr style="border-top: dashed 1px;
-							border-color: #c0504d; margin-top:10px;
-							border-bottom: none" />]]>
-							
-							
-							
-							
-							
-							
-							
-							
-							
-							
-							
-							
-							
-						</html>
-						<vlayout children="@load(vm.filtraProjetos)"
-							width="700px;">
-							<template name="children" var="atuacao">
-								<vlayout width="640px;"
-									style="margin-top: 20px">
-									<vlayout>
-										<label sclass="cargo"
-											value="@load(atuacao.cargo)" />
-										<label sclass="local"
-											value="@load(atuacao.local)" />
-										<div>
-											<label sclass="data_atuacao"
-												value="De: " />
-											<label sclass="data_atuacao"
-												value="@load(''.concat(atuacao.dataInicio)) @converter('br.ufjf.egresso.utils.DateFormatConverter')" />
-										</div>
-										<div>
-											<label sclass="data_atuacao"
-												value="@load(atuacao.dataTermino ne null ? 'Até: ' : 'Atual')" />
-											<label sclass="data_atuacao"
-												visible="@load(atuacao.dataTermino ne null)"
-												value="@load(''.concat(atuacao.dataTermino)) @converter('br.ufjf.egresso.utils.DateFormatConverter')" />
-										</div>
-										<div
-											visible="@load(atuacao.descricao ne null and atuacao.descricao ne '')">
-											<label sclass="data_atuacao"
-												value="Descricao:" />
-
-										</div>
-
-										<label visible="true"
-											value="@load(atuacao.descricao)" />
-									</vlayout>
-									<vlayout visible="false">
-										<hlayout>
 											<label sclass="cargo"
-												value="Projeto: " />
-											<textbox hflex="1"
-												value="@bind(vm.atuacaoEmEdicao.cargo)" />
-										</hlayout>
-										<hlayout>
+												value="@load(atuacao.cargo)" />
+											<label sclass="local"
+												value="@load(atuacao.local)" />
+											<div>
+												<label
+													sclass="data_atuacao" value="De: " />
+												<label
+													sclass="data_atuacao"
+													value="@load(''.concat(atuacao.dataInicio)) @converter('br.ufjf.egresso.utils.DateFormatConverter')" />
+											</div>
+											<div>
+												<label
+													sclass="data_atuacao"
+													value="@load(atuacao.dataTermino ne null ? 'Até: ' : 'Atual')" />
+												<label
+													sclass="data_atuacao"
+													visible="@load(atuacao.dataTermino ne null)"
+													value="@load(''.concat(atuacao.dataTermino)) @converter('br.ufjf.egresso.utils.DateFormatConverter')" />
+											</div>
+											<div
+												visible="@load(atuacao.descricao ne null and atuacao.descricao ne '')">
+												<label
+													value="Descricao:" />
+
+											</div>
+
+											<label visible="true"
+												value="@load(atuacao.descricao)" />
+
+										</vlayout>
+										<vlayout visible="false">
+											<hlayout>
+												<label sclass="cargo"
+													value="Cargo: " />
+												<textbox
+													value="@bind(vm.atuacaoEmEdicao.cargo)" />
+											</hlayout>
+											<hlayout>
+												<label sclass="local"
+													value="Local: " />
+												<textbox
+													value="@bind(vm.atuacaoEmEdicao.local)" />
+											</hlayout>
+											<hlayout>
+												<label
+													sclass="data_atuacao" value="De:" />
+												<datebox
+													format="dd/MM/yyyy"
+													value="@bind(vm.atuacaoEmEdicao.dataInicio)" />
+											</hlayout>
+											<hlayout>
+												<label
+													sclass="data_atuacao" value="Até :" />
+												<datebox
+													format="dd/MM/yyyy"
+													value="@bind(vm.atuacaoEmEdicao.dataTermino)"
+													disabled="@load(not self.nextSibling.checked)" />
+												<checkbox label="Atual"
+													checked="@load(vm.atuacaoEmEdicao.dataTermino eq null)"
+													onCheck="@command('marcarAtual', atual = self.checked, datebox = self.previousSibling)" />
+											</hlayout>
+
+											<vlayout>
+												<label
+													sclass="data_atuacao" value="Descricao:" />
+
+												<textbox width="100%"
+													value="@bind(vm.atuacaoEmEdicao.descricao)" rows="4"
+													maxlength="300" />
+											</vlayout>
+
+										</vlayout>
+										<div class="editar_exp"
+											hflex="1"
+											visible="@load(vm.podeEditar and (not vm.emEdicao or (vm.emEdicao and atuacao.id eq vm.atuacaoEmEdicao.id)))">
+
 											<label
-												sclass="Local de desenvolvimento" value="Local: " />
-											<textbox hflex="1"
-												value="@bind(vm.atuacaoEmEdicao.local)" />
-										</hlayout>
-										<hlayout>
-											<label sclass="data_atuacao"
-												value="De:" />
-											<datebox format="dd/MM/yyyy"
-												hflex="1" value="@bind(vm.atuacaoEmEdicao.dataInicio)" />
-										</hlayout>
-										<hlayout>
-											<label sclass="data_atuacao"
-												value="Até :" />
-											<datebox format="dd/MM/yyyy"
-												hflex="1" value="@bind(vm.atuacaoEmEdicao.dataTermino)"
-												disabled="@load(not self.nextSibling.checked)" />
-											<checkbox label="Atual"
-												checked="@load(vm.atuacaoEmEdicao.dataTermino eq null)"
-												onCheck="@command('marcarAtual', atual = self.checked, datebox = self.previousSibling)" />
-										</hlayout>
-										<vlayout>
-											<label sclass="data_atuacao"
-												value="Descrição:" />
-											<textbox width="100%"
-												value="@bind(vm.atuacaoEmEdicao.descricao)" rows="4"
-												maxlength="300" />
-										</vlayout>
+												style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:5px"
+												value="Editar" visible="@load(vm.podeEditar)"
+												onClick="@command('editarAtuacao',editarSalvar=self,sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling, cancelar=self.nextSibling, atuacao=atuacao)" />
+											<label visible="false"
+												style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:5px"
+												value="Cancelar"
+												onClick="@command('cancelarEdicao', editarSalvar=self.previousSibling, cancelar=self, sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling)" />
 
+											<label
+												style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:5px"
+												value="	Excluir" visible="@load(vm.podeEditar)"
+												onClick="@command('excluirAtuacao', atuacao=atuacao)" />
+										</div>
 									</vlayout>
-									<div class="editar_exp" hflex="1"
-										visible="@load(vm.podeEditar and (not vm.emEdicao or (vm.emEdicao and atuacao.id eq vm.atuacaoEmEdicao.id)))">
-										<label
-											style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:5px"
-											value="Editar" visible="@load(vm.podeEditar)"
-											onClick="@command('editarAtuacao',editarSalvar=self,sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling, cancelar=self.nextSibling, atuacao=atuacao)" />
-										<label visible="false"
-											style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:5px"
-											value="Cancelar"
-											onClick="@command('cancelarEdicao', editarSalvar=self.previousSibling, cancelar=self, sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling)" />
+								</template>
+							</vlayout>
+						</div>
 
-										<label
-											style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:5px"
-											value="	Excluir" visible="@load(vm.podeEditar)"
-											onClick="@command('excluirAtuacao', atuacao=atuacao)" />
-									</div>
-								</vlayout>
-							</template>
-						</vlayout>
-					</div>
+						<div width="800px" align="left"
+							style="padding:20px; background-color:white;margin-bottom:25px; margin-left:200px;"
+							hflex="1">
+							<div>
+								<label value="Formação"
+									class="cabecalho" />
+								<label
+									style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:5px"
+									value="Adicionar..." visible="@load(vm.podeEditar)"
+									onClick="@command('adicionaAtuacao', window=adicionaAtuacao, tipo=1)" />
+							</div>
+							<html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+								
+								<![CDATA[ <hr style="border-top: dashed
+								1px; border-color: #c0504d;
+								margin-top:10px; border-bottom: none"
+								/>]]>
+								
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+						</html>
+							<vlayout
+								children="@load(vm.filtraFormacoes)"
+								style="overflow:visible;width:700px;">
+
+								<template name="children"
+									var="atuacao">
+									<vlayout
+										style="margin-top: 20px;width: 640px;">
+										<vlayout>
+											<label sclass="cargo"
+												value="@load(atuacao.cargo)" />
+											<label sclass="local"
+												value="@load(atuacao.local)" />
+											<div>
+												<label
+													sclass="data_atuacao" value="De: " />
+												<label
+													sclass="data_atuacao"
+													value="@load(''.concat(atuacao.dataInicio)) @converter('br.ufjf.egresso.utils.DateFormatConverter')" />
+											</div>
+											<div>
+												<label
+													sclass="data_atuacao"
+													value="@load(atuacao.dataTermino ne null ? 'Até: ' : 'Atual')" />
+												<label
+													sclass="data_atuacao"
+													visible="@load(atuacao.dataTermino ne null)"
+													value="@load(''.concat(atuacao.dataTermino)) @converter('br.ufjf.egresso.utils.DateFormatConverter')" />
+											</div>
+											<div
+												visible="@load(atuacao.descricao ne null and atuacao.descricao ne '')">
+												<label
+													sclass="data_atuacao" value="Descricao:" />
+
+											</div>
+
+											<label visible="true"
+												value="@load(atuacao.descricao)" />
+
+										</vlayout>
+										<vlayout visible="false">
+											<hlayout style="width:100%;">
+												<label sclass="cargo"
+													value="Formação: " />
+												<textbox
+													value="@bind(vm.atuacaoEmEdicao.cargo)" />
+											</hlayout>
+											<hlayout style="width:100%;">
+												<label sclass="local"
+													value="Instituição: " />
+												<textbox
+													value="@bind(vm.atuacaoEmEdicao.local)" />
+											</hlayout>
+											<hlayout style="width:100%;">
+												<label
+													sclass="data_atuacao" value="De:" />
+												<datebox
+													format="dd/MM/yyyy"
+													value="@bind(vm.atuacaoEmEdicao.dataInicio)" />
+											</hlayout>
+											<hlayout style="width:100%;">
+												<label
+													sclass="data_atuacao" value="Até :" />
+												<datebox
+													format="dd/MM/yyyy"
+													value="@bind(vm.atuacaoEmEdicao.dataTermino)"
+													disabled="@load(not self.nextSibling.checked)" />
+												<checkbox label="Atual"
+													checked="@load(vm.atuacaoEmEdicao.dataTermino eq null)"
+													onCheck="@command('marcarAtual', atual = self.checked, datebox = self.previousSibling)" />
+											</hlayout>
+											<vlayout>
+												<label
+													sclass="data_atuacao" value="Descricao:" />
+												<textbox width="100%"
+													value="@bind(vm.atuacaoEmEdicao.descricao)" rows="4"
+													maxlength="300" />
+											</vlayout>
+										</vlayout>
+										<div class="editar_exp"
+											hflex="1"
+											visible="@load(vm.podeEditar and (not vm.emEdicao or (vm.emEdicao and atuacao.id eq vm.atuacaoEmEdicao.id)))">
+											<label
+												style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:5px"
+												value="Editar" visible="@load(vm.podeEditar)"
+												onClick="@command('editarAtuacao',editarSalvar=self,sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling, cancelar=self.nextSibling, atuacao=atuacao)" />
+											<label visible="false"
+												style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:5px"
+												value="Cancelar"
+												onClick="@command('cancelarEdicao', editarSalvar=self.previousSibling, cancelar=self, sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling)" />
+
+											<label
+												style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:5px"
+												value="	Excluir" visible="@load(vm.podeEditar)"
+												onClick="@command('excluirAtuacao', atuacao=atuacao)" />
+										</div>
+									</vlayout>
+								</template>
+							</vlayout>
+						</div>
+
+						<div width="700px" align="left"
+							style="overflow:visible; padding:20px; background-color:white;margin-bottom:25px; margin-left:200px;"
+							hflex="1">
+							<div>
+								<label value="Projetos"
+									class="cabecalho" />
+								<label
+									style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:5px"
+									value="Adicionar..." visible="@load(vm.podeEditar)"
+									onClick="@command('adicionaAtuacao', window=adicionaAtuacao, tipo=2)" />
+							</div>
+							<html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+								
+								<![CDATA[ <hr style="border-top: dashed
+								1px; border-color: #c0504d;
+								margin-top:10px; border-bottom: none"
+								/>]]>
+								
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+						</html>
+							<vlayout children="@load(vm.filtraProjetos)"
+								width="700px;">
+								<template name="children"
+									var="atuacao">
+									<vlayout width="640px;"
+										style="margin-top: 20px">
+										<vlayout>
+											<label sclass="cargo"
+												value="@load(atuacao.cargo)" />
+											<label sclass="local"
+												value="@load(atuacao.local)" />
+											<div>
+												<label
+													sclass="data_atuacao" value="De: " />
+												<label
+													sclass="data_atuacao"
+													value="@load(''.concat(atuacao.dataInicio)) @converter('br.ufjf.egresso.utils.DateFormatConverter')" />
+											</div>
+											<div>
+												<label
+													sclass="data_atuacao"
+													value="@load(atuacao.dataTermino ne null ? 'Até: ' : 'Atual')" />
+												<label
+													sclass="data_atuacao"
+													visible="@load(atuacao.dataTermino ne null)"
+													value="@load(''.concat(atuacao.dataTermino)) @converter('br.ufjf.egresso.utils.DateFormatConverter')" />
+											</div>
+											<div
+												visible="@load(atuacao.descricao ne null and atuacao.descricao ne '')">
+												<label
+													sclass="data_atuacao" value="Descricao:" />
+
+											</div>
+
+											<label visible="true"
+												value="@load(atuacao.descricao)" />
+										</vlayout>
+										<vlayout visible="false">
+											<hlayout style="width:100%;">
+												<label
+													value="Projeto: " />
+												<textbox hflex="1" 
+													value="@bind(vm.atuacaoEmEdicao.cargo)" />
+											</hlayout>
+											<hlayout>
+												<label
+													sclass="Local de desenvolvimento" value="Local: " />
+												<textbox hflex="1"
+													value="@bind(vm.atuacaoEmEdicao.local)" />
+											</hlayout>
+											<hlayout>
+												<label
+													sclass="data_atuacao" value="De:" />
+												<datebox
+													format="dd/MM/yyyy" hflex="1"
+													value="@bind(vm.atuacaoEmEdicao.dataInicio)" />
+											</hlayout>
+											<hlayout>
+												<label
+													sclass="data_atuacao" value="Até :" />
+												<datebox
+													format="dd/MM/yyyy" hflex="1"
+													value="@bind(vm.atuacaoEmEdicao.dataTermino)"
+													disabled="@load(not self.nextSibling.checked)" />
+												<checkbox label="Atual"
+													checked="@load(vm.atuacaoEmEdicao.dataTermino eq null)"
+													onCheck="@command('marcarAtual', atual = self.checked, datebox = self.previousSibling)" />
+											</hlayout>
+											<vlayout>
+												<label
+													sclass="data_atuacao" value="Descrição:" />
+												<textbox width="100%"
+													value="@bind(vm.atuacaoEmEdicao.descricao)" rows="4"
+													maxlength="300" />
+											</vlayout>
+
+										</vlayout>
+										<div class="editar_exp"
+											hflex="1"
+											visible="@load(vm.podeEditar and (not vm.emEdicao or (vm.emEdicao and atuacao.id eq vm.atuacaoEmEdicao.id)))">
+											<label
+												style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:5px"
+												value="Editar" visible="@load(vm.podeEditar)"
+												onClick="@command('editarAtuacao',editarSalvar=self,sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling, cancelar=self.nextSibling, atuacao=atuacao)" />
+											<label visible="false"
+												style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:5px"
+												value="Cancelar"
+												onClick="@command('cancelarEdicao', editarSalvar=self.previousSibling, cancelar=self, sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling)" />
+
+											<label
+												style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:5px"
+												value="	Excluir" visible="@load(vm.podeEditar)"
+												onClick="@command('excluirAtuacao', atuacao=atuacao)" />
+										</div>
+									</vlayout>
+								</template>
+							</vlayout>
+						</div>
+					</vlayout>
 				</vlayout>
 			</vlayout>
-		</vlayout>
 		</div>
 		<window id="adicionaInteresses" title="Cadastrar Interesses"
 			visible="false" width="350px" border="normal"
@@ -528,7 +570,7 @@
 					<row>
 						<label
 							value="@load(vm.novaAtuacao.tipoAtuacao.id eq 1 ? 'Formação' : vm.novaAtuacao.tipoAtuacao.id eq 2 ? 'Projeto' : 'Cargo')" />
-						<textbox
+						<textbox maxlength="100"
 							value="@load(vm.novaAtuacao.cargo)@save(vm.novaAtuacao.cargo, before='submitAtuacao')"
 							tabindex="1" id="cargo" width="100%" />
 
@@ -537,9 +579,9 @@
 					<row>
 						<label
 							value="@load(vm.novaAtuacao.tipoAtuacao.id eq 1 ? 'Instituição' : vm.novaAtuacao.tipoAtuacao.id eq 2 ? 'Local de Desenvolvimento' : 'Empresa')" />
-						<textbox
+						<textbox style="overflow:auto;"
 							value="@load(vm.novaAtuacao.local)@save(vm.novaAtuacao.local, before='submitAtuacao')"
-							tabindex="2" id="local" width="100%" />
+							tabindex="2" id="local" width="100px;" />
 					</row>
 					<row>
 						<label value="Data Início:" />
@@ -574,63 +616,67 @@
 					width="75px" style="margin-top:5px" />
 			</div>
 		</window>
-		
-		<div align="center">
-		<div width="700px;" align="left"
-			style="margin-left:120px; margin-bottom:50px; background-color: white;padding:20px;">
-			<hlayout>
-				<label value="Interesses " style="font-size:16px;" />
-				<label
-					style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:5px"
-					value="Adicionar..." visible="@load(vm.podeEditar)"
-					onClick="@command('adicionaInteresses', window= adicionaInteresses)" />
-			</hlayout>
-			<html>
 
-				
-				<![CDATA[ <hr style="border-top: dashed 1px;
-				border-color: #c0504d; margin-top:10px; border-bottom:
-				none" />]]>
+		<div align="center" style="overflow:visible;">
+			<div width="700px;" align="left"
+				style="margin-left:120px; margin-bottom:50px; background-color: white;padding:20px;">
+				<hlayout>
+					<label value="Interesses " style="font-size:16px;" />
+					<label
+						style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:5px"
+						value="Adicionar..." visible="@load(vm.podeEditar)"
+						onClick="@command('adicionaInteresses', window= adicionaInteresses)" />
+				</hlayout>
+				<html>
+
+
+					
+					<![CDATA[ <hr style="border-top: dashed 1px;
+					border-color: #c0504d; margin-top:10px;
+					border-bottom: none" />]]>
+					
 				
 							
 						</html>
-			<vlayout style="width:700px;"  children="@load(vm.interesses)">
-				<template name="children" var="interesse">
-					<vlayout width="640px" style="margin-top: 20px;">
-						<vlayout>
-							<label sclass="interesse"
-								value="@load(interesse.interesse)" />
-						</vlayout>
-
-						<vlayout visible="false">
-							<hlayout>
+				<vlayout style="width:700px;"
+					children="@load(vm.interesses)">
+					<template name="children" var="interesse">
+						<vlayout width="640px"
+							style="margin-top: 20px;">
+							<vlayout>
 								<label sclass="interesse"
-									value="Interesse " />
-								<textbox hflex="1"
-									value="@bind(vm.interesseEmEdicao.interesse)" />
-							</hlayout>
+									value="@load(interesse.interesse)" />
+							</vlayout>
 
+							<vlayout visible="false">
+								<hlayout>
+									<label sclass="interesse"
+										value="Interesse " />
+									<textbox rows="4" hflex="1"
+										value="@bind(vm.interesseEmEdicao.interesse)" />
+								</hlayout>
+
+							</vlayout>
+							<div class="editar_exp" hflex="1"
+								visible="@load(vm.podeEditar and (not vm.emEdicao or (vm.emEdicao and interesse.id eq vm.interesseEmEdicao.id)))">
+								<label
+									style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:5px"
+									value="Editar" visible="@load(vm.podeEditar)"
+									onClick="@command('editarInteresse',editarSalvar=self,sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling, cancelar=self.nextSibling, interesse = interesse)" />
+								<label visible="false"
+									style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:5px"
+									value="Cancelar"
+									onClick="@command('cancelarEdicaoInteresse', editarSalvar=self.previousSibling, cancelar=self, sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling)" />
+
+								<label
+									style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:5px"
+									value="	Excluir" visible="@load(vm.podeEditar)"
+									onClick="@command('excluirInteresses', interesse = interesse)" />
+							</div>
 						</vlayout>
-						<div class="editar_exp" hflex="1"
-							visible="@load(vm.podeEditar and (not vm.emEdicao or (vm.emEdicao and interesse.id eq vm.interesseEmEdicao.id)))">
-							<label
-								style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:5px"
-								value="Editar" visible="@load(vm.podeEditar)"
-								onClick="@command('editarInteresse',editarSalvar=self,sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling, cancelar=self.nextSibling, interesse = interesse)" />
-							<label visible="false"
-								style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:5px"
-								value="Cancelar"
-								onClick="@command('cancelarEdicaoInteresse', editarSalvar=self.previousSibling, cancelar=self, sumir=self.parent.previousSibling.previousSibling, aparecer=self.parent.previousSibling)" />
-
-							<label
-								style="color:#c0504d; cursor:pointer; text-decoration:underline; margin-left:5px"
-								value="	Excluir" visible="@load(vm.podeEditar)"
-								onClick="@command('excluirInteresses', interesse = interesse)" />
-						</div>
-					</vlayout>
-				</template>
-			</vlayout>
-		</div>
+					</template>
+				</vlayout>
+			</div>
 		</div>
 
 
@@ -641,8 +687,10 @@
 
 
 
+
 			
 			<![CDATA[ Voltar para turmas.]]>
+			
 			
 			
 			

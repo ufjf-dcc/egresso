@@ -163,6 +163,7 @@ public class FbCadastroController {
 						Messagebox.ERROR);
 	    		break;
 	    	default:
+	    		System.out.println(e.getMessage());
 	    		Messagebox.show("Não foi possível autenticar. Por favor, verifique se o número foi digitado corretamente.",
 									"Erro", Messagebox.OK, Messagebox.ERROR);
 			}

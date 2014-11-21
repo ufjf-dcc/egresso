@@ -69,7 +69,7 @@
 						placeholder="Pesquisar aluno" onOK="@command('pesquisarTodos')"
 						value="@bind(vm.pesquisa)" />
 	
-				<combobox id="combocurso" autodrop="true" placeholder="Todos" style="padding-right	:5px;"
+				<combobox id="combocurso" autodrop="true" placeholder="Selecione um curso" style="padding-right	:5px;"
 					onSelect="@command('selecionaCurso', curso=self.selectedIndex)"
 					model="@load(vm.cursos)" >
 					<template name="model">

@@ -70,6 +70,7 @@ public class FbTurmaController {
 	private Curso curso;
 	private CursoBusiness cursoBusiness;
 	private String turmaSelecionada;
+
 	private Curso cursoSelecionado;
 	private List<Aluno> todosAlunos;
 
@@ -139,6 +140,13 @@ public class FbTurmaController {
 		turma = ((Aluno) Sessions.getCurrent().getAttribute("aluno"))
 				.getTurma();
 		aluno = ((Aluno) Sessions.getCurrent().getAttribute("aluno"));
+
+		turmaSelecionada = Integer.toString(turma.getAno()) + ' '
+				+ Integer.toString(turma.getSemestre()) + 'º' + ' '
+				+ "semestre";
+		cursoSelecionado = aluno.getCurso();
+		trocaTurma();
+
 		turmas = turmaBusiness.getTodas();
 
 		semestres = new ArrayList<String>();
@@ -150,7 +158,7 @@ public class FbTurmaController {
 				+ turma.getAno();
 		filtraAlunos = new AlunoBusiness().getAlunos(turma);
 		alunos = new AlunoBusiness().getTodosCurso(aluno.getCurso());
-		cursoSelecionado = aluno.getCurso();
+
 		todosAlunos = new AlunoBusiness().getTodos();
 		postagensTurma = new PostagemBusiness().getPostagens(turma,
 				aluno.getCurso());
@@ -583,16 +591,18 @@ public class FbTurmaController {
 	public void descricaoDataPostagem(
 			@BindingParam("dataHora") Timestamp dataHora,
 			@BindingParam("label") Label label) {
-		if (dataHora
-				.toString()
-				.substring(0, 11)
-				.equals(new Timestamp(new Date().getTime()).toString()
-						.substring(0, 11)))
-			label.setValue("Hoje, "
-					+ new SimpleDateFormat("HH:mm").format(dataHora));
-		else
-			label.setValue(new SimpleDateFormat("MM/dd/yyyy, HH:mm")
-					.format(dataHora));
+		if (dataHora != null) {
+			if (dataHora
+					.toString()
+					.substring(0, 11)
+					.equals(new Timestamp(new Date().getTime()).toString()
+							.substring(0, 11)))
+				label.setValue("Hoje, "
+						+ new SimpleDateFormat("HH:mm").format(dataHora));
+			else
+				label.setValue(new SimpleDateFormat("MM/dd/yyyy, HH:mm")
+						.format(dataHora));
+		}
 	}
 
 	/**
@@ -780,7 +790,7 @@ public class FbTurmaController {
 
 	@Command
 	public void hidePopup(@BindingParam("popup") Window popup) {
-		
+
 		popup.setVisible(false);
 	}
 
