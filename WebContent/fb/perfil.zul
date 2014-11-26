@@ -544,7 +544,7 @@
 						<label value="Interesse" />
 						<textbox 
 							value="@load(vm.novoInteresse.interesse)@save(vm.novoInteresse.interesse, before='submitInteresses')"
-							tabindex="1" id="interesse" width="100%" />
+							tabindex="1" maxlength ="250" sid="interesse" width="100%" />
 					</row>
 				</rows>
 
