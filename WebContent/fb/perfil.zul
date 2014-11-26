@@ -39,7 +39,7 @@
 		<div align="center" style="margin-left:-80px;">
 			<vlayout>
 				<div align="left"
-					style="background-color: white;margin-left: 200px; margin-top:20px; margin-bottom:25px;width: 700px;padding: 20px;height:250px;">
+					style="background-color: white;margin-left: 200px; margin-top:20px; margin-bottom:25px;width: 700px;padding: 20px;height:100%;">
 					<hlayout>
 						<div
 							style="width: 160px; height: 200px;margin-right:10px; overflow:hidden;">
@@ -64,18 +64,18 @@
 							
 						
 					</html>
-							<vlayout visible="@load(vm.aluno.atuacao ne null)">
+							<vlayout style="width:400px;" visible="@load(vm.aluno.atuacao ne null)">
 								<label value="Atuação atual"
 									style="font-size:13px" />
 
-								<label sclass="cargo"
-									value="@load(vm.aluno.atuacao.cargo)" />
-								<label sclass="local"
+								<label 
+									value="@load(vm.aluno.atuacao.cargo)"  style="word-wrap: break-word;"/>
+								<label sclass="local" style="word-wrap: break-word;"
 									value="@load(vm.aluno.atuacao.local)" />
 								<div>
 									<label sclass="data_atuacao"
 										value="Desde " />
-									<label sclass="data_atuacao"
+									<label style="word-wrap: break-word;" sclass="data_atuacao"
 										value="@load(''.concat(vm.aluno.atuacao.dataInicio)) @converter('br.ufjf.egresso.utils.DateFormatConverter')" />
 								</div>
 							</vlayout>
@@ -107,7 +107,7 @@
 				</div>
 				<vlayout hflex="1">
 
-					<vlayout style="width:900px; overflow:visible;"
+					<vlayout style="width:900px; height:100%; overflow:visible;"
 						hflex="false" spacing="5px">
 						<div align="left"
 							style="padding:20px; width:800px; background-color:white;margin-bottom:25px; margin-left:200px;"
@@ -133,41 +133,41 @@
 							
 						</html>
 							<vlayout children="@load(vm.filtraEmpregos)"
-								width="700px">
+								width="700px" style="height:100%;">
 
 								<template name="children"
 									var="atuacao">
 									<vlayout width="640px;"
 										style="margin-top: 20px">
 										<vlayout>
-											<label sclass="cargo"
+											<label sclass="cargo"  style="word-wrap: break-word;"
 												value="@load(atuacao.cargo)" />
-											<label sclass="local"
+											<label sclass="local" style="word-wrap: break-word;"
 												value="@load(atuacao.local)" />
 											<div>
 												<label
 													sclass="data_atuacao" value="De: " />
 												<label
-													sclass="data_atuacao"
+													sclass="data_atuacao" style="word-wrap: break-word;"
 													value="@load(''.concat(atuacao.dataInicio)) @converter('br.ufjf.egresso.utils.DateFormatConverter')" />
 											</div>
 											<div>
 												<label
-													sclass="data_atuacao"
+													sclass="data_atuacao" style="word-wrap: break-word;"
 													value="@load(atuacao.dataTermino ne null ? 'Até: ' : 'Atual')" />
 												<label
-													sclass="data_atuacao"
+													sclass="data_atuacao" style="word-wrap: break-word;"
 													visible="@load(atuacao.dataTermino ne null)"
 													value="@load(''.concat(atuacao.dataTermino)) @converter('br.ufjf.egresso.utils.DateFormatConverter')" />
 											</div>
-											<div
+											<div 
 												visible="@load(atuacao.descricao ne null and atuacao.descricao ne '')">
-												<label
+												<label 
 													value="Descricao:" />
 
 											</div>
 
-											<label visible="true"
+											<label visible="true" style="word-wrap: break-word;"
 												value="@load(atuacao.descricao)" />
 
 										</vlayout>
@@ -283,36 +283,36 @@
 						</html>
 							<vlayout
 								children="@load(vm.filtraFormacoes)"
-								style="overflow:visible;width:700px;">
+								style="overflow:visible;width:700px;height:100%;">
 
 								<template name="children"
 									var="atuacao">
 									<vlayout
 										style="margin-top: 20px;width: 640px;">
 										<vlayout>
-											<label sclass="cargo"
+											<label sclass="cargo" style="word-wrap: break-word;"
 												value="@load(atuacao.cargo)" />
-											<label sclass="local"
+											<label sclass="local" style="word-wrap: break-word;"
 												value="@load(atuacao.local)" />
 											<div>
-												<label
+												<label style="word-wrap: break-word;"
 													sclass="data_atuacao" value="De: " />
-												<label
+												<label style="word-wrap: break-word;"
 													sclass="data_atuacao"
 													value="@load(''.concat(atuacao.dataInicio)) @converter('br.ufjf.egresso.utils.DateFormatConverter')" />
 											</div>
 											<div>
-												<label
+												<label style="word-wrap: break-word;"
 													sclass="data_atuacao"
 													value="@load(atuacao.dataTermino ne null ? 'Até: ' : 'Atual')" />
-												<label
+												<label style="word-wrap: break-word;"
 													sclass="data_atuacao"
 													visible="@load(atuacao.dataTermino ne null)"
 													value="@load(''.concat(atuacao.dataTermino)) @converter('br.ufjf.egresso.utils.DateFormatConverter')" />
 											</div>
 											<div
 												visible="@load(atuacao.descricao ne null and atuacao.descricao ne '')">
-												<label
+												<label style="word-wrap: break-word;"
 													sclass="data_atuacao" value="Descricao:" />
 
 											</div>
@@ -428,40 +428,40 @@
 							
 						</html>
 							<vlayout children="@load(vm.filtraProjetos)"
-								width="700px;">
+								style="width:700px; height:100%; ">
 								<template name="children"
 									var="atuacao">
 									<vlayout width="640px;"
 										style="margin-top: 20px">
 										<vlayout>
-											<label sclass="cargo"
+											<label sclass="cargo" style="word-wrap: break-word;"
 												value="@load(atuacao.cargo)" />
-											<label sclass="local"
+											<label sclass="local" style="word-wrap: break-word;"
 												value="@load(atuacao.local)" />
 											<div>
-												<label
+												<label style="word-wrap: break-word;"
 													sclass="data_atuacao" value="De: " />
-												<label
+												<label style="word-wrap: break-word;"
 													sclass="data_atuacao"
 													value="@load(''.concat(atuacao.dataInicio)) @converter('br.ufjf.egresso.utils.DateFormatConverter')" />
 											</div>
 											<div>
-												<label
+												<label style="word-wrap: break-word;"
 													sclass="data_atuacao"
 													value="@load(atuacao.dataTermino ne null ? 'Até: ' : 'Atual')" />
-												<label
+												<label style="word-wrap: break-word;"
 													sclass="data_atuacao"
 													visible="@load(atuacao.dataTermino ne null)"
 													value="@load(''.concat(atuacao.dataTermino)) @converter('br.ufjf.egresso.utils.DateFormatConverter')" />
 											</div>
 											<div
 												visible="@load(atuacao.descricao ne null and atuacao.descricao ne '')">
-												<label
+												<label style="word-wrap: break-word;"
 													sclass="data_atuacao" value="Descricao:" />
 
 											</div>
 
-											<label visible="true"
+											<label visible="true" style="word-wrap: break-word;"
 												value="@load(atuacao.descricao)" />
 										</vlayout>
 										<vlayout visible="false">
@@ -542,7 +542,7 @@
 				<rows>
 					<row>
 						<label value="Interesse" />
-						<textbox
+						<textbox 
 							value="@load(vm.novoInteresse.interesse)@save(vm.novoInteresse.interesse, before='submitInteresses')"
 							tabindex="1" id="interesse" width="100%" />
 					</row>
@@ -581,7 +581,7 @@
 							value="@load(vm.novaAtuacao.tipoAtuacao.id eq 1 ? 'Instituição' : vm.novaAtuacao.tipoAtuacao.id eq 2 ? 'Local de Desenvolvimento' : 'Empresa')" />
 						<textbox style="overflow:auto;"
 							value="@load(vm.novaAtuacao.local)@save(vm.novaAtuacao.local, before='submitAtuacao')"
-							tabindex="2" id="local" width="100px;" />
+							tabindex="2" id="local" width="100%;" />
 					</row>
 					<row>
 						<label value="Data Início:" />
@@ -638,13 +638,14 @@
 				
 							
 						</html>
-				<vlayout style="width:700px;"
+				<vlayout style="width:700px; height:100%;"
 					children="@load(vm.interesses)">
 					<template name="children" var="interesse">
 						<vlayout width="640px"
 							style="margin-top: 20px;">
 							<vlayout>
-								<label sclass="interesse"
+								<label     style="word-wrap: break-word;"
+								sclass="interesse"
 									value="@load(interesse.interesse)" />
 							</vlayout>
 

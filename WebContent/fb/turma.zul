@@ -220,9 +220,9 @@
 							<vlayout
 								visible="@load(not postagem.privado or (postagem.privado and postagem.turma eq turma))" />
 							<hlayout>
-								<vlayout>
+								<vlayout style="width: 700px; height:100%;">
 									<label value="@load(postagem.texto)"
-										style="font-size:12px; " hflex="1" />
+										style="font-size:12px; word-wrap: break-word;" hflex="1" />
 
 									<div
 										style="width:400px;  float:left;"
