@@ -36,7 +36,7 @@
 
 		//Abre a janela de convite
 		function convidar(){ FB.ui({method:
-		'apprequests', filters: ['app_non_users'], message: 'Faça parte do aplicativo que reúne os ex-launos do curso de Ciência da Computação da UFJF!'
+		'apprequests', filters: ['app_non_users'], message: 'Faça parte do aplicativo que reúne os ex-alunos dos cursos do Departamento de Ciência da Computação da UFJF!'
 
 		}, null); }
 
