@@ -44,7 +44,7 @@ import br.ufjf.egresso.utils.ConfHandler;
 import br.ufjf.egresso.utils.FileManager;
 
 /**
- * Classe para controlar a página /fb/turma.zul
+ * Classe para controlar a página /fb/turma.zul ,  /fb/todosAlunos.zul , /fb/albumTurma.zul
  * 
  * @author Jorge Augusto da Silva Moreira e Eduardo Rocha Soares
  * 
@@ -58,7 +58,9 @@ public class FbTurmaController {
 	private List<Turma> turmas;
 	private TurmaBusiness turmaBusiness = new TurmaBusiness();
 	private String pesquisa, descricao, imgExtensao;
+	// turma do aluno
 	private Turma turma;
+	// aluno responsável pela sessão
 	private Aluno aluno;
 	private List<Postagem> postagensTurma;
 	private int largura, altura;
@@ -67,10 +69,12 @@ public class FbTurmaController {
 	private int indiceImagem;
 	private boolean buscaGlobal = false;
 	private String nomeImg;
+	// curso do aluno da sessão
 	private Curso curso;
 	private CursoBusiness cursoBusiness;
+	// turma selecionada atualmente
 	private String turmaSelecionada;
-
+	// curso selecionado atualmente
 	private Curso cursoSelecionado;
 	private List<Aluno> todosAlunos;
 
@@ -136,7 +140,9 @@ public class FbTurmaController {
 	@Init
 	public void init() {
 		BindUtils.postNotifyChange(null, null, this, "alunoSelect");
-
+		/*
+		 * pega aluno e turma passados por get da página index.zul
+		 */
 		turma = ((Aluno) Sessions.getCurrent().getAttribute("aluno"))
 				.getTurma();
 		aluno = ((Aluno) Sessions.getCurrent().getAttribute("aluno"));
@@ -171,10 +177,7 @@ public class FbTurmaController {
 
 	}
 
-	@Command
-	public void trocarCor(@BindingParam("cbx") Combobox cbx) {
-		cbx.setPlaceholder("Outras turmas");
-	}
+
 
 	public List<Aluno> getAlunos() {
 		return alunos;
@@ -267,7 +270,11 @@ public class FbTurmaController {
 	public int getAltura() {
 		return altura;
 	}
-
+	/**
+	 * Monta a tabela de alunos da página de turma
+	 * @param evt
+	 * 		Evento disparado pelo ator {@link Aluno}
+	 * 	 */
 	@Command
 	public void montaTabela(@BindingParam("event") ClientInfoEvent evt) {
 		if (evt != null) {
@@ -288,6 +295,7 @@ public class FbTurmaController {
 				inseridos = 0;
 				linhaAluno = new ArrayList<Aluno>();
 			}
+			// adiciona os alunos na lista
 			linhaAluno.add(a);
 			inseridos++;
 
@@ -300,7 +308,11 @@ public class FbTurmaController {
 		BindUtils.postNotifyChange(null, null, this, "linhasAluno");
 		Clients.evalJavaScript("fadeIn()");
 	}
-
+	/**
+	 * Monta a tabela da página de todos alunos
+	 * @param evt
+	 * 		Evento disparado pelo ator
+	 */
 	@Command
 	public void montaTabelaTodos(@BindingParam("event") ClientInfoEvent evt) {
 		if (evt != null) {
@@ -341,7 +353,11 @@ public class FbTurmaController {
 	public void setBuscaGlobal(boolean buscaGlobal) {
 		this.buscaGlobal = buscaGlobal;
 	}
-
+	/**
+	 * monta tabela de imagens do album da turma
+	 * @param evt
+	 * 	evento disparado pelo ator
+	 */
 	@Command
 	public void montaTabelaImagens(@BindingParam("event") ClientInfoEvent evt) {
 		if (evt != null) {
@@ -418,7 +434,10 @@ public class FbTurmaController {
 	public int getLargura() {
 		return largura;
 	}
-
+	/**
+	 * Efetua uma pesquisa por nome de aluno na página de turmas
+	 * depois de filtrada a pesquisa, monta a tabela novamente com os resultados obtidos.
+	 */
 	@Command
 	@NotifyChange({ "filtraAlunos", "emptyMessage" })
 	public void pesquisar() {
@@ -455,7 +474,11 @@ public class FbTurmaController {
 		montaTabela(null);
 
 	}
-
+	/**
+	 * Seleciona um curso pelo combobox de cursos da página de turmas
+	 * @param curso
+	 * 	Curso selecionado
+	 */
 	@Command
 	public void selecionaCurso(@BindingParam("curso") int curso) {
 		cursoSelecionado = cursos.get(curso);
@@ -463,7 +486,10 @@ public class FbTurmaController {
 		montaTabelaTodos(null);
 
 	}
-
+	/**
+	 * Faz uma pesquisa por aluno na página de todos alunos, só que agora
+	 * uma pesquisa global dentre os alunos de um dado curso
+	 */
 	@Command
 	@NotifyChange({ "filtraAlunos", "emptyMessage" })
 	public void pesquisarTodos() {
@@ -487,24 +513,32 @@ public class FbTurmaController {
 		montaTabela(null);
 
 	}
-
+	/**
+	 * Limpa o campo de pesquisa
+	 */
 	@Command("limparPesquisa")
 	public void limparPesquisa() {
 		filtraAlunos = new AlunoBusiness().getAlunos(turma);
 		montaTabela(null);
 	}
-
+	/**
+	 * Redireciona para o perfil de um aluno selecionado
+	 * @param facebookId
+	 * 	Facebook id do aluno selecionado
+	 */
 	@Command
 	public void verPerfil(@BindingParam("facebookId") String facebookId) {
 		if (facebookId != null)
 			Executions.sendRedirect("perfil.zul?id=" + facebookId);
 	}
-
+	/**
+	 * Chama a página de convite para o aplicativo.
+	 */
 	@Command
 	public void convidar() {
 		Executions.sendRedirect("convida.zul");
 	}
-
+	
 	@Command
 	public void pesquisaGlobal(@BindingParam("global") Checkbox cbx,
 			@BindingParam("selectTurma") Combobox comboTurma) {
@@ -522,20 +556,25 @@ public class FbTurmaController {
 		BindUtils.postNotifyChange(null, null, this, "buscaGlobal");
 
 	}
-
+	/**
+	 * redireciona pro albúm da turma
+	 */
 	@Command
 	public void verAlbum() {
 
 		Clients.evalJavaScript("album()");
 
 	}
-
+	/*
 	@Command
 	public void verTodosAlunos() {
 		Clients.evalJavaScript("verTodos()");
 
-	}
-
+	}*/
+	
+	/**
+	 * Redireciona para o perfil de um aluno
+	 */
 	@Command
 	public void goProfile() {
 		Executions.sendRedirect("perfil.zul?id="
@@ -543,19 +582,27 @@ public class FbTurmaController {
 						.getFacebookId());
 
 	}
-
+	/**
+	 * volta para página de turma
+	 */
 	@Command
 	public void voltaTurma() {
 		Clients.evalJavaScript("voltaTurma()");
 
 	}
-
+	/**
+	 * redireciona para a página de ver todos alunos
+	 */
 	@Command
 	public void verTodos() {
 		Clients.evalJavaScript("verTodos()");
 
 	}
-
+	/**
+	 * faz a mudança de {@link Turma} e {@link Curso} quando o {@link Aluno} seleciona outra {@link Turma}  e outro {@link Curso} para ver,
+	 * recarregando o mural e a grade de {@link Aluno}s
+	 * 
+	 */
 	@Command
 	public void trocaTurma() {
 		Clients.evalJavaScript("fadeOut()");
@@ -566,7 +613,7 @@ public class FbTurmaController {
 					.parseInt(turmaSelecionada.substring(
 							turmaSelecionada.indexOf("º") - 1,
 							turmaSelecionada.indexOf("º"))));
-
+			// monta a string de descrição de turma com base nos dados da turma retornada
 			descricao = "Turma do " + turma.getSemestre() + "º semestre de "
 					+ turma.getAno();
 			System.out.println(cursoSelecionado.getCurso());
@@ -597,6 +644,11 @@ public class FbTurmaController {
 					.substring(0, 11)
 					.equals(new Timestamp(new Date().getTime()).toString()
 							.substring(0, 11)))
+				/*
+				 *  monta a String de descrição de data da postagem,
+				 *  faz uma conversão de tipo de data. 
+				 */
+				
 				label.setValue("Hoje, "
 						+ new SimpleDateFormat("HH:mm").format(dataHora));
 			else
@@ -678,7 +730,11 @@ public class FbTurmaController {
 		BindUtils.postNotifyChange(null, null, this, "imgPostagem");
 
 	}
-
+	/**
+	 * Faz upload de uma imagem jpg, png, ou gif para ser postada no mural da turma.
+	 * @param evt
+	 * 	Evento onUpload
+	 */
 	@Command
 	public void upload(@BindingParam("evt") UploadEvent evt) {
 		String[] extensoes = new String[] { "jpg", "png", "gif", "jpeg" };
@@ -706,7 +762,13 @@ public class FbTurmaController {
 	public void setNomeImg(String nomeImg) {
 		this.nomeImg = nomeImg;
 	}
-
+	/**
+	 * Abre a imagem numa window para o usuário poder ver a imagem em tamanho maior.s
+	 * @param window
+	 * Janela onde será exibida a imagem
+	 * @param imgSrc
+	 * 	Endereço da imagem.
+	 */
 	@Command
 	public void verImagem(@BindingParam("window") Window window,
 			@BindingParam("imgSrc") String imgSrc) {
@@ -771,14 +833,14 @@ public class FbTurmaController {
 		}
 	}
 
-	@Command
-	public void mostrarPopup(@BindingParam("lbl") Label lbl,
-			@BindingParam("nome") String nome) {
-		lbl.setVisible(true);
-		lbl.setValue("teste");
-
-	}
-
+	
+	/**
+ 		* Mostra o popup com informações do {@link Aluno}
+ 		* @param popup
+ 		* 	Popup que conterá as informações do {@link Aluno}
+ 		* @param aluno
+ 		* 	{@link Aluno} selecionado que terá suas informações exibidas
+ 	*/
 	@Command
 	public void showPopup(@BindingParam("popup") Window popup,
 			@BindingParam("alunoSelect") Aluno aluno) {
@@ -787,13 +849,23 @@ public class FbTurmaController {
 		popup.doPopup();
 
 	}
-
+	/**
+	 * Esconde o popup de informações de {@link Aluno}
+	 * @param popup
+	 * 	Popup a ser escondido.
+	 */
 	@Command
 	public void hidePopup(@BindingParam("popup") Window popup) {
 
 		popup.setVisible(false);
 	}
-
+	/**
+	 * Carrega uma imagem para ser exibida no elemento img  
+	 * @param img
+	 * 	imagem a ser carregada
+	 * @param imgPath
+	 * 	caminho da imagem
+	 */
 	@Command
 	public void carregarImagem(@BindingParam("imagem") Image img,
 			@BindingParam("imgSrc") String imgPath) {

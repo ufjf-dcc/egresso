@@ -5,8 +5,20 @@ import java.util.List;
 import org.hibernate.Query;
 
 import br.ufjf.egresso.model.Curso;
+/**
+ * Classe responśvel por acessar os dados de {@link Curso}
+ * @author Eduardo Rocha Soares
+ *
+ */
 
 public class CursoDAO extends GenericoDAO {
+	/**
+	 * Retorna todos os códigos de todos os {@link Curso}s existentes 
+	 * no banco de dados
+	 * @return
+	 * 	{@link List} de {@link Integer} ou {@link null}
+	 * se não encontrar nenhum registro.
+	 */
 	@SuppressWarnings("unchecked")
 	public List<Integer> getAllCodes() {
 		try {
@@ -22,7 +34,12 @@ public class CursoDAO extends GenericoDAO {
 		return null;
 
 	}
-
+	/**
+	 * Retorna os todos os {@link Curso}s existentes
+	 *  no banco de dados.
+	 * @return
+	 * {@link List} de {@link Curso}s
+	 */
 	public List<Curso> getTodos() {
 		try {
 			Query query = getSession().createQuery("SELECT c FROM Curso as c ");
@@ -36,7 +53,14 @@ public class CursoDAO extends GenericoDAO {
 		}
 		return null;
 	}
-
+	/**
+	 * Retorna um {@link Curso} pesquisado por seu código
+	 * @param cod
+	 * código do {@link Curso}
+	 * @return
+	 * 	{@link Curso} se a busca encontrar um registro ou
+	 * {@link null} caso não encontre.
+	 */
 	public Curso getPorCod(int cod) {
 		try {
 			Query query = getSession().createQuery("SELECT c FROM Curso as c WHERE c.codCurso = :cod ");

@@ -11,7 +11,11 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistryBuilder;
 
 import br.ufjf.egresso.utils.ConfHandler;
-
+/**
+ * Classe de Configuração deo Hibernate.
+ * @author Jorge Moreiras
+ *
+ */
 public class HibernateUtil {
 	private static SessionFactory sessionFactory;
 	private static ServiceRegistryBuilder serviceRegistry;

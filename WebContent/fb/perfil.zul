@@ -544,7 +544,7 @@
 						<label value="Interesse" />
 						<textbox 
 							value="@load(vm.novoInteresse.interesse)@save(vm.novoInteresse.interesse, before='submitInteresses')"
-							tabindex="1" maxlength ="250" sid="interesse" width="100%" />
+							tabindex="1" maxlength ="250" id="interesse" width="100%" />
 					</row>
 				</rows>
 
@@ -579,7 +579,8 @@
 					<row>
 						<label
 							value="@load(vm.novaAtuacao.tipoAtuacao.id eq 1 ? 'Instituição' : vm.novaAtuacao.tipoAtuacao.id eq 2 ? 'Local de Desenvolvimento' : 'Empresa')" />
-						<textbox style="overflow:auto;"
+						<textbox 
+						
 							value="@load(vm.novaAtuacao.local)@save(vm.novaAtuacao.local, before='submitAtuacao')"
 							tabindex="2" id="local" width="100%;" />
 					</row>

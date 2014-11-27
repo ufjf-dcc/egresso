@@ -6,9 +6,18 @@ import org.hibernate.Query;
 
 import br.ufjf.egresso.model.Aluno;
 import br.ufjf.egresso.model.Atuacao;
-
+/**
+ * Classe que obtém as informações de {@link Atuacao} do c
+ * banco de dados
+ * @author Eduardo Rocha Soares
+ *
+ */
 public class AtuacaoDAO extends GenericoDAO {
-	
+	/**
+	 * Retorna todas as atuação do banco de dados.
+	 * @return
+	 * {@link List} de {@link Atuacao} 
+	 */
 	@SuppressWarnings("unchecked")
 	public List<Atuacao> getTodas() {
 		try {
@@ -25,7 +34,13 @@ public class AtuacaoDAO extends GenericoDAO {
 		}
 		return null;
 	}
-
+	/**
+	 * Retorna todas as {@link Atuacao} de um determinado {@link Aluno}
+	 * @param aluno
+	 * {@link Aluno} para o qual carregaremos as {@link Atuacao}
+	 * @return
+	 * 	{@link List} de {@link Atuacao}
+	 */
 	public List<Atuacao> getAtuacoes(Aluno aluno) {
 		try {
 			Query query = getSession().createQuery(
@@ -43,7 +58,13 @@ public class AtuacaoDAO extends GenericoDAO {
 		}
 		return null;
 	}
-
+	/**
+	 * Exclui as {@link Atuacao} de um {@link Aluno]
+	 * @param aluno
+	 * 	{@link Aluno} do qual serão excluídas as {@link Atuacao}
+	 * @return
+	 * 	{@link true} se for bem sucedido {@link false} caso contŕario
+	 */
 	public boolean excluir(Aluno aluno) {
 		try {
 		Query query = getSession().createQuery("DELETE Atuacao WHERE aluno = :aluno");
