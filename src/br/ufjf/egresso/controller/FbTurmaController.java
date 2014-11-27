@@ -360,6 +360,7 @@ public class FbTurmaController {
 	 */
 	@Command
 	public void montaTabelaImagens(@BindingParam("event") ClientInfoEvent evt) {
+
 		if (evt != null) {
 			largura = evt.getDesktopWidth();
 			altura = evt.getDesktopHeight() - 200;
@@ -386,6 +387,7 @@ public class FbTurmaController {
 
 		if (linhaPostagem.size() > 0)
 			linhasPostagem.add(linhaPostagem);
+		
 
 		BindUtils.postNotifyChange(null, null, this, "postagensTurma");
 		BindUtils.postNotifyChange(null, null, this, "linhasPostagem");
