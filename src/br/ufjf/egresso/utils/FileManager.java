@@ -25,6 +25,7 @@ public class FileManager {
 						.getChecksumInstance("md5");
 				checksum.update(("" + System.currentTimeMillis()).getBytes());
 				fileName = checksum.getFormattedValue() + "." + fileExt;
+				// pega uma configuração do config.txts
 				String url = ConfHandler.getConf("FILE.PATH");
 				url.replace("egresso", "/");
 				

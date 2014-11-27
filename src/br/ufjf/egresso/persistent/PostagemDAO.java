@@ -7,9 +7,20 @@ import org.hibernate.Query;
 import br.ufjf.egresso.model.Curso;
 import br.ufjf.egresso.model.Postagem;
 import br.ufjf.egresso.model.Turma;
-
+/**
+ * Classe responsável por manipular os dados de {@link Postagem}
+ * @author esoares
+ *
+ */
 public class PostagemDAO extends GenericoDAO {
-
+	/**
+	 * Recupera uma {@link Postagem} pelo seu id
+	 * @param id
+	 * id da {@link Postagem} que será recuperada do banco
+	 * @return
+	 * {@link Postagem} ou {@link null} caso não seja encontrada
+	 * nenhuma {@link Postagem} com aquele id.
+	 */
 	public Postagem getPostagem(int id) {
 		try {
 			Query query = getSession().createQuery(
@@ -26,6 +37,17 @@ public class PostagemDAO extends GenericoDAO {
 		}
 		return null;
 	}
+	/**
+	 * Recupera as {@link Postagem}s de uma {@link Turma} e {@link Curso}
+	 * @param turma
+	 * {@link Turma} da qual serão recuperadas as {@link Postagem}s 
+	 * @param curso
+	 * {@link Curso} do qual serão recuperadas as {@link Postagem}s 
+
+	 * @return
+	 * {@link List} de {@link Postagem} retornadas da busca ou {@link null} 
+	 * caso não exista nenhuma {@link Postagem}
+	 */
 	@SuppressWarnings("unchecked")
 	public List<Postagem> getPostagens(Turma turma, Curso curso) {
 		try {
